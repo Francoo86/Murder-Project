@@ -1,8 +1,6 @@
-# TIS-Proyecto
+# Murder Project.
 Proyecto para TIS (W.I.P).
+AÑADIR LORE...
 
-# Ideas
-* GPS.
-* GPS para busqueda de arriendo.
-* Easy Taxi pero para micros.
-* App de automoviles que consiste en un monton de apartados.
+# Instalación.
+TODO: Mostrar pasos a seguir.
