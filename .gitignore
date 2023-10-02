@@ -15,3 +15,6 @@ Murder Project/log.txt
 
 # Built Visual Studio Code Extensions
 *.vsix
+Murder Project/log.txt
+Murder Project/game/saves/persistent
+Murder Project/game/cache/shaders.txt
