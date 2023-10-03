@@ -2,12 +2,14 @@
 
 # Declara los personajes usados en el juego como en el ejemplo:
 
-define e = Character("Eileen")
-
+define mario = Character("Mario")
+define luigi = Character("Luigi")
 
 # El juego comienza aquí.
 
 label start:
+    python:
+        print("test!!!!")
 
     # Muestra una imagen de fondo: Aquí se usa un marcador de posición por
     # defecto. Es posible añadir un archivo en el directorio 'images' con el
@@ -19,13 +21,13 @@ label start:
     # reemplazarlo añadiendo un archivo llamado "eileen happy.png" al directorio
     # 'images'.
 
-    show eileen happy
+    # show eileen happy
 
     # Presenta las líneas del diálogo.
 
-    e "Has creado un nuevo juego Ren'Py."
+    mario "Hola soy Mario!!!"
 
-    e "Añade una historia, imágenes y música, ¡y puedes presentarlo al mundo!"
+    luigi "Yo luigi!"
 
     # Finaliza el juego:
 
