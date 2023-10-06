@@ -2,14 +2,19 @@
 
 # Declara los personajes usados en el juego como en el ejemplo:
 
+# preparar fetching.
+init python:
+    from lib.connection import create_conn
+
+
 define mario = Character("Mario")
 define luigi = Character("Luigi")
 
 # El juego comienza aquí.
 
 label start:
-    python:
-        print("test!!!!")
+    show text "Iniciando..."
+    pause 1
 
     # Muestra una imagen de fondo: Aquí se usa un marcador de posición por
     # defecto. Es posible añadir un archivo en el directorio 'images' con el
@@ -26,7 +31,6 @@ label start:
     # Presenta las líneas del diálogo.
 
     mario "Hola soy Mario!!!"
-
     luigi "Yo luigi!"
 
     # Finaliza el juego:
