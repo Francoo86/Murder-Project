@@ -13,6 +13,7 @@ image aiko happy = "aiko/Aiko_Halloween_Smile.png"
 # preparar fetching.
 init python:
     from lib.connection import initialize_connection
+    from lib.inworld_api import BasePlayer, Prompt
 
 
 define aiko = Character("Aiko")
