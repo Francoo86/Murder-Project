@@ -23,10 +23,10 @@ def create_connection(url : str, mode : str, **kwargs : ...) -> Response:
         Response object.
     """
     if mode == "get":
-        return request_get(url, kwargs)
+        return request_get(url, **kwargs)
 
     # should return 201.
-    return request_post(url, kwargs)
+    return request_post(url, **kwargs)
 
 # Can return none.
 # URL can't be empty.
@@ -38,8 +38,6 @@ def initialize_connection(url : str, mode : str, delay : float = 0, **kwargs):
         if delay > 0:
             sleep(delay)
 
-        # this is breaking the encapsulation logic, but we need to.
-        # FIXME: Change it in some moment.
         if conn.status_code in success_codes:
             return conn
         
