@@ -1,15 +1,38 @@
 # Assuming we are only using the GET method.
-from requests import get as req_get, exceptions
+from requests import get as request_get, post as request_post, exceptions, Response
 from time import sleep
 
 # define constants.
-SUCCESFUL_CODE = 200
+SUCCESFUL_CODE_GET = 200
+SENT_MESSAGE_CODE = 201
+
+# save those codes here because we don't want to put if-else thingy.
+success_codes = [
+    SUCCESFUL_CODE_GET, SENT_MESSAGE_CODE
+]
+
+def create_connection(url : str, mode : str, **kwargs : ...) -> Response:
+    """
+    Creates a connection with the specified HTTP Method.
+    Args:
+        url (str): The specified URL to connect.
+        mode (str): The HTTP method (only GET and POST).
+        kwargs (vararg): The parameters to use when doing connection.
+
+    Returns:
+        Response object.
+    """
+    if mode == "get":
+        return request_get(url, kwargs)
+
+    # should return 201.
+    return request_post(url, kwargs)
 
 # Can return none.
 # URL can't be empty.
-def create_conn(url : str, delay : float = 0):
+def initialize_connection(url : str, mode : str, delay : float = 0, **kwargs):
     try:
-        conn = req_get(url)
+        conn = create_connection(url, mode, **kwargs)
         
         # give it a chance to avoid bans.
         if delay > 0:
@@ -17,7 +40,7 @@ def create_conn(url : str, delay : float = 0):
 
         # this is breaking the encapsulation logic, but we need to.
         # FIXME: Change it in some moment.
-        if conn.status_code == SUCCESFUL_CODE:
+        if conn.status_code in success_codes:
             return conn
         
         print(f"The url: {url} returned {conn.status_code}")

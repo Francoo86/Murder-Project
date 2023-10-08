@@ -23,3 +23,8 @@ Murder Project/traceback.txt
 *.rpyc
 Murder Project/game/script.rpyc
 *.rpyb
+Murder Project/game/saves/navigation.json
+Murder Project/game/cache/screens.rpyb
+Murder Project/game/cache/py3analysis.rpyb
+Murder Project/game/cache/bytecode-39.rpyb
+*.pyc

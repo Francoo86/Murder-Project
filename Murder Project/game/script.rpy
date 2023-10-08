@@ -12,11 +12,10 @@ image aiko happy = "aiko/Aiko_Halloween_Smile.png"
 
 # preparar fetching.
 init python:
-    from lib.connection import create_conn
+    from lib.connection import initialize_connection
 
 
 define aiko = Character("Aiko")
-define luigi = Character("Luigi")
 
 transform half_size:
     zoom 0.4
@@ -37,15 +36,30 @@ label start:
     # reemplazarlo añadiendo un archivo llamado "eileen happy.png" al directorio
     # 'images'.
 
-    show aiko normal at half_size
+    # show aiko normal at half_size
     # show eileen happy
     aiko "Hola mundo!"
     aiko "Y para pensar señores."
 
-    show aiko happy at half_size
+    # show aiko happy at half_size
 
-    aiko "Imagina aprender las topologias en Cisco."
-    aiko "Facil para el que estudio..."
+    aiko "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo risus metus, vitae tristique nisi tincidunt sed. Nunc ut neque vel purus hendrerit egestas et nec erat. Donec vitae elit a nisi fermentum rhoncus nec condimentum magna. Pellentesque eleifend sagittis dui, et tincidunt nulla mattis ac. Duis pellentesque ante sed dui consectetur pellentesque. Aenean scelerisque id dui a tristique. Curabitur efficitur imperdiet arcu,
+    in vulputate eros commodo nec. Praesent elementum dui faucibus ligula accumsan faucibus. Cras in scelerisque est."
+    aiko "Sample text..."
+
+    python:
+        rep = initialize_connection("https://pokeapi.co/api/v2/pokemon/ditto", "get")
+
+        if rep:
+            json = rep.json()
+
+            for element in json:
+                renpy.say(aiko, str(element))
+
+
+        res = renpy.input("Y bien cual es tu consulta?")
+
+    aiko "como tan muchacho [res]"
 
     # Presenta las líneas del diálogo.
     #
