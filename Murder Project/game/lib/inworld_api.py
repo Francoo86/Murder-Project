@@ -1,9 +1,10 @@
+# if you want to test the module, you should remove the "lib." thing in this module.
 from lib.utils import copydict
 from lib.inworld_connection import SendTextAPIConnection, OpenSessionAPIConnection
 
 # API KEY.
 class Player:
-    def __init__(self, user_name : str, age : float = 20, gender : str = ""):
+    def __init__(self, user_name : str, age : float, gender : str):
         # self.player = char_name
         self.player_data = {
             # Pretty basic user thing.
@@ -28,30 +29,6 @@ class Player:
 
     def set_gender(self, gender : str):
         self.player_data["gender"] = gender
-
-class Prompt:
-    def __init__(self, character : Player):
-        # inject player to this.
-        self.player = character
-        self.session_handler = SessionHandler(character)
-        self.previous_text = ""
-        self.last_message = []
-        self.last_prompt_data = {}
-
-    def get_formatted_message(self) -> str:
-        return " ".join(self.last_message)
-    
-    def get_user_last_text(self):
-        return self.previous_text
-
-    def send_text(self, text : str):
-        session_id = self.session_handler.get_session_id()
-        player_id = self.session_handler.get_player_session_id()
-        conn = SendTextAPIConnection(session_id, player_id, text)
-
-        data = conn.connect(delay=0)
-        self.last_message = data["textList"]
-        return self.last_message
 
 class SessionHandler:
     def __init__(self, player : Player):
@@ -84,10 +61,52 @@ class SessionHandler:
 
         return self.session_id
     
-    # TODO: Fix DI.
+    # player thing.
+    def set_player(self, player : Player):
+        self.player = player
+
     def request_new_session(self) -> str:
         conn = OpenSessionAPIConnection(self.player.get_player_data())
         session_id, player_id = conn.connect(delay=0)
         self.session_id, self.player_session_id = session_id, player_id
 
         return session_id, player_id
+
+class Prompt:
+    def __init__(self, session : SessionHandler):
+        # inject session to this.
+        self.session_handler = session
+        self.previous_text = ""
+
+        # initialize it in none.
+        self.last_message : list = None
+        self.last_prompt_data : dict = None
+
+    # we can have multiple sessions.
+    def set_session_handler(self, session : SessionHandler):
+        self.session_handler = session
+
+    # no setters because there are no need to set things.
+    def get_formatted_message(self) -> str:
+        return " ".join(self.last_message)
+    
+    def get_user_last_text(self):
+        return self.previous_text
+    
+    def get_prompt_response_data(self):
+        return self.last_prompt_data
+
+    def send_text(self, text : str):
+        session_id = self.session_handler.get_session_id()
+        player_id = self.session_handler.get_player_session_id()
+        conn = SendTextAPIConnection(session_id, player_id, text)
+
+        data = conn.connect(delay=0)
+
+        # save this important data.
+        self.last_prompt_data = data
+
+        # we want to get the response thing.
+        self.last_message = data["textList"]
+
+        return self.last_message

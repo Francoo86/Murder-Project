@@ -1,27 +1,37 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from lib.connection import initialize_connection
 from lib.utils import copydict
 
-# LA LLAVE DE API.
-KEY = "Basic " + "KEY"
-# EL PATH DEL ESPACIO DE TRABAJO.
-WORKSPACE_PATH = "WORKSPACE_ID"
-# EL PERSONAJE COMO TAL.
-CHARACTER = WORKSPACE_PATH + "PERSONAJE_PATH"
 # Headers, dejarlos así nomás.
 HEADERS = {"Content-Type": "application/json", "authorization": KEY}
 
 # Yeah, the metamorphosis thing is real.
 class AbstractConnection(ABC):
-    def __init__(self):
-        pass
+    # in the case we use get we change it.
+    def __init__(self, data : any):
+        self.data = data
+        self.method = "post"
+        self.delay = 0
 
+    @abstractmethod
     def connect(self, delay : int = 0, headers = HEADERS) -> any:
         pass
 
+    def setup_data(self):
+        pass
+
+    def set_method(self, method : str):
+        self.method = method
+
+    def set_delay(self, delay : int):
+        self.delay = delay
+
 class OpenSessionAPIConnection(AbstractConnection):
-    def __init__(self, player_data : dict):
-        self.set_player_data(player_data)
+    def __init__(self, data : dict):
+        self.set_player_data(data)
+
+    def set_method(self, method: str):
+        return super().set_method(method)
 
     # only saves the reference though.
     def set_player_data(self, new_data : dict):

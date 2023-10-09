@@ -12,7 +12,7 @@ image aiko happy = "aiko/Aiko_Halloween_Smile.png"
 
 # preparar fetching.
 init python:
-    from lib.inworld_api import Player, Prompt
+    from lib.inworld_api import Player, Prompt, SessionHandler
 
 
 define aiko = Character("Aiko")
@@ -51,8 +51,11 @@ label start:
         player = Player("Senku", 30, "male")
         player.set_role("scientist")
 
-        prpt = Prompt(player)
-        text = prpt.send_text("How are you today?")
+        # create a new session.
+        senku_session = SessionHandler(player)
+
+        # create a prompt based on Senku's session.
+        prpt = Prompt(senku_session)
 
         # save this aux variable.
         res = ""
