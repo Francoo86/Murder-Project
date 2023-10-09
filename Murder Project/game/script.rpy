@@ -78,11 +78,6 @@ label start:
     aiko "como tan muchacho [res]"
 
     # Presenta las líneas del diálogo.
-    #
-
-    #mario "Hola soy Mario!!!"
-    #luigi "Yo luigi!"
-
     # Finaliza el juego:
 
     return

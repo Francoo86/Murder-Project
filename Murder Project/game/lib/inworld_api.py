@@ -18,26 +18,32 @@ class Player:
         return self.player_data
 
     # This is for setting up the required data to send.
-    def set_name(self, char : str):
+    def set_name(self, char : str) -> None:
         self.player_data["givenName"] = char
 
-    def set_role(self, role : str):
+    def set_role(self, role : str) -> None:
         self.player_data["role"] = role
     
-    def set_age(self, age : int):
+    def set_age(self, age : int) -> None:
         self.player_data["age"] = age
 
-    def set_gender(self, gender : str):
+    def set_gender(self, gender : str) -> None:
         self.player_data["gender"] = gender
 
 class SessionHandler:
-    def __init__(self, player : Player):
+    def __init__(self, player : Player) -> None:
         self.player = player
         self.session_id = None
         self.player_session_id = None
 
         # ensure this data will be used.
         self._old_player_data = copydict(self.player.get_player_data())
+
+    def get_session_data(self) -> dict:
+        id = self.get_session_id()
+        player_id = self.get_player_session_id()
+        
+        return {"ID" : id, "PlayerID": player_id}
 
     def should_request_new_session(self) -> bool:
         old_data = self._old_player_data
@@ -62,18 +68,18 @@ class SessionHandler:
         return self.session_id
     
     # player thing.
-    def set_player(self, player : Player):
+    def set_player(self, player : Player) -> None:
         self.player = player
 
     def request_new_session(self) -> str:
         conn = OpenSessionAPIConnection(self.player.get_player_data())
-        session_id, player_id = conn.connect(delay=0)
+        session_id, player_id = conn.connect()
         self.session_id, self.player_session_id = session_id, player_id
 
         return session_id, player_id
 
 class Prompt:
-    def __init__(self, session : SessionHandler):
+    def __init__(self, session : SessionHandler) -> None:
         # inject session to this.
         self.session_handler = session
         self.previous_text = ""
@@ -83,25 +89,30 @@ class Prompt:
         self.last_prompt_data : dict = None
 
     # we can have multiple sessions.
-    def set_session_handler(self, session : SessionHandler):
+    def set_session_handler(self, session : SessionHandler) -> None:
         self.session_handler = session
 
     # no setters because there are no need to set things.
     def get_formatted_message(self) -> str:
         return " ".join(self.last_message)
     
-    def get_user_last_text(self):
+    def get_user_last_text(self) -> str:
         return self.previous_text
     
-    def get_prompt_response_data(self):
+    def get_prompt_response_data(self) -> dict:
         return self.last_prompt_data
+    
+    def get_data_to_send(self) -> dict:
+        data = self.session_handler.get_session_data()
+        data.update({"Text" : self.previous_text})
 
-    def send_text(self, text : str):
-        session_id = self.session_handler.get_session_id()
-        player_id = self.session_handler.get_player_session_id()
-        conn = SendTextAPIConnection(session_id, player_id, text)
+        return data
 
-        data = conn.connect(delay=0)
+    def send_text(self, text : str) -> list:
+        self.previous_text = text
+
+        conn = SendTextAPIConnection(self.get_data_to_send())
+        data = conn.connect()
 
         # save this important data.
         self.last_prompt_data = data
