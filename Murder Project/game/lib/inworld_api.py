@@ -26,6 +26,9 @@ class Player:
     def set_age(self, age : int):
         self.player_data["age"] = age
 
+    def set_gender(self, gender : str):
+        self.player_data["gender"] = gender
+
 class Prompt:
     def __init__(self, character : Player):
         # inject player to this.
