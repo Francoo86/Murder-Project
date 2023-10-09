@@ -12,8 +12,7 @@ image aiko happy = "aiko/Aiko_Halloween_Smile.png"
 
 # preparar fetching.
 init python:
-    from lib.connection import initialize_connection
-    from lib.inworld_api import BasePlayer, Prompt
+    from lib.inworld_api import Player, Prompt
 
 
 define aiko = Character("Aiko")
@@ -49,16 +48,29 @@ label start:
     aiko "Sample text..."
 
     python:
-        rep = initialize_connection("https://pokeapi.co/api/v2/pokemon/ditto", "get")
+        player = Player("Senku", 30, "male")
+        player.set_role("scientist")
 
-        if rep:
-            json = rep.json()
+        prpt = Prompt(player)
+        text = prpt.send_text("How are you today?")
 
-            for element in json:
-                renpy.say(aiko, str(element))
+        # save this aux variable.
+        res = ""
 
+        while True:
+            res = renpy.input("Y bien cual es tu consulta?")
 
-        res = renpy.input("Y bien cual es tu consulta?")
+            # efectivamente, un loop.
+            if res == "stop":
+                break
+
+            text = prpt.send_text(res)
+
+            for phrase in text:
+                renpy.say(aiko, phrase)
+
+            renpy.say(aiko, "FIN PRUEBA IA.")
+            #block of code to run
 
     aiko "como tan muchacho [res]"
 

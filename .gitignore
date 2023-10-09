@@ -28,3 +28,8 @@ Murder Project/game/cache/screens.rpyb
 Murder Project/game/cache/py3analysis.rpyb
 Murder Project/game/cache/bytecode-39.rpyb
 *.pyc
+*.rpyb
+Murder Project/game/cache/bytecode-39.rpyb
+Murder Project/errors.txt
+Murder Project/game/saves/navigation.json
+*.rpyc
