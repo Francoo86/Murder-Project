@@ -33,3 +33,7 @@ Murder Project/game/cache/bytecode-39.rpyb
 Murder Project/errors.txt
 Murder Project/game/saves/navigation.json
 *.rpyc
+
+# add these guys here.
+!.env
+.env

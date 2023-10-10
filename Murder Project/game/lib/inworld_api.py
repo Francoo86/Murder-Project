@@ -6,7 +6,7 @@ from lib.inworld_connection import SendTextAPIConnection, OpenSessionAPIConnecti
 class Player:
     def __init__(self, user_name : str, age : float, gender : str):
         # self.player = char_name
-        self.player_data = {
+        self._player_data = {
             # Pretty basic user thing.
             "endUserId": "12345",
             "givenName": user_name,
@@ -15,20 +15,20 @@ class Player:
         }
 
     def get_player_data(self) -> dict: 
-        return self.player_data
+        return self._player_data
 
     # This is for setting up the required data to send.
     def set_name(self, char : str) -> None:
-        self.player_data["givenName"] = char
+        self._player_data["givenName"] = char
 
     def set_role(self, role : str) -> None:
-        self.player_data["role"] = role
+        self._player_data["role"] = role
     
     def set_age(self, age : int) -> None:
-        self.player_data["age"] = age
+        self._player_data["age"] = age
 
     def set_gender(self, gender : str) -> None:
-        self.player_data["gender"] = gender
+        self._player_data["gender"] = gender
 
 class SessionHandler:
     def __init__(self, player : Player) -> None:

@@ -2,26 +2,38 @@ from abc import ABC, abstractmethod
 from lib.connection import initialize_connection
 from lib.utils import copydict
 
-# LA LLAVE DE API.
-KEY = "Basic " + "LLAVE"
-# EL PATH DEL ESPACIO DE TRABAJO.
-WORKSPACE_PATH = "workspaces/{ID}"
-# EL PERSONAJE COMO TAL.
-CHARACTER = WORKSPACE_PATH + "/characters/madame_fortune_teller"
-# Headers, dejarlos así nomás.
+# thanks pip thing.
+# this library doesn't exist in base renpy sdk.
+from lib.dotenv import load_dotenv
+import os
+
+# renpy loads here.
+# WORKAROUND: Import the path thing to fix the .env not found error.
+SCRIPT_PATH = os.path.dirname(os.path.abspath(__file__))
+GAME_PATH = os.path.dirname(os.path.dirname(SCRIPT_PATH))
+load_dotenv(os.path.join(GAME_PATH, ".env"))
+
+# this data is important for the game api.
+KEY = os.getenv("API_KEY")
+WORKSPACE_PATH = os.getenv("WORKSPACE_PATH")
+CHARACTER_NAME = os.getenv("CHARACTER_NAME")
 HEADERS = {"Content-Type": "application/json", "authorization": KEY}
 
 # key for saving the session.
 GRPC_METADATA = "Grpc-Metadata-session-id"
 
-# Yeah, the metamorphosis thing is real.
+# we need to reinvent the wheel rip.
+class APIClient:
+    def __init__(self) -> None:
+        self.key : str
+        self.path : str
+
 class AbstractConnection(ABC):
     # in the case we use get we change it.
     def __init__(self, data : dict):
         self.data = data
         self.method = "post"
         self.delay = 0
-        self.is_setup = False
         self.headers = HEADERS
 
         self.setup_data()
@@ -62,7 +74,7 @@ class OpenSessionAPIConnection(AbstractConnection):
         super().__init__(data)
 
     def setup_data(self):
-        name_json = {"name": CHARACTER}
+        name_json = {"name": CHARACTER_NAME}
         name_json.update(self.data)
 
         # save the user data here.
@@ -73,7 +85,7 @@ class OpenSessionAPIConnection(AbstractConnection):
     
     def connect(self) -> tuple:
         # data to do the connection.
-        url = f'https://studio.inworld.ai/v1/{CHARACTER}:openSession'
+        url = f'https://studio.inworld.ai/v1/{WORKSPACE_PATH}/characters/{CHARACTER_NAME}:openSession'
         json = self.connect_url(url, fallback_msg="Can't connect to OpenSession API.")
 
         # get the connection important things.
