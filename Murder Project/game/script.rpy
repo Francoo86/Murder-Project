@@ -52,7 +52,7 @@ label start:
         player.set_role("scientist")
 
         # create a new session.
-        senku_session = SessionHandler(player)
+        senku_session = SessionHandler(player, "doctor_lucas")
 
         # create a prompt based on Senku's session.
         prpt = Prompt(senku_session)

@@ -16,7 +16,7 @@ load_dotenv(os.path.join(GAME_PATH, ".env"))
 # this data is important for the game api.
 KEY = os.getenv("API_KEY")
 WORKSPACE_PATH = os.getenv("WORKSPACE_PATH")
-CHARACTER_NAME = os.getenv("CHARACTER_NAME")
+# CHARACTER_NAME = os.getenv("CHARACTER_NAME")
 HEADERS = {"Content-Type": "application/json", "authorization": KEY}
 
 # key for saving the session.
@@ -74,18 +74,14 @@ class OpenSessionAPIConnection(AbstractConnection):
         super().__init__(data)
 
     def setup_data(self):
-        name_json = {"name": CHARACTER_NAME}
-        name_json.update(self.data)
+        self.character = self.data["character"]
 
-        # save the user data here.
-        name_json["user"] = self.data
-
-        # this guy is the merged.
-        self.data = name_json
+        # Remove this data as we don't want to send it in the POST parameters.
+        self.data.pop("character")
     
     def connect(self) -> tuple:
         # data to do the connection.
-        url = f'https://studio.inworld.ai/v1/{WORKSPACE_PATH}/characters/{CHARACTER_NAME}:openSession'
+        url = f'https://studio.inworld.ai/v1/{WORKSPACE_PATH}/characters/{self.character}:openSession'
         json = self.connect_url(url, fallback_msg="Can't connect to OpenSession API.")
 
         # get the connection important things.

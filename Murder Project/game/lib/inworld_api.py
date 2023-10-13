@@ -31,19 +31,26 @@ class Player:
         self._player_data["gender"] = gender
 
 class SessionHandler:
-    def __init__(self, player : Player) -> None:
-        self.player = player
-        self.session_id = None
-        self.player_session_id = None
-
+    def __init__(self, player : Player, char : str) -> None:
+        self.player : Player = player
+        self.character : str = char
+        self.session_id : str = None
+        self.player_session_id : str = None        
         # ensure this data will be used.
-        self._old_player_data = copydict(self.player.get_player_data())
+        # self._current_data : dict = copydict(self.player.get_player_data())
+        self._old_player_data : dict = copydict(self.player.get_player_data())
+
+    def set_character(self, char : str):
+        self.character = char
+
+    def get_character(self):
+        return self.character
 
     def get_session_data(self) -> dict:
         id = self.get_session_id()
         player_id = self.get_player_session_id()
         
-        return {"ID" : id, "PlayerID": player_id}
+        return {"ID" : id, "PlayerID": player_id, "Character" : self.character}
 
     def should_request_new_session(self) -> bool:
         old_data = self._old_player_data
@@ -66,13 +73,17 @@ class SessionHandler:
             self.request_new_session()
 
         return self.session_id
-    
+
     # player thing.
     def set_player(self, player : Player) -> None:
         self.player = player
 
     def request_new_session(self) -> str:
-        conn = OpenSessionAPIConnection(self.player.get_player_data())
+        conn = OpenSessionAPIConnection({
+            "character": self.character,
+            "user": self.player.get_player_data()
+        })
+
         session_id, player_id = conn.connect()
         self.session_id, self.player_session_id = session_id, player_id
 
