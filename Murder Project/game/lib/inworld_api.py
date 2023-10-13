@@ -2,6 +2,15 @@
 from lib.utils import copydict
 from lib.inworld_connection import SendTextAPIConnection, OpenSessionAPIConnection
 
+# Metaclass, class that creates classes.
+# This will be used for Player and Prompt.
+class Singleton (type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)    
+        return cls._instances[cls]
+
 # API KEY.
 class Player:
     def __init__(self, user_name : str, age : float, gender : str):
@@ -29,6 +38,49 @@ class Player:
 
     def set_gender(self, gender : str) -> None:
         self._player_data["gender"] = gender
+    
+class SinglePlayer(metaclass=Singleton):
+    def __init__(self, user_name : str, age : float, gender : str):
+        # self.player = char_name
+        self._player_data = {
+            # Pretty basic user thing.
+            "endUserId": "12345",
+            "givenName": user_name,
+            "age": age,
+            "gender": gender
+        }
+
+    def get_player_data(self) -> dict: 
+        return self._player_data
+
+    # This is for setting up the required data to send.
+    def set_name(self, char : str) -> None:
+        self._player_data["givenName"] = char
+
+    def set_role(self, role : str) -> None:
+        self._player_data["role"] = role
+    
+    def set_age(self, age : int) -> None:
+        self._player_data["age"] = age
+
+    def set_gender(self, gender : str) -> None:
+        self._player_data["gender"] = gender
+
+    # getters.
+    def get_name(self) -> str:
+        return self._player_data["givenName"]
+    
+    def get_role(self) -> str:
+        return self._player_data["role"]
+    
+    def get_age(self) -> str:
+        return self._player_data["age"]
+    
+    def get_gender(self) -> str:
+        return self._player_data["gender"]
+
+    def __str__(self):
+        return f"[Name : {self.get_name()}, Age: {self.get_age()}, Gender: {self.get_gender()}, Role: {self.get_role()}]"
 
 class SessionHandler:
     def __init__(self, player : Player, char : str) -> None:
@@ -42,6 +94,9 @@ class SessionHandler:
 
     def set_character(self, char : str):
         self.character = char
+
+        # we are changing characters, the session should be changed.
+        self.request_new_session()
 
     def get_character(self):
         return self.character

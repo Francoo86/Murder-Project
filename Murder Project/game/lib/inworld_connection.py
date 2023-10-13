@@ -16,7 +16,6 @@ load_dotenv(os.path.join(GAME_PATH, ".env"))
 # this data is important for the game api.
 KEY = os.getenv("API_KEY")
 WORKSPACE_PATH = os.getenv("WORKSPACE_PATH")
-# CHARACTER_NAME = os.getenv("CHARACTER_NAME")
 HEADERS = {"Content-Type": "application/json", "authorization": KEY}
 
 # key for saving the session.
