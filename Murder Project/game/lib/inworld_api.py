@@ -11,7 +11,7 @@ class SessionHandler:
         self.player_session_id : str = None        
 
         # changed name to avoid weird things.
-        self._old_player_session_data : dict = player_info.get_info_as_dict()
+        self._old_player_session_data : dict = player_info.get_info()
 
     def set_character(self, char : str):
         self.character = char
@@ -30,11 +30,11 @@ class SessionHandler:
 
     def should_request_new_session(self) -> bool:
         old_data = self._old_player_session_data
-        current_data = self.player_info.get_info_as_dict()
+        current_data = self.player_info.get_info()
 
         # not the same data so we copy it again.
         if old_data != current_data:
-            self._old_player_session_data = copydict(current_data)
+            self._old_player_session_data = current_data
             return True
 
         return False

@@ -3,7 +3,9 @@
 # Declara los personajes usados en el juego como en el ejemplo:
 
 # asignamos una imagen para la escena.
-image bg santiasco = "santiasco.jpg"
+image bg santiasco:
+    zoom 2
+    "granja.jpg"
 
 # credits to noraneko games.
 # only for testing btw.
@@ -13,10 +15,15 @@ image aiko happy = "aiko/Aiko_Halloween_Smile.png"
 # preparar fetching.
 init python:
     from lib.inworld_api import Prompt, SessionHandler
-    from lib.player import SinglePlayer, PlayerInfo
+    from lib.player import PlayerInfo
 
+# PRO GAMER TIPS #
+# default => Variable que se guarda por sesiones.
+# define => Variable constante.
 
 define aiko = Character("Aiko")
+
+
 
 transform half_size:
     zoom 0.4
@@ -24,8 +31,17 @@ transform half_size:
 # El juego comienza aquí.
 
 label start:
+    # This needs to be kept across sessions.
+    default info = PlayerInfo("Juan", 20, "Male", "Scientist")
+
+    # load player data.
+    default ply = SinglePlayer(info)
+
     show text "Iniciando..."
     pause 1
+
+    python:
+        inv = Inventory()
 
     # Muestra una imagen de fondo: Aquí se usa un marcador de posición por
     # defecto. Es posible añadir un archivo en el directorio 'images' con el
@@ -49,7 +65,7 @@ label start:
     aiko "Sample text..."
 
     python:
-        info = PlayerInfo("Juan", 20, "Male", "Scientist")
+
         player = SinglePlayer(info)
 
         # create a new session.
