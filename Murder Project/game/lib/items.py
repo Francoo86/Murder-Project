@@ -1,29 +1,27 @@
-from abc import ABC, abstractmethod
-
-# Abstract class that saves items.
-class BaseItem(ABC):
+class BaseItem:
     def __init__(self) -> None:
         self.name = ""
         self.description = ""
 
-    # Should be implemented.
-    @abstractmethod
-    def use(self):
-        pass
-
-    @abstractmethod
-    def is_usable(self):
-        pass
-    
     # Non abstract methods.
     def get_name(self):
         return self.name
+
+    def get_description(self):
+        return
     
     def set_name(self, name):
         self.name = name
 
-# bloc de notas?????
+class PassiveItem(BaseItem):
+    def __init__(self):
+        
+        pass
 
+    def use(self):
+        pass
+
+# bloc de notas?????
 class TextItem(BaseItem):
     def __init__(self):
         self.current_text = ""

@@ -1,0 +1,2 @@
+class EventTrigger:
+    pass

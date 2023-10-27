@@ -1,44 +1,9 @@
 # if you want to test the module, you should remove the "lib." thing in this module.
 from lib.utils import copydict
 from lib.inworld_connection import SendTextAPIConnection, OpenSessionAPIConnection
+from lib.patterns import Singleton
 
-# Metaclass, class that creates classes.
-# This will be used for Player and Prompt.
-class Singleton (type):
-    _instances = {}
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)    
-        return cls._instances[cls]
-
-# API KEY.
-class Player:
-    def __init__(self, user_name : str, age : float, gender : str):
-        # self.player = char_name
-        self._player_data = {
-            # Pretty basic user thing.
-            "endUserId": "12345",
-            "givenName": user_name,
-            "age": age,
-            "gender": gender
-        }
-
-    def get_player_data(self) -> dict: 
-        return self._player_data
-
-    # This is for setting up the required data to send.
-    def set_name(self, char : str) -> None:
-        self._player_data["givenName"] = char
-
-    def set_role(self, role : str) -> None:
-        self._player_data["role"] = role
-    
-    def set_age(self, age : int) -> None:
-        self._player_data["age"] = age
-
-    def set_gender(self, gender : str) -> None:
-        self._player_data["gender"] = gender
-    
+# this should be changed ASAP.
 class SinglePlayer(metaclass=Singleton):
     def __init__(self, user_name : str, age : float, gender : str):
         # self.player = char_name
@@ -73,7 +38,7 @@ class SinglePlayer(metaclass=Singleton):
     def get_role(self) -> str:
         return self._player_data["role"]
     
-    def get_age(self) -> str:
+    def get_age(self) -> float:
         return self._player_data["age"]
     
     def get_gender(self) -> str:
@@ -83,8 +48,8 @@ class SinglePlayer(metaclass=Singleton):
         return f"[Name : {self.get_name()}, Age: {self.get_age()}, Gender: {self.get_gender()}, Role: {self.get_role()}]"
 
 class SessionHandler:
-    def __init__(self, player : Player, char : str) -> None:
-        self.player : Player = player
+    def __init__(self, player : SinglePlayer, char : str) -> None:
+        self.player : SinglePlayer = player
         self.character : str = char
         self.session_id : str = None
         self.player_session_id : str = None        
@@ -130,7 +95,7 @@ class SessionHandler:
         return self.session_id
 
     # player thing.
-    def set_player(self, player : Player) -> None:
+    def set_player(self, player : SinglePlayer) -> None:
         self.player = player
 
     def request_new_session(self) -> str:
@@ -187,3 +152,7 @@ class Prompt:
         self.last_message = data["textList"]
 
         return self.last_message
+    
+class JSONObject:
+    def __init__(self) -> None:
+        pass
