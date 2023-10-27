@@ -98,6 +98,7 @@ class SendTextAPIConnection(AbstractConnection):
         self.text_send = self.data["Text"]
 
         # do this in this case because is the json data.
+        # HACK: Reassign the data as we need to send the json stuff.
         self.data = {"text": self.text_send}
         
     def __init__(self, data : dict):

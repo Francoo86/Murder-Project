@@ -82,12 +82,6 @@ class Prompt:
     def get_formatted_message(self) -> str:
         return " ".join(self.last_message)
     
-    def get_user_last_text(self) -> str:
-        return self.previous_text
-    
-    def get_prompt_response_data(self) -> dict:
-        return self.last_prompt_data
-    
     def get_data_to_send(self) -> dict:
         data = self.session_handler.get_session_data()
         data.update({"Text" : self.previous_text})
@@ -107,6 +101,3 @@ class Prompt:
         self.last_message = data["textList"]
 
         return self.last_message
-    
-class PromptInfo:
-    pass
