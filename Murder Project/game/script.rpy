@@ -22,32 +22,36 @@ init python:
 # define => Variable constante.
 
 define aiko = Character("Aiko")
+define debug = Character("Debug")
 
+# This needs to be kept across sessions.
+default info = PlayerInfo("Juan", 20, "Male", "Scientist")
 
+# load player data.
+# default ply = SinglePlayer(info)
 
 transform half_size:
     zoom 0.4
 
 # El juego comienza aquí.
 
-label start:
-    # This needs to be kept across sessions.
-    default info = PlayerInfo("Juan", 20, "Male", "Scientist")
-
-    # load player data.
-    default ply = SinglePlayer(info)
-
+label start:        
     show text "Iniciando..."
     pause 1
-
-    python:
-        inv = Inventory()
 
     # Muestra una imagen de fondo: Aquí se usa un marcador de posición por
     # defecto. Es posible añadir un archivo en el directorio 'images' con el
     # nombre "bg room.png" or "bg room.jpg" para que se muestre aquí.
 
     scene bg santiasco
+
+    menu:
+        "Hablar con Pedro.":
+            debug "hablando con Pedro"
+        "Hablar con Juan":
+            debug  "Hablando con Juan."
+        "Hablar con Diego":
+            debug "Hablando con Diego"
 
     # Muestra un personaje: Se usa un marcador de posición. Es posible
     # reemplazarlo añadiendo un archivo llamado "eileen happy.png" al directorio
@@ -60,16 +64,12 @@ label start:
 
     # show aiko happy at half_size
 
-    aiko "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo risus metus, vitae tristique nisi tincidunt sed. Nunc ut neque vel purus hendrerit egestas et nec erat. Donec vitae elit a nisi fermentum rhoncus nec condimentum magna. Pellentesque eleifend sagittis dui, et tincidunt nulla mattis ac. Duis pellentesque ante sed dui consectetur pellentesque. Aenean scelerisque id dui a tristique. Curabitur efficitur imperdiet arcu,
-    in vulputate eros commodo nec. Praesent elementum dui faucibus ligula accumsan faucibus. Cras in scelerisque est."
+    aiko "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In commodo risus metus, vitae tristique nisi tincidunt sed."
     aiko "Sample text..."
 
     python:
-
-        player = SinglePlayer(info)
-
         # create a new session.
-        senku_session = SessionHandler(player.info, "doctor_lucas")
+        senku_session = SessionHandler(info, "doctor_lucas")
 
         # create a prompt based on Senku's session.
         prpt = Prompt(senku_session)

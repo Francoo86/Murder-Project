@@ -1,4 +1,6 @@
 init python:
+    from lib.patterns import Singleton
+
     # MOST IMPORTANT ITEM THING.
     class BaseItem:
         def __init__(self) -> None:
@@ -28,7 +30,8 @@ init python:
             pass
 
     # HERE WE SAVE THE PLAYER DATA.
-    class Inventory:
+    # only one inventory.
+    class SingleInventory(metaclass=Singleton):
         def __init__(self):
             self.saved_items : list[BaseItem] = []
             
