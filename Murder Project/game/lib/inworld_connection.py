@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from lib.connection import initialize_connection
 from lib.utils import copydict
 from requests import Session
+from urllib.parse import urljoin
 
 # thanks pip thing.
 # this library doesn't exist in base renpy sdk.
@@ -21,6 +22,10 @@ HEADERS = {"Content-Type": "application/json", "authorization": KEY}
 
 # key for saving the session.
 GRPC_METADATA = "Grpc-Metadata-session-id"
+
+# SHARES THE SAME WORKSPACE PATH.
+FULL_SERVICE = urljoin(os.getenv("API_URL"), WORKSPACE_PATH)
+
 
 # we need to reinvent the wheel rip.
 class APIClient:
@@ -86,7 +91,7 @@ class OpenSessionAPIConnection(AbstractConnection):
     
     def connect(self) -> tuple:
         # data to do the connection.
-        url = f'https://studio.inworld.ai/v1/{WORKSPACE_PATH}/characters/{self.character}:openSession'
+        url = f'/characters/{self.character}:openSession'
         json = self.connect_url(url, fallback_msg="Can't connect to OpenSession API.")
 
         # get the connection important things.
@@ -118,7 +123,7 @@ class PromptAPIConnection(AbstractConnection):
         self.set_headers(new_headers)
         
     def connect(self) -> dict:
-        url = f'https://studio.inworld.ai/v1/{WORKSPACE_PATH}/sessions/{self.session_id}/sessionCharacters/{self.player_id}:sendText'
+        url = f'/sessions/{self.session_id}/sessionCharacters/{self.player_id}:sendText'
         json = self.connect_url(url, fallback_msg="Can't connect to SendText API.")
         return json
 
