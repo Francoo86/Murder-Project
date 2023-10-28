@@ -25,26 +25,25 @@ GRPC_METADATA = "Grpc-Metadata-session-id"
 # TODO: Allow for 4 sessions.
 class OpenAPIClient:
     session = Session()
-    rest_url = os.getenv("API_URL")
+    rest_url = "https://studio.inworld.ai/v1/"
 
     # we require the environment things.
     def __init__(self, key : str = KEY, workspace : str = WORKSPACE_PATH) -> None:
         # headers don't need to be static, as they be more prone to change.
-        self.headers = {"Content-Type": "application/json"}
+        self.__headers = {"Content-Type": "application/json"}
         self.set_auth_data(key, workspace)
     
     # para los panas
     def set_auth_data(self, key : str, workspace : str):
-        self.key = key
-        self.workspace = workspace
-        self.headers["authorization"] = key
+        self.__workspace = workspace
+        self.__headers["authorization"] = key
 
     def __call_api(self, endpoint : str, delay : int = 0, method : str = "post", data : dict = None, **kwargs):
-        full_path = f"{self.rest_url}{self.workspace}{endpoint}"
+        full_path = f"{self.rest_url}{self.__workspace}{endpoint}"
 
         # connect to endpoint and thats it.
         connection = initialize_connection(self.session, full_path, 
-                method, delay, json=data, headers=self.headers, **kwargs)
+                method, delay, json=data, headers=self.__headers, **kwargs)
 
         if not connection:
             raise Exception(f"Can't connect to {full_path}")
@@ -54,9 +53,9 @@ class OpenAPIClient:
     # this is mostly for sessions.
     def __call_with_grpc(self, endpoint : str, sess_id : str, data : dict):
         # HACK: Add key then remove as this func requires this.
-        self.headers[GRPC_METADATA] = sess_id
+        self.__headers[GRPC_METADATA] = sess_id
         json = self.__call_api(endpoint, data=data)
-        self.headers.pop(GRPC_METADATA)
+        self.__headers.pop(GRPC_METADATA)
         
         return json
     
@@ -71,4 +70,4 @@ class OpenAPIClient:
     def send_goal(self, sess_id : str, player_id : str, trigger_name : str):
         goal_endpoint = f"/sessions/{sess_id}/sessionCharacters/{player_id}:sendTrigger"
         return self.__call_with_grpc(goal_endpoint, sess_id, 
-                                    {"triggerEvent": { "trigger":f"{self.workspace}/triggers/{trigger_name}"}})
+                                    {"triggerEvent": { "trigger":f"{self.__workspace}/triggers/{trigger_name}"}})

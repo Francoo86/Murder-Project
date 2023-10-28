@@ -16,6 +16,7 @@ image aiko happy = "aiko/Aiko_Halloween_Smile.png"
 init python:
     from lib.inworld_api import Prompt, SessionHandler
     from lib.player import PlayerInfo
+    from lib.inworld_connection import OpenAPIClient
 
 # PRO GAMER TIPS #
 # default => Variable que se guarda por sesiones.
@@ -26,6 +27,9 @@ define debug = Character("Debug")
 
 # This needs to be kept across sessions.
 default info = PlayerInfo("Juan", 20, "Male", "Scientist")
+
+# uses the default .env if not provided.
+default client = OpenAPIClient()
 
 # load player data.
 # default ply = SinglePlayer(info)
@@ -69,7 +73,7 @@ label start:
 
     python:
         # create a new session.
-        senku_session = SessionHandler(info, "doctor_lucas")
+        senku_session = SessionHandler(info, client, "doctor_lucas")
 
         # create a prompt based on Senku's session.
         prpt = Prompt(senku_session)
