@@ -1,5 +1,5 @@
 # Assuming we are only using the GET method.
-from requests import get as request_get, post as request_post, exceptions, Response
+from requests import get as request_get, post as request_post, exceptions, Response, Session
 from time import sleep
 
 # define constants.
@@ -30,9 +30,9 @@ def create_connection(url : str, mode : str, **kwargs : ...) -> Response:
 
 # Can return none.
 # URL can't be empty.
-def initialize_connection(url : str, mode : str, delay : float = 0, **kwargs):
+def initialize_connection(sess : Session, url : str, mode : str, delay : float = 0, **kwargs):
     try:
-        conn = create_connection(url, mode, **kwargs)
+        conn = sess.post(url=url, **kwargs) if mode == "post" else sess.get(url=url, **kwargs)
         
         # give it a chance to avoid bans.
         if delay > 0:

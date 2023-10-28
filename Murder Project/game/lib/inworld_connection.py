@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from lib.connection import initialize_connection
 from lib.utils import copydict
+from requests import Session
 
 # thanks pip thing.
 # this library doesn't exist in base renpy sdk.
@@ -29,12 +30,17 @@ class APIClient:
 
 class AbstractConnection(ABC):
     # in the case we use get we change it.
-    def __init__(self, data : dict):
-        self.data = data
+    # static session.
+    # we are connecting to the same service, the only thing that changes is the endpoint.
+    session = Session()
+    
+    def __init__(self, data : dict = None):
         self.method = "post"
         self.delay = 0
         self.headers = HEADERS
-
+        # we avoid a bit of overhead.
+        # self.session = Session()
+        self.data = data
         self.setup_data()
 
     @abstractmethod
@@ -61,7 +67,7 @@ class AbstractConnection(ABC):
         self.headers = data
 
     def connect_url(self, url : str, fallback_msg : str, **kwargs) -> dict:
-        connection = initialize_connection(url, self.method, self.delay, json=self.data, headers=self.headers, **kwargs)
+        connection = initialize_connection(self.session, url, self.method, self.delay, json=self.data, headers=self.headers, **kwargs)
 
         if not connection:
             raise Exception(fallback_msg)
