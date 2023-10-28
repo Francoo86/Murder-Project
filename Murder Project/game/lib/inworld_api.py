@@ -1,6 +1,6 @@
 # if you want to test the module, you should remove the "lib." thing in this module.
 from lib.utils import copydict
-from lib.inworld_connection import SendTextAPIConnection, OpenSessionAPIConnection
+from lib.inworld_connection import PromptAPIConnection, OpenSessionAPIConnection
 from lib.player import PlayerInfo
 
 class SessionHandler:
@@ -91,7 +91,7 @@ class Prompt:
     def send_text(self, text : str) -> list:
         self.previous_text = text
 
-        conn = SendTextAPIConnection(self.get_data_to_send())
+        conn = PromptAPIConnection(self.get_data_to_send())
         data = conn.connect()
 
         # save this important data.

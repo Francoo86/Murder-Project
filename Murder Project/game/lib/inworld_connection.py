@@ -91,7 +91,7 @@ class OpenSessionAPIConnection(AbstractConnection):
 
         return session_id, player_id
 
-class SendTextAPIConnection(AbstractConnection):
+class PromptAPIConnection(AbstractConnection):
     def setup_data(self):
         self.session_id = self.data["ID"]
         self.player_id = self.data["PlayerID"]
