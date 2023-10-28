@@ -59,6 +59,11 @@ class OpenAPIClient:
         
         return json
     
+    # added this because testing purposes.
+    def send_simple_text(self, character : str, ply_data : dict):
+        simple_text_endpoint = f"/characters/{character}:simpleSendText"
+        return self.__call_api(simple_text_endpoint, data=ply_data)
+    
     def request_character_session(self, character : str, ply_data : dict):
         session_endpoint = f'/characters/{character}:openSession'
         return self.__call_api(session_endpoint, data=ply_data)
@@ -67,7 +72,11 @@ class OpenAPIClient:
         prompt_endpoint = f'/sessions/{sess_id}/sessionCharacters/{player_id}:sendText'
         return self.__call_with_grpc(prompt_endpoint, sess_id, {"text" : text})
     
-    def send_goal(self, sess_id : str, player_id : str, trigger_name : str):
+    def send_trigger(self, sess_id : str, player_id : str, trigger_name : str, scene_params : dict = None):
         goal_endpoint = f"/sessions/{sess_id}/sessionCharacters/{player_id}:sendTrigger"
-        return self.__call_with_grpc(goal_endpoint, sess_id, 
-                                    {"triggerEvent": { "trigger":f"{self.__workspace}/triggers/{trigger_name}"}})
+        trigger_data = {"triggerEvent": { "trigger":f"{self.__workspace}/triggers/{trigger_name}"}}
+        
+        if scene_params:
+            trigger_data["triggerEvent"]["parameters"] = [scene_params]
+        
+        return self.__call_with_grpc(goal_endpoint, sess_id, data=trigger_data)

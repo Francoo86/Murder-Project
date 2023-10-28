@@ -14,7 +14,7 @@ image aiko happy = "aiko/Aiko_Halloween_Smile.png"
 
 # preparar fetching.
 init python:
-    from lib.inworld_api import Prompt, SessionHandler
+    from lib.inworld_api import PromptSender, SessionHandler
     from lib.player import PlayerInfo
     from lib.inworld_connection import OpenAPIClient
 
@@ -76,7 +76,7 @@ label start:
         senku_session = SessionHandler(info, client, "doctor_lucas")
 
         # create a prompt based on Senku's session.
-        prpt = Prompt(senku_session)
+        prompt = PromptSender(senku_session)
 
         # save this aux variable.
         res = ""
@@ -88,7 +88,9 @@ label start:
             if res == "stop":
                 break
 
-            text = prpt.send_text(res)
+            prompt.talk(res)
+
+            text, feeling = prompt.show_response()
 
             for phrase in text:
                 renpy.say(aiko, phrase)
