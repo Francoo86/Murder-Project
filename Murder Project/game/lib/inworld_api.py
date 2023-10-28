@@ -1,7 +1,9 @@
 # if you want to test the module, you should remove the "lib." thing in this module.
 from lib.utils import copydict
-from lib.inworld_connection import PromptAPIConnection, OpenSessionAPIConnection
+from lib.inworld_connection import OpenAPIClient
 from lib.player import PlayerInfo
+
+api_client = OpenAPIClient()
 
 class SessionHandler:
     def __init__(self, player_info : PlayerInfo, char : str) -> None:
@@ -22,11 +24,12 @@ class SessionHandler:
     def get_character(self):
         return self.character
 
-    def get_session_data(self) -> dict:
+    def get_session_data(self) -> tuple:
         id = self.get_session_id()
         player_id = self.get_player_session_id()
         
-        return {"ID" : id, "PlayerID": player_id, "Character" : self.character}
+        return id, player_id
+        # return {"ID" : id, "PlayerID": player_id, "Character" : self.character}
 
     def should_request_new_session(self) -> bool:
         old_data = self._old_player_session_data
@@ -54,14 +57,17 @@ class SessionHandler:
         self.player_info = player_info
 
     def request_new_session(self) -> str:
-        conn = OpenSessionAPIConnection({
-            "character": self.character,
-            "user": self._old_player_session_data
-        })
+        # send character and the user_data.
+        data = api_client.request_character_session(self.character, {"user": self._old_player_session_data})
+        
+        session_id = data["name"]
+        player_id = data["sessionCharacters"][0]["character"]
 
-        session_id, player_id = conn.connect()
-        self.session_id, self.player_session_id = session_id, player_id
-
+        print("Requested data: ", session_id, player_id)
+        
+        self.session_id = session_id
+        self.player_session_id = player_id
+        
         return session_id, player_id
 
 class Prompt:
@@ -82,17 +88,17 @@ class Prompt:
     def get_formatted_message(self) -> str:
         return " ".join(self.last_message)
     
+    """
     def get_data_to_send(self) -> dict:
         data = self.session_handler.get_session_data()
         data.update({"Text" : self.previous_text})
 
-        return data
+        return data"""
 
     def send_text(self, text : str) -> list:
         self.previous_text = text
-
-        conn = PromptAPIConnection(self.get_data_to_send())
-        data = conn.connect()
+        id, ply_id = self.session_handler.get_session_data()
+        data = api_client.send_prompt(id, ply_id, text)
 
         # save this important data.
         self.last_prompt_data = data
