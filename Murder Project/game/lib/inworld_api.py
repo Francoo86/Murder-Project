@@ -51,6 +51,9 @@ class AISessionHandler:
     def request_new_session(self) -> None:
         # send character and the user_data.
         data = self.client.request_character_session(self.character, {PLAYER_KEY: self.current_data})
+
+        if data is None:
+            return
         
         session_id = data["name"]
         player_id = data["sessionCharacters"][0]["character"]
@@ -79,6 +82,9 @@ class CharacterResponse:
         return self.current_interaction["emotion"]
     
     def get_response(self):
+        if self.current_interaction is None:
+            return ["Sorry i'm sleeping right now, maybe try by resetting the game, or report to the developers..."], ["SLEEPY"]
+
         return self.get_response_text(), self.get_feeling_data()
 
 # CONTROLLER.    

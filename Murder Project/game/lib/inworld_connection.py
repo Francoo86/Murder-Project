@@ -40,7 +40,8 @@ class InworldAPIClient:
                 method, delay, json=data, headers=self.__headers, **kwargs)
 
         if not connection:
-            raise Exception(f"Can't connect to {full_path}")
+            print(f"Can't connect to {full_path}")
+            return None
         
         return connection.json()
     
