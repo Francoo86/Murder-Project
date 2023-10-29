@@ -1,10 +1,5 @@
 from lib.connection import initialize_connection
-from lib.utils import copydict
 from requests import Session
-from urllib.parse import urljoin
-
-# thanks pip thing.
-# this library doesn't exist in base renpy sdk.
 from lib.dotenv import load_dotenv
 import os
 
@@ -22,7 +17,7 @@ WORKSPACE_PATH = os.getenv("WORKSPACE_PATH")
 GRPC_METADATA = "Grpc-Metadata-session-id"
 
 # TODO: Allow for 4 sessions.
-class OpenAPIClient:
+class InworldAPIClient:
     session = Session()
     api_url = "https://studio.inworld.ai/v1/"
 

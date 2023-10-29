@@ -1,74 +1,55 @@
 # if you want to test the module, you should remove the "lib." thing in this module.
-from lib.utils import copydict
-from lib.inworld_connection import OpenAPIClient
-from lib.player import PlayerInfo
-
-api_client = OpenAPIClient()
+from lib.inworld_connection import InworldAPIClient
+from lib.player import PlayerModel
 
 PLAYER_KEY = "user"
 
 # NOT MVC
-class SessionHandler:
-    def __init__(self, player_info : PlayerInfo, client: OpenAPIClient, char : str) -> None:
-        self.player_info : PlayerInfo = player_info
+class AISessionHandler:
+    def __init__(self, player_model : PlayerModel, client: InworldAPIClient, char : str) -> None:
         self.character : str = char
         self.session_id : str = None
         self.player_session_id : str = None        
-
-        # changed name to avoid weird things.
-        self._old_player_session_data : dict = player_info.get_info()
         self.client = client
         
-        self.request_new_session()
-
+        # player model handling.
+        self.player_model = player_model
+        self.current_data = player_model.get_info()
+        
     def set_character(self, char : str):
         self.character = char
 
         # we are changing characters, the session should be changed.
         self.request_new_session()
         
-    def set_client(self, client: OpenAPIClient):
+    def set_player_model(self, ply_info : PlayerModel):
+        self.player_model = ply_info
+        
+    def set_client(self, client: InworldAPIClient):
         self.client = client
         
         self.request_new_session()
-
-    def get_character(self):
-        return self.character
-
-    def get_session_data(self) -> tuple:
-        id = self.get_session_id()
-        player_id = self.get_player_session_id()
         
-        return id, player_id
+    def is_valid(self):
+        return (self.session_id is not None) and self.is_reliable()
 
-    def should_request_new_session(self) -> bool:
-        old_data = self._old_player_session_data
-        current_data = self.player_info.get_info()
+    def is_reliable(self) -> bool:
+        old_data = self.current_data
+        current_data = self.player_model.get_info()
+        return old_data == current_data
 
-        # not the same data so we copy it again.
-        if old_data != current_data:
-            self._old_player_session_data = current_data
-            return True
-
-        return False
-    def get_player_session_id(self) -> str:
-        return self.player_session_id
-
-    def get_session_id(self) -> str:
+    def prepare(self) -> bool:
         # get it instantly.
-        if not self.session_id or self.should_request_new_session():
+        if not self.is_valid():
+            self.current_data = self.player_model.get_info()
             print("Requesting a new session...")
             self.request_new_session()
 
-        return self.session_id
+        return True
 
-    # player thing.
-    def set_player_info(self, player_info : PlayerInfo) -> None:
-        self.player_info = player_info
-
-    def request_new_session(self) -> str:
+    def request_new_session(self) -> None:
         # send character and the user_data.
-        data = self.client.request_character_session(self.character, {PLAYER_KEY: self._old_player_session_data})
+        data = self.client.request_character_session(self.character, {PLAYER_KEY: self.current_data})
         
         session_id = data["name"]
         player_id = data["sessionCharacters"][0]["character"]
@@ -77,8 +58,6 @@ class SessionHandler:
         
         self.session_id = session_id
         self.player_session_id = player_id
-        
-        return session_id, player_id
 
 # VIEW
 class CharacterResponse:
@@ -103,12 +82,15 @@ class CharacterResponse:
 
 # CONTROLLER.    
 class PromptSender:
-    def __init__(self, sess : SessionHandler) -> None:
+    def __init__(self, sess : AISessionHandler) -> None:
         self.current_session = sess
         self.view = CharacterResponse()
         
     def __do_action(self, **kwargs):
         sess = self.current_session
+        # will initialize once.
+        sess.prepare()
+        
         interaction = sess.client.send_prompt(sess.session_id, sess.player_session_id, **kwargs)
         # save data to the interactor.
         self.view.set_last_interaction(interaction)

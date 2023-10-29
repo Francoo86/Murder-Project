@@ -14,9 +14,9 @@ image aiko happy = "aiko/Aiko_Halloween_Smile.png"
 
 # preparar fetching.
 init python:
-    from lib.inworld_api import PromptSender, SessionHandler
-    from lib.player import PlayerInfo
-    from lib.inworld_connection import OpenAPIClient
+    from lib.inworld_api import PromptSender, AISessionHandler
+    from lib.player import PlayerModel
+    from lib.inworld_connection import InworldAPIClient
 
 # PRO GAMER TIPS #
 # default => Variable que se guarda por sesiones.
@@ -26,10 +26,11 @@ define aiko = Character("Aiko")
 define debug = Character("Debug")
 
 # This needs to be kept across sessions.
-default info = PlayerInfo("Juan", 20, "Male", "Scientist")
+default info = PlayerModel("Juan", 20, "Male", "Scientist")
+default info2 = PlayerModel("Alberto", 30, "Male", "Virus Researcher")
 
 # uses the default .env if not provided.
-default client = OpenAPIClient()
+default client = InworldAPIClient()
 
 # load player data.
 # default ply = SinglePlayer(info)
@@ -73,7 +74,7 @@ label start:
 
     python:
         # create a new session.
-        senku_session = SessionHandler(info, client, "doctor_lucas")
+        senku_session = AISessionHandler(info, client, "doctor_lucas")
 
         # create a prompt based on Senku's session.
         prompt = PromptSender(senku_session)
@@ -85,6 +86,12 @@ label start:
             res = renpy.input("Y bien cual es tu consulta?")
 
             # efectivamente, un loop.
+            if res == "change":
+                renpy.say(aiko, "swapping to alberto")
+                senku_session.set_player_model(info2)
+                renpy.say(aiko, f"Is valid {senku_session.is_valid()}")
+                continue
+
             if res == "stop":
                 break
 

@@ -1,6 +1,6 @@
 # object for handling player data.
 # this should be loaded each time the game starts.
-class PlayerInfo:
+class PlayerModel:
     def __init__(self, name : str, age : float, gender : str, role : str = ""):
         self.name = name
         self.age = age
