@@ -1,12 +1,13 @@
 # if you want to test the module, you should remove the "lib." thing in this module.
 from lib.inworld_connection import InworldAPIClient
 from lib.player import PlayerModel
+from lib.patterns import Singleton
 
 PLAYER_KEY = "user"
 
 # NOT MVC
 class AISessionHandler:
-    def __init__(self, player_model : PlayerModel, client: InworldAPIClient, char : str) -> None:
+    def __init__(self, player_model : PlayerModel, client: InworldAPIClient, char : str = "") -> None:
         self.character : str = char
         self.session_id : str = None
         self.player_session_id : str = None        
@@ -81,12 +82,18 @@ class CharacterResponse:
         return self.get_response_text(), self.get_feeling_data()
 
 # CONTROLLER.    
-class PromptSender:
-    def __init__(self, sess : AISessionHandler) -> None:
+class PromptSender(metaclass=Singleton):
+    def __init__(self, sess : AISessionHandler = None) -> None:
         self.current_session = sess
         self.view = CharacterResponse()
         
+    def set_session(self, sess : AISessionHandler):
+        self.current_session = sess
+        
     def __do_request(self, **kwargs):
+        if self.current_session is None:
+            return
+
         sess = self.current_session
         # will initialize once.
         sess.prepare()
