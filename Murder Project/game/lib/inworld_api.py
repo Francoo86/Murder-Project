@@ -86,7 +86,7 @@ class PromptSender:
         self.current_session = sess
         self.view = CharacterResponse()
         
-    def __do_action(self, **kwargs):
+    def __do_request(self, **kwargs):
         sess = self.current_session
         # will initialize once.
         sess.prepare()
@@ -96,10 +96,10 @@ class PromptSender:
         self.view.set_last_interaction(interaction)
         
     def talk(self, text : str):
-        self.__do_action(text=text)
+        self.__do_request(text=text)
     
     def update_environment(self, trigger : str, params : dict = None):
-        self.__do_action(trigger_name=trigger, scene_params=params)
+        self.__do_request(trigger_name=trigger, scene_params=params)
 
     def show_response(self):
         return self.view.get_response()

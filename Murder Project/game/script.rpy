@@ -65,7 +65,6 @@ label start:
     # show aiko normal at half_size
     # show eileen happy
     aiko "Hola mundo!"
-    aiko "Y para pensar señores."
 
     # show aiko happy at half_size
 
