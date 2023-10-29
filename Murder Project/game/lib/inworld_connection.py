@@ -1,4 +1,3 @@
-from abc import ABC, abstractmethod
 from lib.connection import initialize_connection
 from lib.utils import copydict
 from requests import Session
@@ -25,7 +24,7 @@ GRPC_METADATA = "Grpc-Metadata-session-id"
 # TODO: Allow for 4 sessions.
 class OpenAPIClient:
     session = Session()
-    rest_url = "https://studio.inworld.ai/v1/"
+    api_url = "https://studio.inworld.ai/v1/"
 
     # we require the environment things.
     def __init__(self, key : str = KEY, workspace : str = WORKSPACE_PATH) -> None:
@@ -39,7 +38,7 @@ class OpenAPIClient:
         self.__headers["authorization"] = key
 
     def __call_api(self, endpoint : str, delay : int = 0, method : str = "post", data : dict = None, **kwargs):
-        full_path = f"{self.rest_url}{self.__workspace}{endpoint}"
+        full_path = f"{self.api_url}{self.__workspace}{endpoint}"
 
         # connect to endpoint and thats it.
         connection = initialize_connection(self.session, full_path, 

@@ -7,6 +7,7 @@ api_client = OpenAPIClient()
 
 PLAYER_KEY = "user"
 
+# NOT MVC
 class SessionHandler:
     def __init__(self, player_info : PlayerInfo, client: OpenAPIClient, char : str) -> None:
         self.player_info : PlayerInfo = player_info
@@ -78,7 +79,8 @@ class SessionHandler:
         self.player_session_id = player_id
         
         return session_id, player_id
-    
+
+# VIEW
 class CharacterResponse:
     def __init__(self):
         self.current_interaction = None
@@ -98,7 +100,8 @@ class CharacterResponse:
     
     def get_response(self):
         return self.get_response_text(), self.get_feeling_data()
-    
+
+# CONTROLLER.    
 class PromptSender:
     def __init__(self, sess : SessionHandler) -> None:
         self.current_session = sess
