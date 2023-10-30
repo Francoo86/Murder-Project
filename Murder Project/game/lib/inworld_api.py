@@ -8,27 +8,37 @@ PLAYER_KEY = "user"
 # NOT MVC
 class AISessionHandler:
     def __init__(self, player_model : PlayerModel, client: InworldAPIClient, char : str = "") -> None:
-        self.character : str = char
-        self.session_id : str = None
-        self.player_session_id : str = None        
-        self.client = client
+        self.__character : str = char
+        self.__session_id : str = None
+        self.__ply_sess_id : str = None        
+        self.__client = client
         
         # player model handling.
         self.player_model = player_model
+        
+    def get_session_id(self):
+        return self.__session_id
+    
+    def get_player_session_id(self):
+        return self.__ply_sess_id
+    
+    def get_character(self):
+        return self.__character
 
     def set_character(self, char : str):
-        self.character = char
+        self.__character = char
 
         # we are changing characters, the session should be changed.
         self.request_new_session()
         
     def set_client(self, client: InworldAPIClient):
-        self.client = client
+        self.__client = client
         
-        self.request_new_session()
-        
+    def get_client(self):
+        return self.__client
+
     def is_valid(self):
-        return (self.session_id is not None)
+        return (self.__session_id is not None)
 
     def prepare(self) -> bool:
         # get it instantly.
@@ -40,7 +50,7 @@ class AISessionHandler:
 
     def request_new_session(self) -> bool:
         # send character and the user_data.
-        data = self.client.request_character_session(self.character, {PLAYER_KEY: self.player_model.get_info()})
+        data = self.__client.request_character_session(self.__character, {PLAYER_KEY: self.player_model.get_info()})
 
         if data is None:
             return False
@@ -50,34 +60,34 @@ class AISessionHandler:
 
         print("Requested data: ", session_id, player_id)
         
-        self.session_id = session_id
-        self.player_session_id = player_id
+        self.__session_id = session_id
+        self.__ply_sess_id = player_id
         
         return True
 
 # VIEW
 class CharacterResponse:
     def __init__(self):
-        self.current_interaction = None
+        self.__current_interaction = None
     
     def set_last_interaction(self, data : dict):
-        self.current_interaction = data
+        self.__current_interaction = data
         
     def get_feeling_data(self):
-        data = self.get_response_feeling()
+        data = self.get_emotion()
         return [data["behavior"], data["strength"]]
   
-    def get_response_text(self):
-        return self.current_interaction["textList"]
+    def get_text(self):
+        return self.__current_interaction["textList"]
     
-    def get_response_feeling(self):
-        return self.current_interaction["emotion"]
+    def get_emotion(self):
+        return self.__current_interaction["emotion"]
     
     def get_response(self):
-        if self.current_interaction is None:
+        if self.__current_interaction is None:
             return ["Sorry i'm sleeping right now, maybe try by resetting the game, or report to the developers..."], ["SLEEPY"]
 
-        return self.get_response_text(), self.get_feeling_data()
+        return self.get_text(), self.get_feeling_data()
 
 # CONTROLLER.    
 class PromptSender(metaclass=Singleton):
@@ -96,7 +106,7 @@ class PromptSender(metaclass=Singleton):
         # will initialize once.
         sess.prepare()
         
-        interaction = sess.client.send_prompt(sess.session_id, sess.player_session_id, **kwargs)
+        interaction = sess.get_client().send_prompt(sess.get_session_id(), sess.get_player_session_id(), **kwargs)
         # save data to the interactor.
         self.view.set_last_interaction(interaction)
         
