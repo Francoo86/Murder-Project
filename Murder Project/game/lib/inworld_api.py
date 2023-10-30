@@ -15,6 +15,7 @@ class AISessionHandler:
         
         # player model handling.
         self.player_model = player_model
+        # self.current_data = player_model.get_info()
         
     def set_character(self, char : str):
         self.character = char
