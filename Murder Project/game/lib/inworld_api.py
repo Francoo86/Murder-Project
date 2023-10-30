@@ -15,7 +15,6 @@ class AISessionHandler:
         
         # player model handling.
         self.player_model = player_model
-        self.current_data = player_model.get_info()
         
     def set_character(self, char : str):
         self.character = char
@@ -23,8 +22,8 @@ class AISessionHandler:
         # we are changing characters, the session should be changed.
         self.request_new_session()
         
-    def set_player_model(self, ply_info : PlayerModel):
-        self.player_model = ply_info
+    # def set_player_model(self, ply_info : PlayerModel):
+        # self.player_model = ply_info
         
     def set_client(self, client: InworldAPIClient):
         self.client = client
@@ -32,28 +31,29 @@ class AISessionHandler:
         self.request_new_session()
         
     def is_valid(self):
-        return (self.session_id is not None) and self.is_reliable()
+        return (self.session_id is not None) # and self.is_reliable()
 
+    """
     def is_reliable(self) -> bool:
         old_data = self.current_data
         current_data = self.player_model.get_info()
-        return old_data == current_data
+        return old_data == current_data"""
 
     def prepare(self) -> bool:
         # get it instantly.
         if not self.is_valid():
-            self.current_data = self.player_model.get_info()
+            # self.current_data = self.player_model.get_info()
             print("Requesting a new session...")
-            self.request_new_session()
+            return self.request_new_session()
 
         return True
 
-    def request_new_session(self) -> None:
+    def request_new_session(self) -> bool:
         # send character and the user_data.
-        data = self.client.request_character_session(self.character, {PLAYER_KEY: self.current_data})
+        data = self.client.request_character_session(self.character, {PLAYER_KEY: self.player_model.get_info()})
 
         if data is None:
-            return
+            return False
         
         session_id = data["name"]
         player_id = data["sessionCharacters"][0]["character"]
@@ -62,6 +62,8 @@ class AISessionHandler:
         
         self.session_id = session_id
         self.player_session_id = player_id
+        
+        return True
 
 # VIEW
 class CharacterResponse:

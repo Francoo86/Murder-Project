@@ -18,7 +18,7 @@ init python:
     from lib.player import PlayerModel
     from lib.inworld_connection import InworldAPIClient
 
-    info = PlayerModel("Juan", 20, "Male", "Scientist")
+    # info = PlayerModel("Juan", 20, "Male", "Scientist")
     client = InworldAPIClient()
 
 # PRO GAMER TIPS #
@@ -34,7 +34,7 @@ define debug = Character("Debug")
 # This needs to be kept across sessions.
 
 # uses the default .env if not provided.
-default info = PlayerModel("Juan", 20, "Male", "Scientist")
+default info = PlayerModel("Luisito", 35, "Male", "Detective")
 default client = InworldAPIClient()
 
 # this is the most important object here.
