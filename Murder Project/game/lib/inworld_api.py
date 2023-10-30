@@ -15,16 +15,12 @@ class AISessionHandler:
         
         # player model handling.
         self.player_model = player_model
-        # self.current_data = player_model.get_info()
-        
+
     def set_character(self, char : str):
         self.character = char
 
         # we are changing characters, the session should be changed.
         self.request_new_session()
-        
-    # def set_player_model(self, ply_info : PlayerModel):
-        # self.player_model = ply_info
         
     def set_client(self, client: InworldAPIClient):
         self.client = client
@@ -32,18 +28,11 @@ class AISessionHandler:
         self.request_new_session()
         
     def is_valid(self):
-        return (self.session_id is not None) # and self.is_reliable()
-
-    """
-    def is_reliable(self) -> bool:
-        old_data = self.current_data
-        current_data = self.player_model.get_info()
-        return old_data == current_data"""
+        return (self.session_id is not None)
 
     def prepare(self) -> bool:
         # get it instantly.
         if not self.is_valid():
-            # self.current_data = self.player_model.get_info()
             print("Requesting a new session...")
             return self.request_new_session()
 

@@ -24,27 +24,22 @@ init python:
 # PRO GAMER TIPS #
 # default => Variable que se guarda por sesiones.
 # define => Variable constante.
-
-define doctor_lucas = Character("Doctor Lucas")
-define priest = Character("Priest")
-define pedro = Character("Pedro")
-
+define ai_dynamic_base = Character("AIChar")
 define debug = Character("Debug")
 
 # This needs to be kept across sessions.
 
 # uses the default .env if not provided.
 default info = PlayerModel("Luisito", 35, "Male", "Detective")
-default client = InworldAPIClient()
 
 # this is the most important object here.
+default client = InworldAPIClient()
 define prompt = PromptSender()
-# load player data.
-# default ply = SinglePlayer(info)
 
 transform half_size:
     zoom 0.4
 
+# selects from the AIs some alternatives.
 label selection:
     $ selected_character = None
     $ sess_pedro = AISessionHandler(info, client, "viejo_pedro")
@@ -57,18 +52,15 @@ label selection:
         "Talk with Doctor Lucas":
             debug "Talking with Lucas"
             $ prompt.set_session(sess_lucas)
-            $ selected_character = "Doctor Lucas"
+            $ ai_dynamic_base = "Doctor Lucas"
         "Talk with Pedro":
             debug  "Talking with Pedro"
             $ prompt.set_session(sess_pedro)
-            $ selected_character  = "Pedro"
+            $ ai_dynamic_base = "Pedro"
         "Talk with Priest":
             debug "Talking with Priest"
             $ prompt.set_session(sess_priest)
-            $ selected_character = "Priest"
-        "Finish this test-build":
-            debug "Going back to menu..."
-            $ MainMenu(confirm=False)
+            $ ai_dynamic_base = "Priest"
 
     return
 
@@ -85,28 +77,25 @@ label start:
     scene bg santiasco
     call selection
 
-    $ selected = Character(selected_character)
-
     python:
         # create a new session.
-        res = ""
-
+        # typical loop for testing these kind of stuffs.
         while True:
             res = renpy.input("Then, what are you asking for?")
 
-            # efectivamente, un loop.
             if res == "stop":
                 break
+
+            if res == "change":
+                renpy.call("selection", from_current=True)
+                continue
 
             prompt.talk(res)
 
             text, feeling = prompt.show_response()
 
             for phrase in text:
-                renpy.say(selected, phrase)
-
-            renpy.say(selected, "FIN PRUEBA IA.")
-            #block of code to run
+                renpy.say(ai_dynamic_base, phrase)
 
     # Presenta las líneas del diálogo.
     # Finaliza el juego:
