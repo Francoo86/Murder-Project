@@ -17,8 +17,5 @@ class PlayerModel(metaclass=Singleton):
             "role": self.game_role
         }
 
-    def set_game_role(self, role : str):
-        self.game_role = role
-        
     def __str__(self):
         return f"[Name : {self.name}, Age: {self.age}, Gender: {self.gender}, Role: {self.game_role}]"
