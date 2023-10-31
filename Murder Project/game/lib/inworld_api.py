@@ -2,8 +2,11 @@
 from lib.inworld_connection import InworldAPIClient
 from lib.player import PlayerModel
 from lib.patterns import Singleton
+from time import time
 
 PLAYER_KEY = "user"
+
+SESSION_TIMEOUT_SECS = 1800
 
 # NOT MVC
 class AISessionHandler:
@@ -12,6 +15,7 @@ class AISessionHandler:
         self.__session_id : str = None
         self.__ply_sess_id : str = None        
         self.__client = client
+        self.__last_time_used = 0
         
         # player model handling.
         self.player_model = player_model
@@ -39,12 +43,24 @@ class AISessionHandler:
 
     def is_valid(self):
         return (self.__session_id is not None)
+    
+    def __has_session_expired(self):
+        last_called = time()
+        
+        if last_called - self.__last_time_used > SESSION_TIMEOUT_SECS:
+            print("Session has passed its AFK threshold.")
+            self.__last_time_used = last_called
+            return True
+        
+        return False
+        
 
     def prepare(self) -> bool:
-        # get it instantly.
-        if not self.is_valid():
+        if not self.is_valid() or self.__has_session_expired():
             print("Requesting a new session...")
             return self.request_new_session()
+        
+        self.__last_time_used = time()      
 
         return True
 

@@ -64,6 +64,11 @@ label selection:
 
     return
 
+# fix for sessions.
+label after_load:
+    return
+
+
 # El juego comienza aquí.
 
 label start:        
