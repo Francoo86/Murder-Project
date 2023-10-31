@@ -3,9 +3,9 @@ init python:
 
     # MOST IMPORTANT ITEM THING.
     class BaseItem:
-        def __init__(self) -> None:
-            self.name = ""
-            self.description = ""
+        def __init__(self, name : str, desc : str) -> None:
+            self.name = name
+            self.description = desc
             self.image_path = ""
 
         # Non abstract methods.
@@ -20,11 +20,12 @@ init python:
 
     # INHERITED ITEMS.
     class PassiveItem(BaseItem):
-        pass
+        def __init__(self, name : str, desc : str):
+            super().__init__(name, desc)
 
     class ActiveItem(BaseItem):
-        def __init__(self) -> None:
-            super().__init__()
+        def __init__(self, name : str, desc : str):
+            super().__init__(name, desc)
 
         def use(self):
             pass
@@ -51,7 +52,7 @@ init python:
         def search_item(self, name : str):
             # nested ahh thing again.
             for item in self.saved_items:
-                if item.name == name:
+                if item.name.lower() == name.lower():
                     return item
                 
             return None

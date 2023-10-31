@@ -76,6 +76,7 @@ label start:
     show text "Iniciando..."
     pause 1
 
+    define knife = PassiveItem("Knife", "Knife used by the killer.")
     # Muestra una imagen de fondo: Aquí se usa un marcador de posición por
     # defecto. Es posible añadir un archivo en el directorio 'images' con el
     # nombre "bg room.png" or "bg room.jpg" para que se muestre aquí.
@@ -102,6 +103,8 @@ label start:
 
             for phrase in text:
                 renpy.say(ai_dynamic_base, phrase)
+
+            renpy.say(ai_dynamic_base, knife.description)
 
     # Presenta las líneas del diálogo.
     # Finaliza el juego:
