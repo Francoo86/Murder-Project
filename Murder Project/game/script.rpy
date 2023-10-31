@@ -30,7 +30,7 @@ define debug = Character("Debug")
 # This needs to be kept across sessions.
 
 # uses the default .env if not provided.
-default info = PlayerModel("Luisito", 35, "Male", "Detective")
+default info = PlayerModel("Juancho", 35, "Male", "Detective")
 
 # this is the most important object here.
 default client = InworldAPIClient()
