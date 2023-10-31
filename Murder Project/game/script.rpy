@@ -69,6 +69,7 @@ label after_load:
     return
 
 
+default inv = SingleInventory()
 # El juego comienza aquí.
 
 label start:        

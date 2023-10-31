@@ -33,13 +33,16 @@ init python:
     # only one inventory.
     class SingleInventory(metaclass=Singleton):
         def __init__(self):
-            self.saved_items : list[BaseItem] = []
+            self.saved_items : set = set()
             
-        def add_item(self):
-            pass
+        def add_item(self, item : BaseItem):
+            self.saved_items.add(item)
         
-        def remove_item(self):
-            pass
+        def remove_item(self, name : str):
+            item = self.search_item(name)
+
+            if item is not None:
+                self.saved_items.remove(item)
         
         def get_items(self):
             return self.saved_items
