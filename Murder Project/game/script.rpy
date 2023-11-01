@@ -14,56 +14,30 @@ image doctor_lucas happy = "doctor_lucas/doctor_lucas_Halloween_Smile.png"
 
 # preparar fetching.
 init python:
-    from lib.inworld_api import PromptSender, AISessionHandler
-    from lib.player import PlayerModel
-    from lib.inworld_connection import InworldAPIClient
-
-    # info = PlayerModel("Juan", 20, "Male", "Scientist")
-    client = InworldAPIClient()
+    from lib.inworld_api import PromptSender
 
 # PRO GAMER TIPS #
 # default => Variable que se guarda por sesiones.
 # define => Variable constante.
-define ai_dynamic_base = Character("AIChar")
 define debug = Character("Debug")
 
-# This needs to be kept across sessions.
-
-# uses the default .env if not provided.
-default info = PlayerModel("Juancho", 35, "Male", "Detective")
-
 # this is the most important object here.
-default client = InworldAPIClient()
-define prompt = PromptSender()
 default inv = SingleInventory()
+default prompt = PromptSender()
 
 transform half_size:
     zoom 0.4
-
-# selects from the AIs some alternatives.
-label selection:
-    $ selected_character = None
-    $ sess_pedro = AISessionHandler(info, client, "viejo_pedro")
-    $ sess_priest = AISessionHandler(info, client, "priest")
-    $ sess_lucas = AISessionHandler(info, client, "doctor_lucas")
-
-    menu:
-        "Which AI should i talk to?"
-
-        "Talk with Doctor Lucas":
-            debug "Talking with Lucas"
-            $ prompt.set_session(sess_lucas)
-            $ ai_dynamic_base = "Doctor Lucas"
-        "Talk with Pedro":
-            debug  "Talking with Pedro"
-            $ prompt.set_session(sess_pedro)
-            $ ai_dynamic_base = "Pedro"
-        "Talk with Priest":
-            debug "Talking with Priest"
-            $ prompt.set_session(sess_priest)
-            $ ai_dynamic_base = "Priest"
-    return
 # El juego comienza aquí.
+
+# TODO: Add pagination to decisions.
+label game_prompt:
+    $ new_char = renpy.display_menu(saved_tuples)
+    $ sess = get_session_by_name(new_char)
+    $ ai_dynamic = new_char
+    $ prompt.set_session(sess)
+
+    return
+
 
 label start:        
     show text "Iniciando..."
@@ -75,12 +49,10 @@ label start:
     # nombre "bg room.png" or "bg room.jpg" para que se muestre aquí.
 
     scene bg santiasco
-    call selection
+
+    call game_prompt
 
     python:
-        # renpy.display_menu([ ("East", "east"), ("West", "west") ])
-        # create a new session.
-        # typical loop for testing these kind of stuffs.
         while True:
             res = renpy.input("Then, what are you asking for?")
 
@@ -88,17 +60,17 @@ label start:
                 break
 
             if res == "change":
-                renpy.call("selection", from_current=True)
+                renpy.call("game_prompt", from_current=True)
                 continue
 
             prompt.talk(res)
 
             text, feeling = prompt.show_response()
-
+    
             for phrase in text:
-                renpy.say(ai_dynamic_base, phrase)
+                renpy.say(ai_dynamic, phrase)
 
-            renpy.say(ai_dynamic_base, knife.description)
+            renpy.say(ai_dynamic, knife.description)
 
     # Presenta las líneas del diálogo.
     # Finaliza el juego:
