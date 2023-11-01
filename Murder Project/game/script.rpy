@@ -35,6 +35,7 @@ default info = PlayerModel("Juancho", 35, "Male", "Detective")
 # this is the most important object here.
 default client = InworldAPIClient()
 define prompt = PromptSender()
+default inv = SingleInventory()
 
 transform half_size:
     zoom 0.4
@@ -61,15 +62,7 @@ label selection:
             debug "Talking with Priest"
             $ prompt.set_session(sess_priest)
             $ ai_dynamic_base = "Priest"
-
     return
-
-# fix for sessions.
-label after_load:
-    return
-
-
-default inv = SingleInventory()
 # El juego comienza aquí.
 
 label start:        
@@ -85,6 +78,7 @@ label start:
     call selection
 
     python:
+        # renpy.display_menu([ ("East", "east"), ("West", "west") ])
         # create a new session.
         # typical loop for testing these kind of stuffs.
         while True:
