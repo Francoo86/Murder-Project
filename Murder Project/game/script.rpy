@@ -51,9 +51,9 @@ label start:
 
     scene bg santiasco
     
+    show screen inv_hud
     call game_prompt
 
-    # show screen demo_ai_chars
 
     python:
         while True:
