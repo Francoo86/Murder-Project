@@ -45,10 +45,12 @@ label start:
     pause 1
 
     define knife = PassiveItem("Knife", "Knife used by the killer.")
-    define rubber_duck = PassiveItem("Rubber Duck", "Why there is a rubber duck?")
+    define rubber_duck = PassiveItem("Rubber Duck", "Why is there a rubber duck on my briefcase?!")
+    define hammer = PassiveItem("Hammer", "To build things.")
 
     $ inv.add_item(knife)
     $ inv.add_item(rubber_duck)
+    $ inv.add_item(hammer)
     # Muestra una imagen de fondo: Aquí se usa un marcador de posición por
     # defecto. Es posible añadir un archivo en el directorio 'images' con el
     # nombre "bg room.png" or "bg room.jpg" para que se muestre aquí.
