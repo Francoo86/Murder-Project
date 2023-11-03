@@ -5,7 +5,6 @@ from lib.patterns import Singleton
 from time import time
 
 PLAYER_KEY = "user"
-
 SESSION_TIMEOUT_SECS = 1800
 
 # NOT MVC

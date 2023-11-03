@@ -31,6 +31,7 @@ transform half_size:
 
 # TODO: Add pagination to decisions.
 label game_prompt:
+    $ narrator("Which character should i talk?", interact=False)
     $ new_char = renpy.display_menu(saved_tuples)
     $ sess = get_session_by_name(new_char)
     $ ai_dynamic = new_char
@@ -43,14 +44,16 @@ label start:
     show text "Iniciando..."
     pause 1
 
-    define knife = PassiveItem("Knife", "Knife used by the killer.")
+    # define knife = PassiveItem("Knife", "Knife used by the killer.")
     # Muestra una imagen de fondo: Aquí se usa un marcador de posición por
     # defecto. Es posible añadir un archivo en el directorio 'images' con el
     # nombre "bg room.png" or "bg room.jpg" para que se muestre aquí.
 
     scene bg santiasco
-
+    
     call game_prompt
+
+    # show screen demo_ai_chars
 
     python:
         while True:
@@ -69,8 +72,6 @@ label start:
     
             for phrase in text:
                 renpy.say(ai_dynamic, phrase)
-
-            renpy.say(ai_dynamic, knife.description)
 
     # Presenta las líneas del diálogo.
     # Finaliza el juego:
