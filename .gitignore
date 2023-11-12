@@ -41,14 +41,14 @@ Murder Project/game/lib/.vscode/settings.json
 .vscode/settings.json
 
 # UNITY FILES.
-/UnityVN/Library/
-/UnityVN/UserSettings/
-/UnityVN/Temp/
-/UnityVN/Obj/
-/UnityVN/Build/
-/UnityVN/Builds/
-/UnityVN/Logs/
-/UnityVN/MemoryCaptures/
+/UnityVN-URP/Library/
+/UnityVN-URP/UserSettings/
+/UnityVN-URP/Temp/
+/UnityVN-URP/Obj/
+/UnityVN-URP/Build/
+/UnityVN-URP/Builds/
+/UnityVN-URP/Logs/
+/UnityVN-URP/MemoryCaptures/
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # [Aa]ssets/AssetStoreTools*
