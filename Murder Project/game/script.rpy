@@ -39,7 +39,6 @@ label game_prompt:
 
     return
 
-
 label start:        
     show text "Iniciando..."
     pause 1

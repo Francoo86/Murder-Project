@@ -38,7 +38,12 @@ public class TextArchitect
         this.tmpro_world = tmpro_world;
     }
 
-    //Coroutine text building.
+    /// <summary>
+    /// Manejador de Corutinas para el dialogo.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="oldText"></param>
+    /// <returns></returns>
     private Coroutine StartTextCoroutine(string text, string oldText = "") {
         preText = oldText;
         targetText = text;
@@ -48,6 +53,12 @@ public class TextArchitect
         buildProcess = tmpro.StartCoroutine(Building());
         return buildProcess;
     }
+
+    /// <summary>
+    /// Construye el texto inicial que un personaje dirá.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
     public Coroutine Build(string text) {
         return StartTextCoroutine(text);
         /*
@@ -60,6 +71,11 @@ public class TextArchitect
         return buildProcess;*/
     }
 
+    /// <summary>
+    /// Agrega el texto ya existente a un dialogo.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
     public Coroutine Append(string text)
     {
         /*
@@ -85,6 +101,66 @@ public class TextArchitect
     }
 
     IEnumerator Building() {
+        Prepare();
+
+        switch (buildMethod) {
+            case BuildMethod.typewriter:
+                yield return Build_TypeWriter();
+                break;
+            case BuildMethod.fade:
+                yield return Build_Fade();
+                break;
+        }
+
+        OnComplete();
+    }
+
+    private void OnComplete() {
+        buildProcess = null;
+    }
+
+    /// <summary>
+    /// Prepara el texto para que no tenga errores.
+    /// </summary>
+    private void Prepare() 
+    {
+        switch (buildMethod) {
+            case BuildMethod.instant:
+                Prepare_Instant();
+                break;
+            case BuildMethod.typewriter:
+                Prepare_Typewriter();
+                break;
+            case BuildMethod.fade:
+                Prepare_Fade();
+                break;
+        }
+    }
+
+    //TODO: Create a new class that holds this functionality.
+    private void Prepare_Instant() {
+        //Reinciar color.
+        tmpro.color = tmpro.color;
+        tmpro.text = currentText;
+        //Cualquier cambio hecho al texto se actualizará aquí.
+        tmpro.ForceMeshUpdate();
+        //Que los caracteres calcen en la pantalla.
+        tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
+    }
+
+    private void Prepare_Typewriter() { 
+    }
+
+    private void Prepare_Fade()
+    {
+
+    }
+
+    private IEnumerator Build_TypeWriter() {
+        yield return null;
+    }
+
+    private IEnumerator Build_Fade() {
         yield return null;
     }
 }
