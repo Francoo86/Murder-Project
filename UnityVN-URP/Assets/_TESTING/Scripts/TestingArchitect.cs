@@ -9,6 +9,8 @@ namespace TESTING {
         DialogController dc;
         TextArchitect arch;
 
+        public TextArchitect.BuildMethod bm = TextArchitect.BuildMethod.instant;
+
         string[] lines = new string[5] {
             "Hola me presento",
             "Lorem Ipsum bla bla",
@@ -22,15 +24,34 @@ namespace TESTING {
         {
             dc = DialogController.Instance;
             arch = new TextArchitect(dc.dialog.dialogText);
-            arch.buildMethod = TextArchitect.BuildMethod.typewriter;
+            arch.buildMethod = TextArchitect.BuildMethod.fade;
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (bm != arch.buildMethod) {
+                arch.buildMethod = bm;
+                arch.Stop();
+            }
+
+            if (Input.GetKeyDown("s"))
+                arch.Stop();
+
             // Debug.Log(string.Format("Is pressing A Key: {0}", Input.GetKey(KeyCode.A)));
-            if (Input.GetKeyDown("space")) {
-                arch.Build(lines[UnityEngine.Random.Range(0, lines.Length)]);
+            if (Input.GetKeyDown("k")) {
+                //arch.Build(lines[UnityEngine.Random.Range(0, lines.Length)]);
+                if (arch.isBuilding)
+                {
+                    if (!arch.shouldSpeedUp)
+                    {
+                        arch.shouldSpeedUp = true;
+                    }
+                    else
+                        arch.ForceComplete();
+                }
+                else
+                    arch.Build(lines[UnityEngine.Random.Range(0, lines.Length)]);
             }
             else if (Input.GetKeyDown("a"))
             {
