@@ -11,5 +11,5 @@ public class DialogContainer
     //Personaje.
     public TMP_Text nameText;
     //Lo que va a decir.
-    public TMP_Text descText;
+    public TextMeshProUGUI dialogText;
 }

@@ -1,18 +1,22 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class TextArchitect
 {
     private TextMeshProUGUI tmpro_ui;
     private TextMeshPro tmpro_world;
 
+    private const float BASE_TEXT_SPEED = 0.015f;
+    private const int FASTER_TEXT_SPEED = 5;
+
     public TMP_Text tmpro => tmpro_ui != null ? tmpro_ui : tmpro_world;
 
     public string currentText => tmpro.text;
     public string targetText { get; private set; } = "";
     public string preText { get; private set; } = "";
-    private int preTextLength = 0;
+    //private int preTextLength = 0;
 
     public string fullTargetText => preText + targetText;
     public enum BuildMethod { instant, typewriter, fade};
@@ -25,7 +29,7 @@ public class TextArchitect
     private const float textSpeed = 1;
     private float speedMultiplier = 1;
 
-    public bool veryFastText = false;
+    public bool shouldSpeedUp = false;
 
     public int charsPerCycle { get { return speed <= 2f ? characterMul : speed <= 2.5f ? characterMul * 2 : characterMul * 3; } }
     private int characterMul = 1;
@@ -141,14 +145,27 @@ public class TextArchitect
     private void Prepare_Instant() {
         //Reinciar color.
         tmpro.color = tmpro.color;
-        tmpro.text = currentText;
+        tmpro.text = fullTargetText;
         //Cualquier cambio hecho al texto se actualizará aquí.
         tmpro.ForceMeshUpdate();
         //Que los caracteres calcen en la pantalla.
         tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
     }
 
-    private void Prepare_Typewriter() { 
+    private void Prepare_Typewriter() {
+        //Resetear el texto.
+        tmpro.color = tmpro.color;
+        tmpro.maxVisibleCharacters = 0;
+        tmpro.text = preText;
+
+        //Revisa si el texto viejo sigue vigente.
+        if (preText != "") { 
+            tmpro.ForceMeshUpdate();
+            tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
+        }
+
+        tmpro.text += targetText;
+        tmpro.ForceMeshUpdate();
     }
 
     private void Prepare_Fade()
@@ -157,7 +174,11 @@ public class TextArchitect
     }
 
     private IEnumerator Build_TypeWriter() {
-        yield return null;
+        while (tmpro.maxVisibleCharacters < tmpro.textInfo.characterCount) {
+            tmpro.maxVisibleCharacters += charsPerCycle * (shouldSpeedUp ? FASTER_TEXT_SPEED : 1);
+            yield return new WaitForSeconds(BASE_TEXT_SPEED / speed);
+        }
+        //yield return null;
     }
 
     private IEnumerator Build_Fade() {
