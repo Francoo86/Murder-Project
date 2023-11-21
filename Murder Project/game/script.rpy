@@ -48,25 +48,7 @@ label game_prompt:
 
     return
 
-label start:        
-    show text "Iniciando..."
-    pause 1
-
-    define knife = PassiveItem("Knife", "Knife used by the killer.")
-    define rubber_duck = PassiveItem("Rubber Duck", "Why is there a rubber duck on my briefcase?!")
-    define hammer = PassiveItem("Hammer", "To build things.")
-
-    $ inv.add_item(knife)
-    $ inv.add_item(rubber_duck)
-    $ inv.add_item(hammer)
-    # Muestra una imagen de fondo: Aquí se usa un marcador de posición por
-    # defecto. Es posible añadir un archivo en el directorio 'images' con el
-    # nombre "bg room.png" or "bg room.jpg" para que se muestre aquí.
-
-    scene bg santiasco
-    
-    show screen inv_hud
-
+label demonstration_intro:
     narrator "Nada mejor que un buen día soleado en estos tiempos, donde el pueblo se muestra tranquilo..."
 
     show marcelo normal at left, half_size with dissolve
@@ -89,9 +71,30 @@ label start:
     hide luis normal
     hide marcelo normal
 
+    return
+
+
+label start:        
+    show text "Iniciando..."
+    pause 1
+
+    define knife = PassiveItem("Knife", "Knife used by the killer.")
+    define rubber_duck = PassiveItem("Rubber Duck", "Why is there a rubber duck on my briefcase?!")
+    define hammer = PassiveItem("Hammer", "To build things.")
+
+    $ inv.add_item(knife)
+    $ inv.add_item(rubber_duck)
+    $ inv.add_item(hammer)
+    # Muestra una imagen de fondo: Aquí se usa un marcador de posición por
+    # defecto. Es posible añadir un archivo en el directorio 'images' con el
+    # nombre "bg room.png" or "bg room.jpg" para que se muestre aquí.
+
+    scene bg santiasco
+    
+    show screen inv_hud
+
+    call demonstration_intro
     call game_prompt
-
-
 
     python:
         while True:
