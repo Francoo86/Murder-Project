@@ -146,13 +146,11 @@ label start:
     scene bg santiasco
     
     show screen inv_hud
-
-    call demonstration_intro
-    call game_prompt_demo
-
-
-
-    # Presenta las líneas del diálogo.
-    # Finaliza el juego:
+    
+    menu dev_menu:
+        "Do demo of game.":
+            call demonstration_intro
+        "Go to prompt demo.":
+            call game_prompt_demo
 
     return
