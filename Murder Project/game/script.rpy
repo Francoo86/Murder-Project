@@ -23,15 +23,20 @@ init python:
 # default => Variable que se guarda por sesiones.
 # define => Variable constante.
 define debug = Character("Debug")
+define luis = Character("Luis")
+define marcelo = Character("Marcelo")
 
 # this is the most important object here.
 default inv = SingleInventory()
 default prompt = PromptSender()
 
 transform half_size:
-    zoom 0.75
+    zoom 0.5
     ypos 0.75
-# El juego comienza aquí.
+
+transform luis_size:
+    zoom 0.5
+    ypos 0.75
 
 # TODO: Add pagination to decisions.
 label game_prompt:
@@ -61,10 +66,32 @@ label start:
     scene bg santiasco
     
     show screen inv_hud
+
+    narrator "Nada mejor que un buen día soleado en estos tiempos, donde el pueblo se muestra tranquilo..."
+
+    show marcelo normal at left, half_size with dissolve
+
+    marcelo "Buenos días Lucho."
+
+    show luis normal at right, half_size with dissolve
+
+    luis "Today we speak only in english, so yeah, hi Marcelo."
+    luis "How are you doing today?"
+
+    marcelo "Thanks i am doing great right now, but there is something that gets me worried in these times."
+    marcelo "You probably know about what i'm talking"
+    
+    luis "What?"
+    luis "The murdering that happened like 3 days ago?"
+
+    marcelo "Yeah."
+
+    hide luis normal
+    hide marcelo normal
+
     call game_prompt
 
-    show marcelo normal at left, half_size
-    show luis normal at right, half_size
+
 
     python:
         while True:
