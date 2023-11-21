@@ -7,6 +7,10 @@ image bg santiasco:
     zoom 2
     "granja.jpg"
 
+image bg iglesia:
+    zoom 2
+    "iglesia.jpg"
+
 # credits to noraneko games.
 # only for testing btw.
 image doctor_lucas normal = "doctor_lucas/doctor_lucas_Halloween_Frown.png"
@@ -92,9 +96,35 @@ label demonstration_intro:
     luis "The murdering that happened like 3 days ago?"
 
     marcelo "Yeah."
+    
+    luis "Do you wanna come to the church? To talk about this topic without worrying the town."
 
-    hide luis normal
-    hide marcelo normal
+    marcelo "Sure."
+
+    hide luis normal with dissolve
+    hide marcelo normal with dissolve
+
+    show text "Going to the church..."
+
+    scene bg iglesia with dissolve
+
+    show luis normal at right, half_size with dissolve
+
+    luis "Now here we are, so, whats the most important element about the murdering?"
+
+    show marcelo normal at left, half_size with dissolve
+
+    marcelo "Let our detective investigate that."
+
+    narrator "'Yeah, i will search all places to get some evidence.'"
+
+    marcelo "Thanks"
+    luis "Thanks"
+
+    narrator "No problem."
+
+    hide luis normal with dissolve
+    hide marcelo normal with dissolve
 
     return
 
