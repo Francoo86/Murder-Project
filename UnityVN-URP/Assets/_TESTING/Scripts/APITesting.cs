@@ -5,7 +5,7 @@ using UnityEngine;
 public class APITesting : MonoBehaviour
 {
     // Start is called before the first frame update
-    public APIClient client = new APIClient();
+    public APIClient client;
     void Start()
     {
         Dictionary <string, string> data = new Dictionary<string, string>
@@ -16,6 +16,7 @@ public class APITesting : MonoBehaviour
             { "role", "detective"},
         };
 
+        client = new APIClient();
         client.SendSimpleText("hello", "sujeto3", data);
     }
 

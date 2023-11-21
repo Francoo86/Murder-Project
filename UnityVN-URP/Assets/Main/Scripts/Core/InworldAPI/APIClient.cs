@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using CandyCoded.env;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class APIClient
@@ -22,17 +24,26 @@ public class APIClient
         this.workspacePath = workspacePath;
     }
 
+    public APIClient()
+    {
+        env.TryParseEnvironmentVariable("API_KEY", out apiKey);
+        env.TryParseEnvironmentVariable("WORKSPACE_PATH", out workspacePath);
+    }
+
     public void SetAuthData(string apiKey, string workspacePath)
     {
 
     }
 
-    public async Task CallAPI(string endPoint, Dictionary<string, string> contentData, Dictionary<string, string> customHeaders = null) {
+    public async Task<string> CallAPI(string endPoint, Dictionary<string, string> contentData, Dictionary<string, string> customHeaders = null) {
         HttpRequestMessage message = new HttpRequestMessage();
+        var serializedContent = JsonConvert.SerializeObject(contentData);
 
         message.RequestUri = new Uri($"{API_URL}{workspacePath}{endPoint}");
-        message.Content = new FormUrlEncodedContent(contentData);
+        message.Content = new StringContent(serializedContent, System.Text.Encoding.UTF8, "application/json");
         message.Method = HttpMethod.Post;
+
+        Debug.Log(apiKey);
 
         Debug.Log(message.RequestUri);
         Debug.Log(message.Method);
@@ -40,7 +51,7 @@ public class APIClient
         
         foreach(var item in contentData) {
             Debug.Log($"[{item.Key}: {item.Value}]");
-        }
+        };
 
         client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0)");
 
@@ -56,7 +67,11 @@ public class APIClient
         }
 
         var response = await client.SendAsync(message);
-        Debug.Log(await response.Content.ReadAsStringAsync());
+        string contentString = await response.Content.ReadAsStringAsync();
+
+        Debug.Log(contentString);
+
+        return contentString;
     }
 
     public void CallWithGRPC(string endPoint, string sessionId, Dictionary<string, string> contentData)
@@ -67,6 +82,8 @@ public class APIClient
     public async void SendSimpleText(string text, string character, Dictionary<string, string> plyData) {
         string session_endpoint = $"/characters/{character}:simpleSendText";
         plyData.Add("text", text);
+
+        Debug.Log(text);
 
         await CallAPI(session_endpoint, plyData);
     }

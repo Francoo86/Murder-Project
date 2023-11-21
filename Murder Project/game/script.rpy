@@ -145,7 +145,7 @@ label start:
 
     scene bg santiasco
     
-    show screen inv_hud
+    show screen inv_hud with dissolve
     
     menu dev_menu:
         "Do demo of game.":

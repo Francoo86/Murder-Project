@@ -15,6 +15,7 @@ screen inventory():
         pos 0.1, 0.25
         for elem in inv.get_items():
             text "[elem.name] - [elem.description]\n"
+            textbutton "HL2" action Notify("Half-Life 2")
 
     imagebutton auto "inventory_goback_%s.png":
         focus_mask True

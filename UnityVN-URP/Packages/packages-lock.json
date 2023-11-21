@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.github-glitchenzo.nugetforunity": {
+      "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "441f6df275ff7bb54169554231ff0f8211148b1e"
+    },
     "com.unity.burst": {
       "version": "1.8.9",
       "depth": 1,
@@ -142,6 +149,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "xyz.candycoded.env": {
+      "version": "https://github.com/CandyCoded/env.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "aefda8e07418cb6b9671284ba667cc690655792a"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
