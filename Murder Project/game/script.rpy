@@ -45,6 +45,7 @@ label game_prompt:
     $ sess = get_session_by_name(new_char)
     $ ai_dynamic = new_char
     $ prompt.set_session(sess)
+    $ renpy.show(f"{ai_dynamic.lower()} normal", [left, half_size])
 
     return
 
