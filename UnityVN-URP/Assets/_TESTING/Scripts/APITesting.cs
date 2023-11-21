@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class APITesting : MonoBehaviour
 {
     // Start is called before the first frame update
     public APIClient client;
-    void Start()
+    async void Start()
     {
         Dictionary <string, string> data = new Dictionary<string, string>
         {
@@ -17,7 +20,7 @@ public class APITesting : MonoBehaviour
         };
 
         client = new APIClient();
-        client.SendSimpleText("hello", "sujeto3", data);
+        string session = await client.RequestCharacterSession("ana", data);
     }
 
     // Update is called once per frame

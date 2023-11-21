@@ -7,6 +7,11 @@ using CandyCoded.env;
 using Newtonsoft.Json;
 using UnityEngine;
 
+/// <summary>
+/// API Wrapper para Inworld.
+/// A pesar de que exista uno en Unity, solo se necesita algo que no sea tan complejo.
+/// Sí, reinventamos la rueda...
+/// </summary>
 public class APIClient
 {
     //Solo una instancia de este cliente es suficiente.
@@ -20,10 +25,10 @@ public class APIClient
     private string apiKey;
 
     public APIClient(string apiKey, string workspacePath) {
-        this.apiKey = apiKey;
-        this.workspacePath = workspacePath;
+        SetAuthData(apiKey, workspacePath);
     }
 
+    //Constructor vacio, carga las variables de entorno por defecto.
     public APIClient()
     {
         env.TryParseEnvironmentVariable("API_KEY", out apiKey);
@@ -32,10 +37,13 @@ public class APIClient
 
     public void SetAuthData(string apiKey, string workspacePath)
     {
-
+        this.apiKey = apiKey;
+        this.workspacePath = workspacePath;
     }
 
-    public async Task<string> CallAPI(string endPoint, Dictionary<string, string> contentData, Dictionary<string, string> customHeaders = null) {
+    public override string ToString() => "Inworld API Client object.";
+
+    private async Task<string> CallAPI(string endPoint, Dictionary<string, string> contentData, string sessionIdGrpc = null) {
         HttpRequestMessage message = new HttpRequestMessage();
         var serializedContent = JsonConvert.SerializeObject(contentData);
 
@@ -43,27 +51,12 @@ public class APIClient
         message.Content = new StringContent(serializedContent, System.Text.Encoding.UTF8, "application/json");
         message.Method = HttpMethod.Post;
 
-        Debug.Log(apiKey);
-
-        Debug.Log(message.RequestUri);
-        Debug.Log(message.Method);
-        Debug.Log(message.Content);
-        
-        foreach(var item in contentData) {
-            Debug.Log($"[{item.Key}: {item.Value}]");
-        };
-
-        client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0)");
-
         message.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-        //Preparar las cabeceras.
-        //message.Headers.Add("Content-Type", "application/json");
         message.Headers.Add("authorization", apiKey);
 
-        //Pythonic thing.
-        if (customHeaders != null) {
-            foreach(var item in customHeaders)
-                message.Headers.Add(item.Key, item.Value);
+        if (sessionIdGrpc != null)
+        {
+            message.Headers.Add("Grpc-Metadata-session-id", sessionIdGrpc);
         }
 
         var response = await client.SendAsync(message);
@@ -74,28 +67,28 @@ public class APIClient
         return contentString;
     }
 
-    public void CallWithGRPC(string endPoint, string sessionId, Dictionary<string, string> contentData)
+    private async Task<string> CallWithGRPC(string endPoint, string sessionId, Dictionary<string, string> contentData)
     {
-
+        return await CallAPI(endPoint, contentData, sessionId);
     }
 
-    public async void SendSimpleText(string text, string character, Dictionary<string, string> plyData) {
+    public async Task<string> SendSimpleText(string text, string character, Dictionary<string, string> plyData) {
         string session_endpoint = $"/characters/{character}:simpleSendText";
         plyData.Add("text", text);
 
-        Debug.Log(text);
-
-        await CallAPI(session_endpoint, plyData);
+        //Debug.Log(text);
+        return await CallAPI(session_endpoint, plyData);
     }
 
-    void Start()
-    {
+    //TODO: Refactor these methods (only parameters).
+    public async Task<string> RequestCharacterSession(string character, Dictionary<string, string> plyData = null)
+        => await CallAPI($"/characters/{character}:openSession", plyData);
+
+    public async Task<string> SendPrompt(string sessId, string plyId, string text)
+       => await CallWithGRPC($"/sessions/{sessId}/sessionCharacters/{plyId}:sendText", sessId, new Dictionary<string, string>() { { "text", text } });
+
+    /*
+    public async Task<string> SendTrigger(string sessId, string plyId, string triggerName, Dictionary<string, string> sceneParams = null) { 
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    }*/
 }
