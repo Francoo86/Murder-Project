@@ -12,6 +12,9 @@ image bg santiasco:
 image doctor_lucas normal = "doctor_lucas/doctor_lucas_Halloween_Frown.png"
 image doctor_lucas happy = "doctor_lucas/doctor_lucas_Halloween_Smile.png"
 
+image marcelo normal = "chars/viejo.png"
+image luis normal = "chars/nose.png"
+
 # preparar fetching.
 init python:
     from lib.inworld_api import PromptSender
@@ -26,7 +29,8 @@ default inv = SingleInventory()
 default prompt = PromptSender()
 
 transform half_size:
-    zoom 0.4
+    zoom 0.75
+    ypos 0.75
 # El juego comienza aquí.
 
 # TODO: Add pagination to decisions.
@@ -38,7 +42,6 @@ label game_prompt:
     $ prompt.set_session(sess)
 
     return
-
 
 label start:        
     show text "Iniciando..."
@@ -60,6 +63,8 @@ label start:
     show screen inv_hud
     call game_prompt
 
+    show marcelo normal at left, half_size
+    show luis normal at right, half_size
 
     python:
         while True:
