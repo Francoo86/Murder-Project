@@ -78,6 +78,9 @@ class AISessionHandler:
         self.__session_id = session_id
         self.__ply_sess_id = player_id
         
+        # imagine doing this shit every single time.
+        self.__last_time_used = time()     
+        
         return True
 
 # VIEW

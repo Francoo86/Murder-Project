@@ -49,6 +49,30 @@ label game_prompt:
 
     return
 
+label game_prompt_demo:
+    call game_prompt
+
+    python:
+        while True:
+            res = renpy.input("Then, what are you asking for?")
+
+            if res == "stop":
+                break
+
+            if res == "change":
+                renpy.hide(f"{ai_dynamic.lower()} normal")
+                renpy.call("game_prompt", from_current=True)
+                continue
+
+            prompt.talk(res)
+
+            text, feeling = prompt.show_response()
+
+            for phrase in text:
+                renpy.say(ai_dynamic, phrase)
+
+    return
+
 label demonstration_intro:
     narrator "Nada mejor que un buen día soleado en estos tiempos, donde el pueblo se muestra tranquilo..."
 
@@ -74,7 +98,6 @@ label demonstration_intro:
 
     return
 
-
 label start:        
     show text "Iniciando..."
     pause 1
@@ -95,25 +118,9 @@ label start:
     show screen inv_hud
 
     call demonstration_intro
-    call game_prompt
+    call game_prompt_demo
 
-    python:
-        while True:
-            res = renpy.input("Then, what are you asking for?")
 
-            if res == "stop":
-                break
-
-            if res == "change":
-                renpy.call("game_prompt", from_current=True)
-                continue
-
-            prompt.talk(res)
-
-            text, feeling = prompt.show_response()
-    
-            for phrase in text:
-                renpy.say(ai_dynamic, phrase)
 
     # Presenta las líneas del diálogo.
     # Finaliza el juego:
