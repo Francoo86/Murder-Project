@@ -15,7 +15,6 @@ public class AISessionHandler
 
     //Tiempo maximo que se puede estar en una sesión sin realizar nada.
     private readonly float SESSION_TIMEOUT_MINUTES = 30;
-
     public AISessionHandler(string character, APIClient client)
     {
         this.character = character;
