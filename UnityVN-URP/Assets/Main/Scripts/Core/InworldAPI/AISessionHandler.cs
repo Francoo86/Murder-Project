@@ -48,15 +48,7 @@ public class AISessionHandler
     }
 
     public async void RequestNewSession() {
-        Dictionary<string, string> dataPlayer = new Dictionary<string, string>
-        {
-            { "givenName", "Juan"},
-            { "age", "26" },
-            { "gender", "male"},
-            { "role", "detective"},
-        };
-
-        string data = (string)await client.RequestCharacterSession(character, dataPlayer);
+        string data = (string)await client.RequestCharacterSession(character, PlayerModel.GetInstance().GetData());
 
         if (data == null) { 
             return;

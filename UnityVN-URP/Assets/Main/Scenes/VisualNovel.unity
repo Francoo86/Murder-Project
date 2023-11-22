@@ -1273,8 +1273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3055b8d47344824492a19b62d4e40d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Basic WnNlZ0F3N296R21PWUZQSnFTN3pIaTdpdVIzNTV4WE06dmZzRmlOYTFNTVZHTW5jTGFMaHR4MEVXUGlJUzhnbUlJVDRlbXk3ZmhXaVVxbGN5VGthZ2NnVGV0VVhIRXJJRw==
-  ws: workspaces/default-rv2ux37bsvkkbl_zun9cwg
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0

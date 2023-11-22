@@ -1,23 +1,24 @@
+using System.Collections.Generic;
+
 public class PlayerModel
 {
     public static PlayerModel plyInstance = null;
 
     //Atributos del detective, es solo una instancia, y esto es especificamente lo que pide Inworld.
-    private string givenName;
-    private float age;
-    private string gender;
-    private string role;
-
-    public string Name { get { return givenName; } set { givenName = value; } }
-    public float Age { get { return age; } set { age = value; } }
-    public string Gender { get { return gender; } set { gender = value; } }
-    public string Role {get { return role; } set { role = value; } }
+    //Si esto es JSON, y convertir esto a diccionario puede ser algo atadoso, lo ideal sería usar un diccionario.
+    //FIXME: Realizar un casting de objeto.
+    private Dictionary<string, string> DetectiveData = new Dictionary<string, string>();
 
     private PlayerModel() {
-        givenName = "Luis";
-        age = 30;
-        gender = "male";
-        role = "detective";
+        DetectiveData["givenName"] = "Luis";
+        DetectiveData["age"] = "30";
+        DetectiveData["gender"] = "male";
+        DetectiveData["role"] = "detective";
+    }
+
+    public Dictionary<string, string> GetData()
+    {
+        return DetectiveData;
     }
 
     public static PlayerModel GetInstance()
