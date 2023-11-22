@@ -13,6 +13,9 @@ public class AISessionHandler
     private APIClient client;
     private DateTime lastUsed;
 
+    public string SessionId { get { return sessionId; } }
+    public string PlayerSessionId { get { return plySessionId; } }
+
     //Tiempo maximo que se puede estar en una sesión sin realizar nada.
     private readonly float SESSION_TIMEOUT_MINUTES = 30;
     public AISessionHandler(string character, APIClient client)
