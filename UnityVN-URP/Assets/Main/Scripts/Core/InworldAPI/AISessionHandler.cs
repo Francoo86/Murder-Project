@@ -25,6 +25,7 @@ public class AISessionHandler
         return sessionId != null;
     }
 
+    //TODO: Test this.
     private bool HasSessionExpired() { 
         DateTime currentTime = DateTime.Now;
 

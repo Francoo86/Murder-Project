@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class PlayerModel
 {
-    public static PlayerModel plyInstance = null;
+    private static PlayerModel plyInstance = null;
 
     //Atributos del detective, es solo una instancia, y esto es especificamente lo que pide Inworld.
     //Si esto es JSON, y convertir esto a diccionario puede ser algo atadoso, lo ideal sería usar un diccionario.
@@ -20,7 +20,6 @@ public class PlayerModel
     {
         return DetectiveData;
     }
-
     public static PlayerModel GetInstance()
     {
         if(plyInstance == null)
