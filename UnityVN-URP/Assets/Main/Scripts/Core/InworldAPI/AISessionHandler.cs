@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -40,10 +41,10 @@ public class AISessionHandler
         return false;
     }
 
-    public void UpdateSession() {
+    public async void UpdateSession() {
         if ((!IsValid()) || HasSessionExpired())
         {
-            RequestNewSession();
+            await RequestNewSession();
         }
         else 
         {
@@ -51,16 +52,17 @@ public class AISessionHandler
         }
     }
 
-    public async void RequestNewSession() {
-        string data = (string)await client.RequestCharacterSession(character, PlayerModel.GetInstance().GetData());
+    public async Task<bool> RequestNewSession() {
+        PlayerModel plyModel = PlayerModel.GetInstance();
+        var data = await client.RequestCharacterSession(character, plyModel.GetData());
 
         if (data == null) { 
-            return;
+            return false;
         }
 
         Debug.Log("Here we are in the RequestNewSession function");
 
-        var deserialSession = JsonConvert.DeserializeObject<SessionResponseModel>(data);
+        var deserialSession = JsonConvert.DeserializeObject<SessionResponseModel>((string)data);
         var charsData = deserialSession.SessionCharacters;
 
         //Usually the first one.
@@ -70,6 +72,10 @@ public class AISessionHandler
         sessionId = deserialSession.Name;
         plySessionId = Info.Name;
         lastUsed = DateTime.Now;
+
+        Debug.Log($"Data obtained from session: {sessionId}, {plySessionId}");
+
+        return true;
     }
 
     /// <summary>

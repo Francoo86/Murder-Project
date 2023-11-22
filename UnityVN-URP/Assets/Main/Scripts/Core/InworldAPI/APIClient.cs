@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using CandyCoded.env;
 using Newtonsoft.Json;
+using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -44,8 +45,17 @@ public class APIClient
 
     public override string ToString() => "Inworld API Client object.";
 
-    private async Task<object> CallAPI(string endPoint, Dictionary<string, string> contentData, string sessionIdGrpc = null) {
+    private async Task<string> CallAPI(string endPoint, Dictionary<string, string> contentData, string sessionIdGrpc = null) {
         HttpRequestMessage message = new HttpRequestMessage();
+
+        Debug.Log("Printing the content: ");
+        foreach(string key in contentData.Keys)
+        {
+            Debug.Log($"{key} = {contentData[key]}");
+        }
+
+        Debug.Log("Finished printing content.");
+
         var serializedContent = JsonConvert.SerializeObject(contentData);
 
         message.RequestUri = new Uri($"{API_URL}{workspacePath}{endPoint}");
