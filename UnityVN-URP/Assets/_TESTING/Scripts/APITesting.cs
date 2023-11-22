@@ -20,7 +20,11 @@ public class APITesting : MonoBehaviour
         };
 
         client = new APIClient();
-        string session = await client.RequestCharacterSession("ana", data);
+        //frickin works!!!!
+        var session = await client.RequestCharacterSession("ana", data);
+
+        AISessionHandler sess = new AISessionHandler("sujeto_5", client);
+        sess.RequestNewSession();
     }
 
     // Update is called once per frame

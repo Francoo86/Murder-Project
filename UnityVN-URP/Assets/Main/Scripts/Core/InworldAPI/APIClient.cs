@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CandyCoded.env;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 /// <summary>
 /// API Wrapper para Inworld.
@@ -43,7 +44,7 @@ public class APIClient
 
     public override string ToString() => "Inworld API Client object.";
 
-    private async Task<string> CallAPI(string endPoint, Dictionary<string, string> contentData, string sessionIdGrpc = null) {
+    private async Task<object> CallAPI(string endPoint, Dictionary<string, string> contentData, string sessionIdGrpc = null) {
         HttpRequestMessage message = new HttpRequestMessage();
         var serializedContent = JsonConvert.SerializeObject(contentData);
 
@@ -62,17 +63,22 @@ public class APIClient
         var response = await client.SendAsync(message);
         string contentString = await response.Content.ReadAsStringAsync();
 
-        Debug.Log(contentString);
+        if (contentString == null)
+        {
+            Debug.LogWarning("The response was null.");
+            return null;
+        }
 
+        Debug.Log(contentString);
         return contentString;
     }
 
-    private async Task<string> CallWithGRPC(string endPoint, string sessionId, Dictionary<string, string> contentData)
+    private async Task<object> CallWithGRPC(string endPoint, string sessionId, Dictionary<string, string> contentData)
     {
         return await CallAPI(endPoint, contentData, sessionId);
     }
 
-    public async Task<string> SendSimpleText(string text, string character, Dictionary<string, string> plyData) {
+    public async Task<object> SendSimpleText(string text, string character, Dictionary<string, string> plyData) {
         string session_endpoint = $"/characters/{character}:simpleSendText";
         plyData.Add("text", text);
 
@@ -81,10 +87,10 @@ public class APIClient
     }
 
     //TODO: Refactor these methods (only parameters).
-    public async Task<string> RequestCharacterSession(string character, Dictionary<string, string> plyData = null)
+    public async Task<object> RequestCharacterSession(string character, Dictionary<string, string> plyData = null)
         => await CallAPI($"/characters/{character}:openSession", plyData);
 
-    public async Task<string> SendPrompt(string sessId, string plyId, string text)
+    public async Task<object> SendPrompt(string sessId, string plyId, string text)
        => await CallWithGRPC($"/sessions/{sessId}/sessionCharacters/{plyId}:sendText", sessId, new Dictionary<string, string>() { { "text", text } });
 
     /*
