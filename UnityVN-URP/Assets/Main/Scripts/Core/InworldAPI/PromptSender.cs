@@ -12,6 +12,18 @@ public class PromptSender {
 
     }
 
+    public static PromptSender Instance
+    {
+        get {
+            if(instance == null)
+            {
+                instance = new PromptSender();
+            }
+
+            return instance;
+        }
+    }
+
     public void InjectSession(AISessionHandler session)
     {
         currentSession = session;

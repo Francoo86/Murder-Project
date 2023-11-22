@@ -60,6 +60,9 @@ public class APIClient
             message.Headers.Add("Grpc-Metadata-session-id", sessionIdGrpc);
         }
 
+        Debug.Log($"URL to go: {message.RequestUri}");
+        Debug.Log($"Content: {message.Content}");
+
         var response = await client.SendAsync(message);
         string contentString = await response.Content.ReadAsStringAsync();
 
