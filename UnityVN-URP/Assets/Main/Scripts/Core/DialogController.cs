@@ -6,7 +6,7 @@ public class DialogController : MonoBehaviour
 {
     public DialogContainer dialogContainer = new DialogContainer();
     private ConversationManager convManager;
-    public static DialogController Instance;
+    public static DialogController Instance { get; private set; }
     private TextArchitect architect;
 
     public delegate void DialogSystemEvent();

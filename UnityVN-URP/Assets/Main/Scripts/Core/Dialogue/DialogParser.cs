@@ -12,10 +12,10 @@ public class DialogParser {
     //Buscamos palabras, pero sin espacios en blanco para realizar el patrón.
     private const string cmdCommandExp = "\\w*[^\\s]\\(";
     public static DialogLineModel Parse(string line) {
-        Debug.Log($"Parsing this line {line}");
+        //Debug.Log($"Parsing this line {line}");
         (string speaker, string dialogue, string commands) = ExtractContent(line);
 
-        Debug.Log($"Speaker is {speaker}, dialog is {dialogue}, command is {commands}");
+        //Debug.Log($"Speaker is {speaker}, dialog is {dialogue}, command is {commands}");
 
         return new DialogLineModel(speaker, dialogue, commands);
     }
@@ -30,7 +30,8 @@ public class DialogParser {
             char currentChar = line[i];
 
             //Revisa si hay texto posible para poder escaparlo.
-            if (currentChar == '\\') isEscaped = !isEscaped;
+            if (currentChar == '\\') 
+                isEscaped = !isEscaped;
             else if (currentChar == '"' && !isEscaped)
             {
                 if (dialogStart == -1)
@@ -45,7 +46,7 @@ public class DialogParser {
             else isEscaped = false;
         }
 
-        Debug.Log(line.Substring(dialogStart + 1, (dialogEnd - dialogStart) - 1));
+        //Debug.Log(line.Substring(dialogStart + 1, (dialogEnd - dialogStart) - 1));
 
         Regex cmdRegex = new Regex(cmdCommandExp);
         Match match = cmdRegex.Match(line);

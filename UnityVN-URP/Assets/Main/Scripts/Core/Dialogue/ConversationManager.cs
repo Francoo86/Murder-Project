@@ -63,13 +63,13 @@ public class ConversationManager
     IEnumerator RunDialogueForLine(DialogLineModel dialogLine)
     {
         //Muestra o esconde un hablante existente.
+        //Ya se configuro el apartado para narrador.
         if (dialogLine.HasSpeaker)
             Controller.ShowSpeakerName(dialogLine.speaker);
-        else
-            Controller.HideSpeakerName();
 
         //Construir el dialogo.
-        yield return BuildDialogue(dialogLine.dialog);
+        //yield return BuildDialogue(dialogLine.dialog);
+        yield return BuildLineSegments(dialogLine.dialog);
 
         //Esperar al input de usuario, así como tocar la pantalla o cosas así.
         yield return WaitForUserInput();
@@ -80,9 +80,38 @@ public class ConversationManager
         yield return null;
     }
 
-    IEnumerator BuildDialogue(string diag) {
-        arch.Build(diag);
+    IEnumerator BuildLineSegments(DialogData dialogLine) {
+        for(int i = 0; i < dialogLine.segments.Count; i++)
+        {
+            DialogData.DIALOG_SEGMENT segment = dialogLine.segments[i];
 
+            yield return WaitForDialogSegmentSignalToBeTriggered(segment);
+            yield return BuildDialogue(segment.dialog, segment.ShouldAppend);
+        }
+    }
+
+    IEnumerator WaitForDialogSegmentSignalToBeTriggered(DialogData.DIALOG_SEGMENT segment)
+    {
+        switch (segment.startSignal)
+        {
+            case DialogData.DIALOG_SEGMENT.StartSignal.C:
+            case DialogData.DIALOG_SEGMENT.StartSignal.A:
+                yield return WaitForUserInput(); 
+                break;
+            case DialogData.DIALOG_SEGMENT.StartSignal.WC:
+            case DialogData.DIALOG_SEGMENT.StartSignal.WA:
+                yield return new WaitForSeconds(segment.signalDelay);
+                break;
+        }
+    }
+
+    IEnumerator BuildDialogue(string diag, bool append = false) {
+        if (!append)
+            arch.Build(diag);
+        else
+            arch.Append(diag);
+
+        //Esperar a que el dialogo se termine de construir.
         while (arch.isBuilding)
         {
             if (isUserManipulated)

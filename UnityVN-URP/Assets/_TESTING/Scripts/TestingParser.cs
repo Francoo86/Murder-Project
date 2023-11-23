@@ -13,9 +13,22 @@ public class TestingParser : MonoBehaviour
     // Update is called once per frame
     void SendFileToParser()
     {
-        List<string> lines = FileManager.ReadTextFile("textomomento.txt");
+        List<string> lines = FileManager.ReadTextFile("dialogGPT.txt");
 
         DialogController.Instance.Say(lines);
+        foreach (string line in lines) {
+            Debug.Log($"Trying to parsing line: {line}");
+            DialogLineModel dialogLine = DialogParser.Parse(line);
+
+            int i = 0;
+            foreach(DialogData.DIALOG_SEGMENT segment in dialogLine.dialog.segments)
+            {
+                if (string.IsNullOrEmpty(line)) continue;
+
+                Debug.Log($"Segment [{i++}] = '{segment.dialog}' " +
+                    $"[signal={segment.startSignal}{(segment.signalDelay > 0 ? $" {segment.signalDelay}" : $"")}]");
+            }
+        }
 
     }
 }
