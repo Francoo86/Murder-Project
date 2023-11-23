@@ -55,7 +55,7 @@ public class ConversationManager
                 yield return RunDialogueForCommands(dialogLine);
             }
 
-            yield return new WaitForSeconds(1);
+            //yield return new WaitForSeconds(1);
 
         }
     }
@@ -68,7 +68,11 @@ public class ConversationManager
         else
             Controller.HideSpeakerName();
 
+        //Construir el dialogo.
         yield return BuildDialogue(dialogLine.dialog);
+
+        //Esperar al input de usuario, así como tocar la pantalla o cosas así.
+        yield return WaitForUserInput();
     }
 
     IEnumerator RunDialogueForCommands(DialogLineModel dialogLine) {
@@ -91,5 +95,13 @@ public class ConversationManager
 
             yield return null;
         }
+    }
+
+    IEnumerator WaitForUserInput() {
+        while (!isUserManipulated) {
+            yield return null;
+        }
+
+        isUserManipulated = false;
     }
 }

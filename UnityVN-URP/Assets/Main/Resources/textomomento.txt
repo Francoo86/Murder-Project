@@ -1,1 +1,4 @@
 John "I am John Gutter"
+Narrator "You are not lad"
+Juanito "I tried..."
+Pedro "See you next time"
