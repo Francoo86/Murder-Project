@@ -9,7 +9,7 @@ public class DialogContainer
 {
     public GameObject root;
     //Personaje.
-    public TMP_Text nameText;
+    public NameContainer nameContainer;
     //Lo que va a decir.
     public TextMeshProUGUI dialogText;
 }

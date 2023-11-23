@@ -15,10 +15,7 @@ public class TestingParser : MonoBehaviour
     {
         List<string> lines = FileManager.ReadTextFile("textomomento.txt");
 
-        foreach (string line in lines)
-        {
-            DialogLineModel dl = DialogParser.Parse(line);
-        }
+        DialogController.Instance.Say(lines);
 
     }
 }

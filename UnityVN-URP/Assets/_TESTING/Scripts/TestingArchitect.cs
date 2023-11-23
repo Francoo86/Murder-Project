@@ -23,7 +23,7 @@ namespace TESTING {
         void Start()
         {
             dc = DialogController.Instance;
-            arch = new TextArchitect(dc.dialog.dialogText);
+            arch = new TextArchitect(dc.dialogContainer.dialogText);
             arch.buildMethod = TextArchitect.BuildMethod.fade;
         }
 

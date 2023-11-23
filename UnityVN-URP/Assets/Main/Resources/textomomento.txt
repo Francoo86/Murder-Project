@@ -1,1 +1,1 @@
-John "I am John Gutter" Command(varargs)
+John "I am John Gutter"
