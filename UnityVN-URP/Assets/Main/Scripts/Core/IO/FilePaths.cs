@@ -5,5 +5,5 @@ using UnityEngine;
 /// </summary>
 public class FilePaths
 {
-    public static readonly string rootPath = $"{Application.dataPath}/GameData/";
+    public static readonly string rootPath = $"{Application.dataPath}/Main/Resources/";
 }

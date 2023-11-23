@@ -8,7 +8,7 @@ public class TestingFiles : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Run());
+        //StartCoroutine(Run());
     }
 
     // Update is called once per frame
@@ -17,6 +17,7 @@ public class TestingFiles : MonoBehaviour
         
     }
 
+    /*
     IEnumerator Run() {
         List <string> lines = FileManager.ReadTextFile(scriptedSeqFile);
 
@@ -26,5 +27,5 @@ public class TestingFiles : MonoBehaviour
         }
 
         yield return null;
-    }
+    }*/
 }

@@ -54,6 +54,8 @@ public class AISessionHandler
 
     public async Task<bool> RequestNewSession() {
         PlayerModel plyModel = PlayerModel.GetInstance();
+        Debug.Log($"Is this an object?{plyModel}");
+        
         var data = await client.RequestCharacterSession(character, plyModel.GetData());
 
         if (data == null) { 
