@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandDBExtension : MonoBehaviour
+//Para poder añadir comandos personalizados según Unity.
+public abstract class CommandDBExtension
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public static void Extend(CommandDB database) { 
     }
 }
