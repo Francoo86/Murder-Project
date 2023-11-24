@@ -55,7 +55,7 @@ public class DialogController : MonoBehaviour
         List<string> conversation = new List<string>() {$"{speaker} \"{dialogue}\""};
         Say(conversation);
     }
-    public void Say(List<string> conversation) { 
+    public void Say(List<string> conversation) {
         convManager.StartConversation(conversation);
     }
 }

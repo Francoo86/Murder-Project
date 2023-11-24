@@ -17,7 +17,7 @@ public class TestingParser : MonoBehaviour
         List<string> lines = FileManager.ReadTextFile("dialogspeaker.txt");
 
         //Command testing.
-
+        /*
         foreach (string line in lines) { 
             if(string.IsNullOrWhiteSpace(line)) continue;
 
@@ -29,7 +29,7 @@ public class TestingParser : MonoBehaviour
                 CommandData.Command command = dialogLine.commandData.commands[i];
                 Debug.Log($"Command [{i}] '{command.name}' has arguments like [{string.Join(", ", command.arguments)}]");
             }
-        }
+        }*/
         DialogController.Instance.Say(lines);
         /*
         DialogController.Instance.Say(lines);

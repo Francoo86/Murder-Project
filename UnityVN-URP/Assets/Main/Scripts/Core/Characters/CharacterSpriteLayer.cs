@@ -7,6 +7,7 @@ namespace CHARACTERS
 
     public class CharacterSpriteLayer
     {
+        /*
         private CharacterManager characterManager => characterManager.instance;
 
         public int layer { get; private set; } = 0;
@@ -22,5 +23,6 @@ namespace CHARACTERS
             renderer = defaultRenderer;
             this.layer = layer;
         }
+    }*/
     }
 }

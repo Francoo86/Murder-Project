@@ -30,6 +30,7 @@ namespace TESTING {
         // Update is called once per frame
         void Update()
         {
+            /*
             if (bm != arch.buildMethod) {
                 arch.buildMethod = bm;
                 arch.Stop();
@@ -56,7 +57,7 @@ namespace TESTING {
             else if (Input.GetKeyDown("a"))
             {
                 arch.Append(lines[UnityEngine.Random.Range(0, lines.Length)]);
-            }
+            }*/
         }
     }
 }

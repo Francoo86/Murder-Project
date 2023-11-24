@@ -6,9 +6,11 @@ public class CommandData
     public List<Command> commands;
     private const char COMMANDSPLITTER_ID = ',';
     private const char ARGUMENTSCONTAINER_ID = '(';
+    private const string WAIT_ID = "[wait]";
     public struct Command {
         public string name;
         public string[] arguments;
+        public bool waitToFinish;
     }
 
     //SIMILAR TO SOME PATTERN.
@@ -26,6 +28,17 @@ public class CommandData
             Command fullCommand = new Command();
             int index = cmd.IndexOf(ARGUMENTSCONTAINER_ID);
             fullCommand.name = cmd[..index].Trim();
+
+            //Marca al comando como debe esperar.
+            if (fullCommand.name.ToLower().StartsWith(WAIT_ID))
+            {
+                //Quitar el identificador de espera.
+                fullCommand.name = fullCommand.name.Substring(0, WAIT_ID.Length - 1);
+                fullCommand.waitToFinish = true;
+            }
+            else
+                fullCommand.waitToFinish = false;
+
             fullCommand.arguments = GetArguments(cmd.Substring(index + 1, cmd.Length - index - 2));
             res.Add(fullCommand);
         }
