@@ -25,16 +25,23 @@ public class SpeakerModel
     private const char EXPRESSIONLAYER_JOINER = ',';
     private const char EXPRESSIONLAYER_DELIMITER = ':';
     public SpeakerModel(string speaker) {
+        InitializeSpeakerModel();
         //Revisar si se encuentran estos "comandos".
-        string speakerPattern = @$"{SCREENNAME_ID}|{POSITION_ID}|{EXPRESSION_ID.Insert(EXPRESSION_ID.Length - 1, @"\")}";
-        MatchCollection matches = Regex.Matches(speaker, speakerPattern);
+        MatchSpeakerData(speaker);
+    }
 
+    private void InitializeSpeakerModel() {
         //Inicializar para evitar problemas de referencias.
         screenName = "";
         speakerScrPos = Vector2.zero;
         ScreenExpressions = new List<(int layer, string expression)>();
+    }
 
-        //Nada que hacer ya que solo tenemos al personaje.
+    //The constructor does too much work.
+    private void MatchSpeakerData(string speaker = "") {
+        string speakerPattern = @$"{SCREENNAME_ID}|{POSITION_ID}|{EXPRESSION_ID.Insert(EXPRESSION_ID.Length - 1, @"\")}";
+        MatchCollection matches = Regex.Matches(speaker, speakerPattern);
+
         if (matches.Count == 0)
         {
             name = speaker;
@@ -44,10 +51,12 @@ public class SpeakerModel
         int index = matches[0].Index;
         name = speaker.Substring(0, index);
         //name = speaker;
-        for(int i = 0; i < matches.Count; i++)
+        for (int i = 0; i < matches.Count; i++)
         {
             Match match = matches[i];
             int startIdx = 0, endIdx = 0;
+
+            //someMethod(match.Value,
 
             //TODO: Refactor.
             if (match.Value == SCREENNAME_ID)
@@ -71,7 +80,8 @@ public class SpeakerModel
                     float.TryParse(axis[1], out speakerScrPos.y);
                 }
             }
-            else if (match.Value == EXPRESSION_ID) {
+            else if (match.Value == EXPRESSION_ID)
+            {
                 startIdx = match.Index + EXPRESSION_ID.Length;
                 endIdx = (i < matches.Count - 1) ? matches[i + 1].Index : speaker.Length;
                 string castedExpr = speaker.Substring(startIdx, endIdx - (startIdx + 1));
