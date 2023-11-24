@@ -65,18 +65,18 @@ public class ConversationManager
         //Muestra o esconde un hablante existente.
         //Ya se configuro el apartado para narrador.
         if (dialogLine.HasSpeaker)
-            Controller.ShowSpeakerName(dialogLine.speaker.DisplayName);
+            Controller.ShowSpeakerName(dialogLine.speakerMdl.DisplayName);
 
         //Construir el dialogo.
         //yield return BuildDialogue(dialogLine.dialog);
-        yield return BuildLineSegments(dialogLine.dialog);
+        yield return BuildLineSegments(dialogLine.dialogData);
 
         //Esperar al input de usuario, así como tocar la pantalla o cosas así.
         yield return WaitForUserInput();
     }
 
     IEnumerator RunDialogueForCommands(DialogLineModel dialogLine) {
-        Debug.Log(dialogLine.commands);
+        Debug.Log(dialogLine.commandData);
         yield return null;
     }
 

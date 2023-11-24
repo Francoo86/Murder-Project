@@ -8,17 +8,17 @@ using UnityEngine;
 
 public class DialogLineModel {
     //public string speaker;
-    public SpeakerModel speaker;
-    public DialogData dialog;
-    public string commands;
+    public SpeakerModel speakerMdl;
+    public DialogData dialogData;
+    public CommandData commandData;
 
-    public bool HasDialog => dialog.HasDialog;//=> dialog != string.Empty;
-    public bool HasCommands => commands != string.Empty;
-    public bool HasSpeaker => speaker != null;//speaker != string.Empty;
+    public bool HasDialog => dialogData.HasDialog;//=> dialog != string.Empty;
+    public bool HasCommands => commandData != null;//commands != string.Empty;
+    public bool HasSpeaker => speakerMdl != null;//speaker != string.Empty;
     public DialogLineModel(string speaker, string dialog, string commands)
     {
-        this.speaker = (!string.IsNullOrEmpty(speaker) ? new SpeakerModel(speaker) : null);
-        this.dialog = new DialogData(dialog);
-        this.commands = commands;
+        speakerMdl = (!string.IsNullOrEmpty(speaker) ? new SpeakerModel(speaker) : null);
+        dialogData = (!string.IsNullOrEmpty(dialog) ? new DialogData(dialog) : null);
+        commandData = (!string.IsNullOrEmpty(commands) ? new CommandData(commands) : null);//commands;
     }   
 }

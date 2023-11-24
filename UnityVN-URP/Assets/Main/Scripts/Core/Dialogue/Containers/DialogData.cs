@@ -24,7 +24,6 @@ public class DialogData
         List <DIALOG_SEGMENT> currentSegments = new List <DIALOG_SEGMENT>();
         MatchCollection matches = Regex.Matches(rawDialog, segmentIdPattern);
 
-        int lastIndex = 0;
         //Encotrar el primer o ultimo segmento en el archivo.
         DIALOG_SEGMENT segment = new DIALOG_SEGMENT();
         segment.dialog = (matches.Count == 0 ? rawDialog : rawDialog.Substring(0, matches[0].Index));
@@ -34,6 +33,8 @@ public class DialogData
         //Añadir a segmentos.
         currentSegments.Add(segment);
 
+
+        int lastIndex;
         if (matches.Count == 0)
             return currentSegments;
         else
@@ -86,6 +87,6 @@ public class DialogData
             NONE, C, A, WA, WC
         }
 
-        public bool ShouldAppend => startSignal == StartSignal.A || startSignal == StartSignal.WA;
+        public readonly bool ShouldAppend => startSignal == StartSignal.A || startSignal == StartSignal.WA;
     }
 }
