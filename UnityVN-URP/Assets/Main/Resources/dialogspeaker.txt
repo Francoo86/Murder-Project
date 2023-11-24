@@ -1,4 +1,4 @@
-Gordon as ??? "Hello there" PlaySound("Pizza Time" -v 0.3), SetMood(null)
+Gordon "Hello there" PlaySound("Si" -v 0.3), SetMood(null)
 Gordon as ??? at 1:0 "Hello There"
 Gordon at 0.5:0.5 as The Half-Life "El pepe" 
 Gordon as Freeman [0:Angle1, 1:happy] at 0 "hello there"

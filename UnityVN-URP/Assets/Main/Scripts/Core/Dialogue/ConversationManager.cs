@@ -8,7 +8,6 @@ public class ConversationManager
     private TextArchitect arch;
     public bool IsRunning => process != null;
 
-    //TODO: Fix this shitty coupling.
     private DialogController Controller => DialogController.Instance;
 
     public ConversationManager(TextArchitect arch) { 

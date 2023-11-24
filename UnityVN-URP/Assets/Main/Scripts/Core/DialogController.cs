@@ -34,6 +34,7 @@ public class DialogController : MonoBehaviour
 
         architect = new TextArchitect(dialogContainer.dialogText);
         convManager = new ConversationManager(architect);
+        _hasInitialized = true;
     }
 
     public void OnUserPrompt_Next() {
