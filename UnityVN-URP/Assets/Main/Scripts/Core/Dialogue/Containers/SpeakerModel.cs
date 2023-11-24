@@ -11,13 +11,15 @@ public class SpeakerModel
     public string name, screenName;
     //Posicion del personaje en pantalla, tal como RenPy.
     public Vector2 speakerScrPos;
+    //Como se mostrará el personaje en pantalla.
+    public string DisplayName => screenName ?? name;
     //Las emociones son papel fundamental en una novela.
     public List<(int layer, string expression)> ScreenExpressions { get; set; }
 
     //Poner constantes para poder parsear bien los datos.
     private const string SCREENNAME_ID = " as ";
     private const string POSITION_ID = " at ";
-    private const string EXPRESSION_ID = @" [";
+    private const string EXPRESSION_ID = " [";
     //Para la position en pantalla, asumiendo que [1:1] es x:y;
     private const char AXISDELIMITER_ID = ':';
     private const char EXPRESSIONLAYER_JOINER = ',';
@@ -51,13 +53,13 @@ public class SpeakerModel
             if (match.Value == SCREENNAME_ID)
             {
                 startIdx = match.Index + SCREENNAME_ID.Length;
-                endIdx = (i < matches.Count - 1) ? matches[matches.Count - 1].Index : speaker.Length;
+                endIdx = (i < matches.Count - 1) ? matches[i + 1].Index : speaker.Length;
                 screenName = speaker.Substring(startIdx, endIdx - startIdx);
             }
             else if (match.Value == POSITION_ID)
             {
                 startIdx = match.Index + POSITION_ID.Length;
-                endIdx = (i < matches.Count - 1) ? matches[matches.Count - 1].Index : speaker.Length;
+                endIdx = (i < matches.Count - 1) ? matches[i + 1].Index : speaker.Length;
                 string scrPos = speaker.Substring(startIdx, endIdx - startIdx);
 
                 string[] axis = scrPos.Split(AXISDELIMITER_ID, System.StringSplitOptions.RemoveEmptyEntries);
@@ -70,14 +72,15 @@ public class SpeakerModel
                 }
             }
             else if (match.Value == EXPRESSION_ID) {
-                startIdx = match.Index + SCREENNAME_ID.Length;
-                endIdx = (i < matches.Count - 1) ? matches[matches.Count - 1].Index : speaker.Length;
-                string castedExpr = speaker.Substring(startIdx, endIdx - startIdx);
+                startIdx = match.Index + EXPRESSION_ID.Length;
+                endIdx = (i < matches.Count - 1) ? matches[i + 1].Index : speaker.Length;
+                string castedExpr = speaker.Substring(startIdx, endIdx - (startIdx + 1));
 
                 ScreenExpressions = castedExpr.Split(EXPRESSIONLAYER_JOINER)
                     //Very JS syntax to forEach.
                     .Select(elem => {
                         var parts = elem.Trim().Split(EXPRESSIONLAYER_DELIMITER);
+                        //Debug.Log($"Parts of this thing: {parts[0]}, {parts[1]}.");
                         return (int.Parse(parts[0]), parts[1]);
                     }).ToList();
             }

@@ -6,7 +6,7 @@ public class ConversationManager
 {
     private Coroutine process = null;
     private TextArchitect arch;
-    public bool isRunning => process != null;
+    public bool IsRunning => process != null;
 
     //TODO: Fix this shitty coupling.
     private DialogController Controller => DialogController.Instance;
@@ -30,7 +30,7 @@ public class ConversationManager
 
     public void StopConversation()
     {
-        if (!isRunning) return;
+        if (!IsRunning) return;
 
         Controller.StopCoroutine(process);
         process = null;
@@ -65,7 +65,7 @@ public class ConversationManager
         //Muestra o esconde un hablante existente.
         //Ya se configuro el apartado para narrador.
         if (dialogLine.HasSpeaker)
-            Controller.ShowSpeakerName(dialogLine.speaker);
+            Controller.ShowSpeakerName(dialogLine.speaker.DisplayName);
 
         //Construir el dialogo.
         //yield return BuildDialogue(dialogLine.dialog);

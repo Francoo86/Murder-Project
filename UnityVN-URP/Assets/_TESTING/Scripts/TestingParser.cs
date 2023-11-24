@@ -13,8 +13,10 @@ public class TestingParser : MonoBehaviour
     // Update is called once per frame
     void SendFileToParser()
     {
-        List<string> lines = FileManager.ReadTextFile("dialogGPT.txt");
 
+        List<string> lines = FileManager.ReadTextFile("dialogspeaker.txt");
+        DialogController.Instance.Say(lines);
+        /*
         DialogController.Instance.Say(lines);
         foreach (string line in lines) {
             Debug.Log($"Trying to parsing line: {line}");
@@ -28,7 +30,7 @@ public class TestingParser : MonoBehaviour
                 Debug.Log($"Segment [{i++}] = '{segment.dialog}' " +
                     $"[signal={segment.startSignal}{(segment.signalDelay > 0 ? $" {segment.signalDelay}" : $"")}]");
             }
-        }
+        }*/
 
     }
 }

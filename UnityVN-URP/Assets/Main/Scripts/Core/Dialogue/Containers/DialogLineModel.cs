@@ -14,10 +14,10 @@ public class DialogLineModel {
 
     public bool HasDialog => dialog.HasDialog;//=> dialog != string.Empty;
     public bool HasCommands => commands != string.Empty;
-    public bool HasSpeaker => false;//speaker != string.Empty;
+    public bool HasSpeaker => speaker != null;//speaker != string.Empty;
     public DialogLineModel(string speaker, string dialog, string commands)
     {
-        this.speaker = new SpeakerModel(speaker);
+        this.speaker = (!string.IsNullOrEmpty(speaker) ? new SpeakerModel(speaker) : null);
         this.dialog = new DialogData(dialog);
         this.commands = commands;
     }   

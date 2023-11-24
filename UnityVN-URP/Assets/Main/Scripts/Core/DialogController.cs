@@ -12,7 +12,7 @@ public class DialogController : MonoBehaviour
     public delegate void DialogSystemEvent();
     public event DialogSystemEvent onUserPrompt_Next;
 
-    public bool IsRunning => convManager.isRunning;
+    public bool IsRunning => convManager.IsRunning;
 
     //Inicializa el objeto en el script.
     public void Awake()
