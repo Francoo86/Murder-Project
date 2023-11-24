@@ -12,7 +12,7 @@ public class SpeakerModel
     //Posicion del personaje en pantalla, tal como RenPy.
     public Vector2 speakerScrPos;
     //Como se mostrará el personaje en pantalla.
-    public string DisplayName => screenName ?? name;
+    public string DisplayName => (screenName != string.Empty) ? screenName : name;
     //Las emociones son papel fundamental en una novela.
     public List<(int layer, string expression)> ScreenExpressions { get; set; }
 
@@ -26,6 +26,7 @@ public class SpeakerModel
     private const char EXPRESSIONLAYER_DELIMITER = ':';
     public SpeakerModel(string speaker) {
         InitializeSpeakerModel();
+        Debug.Log($"Getting the speaker {speaker}");
         //Revisar si se encuentran estos "comandos".
         MatchSpeakerData(speaker);
     }

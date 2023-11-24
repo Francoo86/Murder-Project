@@ -34,11 +34,11 @@ public class TextArchitect
 
     public bool shouldSpeedUp = false;
 
-    public int charsPerCycle { get { return speed <= 2f ? characterMul : speed <= 2.5f ? characterMul * 2 : characterMul * 3; } }
+    public int CharsPerCycle { get { return speed <= 2f ? characterMul : speed <= 2.5f ? characterMul * 2 : characterMul * 3; } }
     private int characterMul = 1;
 
     public float GetProperTextSpeed() { 
-        return charsPerCycle* (shouldSpeedUp? FASTER_TEXT_SPEED : 1);
+        return CharsPerCycle* (shouldSpeedUp? FASTER_TEXT_SPEED : 1);
     }
 
 public TextArchitect(TextMeshProUGUI tmpro_ui) {

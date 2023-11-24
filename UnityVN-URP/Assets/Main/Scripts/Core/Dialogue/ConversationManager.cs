@@ -8,7 +8,6 @@ public class ConversationManager
     private TextArchitect arch;
     public bool IsRunning => process != null;
 
-    //TODO: Fix this shitty coupling.
     private DialogController Controller => DialogController.Instance;
 
     public ConversationManager(TextArchitect arch) { 
@@ -22,7 +21,6 @@ public class ConversationManager
     }
 
     public void StartConversation(List<string> conversation) {
-        Debug.Log($"Object check {conversation == null}");
         StopConversation();
 
         process = Controller.StartCoroutine(RunningConversation(conversation));
@@ -55,6 +53,8 @@ public class ConversationManager
                 yield return RunDialogueForCommands(dialogLine);
             }
 
+            if(dialogLine.HasDialog) 
+                yield return WaitForUserInput();
             //yield return new WaitForSeconds(1);
 
         }
@@ -72,11 +72,20 @@ public class ConversationManager
         yield return BuildLineSegments(dialogLine.dialogData);
 
         //Esperar al input de usuario, así como tocar la pantalla o cosas así.
-        yield return WaitForUserInput();
+        //yield return WaitForUserInput();
     }
 
     IEnumerator RunDialogueForCommands(DialogLineModel dialogLine) {
-        Debug.Log(dialogLine.commandData);
+        List<CommandData.Command> commands = dialogLine.commandData.commands;
+
+        foreach (CommandData.Command command in commands) {
+            //Ejecutar esto primero antes de empezar con el otro comando.
+            if (command.waitToFinish)
+                yield return CommandController.Instance.Execute(command.name, command.arguments);
+            else
+                CommandController.Instance.Execute(command.name, command.arguments);
+        } 
+        //Debug.Log(dialogLine.commandData);
         yield return null;
     }
 

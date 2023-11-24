@@ -34,6 +34,7 @@ public class DialogController : MonoBehaviour
 
         architect = new TextArchitect(dialogContainer.dialogText);
         convManager = new ConversationManager(architect);
+        _hasInitialized = true;
     }
 
     public void OnUserPrompt_Next() {
@@ -54,7 +55,7 @@ public class DialogController : MonoBehaviour
         List<string> conversation = new List<string>() {$"{speaker} \"{dialogue}\""};
         Say(conversation);
     }
-    public void Say(List<string> conversation) { 
+    public void Say(List<string> conversation) {
         convManager.StartConversation(conversation);
     }
 }
