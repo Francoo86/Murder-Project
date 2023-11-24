@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 public class DialogParser {
     //Buscamos palabras, pero sin espacios en blanco para realizar el patrón.
-    private const string cmdCommandExp = "\\w*[^\\s]\\(";
+    private const string cmdCommandExp = @"[\w\[\]]*[^\s]\(";
     public static DialogLineModel Parse(string line) {
         //Debug.Log($"Parsing this line {line}");
         (string speaker, string dialogue, string commands) = ExtractContent(line);
@@ -49,16 +49,27 @@ public class DialogParser {
         //Debug.Log(line.Substring(dialogStart + 1, (dialogEnd - dialogStart) - 1));
 
         Regex cmdRegex = new Regex(cmdCommandExp);
-        Match match = cmdRegex.Match(line);
+        MatchCollection matches = cmdRegex.Matches(line);
         int commandStart = -1;
 
-        if(match.Success)
+        foreach (Match match in matches)
         {
-            commandStart = match.Index;
+            //Evitar falsos positivos cuando se encuentran comandos dentro de un dialogo.
+            if (match.Index < dialogStart || match.Index > dialogEnd) { 
+                commandStart = match.Index;
+                break;
+            }
 
             if (dialogStart == -1 && dialogEnd == -1)
                 return ("", "", line.Trim());
         }
+
+        //NO es un comando.
+        if (commandStart != -1 && (dialogStart == -1 && dialogEnd == -1)){
+            return ("", "", line.Trim());
+        }
+
+
 
         //Revisamos si el comando está después del dialogo.
         //Juanito "Sample Text" Bailar([comando style linux])
@@ -73,7 +84,7 @@ public class DialogParser {
         else if (commandStart != -1 && dialogStart > commandStart)
             commands = line;
         else
-            speaker = line;
+            dialogue = line;
 
         return (speaker,  dialogue, commands);
     }
