@@ -22,7 +22,15 @@ public class TestingDialog : MonoBehaviour
             "AAAAXDDDDDDDDDDDDDDDDD",
         };
 
+        charPedro.SetDialogColor(Color.red);
+
         yield return charPedro.Say(lines);
+
+        charPedro.SetNameColor(Color.cyan);
+        charPedro.SetDialogColor(Color.green);
+
+        yield return charPedro.Say(lines);
+
         yield return alfonso.Say(lines);
     }
 
