@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class DialogController : MonoBehaviour
 {
+    [SerializeField] private DialogConfig _config;
+
+    public DialogConfig Config => _config;
+
     public DialogContainer dialogContainer = new DialogContainer();
     private ConversationManager convManager;
     public static DialogController Instance { get; private set; }

@@ -7,6 +7,7 @@ namespace CHARACTERS
 
     public class CharacterSpriteLayer
     {
+        /*
         private CharacterManager characterManager => characterManager.instance;
 
         private const float DEFAULT_TRANSITION_SPEED = 3f;
@@ -219,6 +220,6 @@ namespace CHARACTERS
             }
 
             co_flipping = null;
-        }
+        }*/
     }
 }
