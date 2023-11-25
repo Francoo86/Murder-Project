@@ -16,14 +16,14 @@ MonoBehaviour:
   - name: Pedro
     alias: Mr. Alcalde
     charType: 0
-    nameCol: {r: 0, g: 0, b: 0, a: 0}
-    diagCol: {r: 0, g: 0, b: 0, a: 0}
+    nameCol: {r: 0, g: 1, b: 1, a: 1}
+    diagCol: {r: 0, g: 1, b: 0, a: 1}
     nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   - name: Alfonso
     alias: Nose
     charType: 0
-    nameCol: {r: 0, g: 0, b: 0, a: 0}
-    diagCol: {r: 0, g: 0, b: 0, a: 0}
+    nameCol: {r: 1, g: 0, b: 0.042004585, a: 1}
+    diagCol: {r: 1, g: 0.90990627, b: 0, a: 1}
     nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
