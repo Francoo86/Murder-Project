@@ -30,7 +30,7 @@ public class TestingParser : MonoBehaviour
                 Debug.Log($"Command [{i}] '{command.name}' has arguments like [{string.Join(", ", command.arguments)}]");
             }
         }*/
-        DialogController.Instance.Say(lines);
+        //DialogController.Instance.Say(lines);
         /*
         DialogController.Instance.Say(lines);
         foreach (string line in lines) {

@@ -55,11 +55,11 @@ public class DialogController : MonoBehaviour
     }
     public void HideSpeakerName() => dialogContainer.nameContainer.Hide();
     //TODO: Implement Strategy.
-    public void Say(string speaker, string dialogue) {
+    public Coroutine Say(string speaker, string dialogue) {
         List<string> conversation = new List<string>() {$"{speaker} \"{dialogue}\""};
-        Say(conversation);
+        return Say(conversation);
     }
-    public void Say(List<string> conversation) {
-        convManager.StartConversation(conversation);
+    public Coroutine Say(List<string> conversation) {
+        return convManager.StartConversation(conversation);
     }
 }

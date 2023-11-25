@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,14 +6,27 @@ using UnityEngine;
 public abstract class Character
 {
     public string name;
+    public string displayName;
     //Hacer un cuadro para cada imagen de personaje.
     public RectTransform root;
 
     //Cada personaje tendrá su propio nombre.
     public Character(string name) { 
         this.name = name;
+        displayName = name;
         Debug.Log($"Creating character in base: {name}");
     }
+
+    public DialogController DController => DialogController.Instance;
+
+    //Hacer que el personaje hable.
+    public Coroutine Say(string dialog) => Say(new List<string> { dialog});
+    public Coroutine Say(List <string> dialogLines)
+    {
+        DController.ShowSpeakerName(displayName);
+        return DController.Say(dialogLines);
+    }
+
 
     public enum CharacterType
     {

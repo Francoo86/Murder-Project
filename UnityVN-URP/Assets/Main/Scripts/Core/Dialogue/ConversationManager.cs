@@ -20,10 +20,11 @@ public class ConversationManager
         isUserManipulated = true;
     }
 
-    public void StartConversation(List<string> conversation) {
+    public Coroutine StartConversation(List<string> conversation) {
         StopConversation();
 
         process = Controller.StartCoroutine(RunningConversation(conversation));
+        return process;
     }
 
     public void StopConversation()
