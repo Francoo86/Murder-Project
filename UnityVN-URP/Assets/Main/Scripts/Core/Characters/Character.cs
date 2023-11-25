@@ -37,9 +37,5 @@ public abstract class Character
         Text,
         Sprite,
         SpriteSheet,
-        //Esto no, lo dejo aqui por si llegase a ocurrir algo inesperado.
-        //NO SE OCUPARA POR TEMAS DE TIEMPO, APARTE PARA EL ULTIMO HAY QUE MODELAR XD.
-        Live2D,
-        Model3D
     }
 }
