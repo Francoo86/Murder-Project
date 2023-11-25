@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class SpriteCharacter : Character
 {
-    public SpriteCharacter(string name) : base(name) { }
+    public SpriteCharacter(string name, CharacterConfigData config) : base(name, config) { }
 }

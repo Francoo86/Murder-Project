@@ -9,10 +9,12 @@ public abstract class Character
     public string displayName;
     //Hacer un cuadro para cada imagen de personaje.
     public RectTransform root;
+    public CharacterConfigData config;
 
     //Cada personaje tendrá su propio nombre.
-    public Character(string name) { 
+    public Character(string name, CharacterConfigData config) { 
         this.name = name;
+        this.config = config;
         displayName = name;
         Debug.Log($"Creating character in base: {name}");
     }
@@ -24,6 +26,7 @@ public abstract class Character
     public Coroutine Say(List <string> dialogLines)
     {
         DController.ShowSpeakerName(displayName);
+        DController.ApplySpeakerDataToBox(config);
         return DController.Say(dialogLines);
     }
 

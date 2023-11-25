@@ -45,6 +45,21 @@ public class DialogController : MonoBehaviour
         onUserPrompt_Next?.Invoke();
     }
 
+    public void ApplySpeakerDataToBox(CharacterConfigData config)
+    {
+        dialogContainer.SetDialogColor(config.diagCol);
+        dialogContainer.SetDialogFont(config.diagFont);
+
+        dialogContainer.nameContainer.SetNameColor(config.nameCol);
+        dialogContainer.nameContainer.SetNameFont(config.nameFont);
+    }
+
+    //Le hace un lookup a la configuración de los personajes solamente pasandole el nombre como parametro.
+    public void ApplySpeakerDataToBox(string speakerName) {
+        Character character = CharacterController.Instance.GetCharacter(speakerName);
+        CharacterConfigData config = character != null ? character.config : CharacterController.Instance.GetCharacterConfig(speakerName);
+        ApplySpeakerDataToBox(config);
+    }
     public void ShowSpeakerName(string speakerName = "")
     {
         //No hay razón para mostrar al narrador, similar a RenPy.
@@ -53,6 +68,7 @@ public class DialogController : MonoBehaviour
         else
             HideSpeakerName();
     }
+
     public void HideSpeakerName() => dialogContainer.nameContainer.Hide();
     //TODO: Implement Strategy.
     public Coroutine Say(string speaker, string dialogue) {

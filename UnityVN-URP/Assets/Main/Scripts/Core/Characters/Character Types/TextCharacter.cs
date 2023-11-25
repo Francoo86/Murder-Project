@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class TextCharacter : Character
 {
-    public TextCharacter(string name) : base(name) { }
+    public TextCharacter(string name, CharacterConfigData config) : base(name, config) { }
 }

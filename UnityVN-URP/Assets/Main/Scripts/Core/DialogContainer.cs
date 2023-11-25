@@ -12,4 +12,8 @@ public class DialogContainer
     public NameContainer nameContainer;
     //Lo que va a decir.
     public TextMeshProUGUI dialogText;
+
+    //TODO: Implement interface of this thing.
+    public void SetDialogColor(Color color) => dialogText.color = color;
+    public void SetDialogFont(TMP_FontAsset font) => dialogText.font = font;
 }

@@ -30,17 +30,37 @@ public class CharacterController : MonoBehaviour
         return character;
     }
 
+    public Character GetCharacter(string charName, bool create = false) {
+        if (storedChars.ContainsKey(charName.ToLower()))
+        {
+            return storedChars[charName.ToLower()];
+        }
+        else if(create)
+        {
+            return CreateCharacter(charName);
+        }
+
+        return null;
+    }
+
+    public CharacterConfigData GetCharacterConfig(string charName)
+    {
+        return config.GetConfig(charName);
+    }
     private Character CreateCharacterFromModel(CharacterModel characterModel)
     {
         CharacterConfigData data = characterModel.config;
 
-        if(data.charType == Character.CharacterType.Text)
+        switch (data.charType)
         {
-            return new TextCharacter(characterModel.name);
-        }
-
-        if (data.charType == Character.CharacterType.Sprite || data.charType == Character.CharacterType.SpriteSheet) {
-            return new SpriteCharacter(characterModel.name);
+            case Character.CharacterType.Text:
+                return new TextCharacter(characterModel.name, data);
+            case Character.CharacterType.Sprite:
+                return new SpriteCharacter(characterModel.name, data);
+            case Character.CharacterType.SpriteSheet:
+                return new SpriteCharacter(characterModel.name, data);
+            default:
+                break;
         }
 
         return null;

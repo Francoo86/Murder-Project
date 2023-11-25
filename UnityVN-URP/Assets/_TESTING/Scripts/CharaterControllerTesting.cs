@@ -7,7 +7,7 @@ public class CharaterControllerTesting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Character character = CharacterController.Instance.CreateCharacter("Alfonso");
+        //Character character = CharacterController.Instance.CreateCharacter("Alfonso");
     }
 
     // Update is called once per frame

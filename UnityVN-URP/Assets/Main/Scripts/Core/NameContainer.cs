@@ -25,4 +25,7 @@ public class NameContainer
         Debug.Log($"We are hiding the {nameText.name}");
         root.SetActive(false);
     }
+
+    public void SetNameColor(Color color) => nameText.color = color;
+    public void SetNameFont(TMP_FontAsset font) => nameText.font = font;
 }
