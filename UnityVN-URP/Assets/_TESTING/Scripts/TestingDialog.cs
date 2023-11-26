@@ -12,7 +12,7 @@ public class TestingDialog : MonoBehaviour
 
     IEnumerator StartTalking()
     {
-        Character charPedro = CharacterController.Instance.CreateCharacter("Pedro");
+        Character charPedro = CharacterController.Instance.CreateCharacter("Marcelo as Freeman");
         Character alfonso = CharacterController.Instance.CreateCharacter("Alfonso");
         List<string> lines = new List<string>()
         {
@@ -24,7 +24,13 @@ public class TestingDialog : MonoBehaviour
 
         charPedro.SetDialogColor(Color.red);
 
+        yield return new WaitForSeconds(1f);
+        yield return charPedro.Hide();
+        yield return new WaitForSeconds(1f);
+        yield return charPedro.Show();
+
         yield return charPedro.Say(lines);
+
 
         charPedro.SetNameColor(Color.cyan);
         charPedro.SetDialogColor(Color.green);

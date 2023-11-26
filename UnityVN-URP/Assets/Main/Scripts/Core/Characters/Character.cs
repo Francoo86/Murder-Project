@@ -11,12 +11,29 @@ public abstract class Character
     //Hacer un cuadro para cada imagen de personaje.
     public RectTransform root;
     public CharacterConfigData config;
+    public Animator animator;
+    protected CharacterController controller => CharacterController.Instance;
+
+    //Corutinas de mostrado.
+    protected Coroutine CO_Hiding, CO_Showing;
+    //Logica de mostrar.
+    private bool IsShowing => CO_Showing != null;
+    private bool IsHiding => CO_Hiding != null;
+    public virtual bool IsVisible => false;
 
     //Cada personaje tendrá su propio nombre.
-    public Character(string name, CharacterConfigData config) {
+    public Character(string name, CharacterConfigData config, GameObject prefab) {
         this.name = name;
         this.config = config;
         displayName = name;
+
+        if(prefab != null)
+        {
+            GameObject obj = UnityEngine.Object.Instantiate(prefab, controller.CharacterPanel);
+            obj.SetActive(true);
+            root = obj.GetComponent<RectTransform>();
+            animator = obj.GetComponentInChildren<Animator>();
+        }
         Debug.Log($"Creating character in base: {name}");
     }
 
@@ -40,6 +57,36 @@ public abstract class Character
         return DController.Say(dialogLines);
     }
 
+    public virtual Coroutine Show()
+    {
+        if (IsShowing)
+            return CO_Showing;
+
+        if(IsHiding)
+            controller.StopCoroutine(CO_Hiding);
+
+        CO_Showing = controller.StartCoroutine(HandleShowing(true));
+
+        return CO_Showing;
+    }
+
+    public virtual Coroutine Hide()
+    {
+        if (IsHiding)
+            return CO_Hiding;
+
+        if (IsShowing)
+            controller.StopCoroutine(CO_Showing);
+
+        CO_Hiding = controller.StartCoroutine(HandleShowing(false));
+
+        return CO_Hiding;
+    }
+
+    public virtual IEnumerator HandleShowing(bool shouldShow) {
+        Debug.LogWarning("Can't be called on abstract character class");
+        yield return null;
+    }
 
     public enum CharacterType
     {

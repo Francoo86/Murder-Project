@@ -10,6 +10,14 @@ public class CharacterController : MonoBehaviour
     private Dictionary<string, Character> storedChars = new Dictionary<string, Character>();
     private CharacterConfig config => DialogController.Instance.Config.charConfigAsset;
 
+    //Constantes para poder realizar un lookup a un personaje.
+    //En español para las cadenas para poder proporcionar flexibilidad.
+    private const string CHARACTER_ID = "<personaje>";
+    private string characterPath => $"Characters/{CHARACTER_ID}";
+    private string characterPrefabPath => $"Characters/{CHARACTER_ID}/Personaje - [{CHARACTER_ID}]";
+    [SerializeField] private RectTransform charPanel = null;
+    public RectTransform CharacterPanel => charPanel;
+
     private void Awake()
     {
         Instance = this; 
@@ -56,9 +64,8 @@ public class CharacterController : MonoBehaviour
             case Character.CharacterType.Text:
                 return new TextCharacter(characterModel.name, data);
             case Character.CharacterType.Sprite:
-                return new SpriteCharacter(characterModel.name, data);
             case Character.CharacterType.SpriteSheet:
-                return new SpriteCharacter(characterModel.name, data);
+                return new SpriteCharacter(characterModel.name, data, characterModel.prefab);
             default:
                 break;
         }
@@ -71,12 +78,22 @@ public class CharacterController : MonoBehaviour
         CharacterModel model = new CharacterModel();
         model.name = charName;
         model.config = config.GetConfig(charName);
+        model.prefab = LookupPrefab(charName);
         return model;
     }
+
+    private GameObject LookupPrefab(string charName)
+    {
+        string resPath = FormatCharacterPrefabPath(characterPrefabPath, charName);
+        return Resources.Load<GameObject>(resPath);
+    }
+
+    private string FormatCharacterPrefabPath(string path, string charName) => path.Replace(CHARACTER_ID, charName);
 
 }
 
 class CharacterModel {
     public string name;
     public CharacterConfigData config = null;
+    public GameObject prefab;
 }
