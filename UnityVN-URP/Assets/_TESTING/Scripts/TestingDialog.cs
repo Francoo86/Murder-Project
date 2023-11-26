@@ -12,8 +12,8 @@ public class TestingDialog : MonoBehaviour
 
     IEnumerator StartTalking()
     {
-        Character charPedro = CharacterController.Instance.CreateCharacter("Marcelo as Freeman");
-        Character alfonso = CharacterController.Instance.CreateCharacter("Alfonso");
+        Character charPedro = CharacterController.Instance.CreateCharacter("Marcelo");
+        Character alfonso = CharacterController.Instance.CreateCharacter("Patricia");
         List<string> lines = new List<string>()
         {
             "XDDDD",
@@ -28,6 +28,8 @@ public class TestingDialog : MonoBehaviour
         yield return charPedro.Hide();
         yield return new WaitForSeconds(1f);
         yield return charPedro.Show();
+        //Wacky ahh pos.
+        charPedro.SetPos(new Vector2(0.5f, 0.4f));
 
         yield return charPedro.Say(lines);
 

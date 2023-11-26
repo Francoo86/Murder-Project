@@ -15,10 +15,11 @@ public abstract class Character
     protected CharacterController controller => CharacterController.Instance;
 
     //Corutinas de mostrado.
-    protected Coroutine CO_Hiding, CO_Showing;
+    protected Coroutine CO_Hiding, CO_Showing, CO_Moving;
     //Logica de mostrar.
     private bool IsShowing => CO_Showing != null;
     private bool IsHiding => CO_Hiding != null;
+    private bool IsMoving => CO_Moving != null;
     public virtual bool IsVisible => false;
 
     //Cada personaje tendrá su propio nombre.
@@ -83,8 +84,66 @@ public abstract class Character
         return CO_Hiding;
     }
 
+    //Estos elementos no corresponden a esta clase.
+    public virtual void SetPos(Vector2 pos) {
+        if (root == null) return;
+        (Vector2 minAnchor, Vector2 maxAnchor) = ConvertPosToRelative(pos);
+        root.anchorMin = minAnchor;
+        root.anchorMax = maxAnchor;
+    }
+
+    public virtual Coroutine MoveToPosition(Vector2 pos, float speed = 2f, bool smooth = false)
+    {
+        if (root == null) return null;
+        if (IsMoving) controller.StopCoroutine(CO_Moving);
+
+        CO_Moving = controller.StartCoroutine(MoveToPositionCoroutine(pos, speed, smooth));
+
+        return CO_Moving;
+    }
+
+    private IEnumerator MoveToPositionCoroutine(Vector2 pos, float speed = 2f, bool smooth = false)
+    {
+        (Vector2 minAnch, Vector2 maxAnch) = ConvertPosToRelative(pos);
+        Vector2 padding = root.anchorMax - root.anchorMin;
+
+        while(root.anchorMin != minAnch ||  root.anchorMax != maxAnch)
+        {
+            root.anchorMin = smooth ? Vector2.Lerp(root.anchorMin, minAnch, speed * Time.deltaTime)
+                : Vector2.MoveTowards(root.anchorMin, minAnch, speed * Time.deltaTime * 0.35f);
+
+            root.anchorMax = root.anchorMin + padding;
+
+            if (smooth && Vector2.Distance(root.anchorMin, root.anchorMax) <= 0.001f) {
+                root.anchorMin = minAnch;
+                root.anchorMax = maxAnch;
+                break;
+            }
+
+            yield return null;
+        }
+
+        Debug.Log($"Finalización de movimiento.");
+        CO_Moving = null;
+    }
+
+    protected (Vector2, Vector2) ConvertPosToRelative(Vector2 pos)
+    {
+       //Vector normalizado ya que es una posición relativa como en cualquier juego.
+       //Podria dar ejemplos de esto, por ejemplo un cuadrado dentro de un panel.
+        Vector2 padding = root.anchorMax - root.anchorMin;
+        float maxX = 1 - padding.x;
+        float maxY = 1 - padding.y;
+
+        Vector2 minAnchorTgt = new Vector2(maxX * pos.x, maxY * pos.y);
+        Vector2 maxAnchorTgt = minAnchorTgt + padding;
+
+        return (minAnchorTgt, maxAnchorTgt);
+
+    }
+
     public virtual IEnumerator HandleShowing(bool shouldShow) {
-        Debug.LogWarning("Can't be called on abstract character class");
+        //Debug.LogWarning("Can't be called on abstract character class");
         yield return null;
     }
 
