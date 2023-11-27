@@ -63,9 +63,10 @@ public class CanvasGroupController
         co_hiding = null;
     }
 
-    public void SetInteractableState(bool active) 
+    public void SetInteractableState(bool active)
     {
-        rootCG.interactableState = active;
+        rootCG.interactable = active;
         rootCG.blocksRaycasts = active;
     }
+
 }
