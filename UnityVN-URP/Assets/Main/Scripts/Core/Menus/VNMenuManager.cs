@@ -71,12 +71,14 @@ public class VNMenuManager : MonoBehaviour
     public void OpenRoot() 
     {
         rootCG.Show();
+        rootCG.SetInteractableState(true);
         isOpen = true;
     }
 
     public void CloseRoot()
     {
         rootCG.Hide();
+        rootCG.SetInteractableState(false);
         isOpen = false;
     }
 
