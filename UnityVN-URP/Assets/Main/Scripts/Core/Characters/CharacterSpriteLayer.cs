@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CHARACTERS
 {
 
     public class CharacterSpriteLayer
     {
-        /*
-        private CharacterManager characterManager => characterManager.instance;
+
+        private CharacterController charController => CharacterController.Instance;
 
         private const float DEFAULT_TRANSITION_SPEED = 3f;
         private float transitionSpeedMultiplier = 1;
@@ -17,7 +18,7 @@ namespace CHARACTERS
 
         public Image renderer { get; private set; } = null;
 
-        public CanvasGroup renderCG => renderer.GetComponent<CanvasGroup>();
+        public CanvasGroup rendererCG => renderer.GetComponent<CanvasGroup>();
 
         private List<CanvasGroup> oldRenderers = new List<CanvasGroup>();
 
@@ -25,10 +26,10 @@ namespace CHARACTERS
         private Coroutine co_levelingAlpha = null;
         private Coroutine co_changingColor = null;
         private Coroutine co_flipping = null;
-        private bool isFacingLeft = Character.DEFAULT_ORIENTATION_IS_FACING_LEFT;
+       // private bool isFacingLeft = Character.DEFAULT_ORIENTATION_IS_FACING_LEFT;
 
         public bool isTransitioningLayer => co_transitioningLayer != null;
-        public bool isLevelingAlpha => co_levelingAlpha:!= null;
+        //public bool isLevelingAlpha => co_levelingAlpha:!= null;
         public bool isChanginColor => co_changingColor != null;
         public bool isFlipping => co_flipping != null;
 
@@ -44,23 +45,25 @@ namespace CHARACTERS
             renderer.sprite = sprite;
         }
 
+        /*
         public Coroutine TransitionSprite(Sprite sprite, float speed = 1)
         {
             if (sprite == renderer.sprite)
                 return null;
             if (isTransitioningLayer)
-                characterManager.StopCoroutine(co_transitioningLayer);
+                charController.StopCoroutine(co_transitioningLayer);
 
-            co_transitioningLayer = characterManager.StartCoroutine(TransitioningSprite(sprite, speed));
+            co_transitioningLayer = charController.StartCoroutine(TransitioningSprite(sprite, speed));
 
             return co_transitioningLayer;
         }
 
+        
         private IEnumerator TransitioningSprite(Sprite sprite, float speedMultiplier)
         {
             transitionSpeedMultiplier = speedMultiplier;
 
-            Image newRender = CreateRender(renderer.transform.parent);
+            Image newRender = CreateRenderer(renderer.transform.parent);
             newRender.sprite = sprite;
 
             yield return TryStartLevelingAlphas();
@@ -80,18 +83,20 @@ namespace CHARACTERS
             rendererCG.alpha = 0;
 
             return newRenderer;
-        }
+        }*/
 
+        /*
         private Coroutine TryStartLevelingAlphas()
         {
             if (isLevelingAlpha)
                 return co_levelingAlpha;
 
-            co_levelingAlpha = characterManager.StartCoutine(RunAlphaLeveling());
+            co_levelingAlpha = charController.StartCoutine(RunAlphaLeveling());
 
             return co_levelingAlpha;
-        }
+        }*/
 
+        /*
         private IEnumerator RunAlphaLeveling()
         {
             while (rendererCG.alpha < 1 || oldRenderers.Any(oldCG.alpha > 0))
@@ -117,11 +122,12 @@ namespace CHARACTERS
             }
 
             co_levelingAlpha = null;
-        }
+        }*/
 
+        /*
         public void SetColor(Color color)
         {
-            renderCG.color = color;
+            rendererCG.color = color;
             foreach (Canvas oldCG in oldRenderers)
             {
                 oldCG.GetComponent<Image>().color = color;
@@ -131,9 +137,9 @@ namespace CHARACTERS
         public Coroutine TransitionColor(Color color, float speed)
         {
             if (isChanginColor)
-                characterManager.StopCorountine(co_changingColor);
+                charController.StopCorountine(co_changingColor);
 
-            co_changingColor = characterManager.StartCoroutine(ChangingColor(color, speed));
+            co_changingColor = charController.StartCoroutine(ChangingColor(color, speed));
 
             return co_changingColor;
         }
@@ -151,7 +157,7 @@ namespace CHARACTERS
             float colorPercent = 0;
             while (colorPercent < 1)
             {
-                colorPercent += DEFAULT_TRANSITION_SPEED * speedMultiplier * Time.deltatime;
+                colorPercent += DEFAULT_TRANSITION_SPEED * speedMultiplier * Time.deltaTime;
 
                 renderer.color = Color.Lerp(oldColor, color, colorPercent);
 
@@ -169,10 +175,10 @@ namespace CHARACTERS
         public Coroutine FaceLeft(float speed = 1, bool immediate = false)
         {
             if (isFlipping)
-                characterManager.StopCoroutine(co_flipping);
+                charController.StopCoroutine(co_flipping);
 
             isFacingLeft = true;
-            co_flipping = characterManager.StartCoroutine(FaceDirection(isFacingLeft, speed, immediate));
+            co_flipping = charController.StartCoroutine(FaceDirection(isFacingLeft, speed, immediate));
 
             return co_flipping;
         }
@@ -180,10 +186,10 @@ namespace CHARACTERS
         public Coroutine FaceRight(float speed = 1, bool immediate = false)
         {
             if (isFlipping)
-                characterManager.StopCoroutine(co_flipping);
+                charController.StopCoroutine(co_flipping);
 
             isFacingLeft = false;
-            co_flipping = characterManager.StartCoroutine(FaceDirection(isFacingLeft, speed, immediate));
+            co_flipping = charController.StartCoroutine(FaceDirection(isFacingLeft, speed, immediate));
 
             return co_flipping;
         }

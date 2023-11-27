@@ -1,6 +1,6 @@
-from lib.connection import initialize_connection
+from connection import initialize_connection
 from requests import Session
-from lib.dotenv import load_dotenv
+from dotenv import load_dotenv
 import os
 
 # renpy loads here.
@@ -64,6 +64,7 @@ class InworldAPIClient:
         return self.__call_api(session_endpoint, data=ply_data)
     
     def send_prompt(self, sess_id : str, player_id : int, text : str):
+        print("player id: ", player_id)
         prompt_endpoint = f'/sessions/{sess_id}/sessionCharacters/{player_id}:sendText'
         return self.__call_with_grpc(prompt_endpoint, sess_id, {"text" : text})
     

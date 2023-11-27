@@ -88,6 +88,9 @@ public class APIClient
 
     private async Task<object> CallWithGRPC(string endPoint, string sessionId, Dictionary<string, string> contentData)
     {
+        if (sessionId != null) {
+            Debug.LogWarning($"Session is not null {endPoint}, sessId: {sessionId}");
+        }
         return await CallAPI(endPoint, contentData, sessionId);
     }
 
@@ -104,7 +107,10 @@ public class APIClient
         => await CallAPI($"/characters/{character}:openSession", plyData);
 
     public async Task<object> SendPrompt(string sessId, string plyId, string text)
-       => await CallWithGRPC($"/sessions/{sessId}/sessionCharacters/{plyId}:sendText", sessId, new Dictionary<string, string>() { { "text", text } });
+    {
+        Debug.Log($"PLAYER SESSION: {plyId}");
+        return await CallWithGRPC($"/sessions/{sessId}/sessionCharacters/{plyId}:sendText", sessId, new Dictionary<string, string>() { { "text", text } });
+    }
 
     /*
     public async Task<string> SendTrigger(string sessId, string plyId, string triggerName, Dictionary<string, string> sceneParams = null) { 

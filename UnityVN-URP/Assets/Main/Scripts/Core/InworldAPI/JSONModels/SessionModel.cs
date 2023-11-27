@@ -22,3 +22,35 @@ class SessionResponseModel {
     public List<CharacterSessionInfo> SessionCharacters { get; set; }
     public string LoadedScene { get; set;}
 }
+
+class InteractionInfo { 
+    public string Name { get; set; }
+    public List<string> TextList { get; set; }
+    public CustomEventInfo CustomEvent { get; set; }
+    public List<string> Params {  get; set; }
+    public EmotionInfo Emotion { get; set; }
+    public string Session { get; set; }
+    public RelationshipUpdate Relationship { get; set; }
+    public List<string> ActiveTriggers { get; set; }
+}
+
+class CustomEventInfo { 
+    public string Event {  get; set; }
+    public List<string> Params { get; set; }
+}
+
+class EmotionInfo
+{
+    public string Behavior { get; set; }
+    public string Strength { get; set; }
+
+}
+
+class RelationshipUpdate
+{
+    public int Trust { get; set; }
+    public int Respect { get; set; }
+    public int Familiar { get; set; }
+    public int Flirtatious { get; set; }
+    public int Attraction { get; set; }
+}

@@ -1,7 +1,7 @@
 # if you want to test the module, you should remove the "lib." thing in this module.
-from lib.inworld_connection import InworldAPIClient
-from lib.player import PlayerModel
-from lib.patterns import Singleton
+from inworld_connection import InworldAPIClient
+from player import PlayerModel
+from patterns import Singleton
 from time import time
 
 PLAYER_KEY = "user"
@@ -136,3 +136,12 @@ class PromptSender(metaclass=Singleton):
 
     def show_response(self):
         return self.view.get_response()
+    
+ply = PlayerModel("Juan", 20, "male", "detective")
+client = InworldAPIClient()
+sess = AISessionHandler(ply, client, "ana")
+prompt = PromptSender(sess)
+
+prompt.talk("hey how are you?")
+
+print(prompt.show_response())

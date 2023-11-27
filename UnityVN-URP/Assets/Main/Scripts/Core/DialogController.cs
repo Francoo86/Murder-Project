@@ -13,7 +13,10 @@ public class DialogController : MonoBehaviour
     public static DialogController Instance { get; private set; }
     private TextArchitect architect;
 
+    //Definimos una "funcion" que es más o menos personalizable.
     public delegate void DialogSystemEvent();
+    //Esta definicion de evento se comporta como el patrón Observador.
+    //Lo que haremos con el es llamarlo cada vez que hagamos click en algo.
     public event DialogSystemEvent onUserPrompt_Next;
 
     public bool IsRunning => convManager.IsRunning;
@@ -42,6 +45,7 @@ public class DialogController : MonoBehaviour
     }
 
     public void OnUserPrompt_Next() {
+        Debug.Log("Invoking...");
         onUserPrompt_Next?.Invoke();
     }
 

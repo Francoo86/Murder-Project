@@ -7,6 +7,8 @@ public class APITesting : MonoBehaviour
     public APIClient client;
     async void Start()
     {
+        PlayerModel ply = PlayerModel.GetInstance();
+
         /*
         Dictionary <string, string> data = new Dictionary<string, string>
         {
@@ -19,6 +21,7 @@ public class APITesting : MonoBehaviour
         client = new APIClient();
         //frickin works!!!!
         var session = await client.RequestCharacterSession("ana", data);*/
+        client = new APIClient();
 
         AISessionHandler sess = new AISessionHandler("sujeto_5", client);
         await sess.RequestNewSession();

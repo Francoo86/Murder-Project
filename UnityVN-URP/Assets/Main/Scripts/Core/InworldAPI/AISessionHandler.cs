@@ -53,10 +53,15 @@ public class AISessionHandler
     }
 
     public async Task<bool> RequestNewSession() {
-        PlayerModel plyModel = PlayerModel.GetInstance();
-        Debug.Log($"Is this an object?{plyModel}");
-        
-        var data = await client.RequestCharacterSession(character, plyModel.GetData());
+        Debug.Log($"Is this an object? {client == null}");
+
+        var data = await client.RequestCharacterSession(character, new Dictionary<string, string>()
+        {
+            { "givenName", "Luis" },
+            {"age", "30" },
+            {"gender", "male" },
+            {"role", "detective" }
+        });
 
         if (data == null) { 
             return false;
@@ -70,9 +75,10 @@ public class AISessionHandler
         //Usually the first one.
         CharacterSessionInfo Info = charsData[0];
 
+        Debug.LogWarning($"Formatting session data: {Info.Character}");
         //Save the data in class.
         sessionId = deserialSession.Name;
-        plySessionId = Info.Name;
+        plySessionId = Info.Character;
         lastUsed = DateTime.Now;
 
         Debug.Log($"Data obtained from session: {sessionId}, {plySessionId}");

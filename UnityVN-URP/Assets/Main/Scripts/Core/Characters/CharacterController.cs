@@ -65,7 +65,7 @@ public class CharacterController : MonoBehaviour
                 return new TextCharacter(characterModel.name, data);
             case Character.CharacterType.Sprite:
             case Character.CharacterType.SpriteSheet:
-                return new SpriteCharacter(characterModel.name, data, characterModel.prefab);
+                return new SpriteCharacter(characterModel.name, data, characterModel.prefab, characterModel.baseCharacterFolder);
             default:
                 break;
         }
@@ -79,6 +79,7 @@ public class CharacterController : MonoBehaviour
         model.name = charName;
         model.config = config.GetConfig(charName);
         model.prefab = LookupPrefab(charName);
+        model.baseCharacterFolder = FormatCharacterPrefabPath(characterPrefabPath, charName);
         return model;
     }
 
@@ -96,4 +97,5 @@ class CharacterModel {
     public string name;
     public CharacterConfigData config = null;
     public GameObject prefab;
+    public string baseCharacterFolder = "";
 }

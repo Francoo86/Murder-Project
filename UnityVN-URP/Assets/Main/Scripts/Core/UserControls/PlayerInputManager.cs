@@ -14,7 +14,10 @@ public class PlayerInputManager : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Return))
+        {
+            Debug.Log("En verdad estoy llamando esto?");
             PromptAdvance();
+        }
     }
 
     //Minuto 42
