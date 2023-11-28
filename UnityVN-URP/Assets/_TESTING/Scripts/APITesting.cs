@@ -51,6 +51,7 @@ public class APITesting : MonoBehaviour
             "Are we living on the matrix?",
         };
 
+        //Make the character talk in the coroutines.
         for(int i =  0; i < lines.Length; i++)
         {
             yield return textChar.Say(lines[i]);

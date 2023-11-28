@@ -46,12 +46,12 @@ public class ConversationManager
 
             //Revisamos si tenemos dialogo.
             if (dialogLine.HasDialog) { 
-                yield return RunDialogueForLine(dialogLine);
+                yield return RunDialogForLine(dialogLine);
             }
 
             //Revisamos si tenemos comandos a ejecutar.
             if (dialogLine.HasCommands) {
-                yield return RunDialogueForCommands(dialogLine);
+                yield return RunDialogForCommands(dialogLine);
             }
 
             if(dialogLine.HasDialog) 
@@ -61,7 +61,7 @@ public class ConversationManager
         }
     }
 
-    IEnumerator RunDialogueForLine(DialogLineModel dialogLine)
+    IEnumerator RunDialogForLine(DialogLineModel dialogLine)
     {
         //Muestra o esconde un hablante existente.
         //Ya se configuro el apartado para narrador.
@@ -76,7 +76,7 @@ public class ConversationManager
         //yield return WaitForUserInput();
     }
 
-    IEnumerator RunDialogueForCommands(DialogLineModel dialogLine) {
+    IEnumerator RunDialogForCommands(DialogLineModel dialogLine) {
         List<CommandData.Command> commands = dialogLine.commandData.commands;
 
         foreach (CommandData.Command command in commands) {
