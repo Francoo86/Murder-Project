@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TestingDialog : MonoBehaviour
 {
+    /*
     // Start is called before the first frame update
     void Start()
     {
@@ -46,5 +47,5 @@ public class TestingDialog : MonoBehaviour
     void Update()
     {
         
-    }
+    }*/
 }

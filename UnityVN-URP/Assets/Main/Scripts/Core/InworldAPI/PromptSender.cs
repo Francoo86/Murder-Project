@@ -7,6 +7,7 @@ public class PromptSender {
     //Another singleton moment.
     private static PromptSender instance;
     private AISessionHandler currentSession;
+    private CharacterInteraction lastInteraction = new CharacterInteraction();
 
     private PromptSender()
     {
@@ -30,6 +31,7 @@ public class PromptSender {
         currentSession = session;
     }
 
+    //Void method should keep it there.
     public async void Talk(string text)
     {
         if (currentSession == null) {
@@ -49,7 +51,14 @@ public class PromptSender {
             {
                 Debug.LogWarning($"Printing fetched text: {deserializedInteraction.TextList[i]}");
             }
-            //Debug.LogWarning(deserializedInteraction.TextList.ToString());
         }
+
+        EmotionInfo emoteInfo = deserializedInteraction.Emotion;
+        lastInteraction.SetLastInteraction(deserializedInteraction.TextList, emoteInfo.Behavior, emoteInfo.Strength);
+    }
+
+    public IEnumerator TestCharacter(Character character)
+    {
+        yield return lastInteraction.DisplayText(character);
     }
 }
