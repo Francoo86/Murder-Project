@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using DIALOGUE; // Add this line
 
 [System.Serializable]
 /// <summary>

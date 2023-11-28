@@ -2850,13 +2850,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f106a488e0a8c4ca92cbe5e901be65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 255467475}
-  previewImage: {fileID: 0}
-  titleText: {fileID: 238457888}
-  deleteButton: {fileID: 1105922949}
-  loadButton: {fileID: 1587724492}
-  saveButton: {fileID: 2005966237}
-  FileNumber: 0
 --- !u!114 &255467478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2949,13 +2942,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f106a488e0a8c4ca92cbe5e901be65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 258664337}
-  previewImage: {fileID: 0}
-  titleText: {fileID: 1416026363}
-  deleteButton: {fileID: 1685679934}
-  loadButton: {fileID: 1301603873}
-  saveButton: {fileID: 88948080}
-  FileNumber: 0
 --- !u!114 &258664340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3369,7 +3355,7 @@ MonoBehaviour:
     root: {fileID: 749809427}
     nameContainer:
       root: {fileID: 293488961}
-      nameText: {fileID: 95199700}
+      <nameText>k__BackingField: {fileID: 95199700}
     dialogText: {fileID: 1017941385}
 --- !u!1 &301875639
 GameObject:
@@ -3930,13 +3916,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f106a488e0a8c4ca92cbe5e901be65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 330022515}
-  previewImage: {fileID: 0}
-  titleText: {fileID: 349079416}
-  deleteButton: {fileID: 1002772831}
-  loadButton: {fileID: 711937667}
-  saveButton: {fileID: 1303774333}
-  FileNumber: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -4190,7 +4169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc741fac1550dde428671b0aa4ea41d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pageType: 1
 --- !u!1 &345244063
 GameObject:
   m_ObjectHideFlags: 0
@@ -8539,11 +8517,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37142d35a0d31ef44bdc0c082a4f6782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 1995947555}
-  pages:
-  - {fileID: 1540275675}
-  - {fileID: 334842899}
-  - {fileID: 1530029594}
 --- !u!1 &907358610
 GameObject:
   m_ObjectHideFlags: 0
@@ -10586,13 +10559,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f106a488e0a8c4ca92cbe5e901be65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 1232394822}
-  previewImage: {fileID: 0}
-  titleText: {fileID: 370453158}
-  deleteButton: {fileID: 1295085411}
-  loadButton: {fileID: 1397642970}
-  saveButton: {fileID: 1059575123}
-  FileNumber: 0
 --- !u!114 &1232394825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10867,13 +10833,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f106a488e0a8c4ca92cbe5e901be65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 1238138756}
-  previewImage: {fileID: 0}
-  titleText: {fileID: 267972208}
-  deleteButton: {fileID: 1916662111}
-  loadButton: {fileID: 1123729619}
-  saveButton: {fileID: 1701876854}
-  FileNumber: 0
 --- !u!114 &1238138759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13616,7 +13575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d075e0209c8011d41a99f7007c8c3f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pageType: 2
 --- !u!1 &1532600125
 GameObject:
   m_ObjectHideFlags: 0
@@ -13780,14 +13738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5eafcea0a7ba74991062c834b690d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pageType: 0
-  saveSlots:
-  - {fileID: 330022519}
-  - {fileID: 2046389386}
-  - {fileID: 258664339}
-  - {fileID: 1238138758}
-  - {fileID: 1232394824}
-  - {fileID: 255467477}
 --- !u!1 &1572613235
 GameObject:
   m_ObjectHideFlags: 0
@@ -18798,13 +18748,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f106a488e0a8c4ca92cbe5e901be65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 2046389384}
-  previewImage: {fileID: 0}
-  titleText: {fileID: 549812689}
-  deleteButton: {fileID: 1319167812}
-  loadButton: {fileID: 1824239466}
-  saveButton: {fileID: 1060472651}
-  FileNumber: 0
 --- !u!114 &2046389387
 MonoBehaviour:
   m_ObjectHideFlags: 0

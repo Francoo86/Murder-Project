@@ -24,9 +24,12 @@ namespace History
         { 
             DialogueData data = new DialogueData();
 
-            var ds = DialogSystem.instance;
-            var dialogueText = ds.dialogueContainer.dialogueText;
-            //var nameText = ds.dialogueContainer.nameContainer.
+            var ds = DialogController.Instance;
+            var dialogueText = ds.dialogContainer.dialogText;
+            var nameText = ds.dialogContainer.nameContainer.nameText;
+
+            data.currentDialogue = dialogueText.text;
+            data.dialogueFont = FilePaths.dialogueText.font.name;
 
             return data;
         }
