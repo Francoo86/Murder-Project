@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class VNMenuManager : MonoBehaviour
 {
+    /*
     public static VNMenuManager instance;
 
     private MenuPage activePage = null;
@@ -35,7 +36,7 @@ public class VNMenuManager : MonoBehaviour
     }
 
     // Dan probelmas el slm.menuFunction -> se debe crear en VNGAMESAVE.
-    /*public void OpenSavePage()
+    public void OpenSavePage()
     {
         var page = GetPage(MenuPage.PageType.SaveAndLoad);
         var slm.menuFunction = SaveAndLoadMenu.MenuFunction.save;
@@ -48,7 +49,7 @@ public class VNMenuManager : MonoBehaviour
         var slm.menuFunction = SaveAndLoadMenu.MenuFunction.load;
         OpenPage(page);
     }
-    */
+    
 
     public void OpenConfigPage()
     {
@@ -92,5 +93,5 @@ public class VNMenuManager : MonoBehaviour
         rootCG.SetInteractableState(false);
         isOpen = false;
     }
-
+    */
 }

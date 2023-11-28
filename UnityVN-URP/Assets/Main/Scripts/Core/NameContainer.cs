@@ -7,25 +7,31 @@ using UnityEngine;
 /// Clase encargada de manejar la logica del nombre del personaje de la caja de dialogo.
 /// </summary>
 /// 
-[System.Serializable]
-public class NameContainer
+namespace DIALOGUE
 {
-    [SerializeField] public GameObject root;
-    [SerializeField] public TextMeshProUGUI nameText;
-    // Start is called before the first frame update
-    public void Show(string newName = "") {
-        root.SetActive(true);
+    [System.Serializable]
+    public class NameContainer
+    {
+        [SerializeField] public GameObject root;
+        [field: SerializeField] public TextMeshProUGUI nameText { get; private set; }
+        // Start is called before the first frame update
+        public void Show(string newName = "")
+        {
+            root.SetActive(true);
 
-        if (newName != string.Empty) { 
-            nameText.text = newName;
+            if (newName != string.Empty)
+            {
+                nameText.text = newName;
+            }
         }
-    }
 
-    public void Hide() {
-        Debug.Log($"We are hiding the {nameText.name}");
-        root.SetActive(false);
-    }
+        public void Hide()
+        {
+            Debug.Log($"We are hiding the {nameText.name}");
+            root.SetActive(false);
+        }
 
-    public void SetNameColor(Color color) => nameText.color = color;
-    public void SetNameFont(TMP_FontAsset font) => nameText.font = font;
+        public void SetNameColor(Color color) => nameText.color = color;
+        public void SetNameFont(TMP_FontAsset font) => nameText.font = font;
+    }
 }

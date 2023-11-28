@@ -9,6 +9,7 @@ using System.IO;
 
 public class SaveLoadSlot : MonoBehaviour
 {
+    /*
     public GameObject root;
     public RawImage previewImage;
     public TextMeshProUGUI titleText;
@@ -32,7 +33,7 @@ public class SaveLoadSlot : MonoBehaviour
             PopulateDetailsFromFile(function, null);
         }
     }
-
+    
     private void PopulateDetailsFromFile( SaveAndLoadMenu.MenuFunction function, VNGameSave file) 
     {
         if (file == null)
@@ -56,7 +57,7 @@ public class SaveLoadSlot : MonoBehaviour
             previewImage.texture = screenshotPreview;
         }
     }
-
+    
     public void Delete() 
     {
         File.Delete(filePath);
@@ -76,4 +77,5 @@ public class SaveLoadSlot : MonoBehaviour
         activeSave.Save();
         PopulateDetailsFromFile(SaveAndLoadMenu.Instance.menuFunction, activeSave);
     }
+    */
 }

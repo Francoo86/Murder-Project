@@ -8,6 +8,7 @@ using System.Security.Principal;
 
 public class SaveAndLoadMenu : MenuPage
 {
+    /*
     public static SaveAndLoadMenu Instance { get; private set; }
 
     private const int MAX_FILES = 6;
@@ -37,7 +38,7 @@ public class SaveAndLoadMenu : MenuPage
         base.Open();
         if (!loadedFilesForFirstTime)
             PopulateSaveSlotsForPage(currentPage);
-    }*/
+    }
 
     private void PopulateSaveSlotsForPage(int pageNumber)
     {
@@ -67,4 +68,5 @@ public class SaveAndLoadMenu : MenuPage
             }
         }
     }
+    */
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MenuPage : MonoBehaviour
 {
+    /*
     public enum PageType { SaveAndLoad, Config, Help };
     public PageType pageType;
 
@@ -19,4 +20,5 @@ public class MenuPage : MonoBehaviour
             VNMenuManager.Instance.CloseRoot();
         }
     }
+    */
 }

@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class ConfigMenu : MenuPage
 {
+    /*
     [SerializeField] private GameObject[] panels;
     private GameObject activePanel;
 
@@ -40,4 +41,5 @@ public class ConfigMenu : MenuPage
         //panel.SetActive(true);
         //activePanel = panel;
     }
+    */
 }
