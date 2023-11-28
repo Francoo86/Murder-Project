@@ -12,7 +12,11 @@ public class MenuPage : MonoBehaviour
     {
     }
 
-    public void Close()
+    public void Close(bool closeAllMenus = false)
     {
+        if (closeAllMenus)
+        {
+            VNMenuManager.Instance.CloseRoot();
+        }
     }
 }
