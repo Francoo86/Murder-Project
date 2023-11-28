@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class ScreenshootMaster : MonoBehaviour
 {
-    public static Texture2D CaptureScreenshot(int width int height, float supersize = 1, string filePath = "") => CaptureScreenshot(Camera.main, width, height, supersize, filePath);
-    public static Texture2D CaptureScreenshot(Camera cam, int width int height, float supersize = 1, string filePath = "")
+    public static Texture2D CaptureScreenshot(int width, int height, float supersize = 1, string filePath = "") => CaptureScreenshot(Camera.main, width, height, supersize, filePath);
+    public static Texture2D CaptureScreenshot(Camera cam, int width, int height, float supersize = 1, string filePath = "")
     {
         if (supersize != 1)
         {
@@ -43,11 +43,11 @@ public class ScreenshootMaster : MonoBehaviour
         switch (fileType) { 
             case ImageType.PNG:
                 bytes = screenshot.EncodeToPNG();
-                extension = ".png"
+                extension = ".png";
                 break;
             case ImageType.JPG:
                 bytes = screenshot.EncodeToJPG();
-                extension = ".jpg"
+                extension = ".jpg";
                 break;
         };
 

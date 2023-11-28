@@ -34,7 +34,8 @@ public class VNMenuManager : MonoBehaviour
         return pages.FirstOrDefault(page => page.pageType == pagetype);
     }
 
-    public void OpenSavePage()
+    // Dan probelmas el slm.menuFunction -> se debe crear en VNGAMESAVE.
+    /*public void OpenSavePage()
     {
         var page = GetPage(MenuPage.PageType.SaveAndLoad);
         var slm.menuFunction = SaveAndLoadMenu.MenuFunction.save;
@@ -47,6 +48,7 @@ public class VNMenuManager : MonoBehaviour
         var slm.menuFunction = SaveAndLoadMenu.MenuFunction.load;
         OpenPage(page);
     }
+    */
 
     public void OpenConfigPage()
     {

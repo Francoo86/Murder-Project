@@ -19,6 +19,7 @@ public class SaveLoadSlot : MonoBehaviour
     [HideInInspector] public int FileNumber = 0;
     [HideInInspector] public string filePath = "";
 
+
     public void PopulateDetails( SaveAndLoadMenu.MenuFunction function )
     {
         if (File.Exists(filePath))
@@ -44,7 +45,7 @@ public class SaveLoadSlot : MonoBehaviour
         }
         else
         {
-            titleText.text = $"{fileNumber}. {file.timestamp}"
+            titleText.text = $"{fileNumber}. {file.timestamp}";
             deleteButton.gameObject.SetActive(true);
             loadButton.gameObject.SetActive(function == SaveAndLoadMenu.MenuFunction.load);
             saveButton.gameObject.SetActive(function == SaveAndLoadMenu.MenuFunction.save);
