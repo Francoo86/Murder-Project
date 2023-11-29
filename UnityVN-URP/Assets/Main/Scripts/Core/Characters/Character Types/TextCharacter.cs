@@ -12,5 +12,11 @@ public class TextCharacter : Character
     public TextCharacter(string name, CharacterConfigData config) : base(name, config, prefab: null) { }
 }
 /*
-}
+        yield return new WaitForSeconds(1);
+        yield return Marcelo.Flip(0.3f);
+       
+        yield return Patricia.FaceRight(immediate:true);
+        yield return Patricia.FaceLeft(immediate:true);
+
+        NUEVO PARA HACER EL TESTEO XD
 */

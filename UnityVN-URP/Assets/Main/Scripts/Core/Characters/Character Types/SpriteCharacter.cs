@@ -105,7 +105,7 @@ public class SpriteCharacter : Character
     }
 
 
-    
+
     public override IEnumerator Highlighting(bool highlight, float speedMultiplier)
     {
         Color targetColor = displayColor;
@@ -115,9 +115,24 @@ public class SpriteCharacter : Character
 
         yield return null;
 
-        while (layers.Any(l =>  l.isChangingColor))
+        while (layers.Any(l => l.isChangingColor))
             yield return null;
 
         co_changingColor = null;
+    }
+
+    public override IEnumerator FaceDirection(bool faceLeft, float speedMultiplier, bool immediate)
+    {
+        foreach (CharacterSpriteLayer layer in layers)
+        {
+            if (faceLeft)
+                layer.FaceLeft(speedMultiplier, immediate);
+            else
+                layer.FaceRight(speedMultiplier, immediate);
+        }
+        yield return null;
+        while (layers.Any(l => l.isFlipping))
+            yield return null;
+        co_flipping = null;
     }
 }
