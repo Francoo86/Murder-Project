@@ -7,11 +7,17 @@ using UnityEngine.UI;
 public class SpriteCharacter : Character
 {
     private const string SPRITE_RENDERED_PARENT_NAME = "Renderers";
+    private const string IMAGES_PATH = "/Images";
+    private string assetsDirectory;
     private CanvasGroup RootCanvas => root.GetComponent<CanvasGroup>();
     public List<CharacterSpriteLayer> layers = new List<CharacterSpriteLayer>(); 
     public SpriteCharacter(string name, CharacterConfigData config, GameObject prefab, string charAssetsFolder) : base(name, config, prefab) {
         RootCanvas.alpha = 0;
-        Show();
+        assetsDirectory = charAssetsFolder;
+
+        GetLayers();
+
+        //Show();
         Debug.Log($"Character based on sprites loaded. {name}");
     }
 
@@ -38,6 +44,16 @@ public class SpriteCharacter : Character
 
     public void SetSprite(Sprite sprite, int layer = 0) {
         layers[layer].SetSprite(sprite);
+    }
+
+    public Sprite GetSprite(string spriteName)
+    {
+        if(config.charType == CharacterType.SpriteSheet)
+        {
+            return null;
+        }
+        else
+            return Resources.Load<Sprite>($"{assetsDirectory}/{spriteName}");
     }
     
     public override IEnumerator HandleShowing(bool shouldShow)
