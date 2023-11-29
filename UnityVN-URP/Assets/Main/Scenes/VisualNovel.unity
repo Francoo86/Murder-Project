@@ -18945,11 +18945,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Personaje - [Marcelo]
       objectReference: {fileID: 0}
-    - target: {fileID: 4000589937846678294, guid: 572efccb0a482174ea789754e399ab3d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4000589937846678295, guid: 572efccb0a482174ea789754e399ab3d,
         type: 3}
       propertyPath: m_Pivot.x

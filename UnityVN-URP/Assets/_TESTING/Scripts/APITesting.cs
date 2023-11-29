@@ -33,9 +33,14 @@ public class APITesting : MonoBehaviour
     
     IEnumerator TestPedro()
     {
-        Character charPedro = CharacterController.Instance.CreateCharacter("Marcelo");
+        SpriteCharacter charPedro = CharacterController.Instance.CreateCharacter("Marcelo") as SpriteCharacter;
         Character textChar = CharacterController.Instance.CreateCharacter("Player");
         yield return charPedro.Show();
+
+        Sprite test = charPedro.GetSprite("marcelo_sorprendido");
+        Debug.Log(test);
+        yield return new WaitForSeconds(2);
+        charPedro.SetSprite(test);
         
         //Dependency injection perhaps.
         AISessionManager aiManager = new AISessionManager("ana", APIClientV2.Instance);

@@ -8,12 +8,13 @@ public class SpriteCharacter : Character
 {
     private const string SPRITE_RENDERED_PARENT_NAME = "Renderers";
     private const string IMAGES_PATH = "/Images";
+    public const bool DEFAULT_ORIENTATION_IS_FACING_LEFT = false;
     private string assetsDirectory;
     private CanvasGroup RootCanvas => root.GetComponent<CanvasGroup>();
     public List<CharacterSpriteLayer> layers = new List<CharacterSpriteLayer>(); 
     public SpriteCharacter(string name, CharacterConfigData config, GameObject prefab, string charAssetsFolder) : base(name, config, prefab) {
         RootCanvas.alpha = 0;
-        assetsDirectory = charAssetsFolder;
+        assetsDirectory = charAssetsFolder + IMAGES_PATH;
 
         GetLayers();
 
@@ -55,7 +56,13 @@ public class SpriteCharacter : Character
         else
             return Resources.Load<Sprite>($"{assetsDirectory}/{spriteName}");
     }
-    
+
+    public Coroutine TransitionSprite(Sprite sprite, int layer = 0, float speed = 0)
+    {
+        CharacterSpriteLayer spriteLayer = layers[layer];
+        return spriteLayer.TransitionSprite(sprite, speed);
+    }
+
     public override IEnumerator HandleShowing(bool shouldShow)
     {
         float targetAlpha = shouldShow ? 1.0f : 0.0f;

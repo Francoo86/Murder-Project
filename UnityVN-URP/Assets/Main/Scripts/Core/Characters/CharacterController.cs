@@ -79,17 +79,17 @@ public class CharacterController : MonoBehaviour
         model.name = charName;
         model.config = config.GetConfig(charName);
         model.prefab = LookupPrefab(charName);
-        model.baseCharacterFolder = FormatCharacterPrefabPath(characterPrefabPath, charName);
+        model.baseCharacterFolder = FormatCharacterPath(characterPath, charName);
         return model;
     }
 
     private GameObject LookupPrefab(string charName)
     {
-        string resPath = FormatCharacterPrefabPath(characterPrefabPath, charName);
+        string resPath = FormatCharacterPath(characterPrefabPath, charName);
         return Resources.Load<GameObject>(resPath);
     }
 
-    private string FormatCharacterPrefabPath(string path, string charName) => path.Replace(CHARACTER_ID, charName);
+    private string FormatCharacterPath(string path, string charName) => path.Replace(CHARACTER_ID, charName);
 
 }
 
