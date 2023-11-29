@@ -6,20 +6,38 @@ using UnityEngine;
 
 public abstract class Character
 {
+    
+    private const float UNHIGHLIGHTED_DARKEN_STRENGTH = 0.65f;
+
     public string name;
     public string displayName;
     //Hacer un cuadro para cada imagen de personaje.
     public RectTransform root;
     public CharacterConfigData config;
     public Animator animator;
+
+    public Color color { get; protected set; } = Color.white;
+    protected Color displayColor => highlighted ? highlightedColor : unhighlightedColor;
+
     protected CharacterController controller => CharacterController.Instance;
 
-    //Corutinas de mostrado.
-    protected Coroutine CO_Hiding, CO_Showing, CO_Moving;
+    
+    protected Color highlightedColor => color;
+    protected Color unhighlightedColor => new Color(color.r * UNHIGHLIGHTED_DARKEN_STRENGTH, color.g * UNHIGHLIGHTED_DARKEN_STRENGTH, color.b * UNHIGHLIGHTED_DARKEN_STRENGTH, color.a);
+    public bool highlighted { get; private set; } = true;
+
+
+    //Corutinas de mostrado.                              
+    protected Coroutine CO_Hiding, CO_Showing, CO_Moving, co_highlighting, co_changingColor;
     //Logica de mostrar.
     private bool IsShowing => CO_Showing != null;
     private bool IsHiding => CO_Hiding != null;
     private bool IsMoving => CO_Moving != null;
+
+    private bool isChangingColor => co_changingColor != null;
+    private bool isHighlighting => (highlighted && co_highlighting != null);
+    private bool isUnHighlighting => (!highlighted && co_highlighting != null);
+
     public virtual bool IsVisible => false;
 
     //Cada personaje tendrá su propio nombre.
@@ -144,6 +162,62 @@ public abstract class Character
 
     public virtual IEnumerator HandleShowing(bool shouldShow) {
         //Debug.LogWarning("Can't be called on abstract character class");
+        yield return null;
+    }
+
+ 
+    public virtual void SetColor(Color color)
+    {
+        this.color = color;
+    }
+    public Coroutine TransitionColor(Color color, float speed = 1f)
+    {
+        this.color = color;
+
+        if (isChangingColor)
+            controller.StopCoroutine(co_changingColor);
+
+        co_changingColor = controller.StartCoroutine(ChangingColor(displayColor, speed));
+        return co_changingColor;
+    }
+    public virtual IEnumerator ChangingColor(Color color, float speed)
+    {
+        Debug.LogWarning("Color changing is not applicable on this character type!");
+        yield return null;
+    }
+
+  
+    public Coroutine Highlight(float speed = 1f)
+    {
+        if (isHighlighting)
+            return co_highlighting;
+
+        if (isUnHighlighting)
+            controller.StopCoroutine(co_highlighting);
+
+        highlighted = true;
+        co_highlighting = controller.StartCoroutine(Highlighting(highlighted, speed));
+
+        return co_highlighting;
+    }
+
+    public Coroutine UnHighlight(float speed = 1f)
+    {
+        if (isUnHighlighting)
+            return co_highlighting;
+
+        if (isHighlighting)
+            controller.StopCoroutine(co_highlighting);
+
+        highlighted = false;
+        co_highlighting = controller.StartCoroutine(Highlighting(highlighted, speed));
+
+        return co_highlighting;
+    }
+
+    public virtual IEnumerator Highlighting(bool highlight, float speedMultiplier)
+    {
+        Debug.Log("Highlighting is not available on this character type!");
         yield return null;
     }
 

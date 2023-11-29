@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class SpriteCharacter : Character
 {
@@ -11,8 +12,9 @@ public class SpriteCharacter : Character
     public const bool DEFAULT_ORIENTATION_IS_FACING_LEFT = false;
     private string assetsDirectory;
     private CanvasGroup RootCanvas => root.GetComponent<CanvasGroup>();
-    public List<CharacterSpriteLayer> layers = new List<CharacterSpriteLayer>(); 
-    public SpriteCharacter(string name, CharacterConfigData config, GameObject prefab, string charAssetsFolder) : base(name, config, prefab) {
+    public List<CharacterSpriteLayer> layers = new List<CharacterSpriteLayer>();
+    public SpriteCharacter(string name, CharacterConfigData config, GameObject prefab, string charAssetsFolder) : base(name, config, prefab)
+    {
         RootCanvas.alpha = 0;
         assetsDirectory = charAssetsFolder + IMAGES_PATH;
 
@@ -28,28 +30,30 @@ public class SpriteCharacter : Character
 
         if (renderRoot == null) return;
 
-        for(int i = 0;  i < renderRoot.transform.childCount; i++)
+        for (int i = 0; i < renderRoot.transform.childCount; i++)
         {
             Transform child = renderRoot.transform.GetChild(i);
             Image renderImage = child.GetComponent<Image>();
 
-            if(renderImage != null) {
+            if (renderImage != null)
+            {
                 CharacterSpriteLayer layer = new CharacterSpriteLayer(renderImage);
                 layers.Add(layer);
                 //En español porque en la UI de Unity nos pusimos de acuerdo en que fuera así.
                 child.name = $"Capa {i}";
             }
-            
+
         }
     }
 
-    public void SetSprite(Sprite sprite, int layer = 0) {
+    public void SetSprite(Sprite sprite, int layer = 0)
+    {
         layers[layer].SetSprite(sprite);
     }
 
     public Sprite GetSprite(string spriteName)
     {
-        if(config.charType == CharacterType.SpriteSheet)
+        if (config.charType == CharacterType.SpriteSheet)
         {
             return null;
         }
@@ -68,7 +72,7 @@ public class SpriteCharacter : Character
         float targetAlpha = shouldShow ? 1.0f : 0.0f;
         CanvasGroup group = RootCanvas;
 
-        while(group.alpha != targetAlpha)
+        while (group.alpha != targetAlpha)
         {
             group.alpha = Mathf.MoveTowards(group.alpha, targetAlpha, 2f * Time.deltaTime);
             yield return null;
@@ -77,5 +81,43 @@ public class SpriteCharacter : Character
         //Resetear las corutinas.
         CO_Hiding = null;
         CO_Showing = null;
+    }
+
+    public override void SetColor(Color color)
+    {
+        base.SetColor(color);
+        color = displayColor;
+
+        foreach (CharacterSpriteLayer layer in layers)
+        {
+            layer.StopChangingColor();
+            layer.SetColor(color);
+        }
+    }
+    public override IEnumerator ChangingColor(Color color, float speed)
+    {
+        foreach (CharacterSpriteLayer layer in layers)
+            layer.TransitionColor(color, speed);
+        yield return null;
+        while (layers.Any(l => l.isChangingColor))
+            yield return null;
+        co_changingColor = null;
+    }
+
+
+    
+    public override IEnumerator Highlighting(bool highlight, float speedMultiplier)
+    {
+        Color targetColor = displayColor;
+
+        foreach (CharacterSpriteLayer layer in layers)
+            layer.TransitionColor(targetColor, speedMultiplier);
+
+        yield return null;
+
+        while (layers.Any(l =>  l.isChangingColor))
+            yield return null;
+
+        co_changingColor = null;
     }
 }

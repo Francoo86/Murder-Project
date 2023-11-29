@@ -31,7 +31,7 @@ namespace CHARACTERS
 
         public bool isTransitioningLayer => co_transitioningLayer != null;
         public bool isLevelingAlpha => co_levelingAlpha != null;
-        public bool isChanginColor => co_changingColor != null;
+        public bool isChangingColor => co_changingColor != null;
         public bool isFlipping => co_flipping != null;
 
 
@@ -137,12 +137,20 @@ namespace CHARACTERS
 
         public Coroutine TransitionColor(Color color, float speed)
         {
-            if (isChanginColor)
+            if (isChangingColor)
                 charController.StopCoroutine(co_changingColor);
 
             co_changingColor = charController.StartCoroutine(ChangingColor(color, speed));
 
             return co_changingColor;
+        }
+        public void StopChangingColor()
+        {
+            if (isChangingColor)
+                return;
+            
+            charController.StopCoroutine(co_changingColor);
+            co_changingColor = null;
         }
 
         private IEnumerator ChangingColor(Color color, float speedMultiplier)
