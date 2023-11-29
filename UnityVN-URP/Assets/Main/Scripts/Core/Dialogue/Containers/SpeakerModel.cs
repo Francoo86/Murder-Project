@@ -39,6 +39,7 @@ public class SpeakerModel
     }
 
     //The constructor does too much work.
+    //FIXME: Refactor pls.
     private void MatchSpeakerData(string speaker = "") {
         string speakerPattern = @$"{SCREENNAME_ID}|{POSITION_ID}|{EXPRESSION_ID.Insert(EXPRESSION_ID.Length - 1, @"\")}";
         MatchCollection matches = Regex.Matches(speaker, speakerPattern);

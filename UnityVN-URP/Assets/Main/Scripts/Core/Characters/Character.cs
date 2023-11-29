@@ -110,6 +110,10 @@ public abstract class Character
         root.anchorMax = maxAnchor;
     }
 
+    public virtual (Vector2, Vector2) GetPos() {
+        return (root.anchorMin, root.anchorMax);
+    }
+
     public virtual Coroutine MoveToPosition(Vector2 pos, float speed = 2f, bool smooth = false)
     {
         if (root == null) return null;
