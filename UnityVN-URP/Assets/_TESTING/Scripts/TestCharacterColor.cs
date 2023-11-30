@@ -15,11 +15,11 @@ public class TestCharacterColor : MonoBehaviour
         SpriteCharacter Marcelo = CreateCharacter("Marcelo") as SpriteCharacter;
         SpriteCharacter Patricia = CreateCharacter("Patricia") as SpriteCharacter;
 
-        Marcelo.Show();
+        yield return Marcelo.Show();
         Patricia.Show();
 
-        yield return null;
-        Marcelo.SetPos(new Vector2(0.9f, 0.73f));
+        Vector2 vec = new Vector2(0.5f, 0.38f);
+        yield return Marcelo.MoveToPosition(vec);
         //Patricia.SetPos(new Vector2(1, 0));
 
         Patricia.UnHighlight();
