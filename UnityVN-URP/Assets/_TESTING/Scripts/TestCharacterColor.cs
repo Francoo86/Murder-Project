@@ -22,6 +22,12 @@ public class TestCharacterColor : MonoBehaviour
         yield return Marcelo.MoveToPosition(vec);
         //Patricia.SetPos(new Vector2(1, 0));
 
+        yield return new WaitForSeconds(1);
+        yield return Marcelo.Flip(0.3f);
+
+        yield return Patricia.FaceRight(immediate: true);
+        yield return Patricia.FaceLeft(immediate: true);
+
         Patricia.UnHighlight();
         yield return Marcelo.Say("Hola");
 
