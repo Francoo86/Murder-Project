@@ -7,9 +7,6 @@ using UnityEditor.VersionControl;
 public class APITesting : MonoBehaviour
 {
     // Start is called before the first frame update
-    public APIClient client;
-    private PromptSender prompt = PromptSender.Instance;
-    private bool initialized = false;
     void Start()
     {
         StartCoroutine(TestPedro());
