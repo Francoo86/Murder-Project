@@ -61,12 +61,41 @@ public class ConversationManager
         }
     }
 
+    private void HandleSpeaker(SpeakerModel speakerModel)
+    {
+        bool shouldBeCreated = (speakerModel.MakeCharacterEnter || speakerModel.IsGoingToScreenPos || speakerModel.IsDoingAnyExpression);
+        Character character = CharacterController.Instance.GetCharacter(speakerModel.name, shouldBeCreated);
+
+        if (speakerModel.MakeCharacterEnter && (!character.IsVisible))
+            character.Show();
+            
+        //Muestra el nombre del personaje.
+        Controller.ShowSpeakerName(speakerModel.DisplayName);
+
+        //Carga los datos creados por la configuración escrita en su clase.
+        Controller.ApplySpeakerDataToBox(speakerModel.name);
+
+        if (speakerModel.IsGoingToScreenPos)
+            character.MoveToPosition(speakerModel.speakerScrPos);
+
+        if(speakerModel.IsDoingAnyExpression)
+            foreach(var exp in speakerModel.ScreenExpressions)
+            {
+                Debug.Log("Is this being called?!! lmao amongus");
+                //TODO: Remove the layer thing as we are not working with that.
+                character.OnExpressionReceive(exp.layer, exp.expression);
+            }
+    }
     IEnumerator RunDialogForLine(DialogLineModel dialogLine)
     {
         //Muestra o esconde un hablante existente.
         //Ya se configuro el apartado para narrador.
         if (dialogLine.HasSpeaker)
-            Controller.ShowSpeakerName(dialogLine.speakerMdl.DisplayName);
+        {
+            HandleSpeaker(dialogLine.speakerMdl);
+            //Mostrar al personaje en la interfaz.
+        }
+            
 
         //Construir el dialogo.
         //yield return BuildDialogue(dialogLine.dialog);

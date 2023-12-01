@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestingDialog : MonoBehaviour
 {
-    /*
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +13,7 @@ public class TestingDialog : MonoBehaviour
 
     IEnumerator StartTalking()
     {
-        Character charPedro = CharacterController.Instance.CreateCharacter("Marcelo");
+        SpriteCharacter charPedro = CharacterController.Instance.CreateCharacter("Marcelo") as SpriteCharacter;
         Character alfonso = CharacterController.Instance.CreateCharacter("Patricia");
         List<string> lines = new List<string>()
         {
@@ -29,6 +29,12 @@ public class TestingDialog : MonoBehaviour
         yield return charPedro.Hide();
         yield return new WaitForSeconds(1f);
         yield return charPedro.Show();
+
+        yield return new WaitForSeconds(1f);
+        Sprite pensativo = charPedro.GetSprite("feliz");
+        Debug.Log("Transitioning to pensativo");
+        charPedro.TransitionSprite(pensativo);
+        //charPedro.SetSprite(pensativo);
         //Wacky ahh pos.
         charPedro.SetPos(new Vector2(0.5f, 0.4f));
 
@@ -47,5 +53,5 @@ public class TestingDialog : MonoBehaviour
     void Update()
     {
         
-    }*/
+    }
 }

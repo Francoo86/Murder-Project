@@ -65,6 +65,7 @@ public class CommandController : MonoBehaviour
     }
 
     //TODO: Make it to factory pattern.
+    //Callback my beloved.
     private IEnumerator WaitForCommandToFinish(Delegate commandProc, string[] args) {
         if (commandProc is Action)
             commandProc.DynamicInvoke(null);

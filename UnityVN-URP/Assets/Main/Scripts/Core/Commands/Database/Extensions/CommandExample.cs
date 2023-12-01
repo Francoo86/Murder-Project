@@ -9,7 +9,7 @@ public class CommandExample : CommandDBExtension
     {
         database.AddCommand("Printear", new Action(PrintStuff));
         database.AddCommand("process_test", new Func<IEnumerator>(PrintNumbers));
-        database.AddCommand("test_moving", new Func<string, IEnumerator>(MoveCharacter));
+        //database.AddCommand("test_moving", new Func<string, IEnumerator>(MoveCharacter));
     }
 
     private static void PrintStuff() {
@@ -27,7 +27,7 @@ public class CommandExample : CommandDBExtension
     private static IEnumerator MoveCharacter(string dir)
     {
         bool left = dir.ToLower() == "left";
-        Transform character = GameObject.Find("Image").transform;
+        Transform character = GameObject.Find("Body").transform;
 
         float moveSpeed = 45;
         float targetX = left ? -8 : 8;

@@ -1,4 +1,5 @@
-Gordon "When despiertas"
+Marcelo "When despiertas"
+enter Marcelo [pensativo] "Hola"
 Fern as Frieren "Momazos" test_moving(right), test_moving(right)
 Frieren "comando(gracioso, xd, xdxdxd) hola ayuda"
 

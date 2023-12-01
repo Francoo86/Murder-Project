@@ -14,6 +14,14 @@ public class AISessionManager
 
     public string SessionId { get { return sessionId; } }
     public string PlayerSessionId { get { return plySessionId; } }
+    //Maybe it can used by another classes.
+    public static readonly Dictionary<string, string> PROTAGONIST_DATA = new Dictionary<string, string>()
+        {
+            { "givenName", "Luis" },
+            {"age", "30" },
+            {"gender", "male" },
+            {"role", "detective" }
+        };
 
     //Tiempo maximo que se puede estar en una sesión sin realizar nada.
     private readonly float SESSION_TIMEOUT_MINUTES = 30;
@@ -53,15 +61,7 @@ public class AISessionManager
     public IEnumerator RequestNewSession() {
         Debug.Log($"Is this an object? {client == null}");
 
-        var detectiveData = new Dictionary<string, string>()
-        {
-            { "givenName", "Luis" },
-            {"age", "30" },
-            {"gender", "male" },
-            {"role", "detective" }
-        };
-
-        yield return client.RequestCharacterSession(character, detectiveData, responseData => {
+        yield return client.RequestCharacterSession(character, PROTAGONIST_DATA, responseData => {
             var deserialSession = JsonConvert.DeserializeObject<SessionResponseModel>(responseData);
             var charsData = deserialSession.SessionCharacters;
 

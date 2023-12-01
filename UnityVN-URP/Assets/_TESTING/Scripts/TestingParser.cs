@@ -7,9 +7,14 @@ public class TestingParser : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SendFileToParser();
+        //SendFileToParser();
+        //StartCoroutine(ReadCoroutine());
     }
 
+    IEnumerator ReadCoroutine() {
+        List<string> lines = FileManager.ReadTextFile("dialogspeaker.txt");
+        yield return DialogController.Instance.Say(lines);
+    }
     // Update is called once per frame
     void SendFileToParser()
     {

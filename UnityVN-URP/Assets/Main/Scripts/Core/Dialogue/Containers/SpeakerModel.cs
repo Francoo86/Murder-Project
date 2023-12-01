@@ -12,9 +12,16 @@ public class SpeakerModel
     //Posicion del personaje en pantalla, tal como RenPy.
     public Vector2 speakerScrPos;
     //Como se mostrará el personaje en pantalla.
-    public string DisplayName => (screenName != string.Empty) ? screenName : name;
+    public string DisplayName => IsScreenName ? screenName : name;
+    public bool IsScreenName => screenName != string.Empty;
+    public bool IsGoingToScreenPos => false;
+    public bool IsDoingAnyExpression => ScreenExpressions.Count > 0;
     //Las emociones son papel fundamental en una novela.
+    //Por lo que veo estas son capas, lo más probable es que solo usaremos la primera solamente.
     public List<(int layer, string expression)> ScreenExpressions { get; set; }
+
+    //Minuto 13.
+    public bool MakeCharacterEnter = false;
 
     //Poner constantes para poder parsear bien los datos.
     private const string SCREENNAME_ID = " as ";
@@ -24,6 +31,8 @@ public class SpeakerModel
     private const char AXISDELIMITER_ID = ':';
     private const char EXPRESSIONLAYER_JOINER = ',';
     private const char EXPRESSIONLAYER_DELIMITER = ':';
+    //Palabra clave para mostrar al personaje en pantalla.
+    private const string SHOWCHARACTER_ID = "enter ";
     public SpeakerModel(string speaker) {
         InitializeSpeakerModel();
         Debug.Log($"Getting the speaker {speaker}");
@@ -40,7 +49,19 @@ public class SpeakerModel
 
     //The constructor does too much work.
     //FIXME: Refactor pls.
+    private string ProcessKeywords(string speaker)
+    {
+        if (speaker.StartsWith(SHOWCHARACTER_ID))
+        {
+            speaker = speaker.Substring(SHOWCHARACTER_ID.Length);
+            MakeCharacterEnter = true;
+        }
+
+        return speaker;
+    }
     private void MatchSpeakerData(string speaker = "") {
+        speaker = ProcessKeywords(speaker);
+
         string speakerPattern = @$"{SCREENNAME_ID}|{POSITION_ID}|{EXPRESSION_ID.Insert(EXPRESSION_ID.Length - 1, @"\")}";
         MatchCollection matches = Regex.Matches(speaker, speakerPattern);
 
@@ -92,8 +113,13 @@ public class SpeakerModel
                     //Very JS syntax to forEach.
                     .Select(elem => {
                         var parts = elem.Trim().Split(EXPRESSIONLAYER_DELIMITER);
-                        //Debug.Log($"Parts of this thing: {parts[0]}, {parts[1]}.");
-                        return (int.Parse(parts[0]), parts[1]);
+
+                        Debug.Log($"EXPRESSION GOT: {parts[0]}");
+
+                        if (parts.Length == 2)
+                            return (int.Parse(parts[0]), parts[1]);
+                        else
+                            return (0, parts[0]);
                     }).ToList();
             }
         }

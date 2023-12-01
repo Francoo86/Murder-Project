@@ -24,7 +24,7 @@ public class CharacterController : MonoBehaviour
     }
     
     //TODO: Make factory method with this.
-    public Character CreateCharacter(string charName) {
+    public Character CreateCharacter(string charName, bool revealAfterCreated = false) {
         if (storedChars.ContainsKey(charName.ToLower()))
         {
             Debug.LogError($"The character {charName} already exists, the character was not created.");
@@ -34,6 +34,9 @@ public class CharacterController : MonoBehaviour
         CharacterModel characterModel = GetCharacterModel(charName);
         Character character = CreateCharacterFromModel(characterModel);
         storedChars.Add(charName.ToLower(), character);
+
+        if (revealAfterCreated)
+            character.Show();
 
         return character;
     }

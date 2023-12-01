@@ -10,7 +10,7 @@ public class SpriteCharacter : Character
     private const string SPRITE_RENDERED_PARENT_NAME = "Renderers";
     private const string IMAGES_PATH = "/Images";
     public const bool DEFAULT_ORIENTATION_IS_FACING_LEFT = false;
-    private string assetsDirectory;
+    private string assetsDirectory = "";
     private CanvasGroup RootCanvas => root.GetComponent<CanvasGroup>();
     public List<CharacterSpriteLayer> layers = new List<CharacterSpriteLayer>();
     public SpriteCharacter(string name, CharacterConfigData config, GameObject prefab, string charAssetsFolder) : base(name, config, prefab)
@@ -61,8 +61,9 @@ public class SpriteCharacter : Character
             return Resources.Load<Sprite>($"{assetsDirectory}/{spriteName}");
     }
 
-    public Coroutine TransitionSprite(Sprite sprite, int layer = 0, float speed = 0)
+    public Coroutine TransitionSprite(Sprite sprite, int layer = 0, float speed = 1)
     {
+        //TODO: Remove the layer.
         CharacterSpriteLayer spriteLayer = layers[layer];
         return spriteLayer.TransitionSprite(sprite, speed);
     }
@@ -134,5 +135,19 @@ public class SpriteCharacter : Character
         while (layers.Any(l => l.isFlipping))
             yield return null;
         co_flipping = null;
+    }
+
+    public override void OnExpressionReceive(int layer, string expression)
+    {
+        Debug.Log($"pls change {layer} {expression}");
+        Sprite sprite = GetSprite(expression);
+
+        if (sprite == null) { 
+            Debug.LogError($"Expression {expression} not found!!");
+            return;
+        }
+        //base.OnExpressionReceive(layer, expression);
+
+        TransitionSprite(sprite, layer);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TestCharacterColor : MonoBehaviour
 {
+    /*
     private Character CreateCharacter (string name) => CharacterController.Instance.CreateCharacter(name);
     void Start()
     {
@@ -42,5 +43,5 @@ public class TestCharacterColor : MonoBehaviour
     void Update()
     {
 
-    }
+    }*/
 }

@@ -50,7 +50,9 @@ namespace CHARACTERS
         public Coroutine TransitionSprite(Sprite sprite, float speed = 1)
         {
             if (sprite == renderer.sprite)
+            {
                 return null;
+            }
             if (isTransitioningLayer)
                 charController.StopCoroutine(co_transitioningLayer);
 
