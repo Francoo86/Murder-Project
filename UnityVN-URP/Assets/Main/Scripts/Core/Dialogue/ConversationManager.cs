@@ -125,7 +125,7 @@ public class ConversationManager
             DialogData.DIALOG_SEGMENT segment = dialogLine.segments[i];
 
             yield return WaitForDialogSegmentSignalToBeTriggered(segment);
-            yield return BuildDialogue(segment.dialog, segment.ShouldAppend);
+            yield return BuildDialog(segment.dialog, segment.ShouldAppend);
         }
     }
 
@@ -144,7 +144,7 @@ public class ConversationManager
         }
     }
 
-    IEnumerator BuildDialogue(string diag, bool append = false) {
+    IEnumerator BuildDialog(string diag, bool append = false) {
         if (!append)
             arch.Build(diag);
         else
