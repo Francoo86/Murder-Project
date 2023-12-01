@@ -13,9 +13,9 @@ public class DialogController : MonoBehaviour
     public static DialogController Instance { get; private set; }
     private TextArchitect architect;
 
-    //Definimos una "funcion" que es más o menos personalizable.
+    //Definimos una "funcion" que es mï¿½s o menos personalizable.
     public delegate void DialogSystemEvent();
-    //Esta definicion de evento se comporta como el patrón Observador.
+    //Esta definicion de evento se comporta como el patrï¿½n Observador.
     //Lo que haremos con el es llamarlo cada vez que hagamos click en algo.
     public event DialogSystemEvent onUserPrompt_Next;
 
@@ -58,7 +58,7 @@ public class DialogController : MonoBehaviour
         dialogContainer.nameContainer.SetNameFont(config.nameFont);
     }
 
-    //Le hace un lookup a la configuración de los personajes solamente pasandole el nombre como parametro.
+    //Le hace un lookup a la configuraciï¿½n de los personajes solamente pasandole el nombre como parametro.
     public void ApplySpeakerDataToBox(string speakerName) {
         Character character = CharacterController.Instance.GetCharacter(speakerName);
         CharacterConfigData config = character != null ? character.config : CharacterController.Instance.GetCharacterConfig(speakerName);
@@ -66,7 +66,7 @@ public class DialogController : MonoBehaviour
     }
     public void ShowSpeakerName(string speakerName = "")
     {
-        //No hay razón para mostrar al narrador, similar a RenPy.
+        //No hay razï¿½n para mostrar al narrador, similar a RenPy.
         if (speakerName.ToLower() != "narrator")
             dialogContainer.nameContainer.Show(speakerName);
         else
