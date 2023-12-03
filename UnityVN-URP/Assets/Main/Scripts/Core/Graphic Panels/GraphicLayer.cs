@@ -25,7 +25,7 @@ public class GraphicLayer
     //path para poder guardar elementos de Load/Save.
     public void SetTexture(Texture texture, float transitionSpeed = 2.0f, Texture blendingTexture = null, string path = "")
     {
-        CreateGraphic(texture, transitionSpeed, path, blendingTexture);
+        CreateGraphic(texture, transitionSpeed, path, blendingText : blendingTexture);
     }
     
     //Only way to avoid repeating myself.
@@ -40,5 +40,6 @@ public class GraphicLayer
 
         //Mantener graficas en renderizado (trackeo).
         CurrentGraphic = graphObj;
+        CurrentGraphic.FadeIn(transitionSpeed, blendingText);
     }
 }
