@@ -7,7 +7,10 @@ public class GraphicTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GraphicPanelController.Instance.GetPanel("Fondo").GetLayer(0, true);
+        GraphicPanel panel = GraphicPanelController.Instance.GetPanel("Fondo");
+        GraphicLayer layer = panel.GetLayer(0, true);
+
+        layer.SetTexture("Graphics/BG Images/casa01");
     }
 
     // Update is called once per frame
