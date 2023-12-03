@@ -30,16 +30,17 @@ public class SpriteCharacter : Character
 
         if (renderRoot == null) return;
 
+        //TODO: Set it only to first child as we don't use all the layers.
         for (int i = 0; i < renderRoot.transform.childCount; i++)
         {
             Transform child = renderRoot.transform.GetChild(i);
-            Image renderImage = child.GetComponent<Image>();
-
-            if (renderImage != null)
+            
+            if (child.TryGetComponent<Image>(out var renderImage))
             {
                 CharacterSpriteLayer layer = new CharacterSpriteLayer(renderImage);
                 layers.Add(layer);
                 //En español porque en la UI de Unity nos pusimos de acuerdo en que fuera así.
+                //FIXME: Quitar esto.
                 child.name = $"Capa {i}";
             }
 
