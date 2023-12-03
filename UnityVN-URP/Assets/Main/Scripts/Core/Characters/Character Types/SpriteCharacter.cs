@@ -12,6 +12,8 @@ public class SpriteCharacter : Character
     public const bool DEFAULT_ORIENTATION_IS_FACING_LEFT = false;
     private string assetsDirectory = "";
     private CanvasGroup RootCanvas => root.GetComponent<CanvasGroup>();
+
+    //TODO: Esto hay que cambiarlo por uno solo.
     public List<CharacterSpriteLayer> layers = new List<CharacterSpriteLayer>();
     public SpriteCharacter(string name, CharacterConfigData config, GameObject prefab, string charAssetsFolder) : base(name, config, prefab)
     {
@@ -100,9 +102,12 @@ public class SpriteCharacter : Character
     {
         foreach (CharacterSpriteLayer layer in layers)
             layer.TransitionColor(color, speed);
+
         yield return null;
+
         while (layers.Any(l => l.isChangingColor))
             yield return null;
+
         co_changingColor = null;
     }
 
@@ -140,14 +145,12 @@ public class SpriteCharacter : Character
 
     public override void OnExpressionReceive(int layer, string expression)
     {
-        Debug.Log($"pls change {layer} {expression}");
         Sprite sprite = GetSprite(expression);
 
         if (sprite == null) { 
             Debug.LogError($"Expression {expression} not found!!");
             return;
         }
-        //base.OnExpressionReceive(layer, expression);
 
         TransitionSprite(sprite, layer);
     }
