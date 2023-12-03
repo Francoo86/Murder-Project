@@ -11,6 +11,7 @@ public class GraphicTest : MonoBehaviour
         GraphicLayer layer = panel.GetLayer(0, true);
 
         layer.SetTexture("Graphics/BG Images/casa01");
+        layer.CurrentGraphic.renderer.material.SetColor("_Color", Color.blue);
     }
 
     // Update is called once per frame

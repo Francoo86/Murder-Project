@@ -7,6 +7,7 @@ public class GraphicLayer
     public const string LAYER_NAME_FORMAT = "Layer {0}";
     public Transform panel;
     public int layerDepth = 0;
+    public GraphicObject CurrentGraphic { get; private set; } = null;
     // Start is called before the first frame update
     public void SetTexture(string path, float transitionSpeed = 2.0f, Texture blendingTexture = null)
     {
@@ -31,10 +32,13 @@ public class GraphicLayer
     //Usar el tipo generico para poder manejar imagenes y videos.
     private void CreateGraphic<T>(T graphicData, float transitionSpeed, string path, bool useAudioForVids = false, Texture blendingText = null)
     {
-        GraphicObject graphObj;
+        GraphicObject graphObj = null;
 
         if (graphicData is Texture)
             //Hacer un casteo si es una textura.
             graphObj = new GraphicObject(this, path, graphicData as Texture);
+
+        //Mantener graficas en renderizado (trackeo).
+        CurrentGraphic = graphObj;
     }
 }

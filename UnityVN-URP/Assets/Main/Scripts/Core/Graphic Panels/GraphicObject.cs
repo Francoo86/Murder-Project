@@ -8,6 +8,8 @@ using UnityEngine.Video;
 public class GraphicObject : MonoBehaviour
 {
     private const string NAME_FORMAT = "Grafica - [{0}]";
+    //Casi dejo la embarrá con esto XDDDD
+    private const string MATERIAL_PATH = "Materials/layerTransitionMaterial";
     public RawImage renderer;
     //Para el juicio final me imagino.
 
@@ -33,6 +35,9 @@ public class GraphicObject : MonoBehaviour
         renderer.name = string.Format(NAME_FORMAT, GraphicName);
         //Textura de la imagen.
         renderer.texture = texture;
+
+        //Cargar las transiciones.
+        renderer.material = GetTransitionMaterial();
     }
 
     private void InitializeGraphics() { 
@@ -46,5 +51,17 @@ public class GraphicObject : MonoBehaviour
 
         rect.offsetMin = Vector3.zero;
         rect.offsetMax = Vector3.one;
+    }
+
+    private Material GetTransitionMaterial()
+    {
+        Material mat = Resources.Load<Material>(MATERIAL_PATH);
+
+        if(mat != null)
+        {
+            return new Material(mat);
+        }
+
+        return null;
     }
 }
