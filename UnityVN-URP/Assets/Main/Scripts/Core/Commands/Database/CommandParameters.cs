@@ -23,8 +23,62 @@ public class CommandParameters
 
                 parameters.Add(paramName, pValue);
             }
-
-
         }
+    }
+
+    public bool TryGetValue<T>(string paramName, out T value, T defaultVal = default(T))
+    {
+        return TryGetValue(new string[] { paramName }, out value, defaultVal);
+    }
+
+    public bool TryGetValue<T>(string[] paramName, out T value, T defaultVal = default(T))
+    {
+        foreach(string parameter in paramName)
+        {
+            if(parameters.TryGetValue(parameter, out string paramValue))
+            {
+                if(TryCastParamater(paramValue, out value)) return true;
+            }
+        }
+
+        value = defaultVal;
+        return false;
+    }
+
+    private bool TryCastParamater<T>(string paramValue, out T value)
+    {
+        value = default; // Initialize with default value
+
+        if (typeof(T) == typeof(bool))
+        {
+            if (bool.TryParse(paramValue, out bool boolValue))
+            {
+                value = (T)(object)boolValue;
+                return true;
+            }
+        }
+        else if (typeof(T) == typeof(int))
+        {
+            if (int.TryParse(paramValue, out int intValue))
+            {
+                value = (T)(object)intValue;
+                return true;
+            }
+        }
+        else if (typeof(T) == typeof(float))
+        {
+            if (float.TryParse(paramValue, out float floatValue))
+            {
+                value = (T)(object)floatValue;
+                return true;
+            }
+        }
+        else if (typeof(T) == typeof(string))
+        {
+            value = (T)(object)paramValue;
+            return true;
+        }
+
+        return false;
     }
 }

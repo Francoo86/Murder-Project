@@ -12,7 +12,7 @@ public class DialogLineModel {
     public DialogData dialogData;
     public CommandData commandData;
 
-    public bool HasDialog => dialogData.HasDialog;//=> dialog != string.Empty;
+    public bool HasDialog => (dialogData != null && dialogData.HasDialog);//=> dialog != string.Empty;
     public bool HasCommands => commandData != null;//commands != string.Empty;
     public bool HasSpeaker => speakerMdl != null;//speaker != string.Empty;
     public DialogLineModel(string speaker, string dialog, string commands)
