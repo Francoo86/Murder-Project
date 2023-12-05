@@ -18850,8 +18850,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31a74582cababd4ea506f586a29782a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicMixer: {fileID: 0}
-  sfxMixer: {fileID: 0}
+  musicMixer: {fileID: -391380712908793045, guid: 14bb1bbc1eca2bd4b82392d85a85f1e3,
+    type: 2}
+  sfxMixer: {fileID: 8875841133277672783, guid: 14bb1bbc1eca2bd4b82392d85a85f1e3,
+    type: 2}
 --- !u!1 &2034410718
 GameObject:
   m_ObjectHideFlags: 0
