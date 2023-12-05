@@ -67,7 +67,7 @@ public class CharacterController : MonoBehaviour
             case Character.CharacterType.Text:
                 return new TextCharacter(characterModel.name, data);
             case Character.CharacterType.Sprite:
-            case Character.CharacterType.SpriteSheet:
+            //case Character.CharacterType.SpriteSheet:
                 return new SpriteCharacter(characterModel.name, data, characterModel.prefab, characterModel.baseCharacterFolder);
             default:
                 break;

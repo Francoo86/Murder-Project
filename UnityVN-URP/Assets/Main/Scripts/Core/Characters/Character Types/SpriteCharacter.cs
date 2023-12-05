@@ -56,11 +56,12 @@ public class SpriteCharacter : Character
 
     public Sprite GetSprite(string spriteName)
     {
+        /*
         if (config.charType == CharacterType.SpriteSheet)
         {
             return null;
         }
-        else
+        else*/
             return Resources.Load<Sprite>($"{assetsDirectory}/{spriteName}");
     }
 

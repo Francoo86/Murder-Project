@@ -81,7 +81,6 @@ public class ConversationManager
         if(speakerModel.IsDoingAnyExpression)
             foreach(var exp in speakerModel.ScreenExpressions)
             {
-                Debug.Log("Is this being called?!! lmao amongus");
                 //TODO: Remove the layer thing as we are not working with that.
                 character.OnExpressionReceive(exp.layer, exp.expression);
             }
@@ -165,6 +164,7 @@ public class ConversationManager
         }
     }
 
+    //TODO: Redux this thing.
     IEnumerator WaitForUserInput() {
         while (!isUserManipulated) {
             yield return null;

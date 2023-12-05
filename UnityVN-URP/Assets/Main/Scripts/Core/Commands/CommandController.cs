@@ -35,7 +35,7 @@ public class CommandController : MonoBehaviour
     // Start is called before the first frame update
     public Coroutine Execute(string command, params string[] args) { 
         Delegate cmd = cmdDatabase.GetCommand(command);
-        //cmd?.DynamicInvoke(null);
+
         if (cmd == null) return null;
 
         return StartProcess(command, cmd, args);

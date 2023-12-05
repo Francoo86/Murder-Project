@@ -22,7 +22,7 @@ public class NameContainer
     }
 
     public void Hide() {
-        Debug.Log($"We are hiding the {nameText.name}");
+        //Debug.Log($"We are hiding the {nameText.name}");
         root.SetActive(false);
     }
 

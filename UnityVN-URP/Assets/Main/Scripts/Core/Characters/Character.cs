@@ -269,6 +269,6 @@ public abstract class Character
         //Los mas usados en VN.
         Text,
         Sprite,
-        SpriteSheet,
+        //SpriteSheet,
     }
 }

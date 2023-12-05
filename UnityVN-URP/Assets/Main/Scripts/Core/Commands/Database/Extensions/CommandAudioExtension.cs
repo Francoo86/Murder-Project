@@ -17,6 +17,10 @@ public class CommandAudioExtension : CommandDBExtension
 
     private static void PlaySFX(string[] data)
     {
+        string filepath;
+        float volume, pitch;
+        bool loop;
 
+        //var param = ConvertDataToParameters(data);
     }
 }

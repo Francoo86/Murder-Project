@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class DialogController : MonoBehaviour
 {
     [SerializeField] private DialogConfig _config;
+    private const string NARRATOR_CHARACTER = "narrator";
 
     public DialogConfig Config => _config;
 
@@ -45,7 +47,8 @@ public class DialogController : MonoBehaviour
     }
 
     public void OnUserPrompt_Next() {
-        Debug.Log("Invoking...");
+        //Debug.Log("Invoking...");
+        //Si no es nulo lo invoca.
         onUserPrompt_Next?.Invoke();
     }
 
@@ -67,14 +70,16 @@ public class DialogController : MonoBehaviour
     public void ShowSpeakerName(string speakerName = "")
     {
         //No hay raz�n para mostrar al narrador, similar a RenPy.
-        if (speakerName.ToLower() != "narrator")
+        if (speakerName.ToLower() != NARRATOR_CHARACTER)
             dialogContainer.nameContainer.Show(speakerName);
         else
             HideSpeakerName();
     }
 
     public void HideSpeakerName() => dialogContainer.nameContainer.Hide();
-    //TODO: Implement Strategy.
+    
+    //Metodos sobrecargados para decir algo.
+    //Este es más que nada si no contamos con hablante.
     public Coroutine Say(string speaker, string dialogue) {
         List<string> conversation = new List<string>() {$"{speaker} \"{dialogue}\""};
         return Say(conversation);
