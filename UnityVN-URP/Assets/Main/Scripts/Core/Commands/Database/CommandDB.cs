@@ -10,8 +10,9 @@ public class CommandDB
     public void AddCommand(string commandName, Delegate command)
     {
         commandName = commandName.ToLower();
+        Debug.Log($"Adding command {commandName}.");
         if (!database.ContainsKey(commandName)) database[commandName] = command;
-        else Debug.LogWarning($"{commandName} already exists on the database!");
+        else Debug.LogWarning($"{commandName} command already exists on the database!");
     }
     
     public Delegate GetCommand(string commandName)
@@ -19,7 +20,7 @@ public class CommandDB
         commandName = commandName.ToLower();
 
         if (!HasCommand(commandName)) {
-            Debug.LogWarning($"The {commandName} doesn't exist on the database.");
+            Debug.LogWarning($"The {commandName} command doesn't exist on the database.");
             return null;
         };
 

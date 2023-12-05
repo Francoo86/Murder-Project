@@ -1,9 +1,13 @@
-CreateCharacter(Marcelo)
-Show(Marcelo)
+CreateCharacter(Marcelo -e true)
+show(Marcelo -i)
+wait(1)
 
+Narrator "Aqui es cuando aparece el marselo..."
 Marcelo "When despiertas"
+wait(1)
+
 enter Marcelo [pensativo] "Hola"
-Fern as Frieren "Momazos" test_moving(right), test_moving(right)
+MoveCharacter(Marcelo -x 0.1 -smoothness true -i true)
 Frieren "comando(gracioso, xd, xdxdxd) hola ayuda"
 
 Gordon as ??? at 1:0 "En territorio laplaciano"

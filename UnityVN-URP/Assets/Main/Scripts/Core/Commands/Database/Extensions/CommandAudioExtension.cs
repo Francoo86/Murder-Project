@@ -15,7 +15,7 @@ public class CommandAudioExtension : CommandDBExtension
         commandDb.AddCommand("playsfx", new Action<string[]>(PlaySFX));
     }
 
-    private static void PlaySFX(string[] data)
+    public static void PlaySFX(string[] data)
     {
         string filepath;
         float volume, pitch;
