@@ -15,6 +15,8 @@ public class GraphicObject
     private const string MAT_FIELD_BLEND = "_Blend";
     private const string MAT_FIELD_ALPHA = "_Alpha";
 
+    private GraphicLayer layer;
+
     private Coroutine co_FadingIn = null;
     private Coroutine co_FadingOut = null;
 
@@ -28,6 +30,7 @@ public class GraphicObject
     public GraphicObject(GraphicLayer layer, string graphicPath, Texture texture)
     {
         this.graphicPath = graphicPath;
+        this.layer = layer;
 
         GameObject obj = new GameObject();
         obj.transform.SetParent(layer.panel);
@@ -45,6 +48,7 @@ public class GraphicObject
     public GraphicObject(GraphicLayer layer, string graphicPath, VideoClip clip)
     {
         this.graphicPath = graphicPath;
+        this.layer = layer;
 
         GameObject obj = new GameObject();
         obj.transform.SetParent(layer.panel);
@@ -114,7 +118,7 @@ public class GraphicObject
 
     GraphicPanelController GraphicController => GraphicPanelController.Instance;
 
-    public Coroutine FadeIn(float speed, Texture blend = null)
+    public Coroutine FadeIn(float speed = 1f, Texture blend = null)
     {
         if (co_FadingOut != null)
             GraphicController.StopCoroutine(co_FadingOut);
@@ -127,7 +131,7 @@ public class GraphicObject
         return co_FadingIn;
     }
 
-    public Coroutine FadeOut(float speed, Texture blend = null)
+    public Coroutine FadeOut(float speed = 1f, Texture blend = null)
     {
         if (co_FadingIn != null)
             GraphicController.StopCoroutine(co_FadingIn);
@@ -165,5 +169,22 @@ public class GraphicObject
 
         co_FadingIn = null;
         co_FadingOut = null;
+
+        if (target == 0)
+            Destroy();
+        else
+            DestroyBackgroundGraphicsOnLayer();
+    }
+
+    private void Destroy()
+    {
+        if (layer.CurrentGraphic != null && layer.CurrentGraphic.renderer == renderer)
+            layer.CurrentGraphic = null;
+
+        Object.Destroy(renderer.gameObject); 
+    }
+    private void DestroyBackgroundGraphicsOnLayer()
+    {
+        layer.DestroyOldGraphics();
     }
 }

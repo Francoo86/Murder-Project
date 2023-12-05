@@ -8,7 +8,8 @@ public class GraphicLayer
     public const string LAYER_NAME_FORMAT = "Layer {0}";
     public Transform panel;
     public int layerDepth = 0;
-    public GraphicObject CurrentGraphic { get; private set; } = null;
+    public GraphicObject CurrentGraphic = null;
+    private List<GraphicObject> oldGraphics = new List<GraphicObject> ();
 
     // Start is called before the first frame update
     public void SetTexture(string path, float transitionSpeed = 2.0f, Texture blendingTexture = null)
@@ -64,8 +65,26 @@ public class GraphicLayer
             graphObj = new GraphicObject(this, path, graphicData as VideoClip);
         }
 
+        if (CurrentGraphic != null && !oldGraphics.Contains(CurrentGraphic))
+            oldGraphics.Add(CurrentGraphic);
+
         // Mantener graficas en renderizado (trackeo).
         CurrentGraphic = graphObj;
         CurrentGraphic.FadeIn(transitionSpeed, blendingText);
+    }
+    public void DestroyOldGraphics()
+    {
+        foreach (var g in oldGraphics)
+            Object.Destroy(g.renderer.gameObject);
+
+        oldGraphics.Clear();
+    }
+    public void Clear()
+    {
+        if (CurrentGraphic != null)
+            CurrentGraphic.FadeOut();
+
+        foreach (var g in oldGraphics)
+            g.FadeOut();
     }
 }
