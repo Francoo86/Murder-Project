@@ -80,7 +80,7 @@ public class AudioChannel
     private IEnumerator VolumeLeveling()
     {
         //Deberiamos tener al menos un track dentro de la lista.
-        while(CurrentTrack != null && (tracks.Count > 1 || CurrentTrack.Volume != CurrentTrack.VolumeCap))
+        while(CurrentTrack != null && (tracks.Count > 1 || CurrentTrack.Volume != CurrentTrack.VolumeCap) || (CurrentTrack == null && tracks.Count > 0))
         {
             //Contar en reversa para poder realizar el efecto.
             for(int i = tracks.Count - 1; i >= 0; i--)
