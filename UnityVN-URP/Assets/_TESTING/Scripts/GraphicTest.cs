@@ -13,7 +13,7 @@ public class GraphicTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     IEnumerator StartTesting()
@@ -23,7 +23,9 @@ public class GraphicTest : MonoBehaviour
 
         yield return new WaitForSeconds(1);
         Texture blend = Resources.Load<Texture>("Graphics/Transition Effects/blackHole");
-        layer.SetTexture("Graphics/BG Images/casa01", blendingTexture: blend);
+        //layer.SetTexture("Graphics/BG Images/casa01", blendingTexture: blend);
+
+        layer.SetVideo("Graphics/BG Videos/otra vista final", blendingTexture: blend);
 
         //layer.CurrentGraphic.renderer.material.SetColor("_Color", Color.blue);
     }

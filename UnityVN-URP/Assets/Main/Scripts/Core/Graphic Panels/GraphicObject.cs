@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.UI;
+
 
 public class GraphicObject
 {
     private const string NAME_FORMAT = "Grafica - [{0}]";
-    //Casi dejo la embarrá con esto XDDDD
     private const string MATERIAL_PATH = "Materials/layerTransitionMaterial";
     private const string MAT_FIELD_COLOR = "_Color";
     private const string MAT_FIELD_MAINTEX = "_MainTex";
@@ -20,8 +19,6 @@ public class GraphicObject
     private Coroutine co_FadingOut = null;
 
     public RawImage renderer;
-    //Para el juicio final me imagino.
-
     public VideoPlayer vidPlayer = null;
     public AudioSource audioSource = null;
     public string graphicPath = "";
@@ -40,13 +37,53 @@ public class GraphicObject
 
         InitializeGraphics();
 
-        //Nombre de la imagen en la escena.
+        // Nombre de la imagen en la escena.
         renderer.name = string.Format(NAME_FORMAT, GraphicName);
         renderer.material.SetTexture(MAT_FIELD_MAINTEX, texture);
     }
 
-    private void InitializeGraphics() { 
-        //Inicializar en la posicion del panel.
+    public GraphicObject(GraphicLayer layer, string graphicPath, VideoClip clip)
+    {
+        this.graphicPath = graphicPath;
+
+        GameObject obj = new GameObject();
+        obj.transform.SetParent(layer.panel);
+        renderer = obj.AddComponent<RawImage>();
+
+        GraphicName = clip.name;
+
+        InitializeGraphics();
+
+        // Renderizar video
+        RenderTexture texture = new RenderTexture(Mathf.RoundToInt(clip.width), Mathf.RoundToInt(clip.height), 0);
+        renderer.material.SetTexture(MAT_FIELD_MAINTEX, texture);
+
+        vidPlayer = renderer.gameObject.AddComponent<VideoPlayer>();
+        vidPlayer.playOnAwake = true;
+        vidPlayer.source = VideoSource.VideoClip;
+        vidPlayer.clip = clip;
+        vidPlayer.renderMode = VideoRenderMode.RenderTexture;
+        vidPlayer.targetTexture = texture;
+        vidPlayer.isLooping = true;
+
+        vidPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
+        audioSource = renderer.gameObject.AddComponent<AudioSource>();
+
+        audioSource.volume = 0;
+
+        vidPlayer.SetTargetAudioSource(0, audioSource);
+
+        vidPlayer.frame = 0;
+        vidPlayer.Prepare();
+        vidPlayer.Play();
+
+        vidPlayer.enabled = false;
+        vidPlayer.enabled = true;
+    }
+
+    private void InitializeGraphics()
+    {
+        // Inicializar en la posición del panel.
         renderer.transform.localPosition = Vector3.zero;
         renderer.transform.localScale = Vector3.one;
 
@@ -57,7 +94,7 @@ public class GraphicObject
         rect.offsetMin = Vector3.zero;
         rect.offsetMax = Vector3.one;
 
-        //Cargar las transiciones.
+        // Cargar las transiciones.
         renderer.material = GetTransitionMaterial();
         renderer.material.SetFloat(MAT_FIELD_BLEND, 0);
         renderer.material.SetFloat(MAT_FIELD_ALPHA, 0);
@@ -67,7 +104,7 @@ public class GraphicObject
     {
         Material mat = Resources.Load<Material>(MATERIAL_PATH);
 
-        if(mat != null)
+        if (mat != null)
         {
             return new Material(mat);
         }
@@ -77,8 +114,9 @@ public class GraphicObject
 
     GraphicPanelController GraphicController => GraphicPanelController.Instance;
 
-    public Coroutine FadeIn(float speed, Texture blend = null) { 
-        if(co_FadingOut != null) 
+    public Coroutine FadeIn(float speed, Texture blend = null)
+    {
+        if (co_FadingOut != null)
             GraphicController.StopCoroutine(co_FadingOut);
 
         if (co_FadingIn != null)
@@ -102,7 +140,8 @@ public class GraphicObject
         return co_FadingOut;
     }
 
-    private IEnumerator Fading(float target, float speed, Texture blend = null) {
+    private IEnumerator Fading(float target, float speed, Texture blend = null)
+    {
         bool isBlending = blend != null;
         bool fadingIn = target > 0f;
 
@@ -113,10 +152,14 @@ public class GraphicObject
 
         string opacityParam = isBlending ? MAT_FIELD_BLEND : MAT_FIELD_ALPHA;
 
-        while(renderMat.GetFloat(opacityParam) != target)
+        while (renderMat.GetFloat(opacityParam) != target)
         {
             float opacity = Mathf.MoveTowards(renderMat.GetFloat(opacityParam), target, speed * Time.deltaTime);
             renderMat.SetFloat(opacityParam, opacity);
+
+            if (IsVideo)
+                audioSource.volume = opacity;
+
             yield return null;
         }
 
