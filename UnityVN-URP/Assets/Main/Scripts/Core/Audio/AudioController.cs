@@ -117,6 +117,16 @@ public class AudioController : MonoBehaviour
         return track;
     }
 
+    public void StopTrack(int channel)
+    {
+        AudioChannel chan = TryToGetChannel(channel, forceCreation: false);
+
+        if (chan == null)
+            return;
+
+        chan.StopTrack();
+    }
+
     public AudioChannel TryToGetChannel(int channelNum, bool forceCreation = false)
     {
         AudioChannel channel = null;
@@ -127,7 +137,9 @@ public class AudioController : MonoBehaviour
         }
         else if(forceCreation)
         {
-            return new AudioChannel(channelNum);
+            channel = new AudioChannel(channelNum);
+            channels.Add(channelNum, channel);
+            return channel;
         }
 
         return null;

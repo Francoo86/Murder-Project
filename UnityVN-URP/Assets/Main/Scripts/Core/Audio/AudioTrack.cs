@@ -11,9 +11,11 @@ public class AudioTrack
     public string Name { get; private set; }
     private AudioChannel channel;
     private AudioSource source;
+    public GameObject Root => source.gameObject;
     public bool Loop => source.loop;
     public float VolumeCap { get; private set; }
     public bool IsPlaying => source.isPlaying;
+    public float Volume { get { return source.volume; } set { source.volume = value; } }
 
     public AudioTrack(AudioClip clip, bool loop, float startingVol, float volumeCap, AudioChannel channel, AudioMixerGroup mixer)
     {

@@ -31,6 +31,10 @@ public class TestingDialog : MonoBehaviour
         yield return new WaitForSeconds(1f);
         yield return charPedro.Show();
 
+        //TODO: Usar el patron introduce parameter object en este.
+        AudioController.Instance.PlayTrack("Audio/Music/Comedy", 0, startVol: 0.5f);
+        AudioController.Instance.PlayTrack("Audio/Music/SneakySnitch", 1, startVol: 0.7f);
+
         yield return new WaitForSeconds(1f);
         Sprite pensativo = charPedro.GetSprite("feliz");
         Debug.Log("Transitioning to pensativo");
@@ -39,7 +43,7 @@ public class TestingDialog : MonoBehaviour
         //Wacky ahh pos.
         charPedro.SetPos(new Vector2(0.5f, 0.4f));
 
-        AudioController.Instance.PlaySoundEffect("Audio/SFX/RadioStatic");
+        //AudioController.Instance.PlaySoundEffect("Audio/SFX/RadioStatic");
 
         yield return charPedro.Say(lines);
         yield return charPedro.Say("Stop a la radio");
