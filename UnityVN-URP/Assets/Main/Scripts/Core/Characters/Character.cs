@@ -32,15 +32,15 @@ public abstract class Character
     //Corutinas de mostrado.                              
     protected Coroutine CO_Hiding, CO_Showing, CO_Moving, co_highlighting, co_changingColor, co_flipping;
     //Logica de mostrar.
-    private bool IsShowing => CO_Showing != null;
-    private bool IsHiding => CO_Hiding != null;
+    public bool IsShowing => CO_Showing != null;
+    public bool IsHiding => CO_Hiding != null;
     private bool IsMoving => CO_Moving != null;
 
     private bool isChangingColor => co_changingColor != null;
     private bool isHighlighting => (highlighted && co_highlighting != null);
     private bool isUnHighlighting => (!highlighted && co_highlighting != null);
 
-    public virtual bool IsVisible => false;
+    public virtual bool IsVisible { get; set; } = false;
     public bool isFacingLeft => facingLeft;
     public bool isFacingRight => !facingLeft;
     public bool isFlipping => co_flipping != null;

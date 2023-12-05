@@ -8,7 +8,7 @@ public class TestingParser : MonoBehaviour
     void Start()
     {
         //SendFileToParser();
-        //StartCoroutine(ReadCoroutine());
+        StartCoroutine(ReadCoroutine());
     }
 
     IEnumerator ReadCoroutine() {

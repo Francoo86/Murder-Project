@@ -8,7 +8,7 @@ public class TestingDialog : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(StartTalking());
+        //StartCoroutine(StartTalking());
     }
 
     IEnumerator StartTalking()
