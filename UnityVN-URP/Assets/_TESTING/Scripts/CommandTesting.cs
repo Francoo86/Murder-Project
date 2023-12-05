@@ -15,13 +15,14 @@ public class CommandTesting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKey(KeyCode.LeftArrow)) {
             CommandController.Instance.Execute("test_moving", "left");
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             CommandController.Instance.Execute("test_moving", "right");
-        }
+        }*/
     }
 
 

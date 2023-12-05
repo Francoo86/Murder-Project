@@ -24,6 +24,7 @@ public class GraphicTest : MonoBehaviour
         yield return new WaitForSeconds(1);
         Texture blend = Resources.Load<Texture>("Graphics/Transition Effects/blackHole");
         layer.SetTexture("Graphics/BG Images/casa01", blendingTexture: blend);
+
         //layer.CurrentGraphic.renderer.material.SetColor("_Color", Color.blue);
     }
 }

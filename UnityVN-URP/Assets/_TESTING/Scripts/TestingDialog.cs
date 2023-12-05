@@ -17,10 +17,10 @@ public class TestingDialog : MonoBehaviour
         Character alfonso = CharacterController.Instance.CreateCharacter("Patricia");
         List<string> lines = new List<string>()
         {
-            "XDDDD",
-            "AYUDA PORFA",
-            "A PASAR TIS",
-            "AAAAXDDDDDDDDDDDDDDDDD",
+            "Podría poner un Lorem Ipsum aquí, pero siento que esto podría ser más interactivo.",
+            "No se, probablemente esta sea una linea generica numero 2.",
+            "Testeando linea 3",
+            "Testeando linea 4",
         };
 
         charPedro.SetDialogColor(Color.red);
@@ -38,8 +38,12 @@ public class TestingDialog : MonoBehaviour
         //Wacky ahh pos.
         charPedro.SetPos(new Vector2(0.5f, 0.4f));
 
-        yield return charPedro.Say(lines);
+        AudioController.Instance.PlaySoundEffect("Audio/SFX/RadioStatic");
 
+        yield return charPedro.Say(lines);
+        yield return charPedro.Say("Stop a la radio");
+
+        AudioController.Instance.StopSoundEffects("RadioStatic");
 
         charPedro.SetNameColor(Color.cyan);
         charPedro.SetDialogColor(Color.green);
