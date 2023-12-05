@@ -109,8 +109,13 @@ public class ConversationManager
 
         foreach (CommandData.Command command in commands) {
             //Ejecutar esto primero antes de empezar con el otro comando.
-            if (command.waitToFinish)
+            //Añadir check de lowercase commo estos comandos a veces no funcan.
+            //TODO: Re-considerar si esta medida es necesaria.
+            if (command.waitToFinish || command.name.ToLower() == "wait")
+            {
+                Debug.Log($"Command name {command.name} {command.arguments[0]}");
                 yield return CommandController.Instance.Execute(command.name, command.arguments);
+            }
             else
                 CommandController.Instance.Execute(command.name, command.arguments);
         } 
