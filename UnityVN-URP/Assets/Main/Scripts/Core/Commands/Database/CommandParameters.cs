@@ -11,7 +11,7 @@ public class CommandParameters
     {
         for(int i = 0; i < paramArray.Length; i++)
         {
-            if (paramArray[i].StartsWith(PARAM_ID))
+            if (paramArray[i].StartsWith(PARAM_ID) && !float.TryParse(paramArray[i], out _))
             {
                 string paramName = paramArray[i];
                 string pValue = "";

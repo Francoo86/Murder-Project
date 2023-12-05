@@ -10,7 +10,6 @@ public class CommandDB
     public void AddCommand(string commandName, Delegate command)
     {
         commandName = commandName.ToLower();
-        Debug.Log($"Adding command {commandName}.");
         if (!database.ContainsKey(commandName)) database[commandName] = command;
         else Debug.LogWarning($"{commandName} command already exists on the database!");
     }
