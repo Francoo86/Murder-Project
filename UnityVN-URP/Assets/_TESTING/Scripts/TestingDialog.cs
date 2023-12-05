@@ -23,6 +23,7 @@ public class TestingDialog : MonoBehaviour
             "Testeando linea 4",
         };
 
+        AudioController.Instance.PlayTrack("Audio/Music/SneakySnitch", startVol: 0.7f);
         charPedro.SetDialogColor(Color.red);
 
         yield return new WaitForSeconds(1f);
@@ -43,7 +44,7 @@ public class TestingDialog : MonoBehaviour
         yield return charPedro.Say(lines);
         yield return charPedro.Say("Stop a la radio");
 
-        AudioController.Instance.StopSoundEffects("RadioStatic");
+        //AudioController.Instance.StopSoundEffects("RadioStatic");
 
         charPedro.SetNameColor(Color.cyan);
         charPedro.SetDialogColor(Color.green);

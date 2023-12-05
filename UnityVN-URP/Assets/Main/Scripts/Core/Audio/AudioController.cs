@@ -6,11 +6,13 @@ using UnityEngine.Audio;
 public class AudioController : MonoBehaviour
 {
     private const string SFX_PARENT_NAME = "SFX";
-    private const string MUSIC_PARENT_NAME = "Music";
+
+    public const float TRACK_TRANSITION_SPEED = 1f;
 
     private const string SFX_NAME_FORMAT = "SFX - [{0}]";
     //Como es un controlador entonces usamos singleton.
     public static AudioController Instance {  get; private set; }
+    public Dictionary<int, AudioChannel> channels = new Dictionary<int, AudioChannel>();
 
     public AudioMixerGroup musicMixer;
     public AudioMixerGroup sfxMixer;
@@ -43,7 +45,7 @@ public class AudioController : MonoBehaviour
 
         if(clip == null)
         {
-            Debug.LogWarning($"Couldn't find the {filePath} audio asset.");
+            Debug.LogWarning($"Couldn't find the {filePath} audio asset. Please ensure that it is on the Resources folder.");
             return null;
         }
 
@@ -92,4 +94,42 @@ public class AudioController : MonoBehaviour
     }
 
     public void StopSoundEffects(AudioClip clip) => StopSoundEffects(clip.name);
+
+    //TODO: Refactor onto one method.
+    public AudioTrack PlayTrack(string filePath, int channel = 0, bool loop = true, float startVol = 0f, float capVol = 1f)
+    {
+        AudioClip clip = Resources.Load<AudioClip>(filePath);
+
+        if (clip == null)
+        {
+            Debug.LogWarning($"Couldn't find the {filePath} audio asset. Please ensure that it is on the Resources folder.");
+            return null;
+        }
+
+        return PlayTrack(clip, channel, loop, startVol, capVol, filePath);
+    }
+
+    public AudioTrack PlayTrack(AudioClip clip, int channel = 0, bool loop = true, float startVol = 0f, float capVol = 1f, string filePath = "")
+    {
+        AudioChannel audioChannel = TryToGetChannel(channel, forceCreation: true);
+        AudioTrack track = audioChannel.PlayTrack(clip, loop, startVol, capVol, filePath);
+
+        return track;
+    }
+
+    public AudioChannel TryToGetChannel(int channelNum, bool forceCreation = false)
+    {
+        AudioChannel channel = null;
+
+        if(channels.TryGetValue(channelNum, out channel))
+        {
+            return channel;
+        }
+        else if(forceCreation)
+        {
+            return new AudioChannel(channelNum);
+        }
+
+        return null;
+    }
 }
