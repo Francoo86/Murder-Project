@@ -54,8 +54,12 @@ public class ConversationManager
                 yield return RunDialogForCommands(dialogLine);
             }
 
-            if(dialogLine.HasDialog) 
+            if (dialogLine.HasDialog)
+            {
                 yield return WaitForUserInput();
+
+                CommandController.Instance.StopAllProcesses();
+            }
             //yield return new WaitForSeconds(1);
 
         }
@@ -113,8 +117,21 @@ public class ConversationManager
             //TODO: Re-considerar si esta medida es necesaria.
             if (command.waitToFinish || command.name.ToLower() == "wait")
             {
-                Debug.Log($"Command name {command.name} {command.arguments[0]}");
-                yield return CommandController.Instance.Execute(command.name, command.arguments);
+                //Is this really a RenPy 2 UNAP edition?
+                CoroutineWrapper wrap = CommandController.Instance.Execute(command.name, command.arguments);
+
+                while (!wrap.IsDone)
+                {
+                    if (isUserManipulated)
+                    {
+                        CommandController.Instance.StopCurrentProcess();
+                        isUserManipulated = false;
+                    }
+
+                    //If this is not on the loop this causes stack overflow.
+                    yield return null;
+                }
+                //yield return CommandController.Instance.Execute(command.name, command.arguments);
             }
             else
                 CommandController.Instance.Execute(command.name, command.arguments);

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 public class CommandData
 {
@@ -27,13 +28,14 @@ public class CommandData
         foreach (string cmd in data) {
             Command fullCommand = new Command();
             int index = cmd.IndexOf(ARGUMENTSCONTAINER_ID);
-            fullCommand.name = cmd[..index].Trim();
+            fullCommand.name = cmd.Substring(0, index).Trim();
 
             //Marca al comando como debe esperar.
             if (fullCommand.name.ToLower().StartsWith(WAIT_ID))
             {
                 //Quitar el identificador de espera.
-                fullCommand.name = fullCommand.name.Substring(0, WAIT_ID.Length - 1);
+                fullCommand.name = fullCommand.name.Substring(WAIT_ID.Length);
+                Debug.Log($"Full command name {fullCommand.name}");
                 fullCommand.waitToFinish = true;
             }
             else
