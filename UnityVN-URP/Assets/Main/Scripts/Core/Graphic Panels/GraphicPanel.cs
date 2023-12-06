@@ -9,7 +9,7 @@ public class GraphicPanel {
     //This will not be used due to deadline.
     private List<GraphicLayer> layers = new List<GraphicLayer>();
 
-    public GraphicLayer GetLayer(int layerDepth, bool forceCreation = false)
+    public GraphicLayer GetLayer(int layerDepth, bool forceCreation = false, bool createIfDoesNotExist = false)
     {
         for (int i = 0; i < layers.Count; i++)
         {

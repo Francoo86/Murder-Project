@@ -9,60 +9,60 @@ public class GraphicLayer
     public Transform panel;
     public int layerDepth = 0;
     public GraphicObject CurrentGraphic = null;
-    private List<GraphicObject> oldGraphics = new List<GraphicObject> ();
+    private List<GraphicObject> oldGraphics = new List<GraphicObject>();
 
     // Start is called before the first frame update
-    public void SetTexture(string path, float transitionSpeed = 2.0f, Texture blendingTexture = null)
+    public Coroutine SetTexture(string path, float transitionSpeed = 2.0f, Texture blendingTexture = null, bool immediate = false)
     {
         Texture texture = Resources.Load<Texture2D>(path);
 
         if (texture == null)
         {
             Debug.LogError($"Couldn't load the {path} texture from disk.");
-            return;
+            return null;
         }
 
-        SetTexture(texture, transitionSpeed, path, blendingTexture);
+        return SetTexture(texture, transitionSpeed, blendingTexture, path, immediate);
     }
 
     // path para poder guardar elementos de Load/Save.
-    public void SetTexture(Texture texture, float transitionSpeed = 2.0f, string path = "", Texture blendingTexture = null)
+    public Coroutine SetTexture(Texture texture, float transitionSpeed = 2.0f, Texture blendingTexture = null, string path = "", bool immediate = false)
     {
-        CreateGraphic(texture, transitionSpeed, path, blendingText: blendingTexture);
+        return CreateGraphic(texture, transitionSpeed, path, blendingTexture: blendingTexture, immediate: immediate);
     }
 
-    public void SetVideo(string path, float transitionSpeed = 1f, bool useAudio = true, Texture blendingTexture = null)
+    public Coroutine SetVideo(string path, float transitionSpeed = 1f, bool useAudio = true, Texture blendingTexture = null, bool immediate = false)
     {
         VideoClip clip = Resources.Load<VideoClip>(path);
 
         if (clip == null)
         {
             Debug.LogError($"Couldn't load the {path} video clip from disk.");
-            return;
+            return null;
         }
 
-        SetVideo(clip, transitionSpeed, useAudio, path, blendingTexture);
+        return SetVideo(clip, transitionSpeed, useAudio, blendingTexture, path, immediate);
     }
 
-    public void SetVideo(VideoClip video, float transitionSpeed = 2.0f, bool useAudio = true, string path = "", Texture blendingTexture = null)
+    public Coroutine SetVideo(VideoClip video, float transitionSpeed = 2.0f, bool useAudio = true, Texture blendingTexture = null, string path = "", bool immediate = false)
     {
-        CreateGraphic(video, transitionSpeed, path, useAudio, blendingTexture);
+        return CreateGraphic(video, transitionSpeed, path, useAudio, blendingTexture, immediate);
     }
 
     // Only way to avoid repeating myself.
     // Usar el tipo generico para poder manejar imagenes y videos.
-    private void CreateGraphic<T>(T graphicData, float transitionSpeed, string path, bool useAudioForVids = false, Texture blendingText = null)
+    private Coroutine CreateGraphic<T>(T graphicData, float transitionSpeed, string path, bool useAudioForVids = false, Texture blendingTexture = null, bool immediate = false)
     {
         GraphicObject graphObj = null;
 
         if (graphicData is Texture)
         {
             // Hacer un casting si es una textura.
-            graphObj = new GraphicObject(this, path, graphicData as Texture);
+            graphObj = new GraphicObject(this, path, graphicData as Texture, immediate);
         }
         else if (graphicData is VideoClip)
         {
-            graphObj = new GraphicObject(this, path, graphicData as VideoClip);
+            graphObj = new GraphicObject(this, path, graphicData as VideoClip, useAudioForVids, immediate);
         }
 
         if (CurrentGraphic != null && !oldGraphics.Contains(CurrentGraphic))
@@ -70,8 +70,12 @@ public class GraphicLayer
 
         // Mantener graficas en renderizado (trackeo).
         CurrentGraphic = graphObj;
-        CurrentGraphic.FadeIn(transitionSpeed, blendingText);
+        if (!immediate)
+            return CurrentGraphic.FadeIn(transitionSpeed, blendingTexture);
+        DestroyOldGraphics();
+        return null;
     }
+
     public void DestroyOldGraphics()
     {
         foreach (var g in oldGraphics)
@@ -79,6 +83,7 @@ public class GraphicLayer
 
         oldGraphics.Clear();
     }
+
     public void Clear()
     {
         if (CurrentGraphic != null)

@@ -27,7 +27,7 @@ public class GraphicObject
     public bool IsVideo { get { return vidPlayer != null; } }
     public string GraphicName { get; private set; }
 
-    public GraphicObject(GraphicLayer layer, string graphicPath, Texture texture)
+    public GraphicObject(GraphicLayer layer, string graphicPath, Texture texture, bool immediate, Texture blendingTexture = null)
     {
         this.graphicPath = graphicPath;
         this.layer = layer;
@@ -38,14 +38,14 @@ public class GraphicObject
 
         GraphicName = texture.name;
 
-        InitializeGraphics();
+        InitializeGraphics(immediate);
 
         // Nombre de la imagen en la escena.
         renderer.name = string.Format(NAME_FORMAT, GraphicName);
         renderer.material.SetTexture(MAT_FIELD_MAINTEX, texture);
     }
 
-    public GraphicObject(GraphicLayer layer, string graphicPath, VideoClip clip)
+    public GraphicObject(GraphicLayer layer, string graphicPath, VideoClip clip, bool useAudio, bool immediate, Texture blendingTexture = null)
     {
         this.graphicPath = graphicPath;
         this.layer = layer;
@@ -56,7 +56,7 @@ public class GraphicObject
 
         GraphicName = clip.name;
 
-        InitializeGraphics();
+        InitializeGraphics(immediate);
 
         // Renderizar video
         RenderTexture texture = new RenderTexture(Mathf.RoundToInt(clip.width), Mathf.RoundToInt(clip.height), 0);
@@ -85,7 +85,7 @@ public class GraphicObject
         vidPlayer.enabled = true;
     }
 
-    private void InitializeGraphics()
+    private void InitializeGraphics(bool immediate)
     {
         // Inicializar en la posición del panel.
         renderer.transform.localPosition = Vector3.zero;
@@ -100,8 +100,9 @@ public class GraphicObject
 
         // Cargar las transiciones.
         renderer.material = GetTransitionMaterial();
-        renderer.material.SetFloat(MAT_FIELD_BLEND, 0);
-        renderer.material.SetFloat(MAT_FIELD_ALPHA, 0);
+        float startingOpacity = immediate ? 1.0f : 0.0f;
+        renderer.material.SetFloat(MAT_FIELD_BLEND, startingOpacity);
+        renderer.material.SetFloat(MAT_FIELD_ALPHA, startingOpacity);
     }
 
     private Material GetTransitionMaterial()
