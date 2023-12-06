@@ -1,4 +1,5 @@
 playsfx(PizzaTaunt)
+playsong(SneakySnitch)
 CreateCharacter(Marcelo -e true)
 show(Marcelo -i)
 

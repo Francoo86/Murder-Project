@@ -109,7 +109,7 @@ public class CommandController : MonoBehaviour
             commandProc.DynamicInvoke(null);
         //Es un comando que tiene strings como parametros.
         else if (commandProc is Action<string>)
-            commandProc.DynamicInvoke(args[0]);
+            commandProc.DynamicInvoke(args.Length == 0 ? string.Empty : args[0]);
         //Tiene argumentos variables.
         else if (commandProc is Action<string[]>)
             commandProc.DynamicInvoke((object)args);
