@@ -6,7 +6,7 @@ Narrator "Aqui es cuando aparece el marselo..."
 Marcelo "When despiertas"
 
 enter Marcelo [pensativo] "Hola"
-[wait]MoveCharacter(Marcelo -x 0.1 -smoothness true -i true -speed 0.1)
+[wait]MoveCharacter(Marcelo -x 0.1 -speed 0.1 -smoothness true)
 Frieren "comando(gracioso, xd, xdxdxd) hola ayuda"
 
 Gordon as ??? at 1:0 "En territorio laplaciano"
