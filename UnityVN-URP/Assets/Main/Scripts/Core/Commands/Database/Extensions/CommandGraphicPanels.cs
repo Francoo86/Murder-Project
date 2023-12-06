@@ -13,9 +13,11 @@ public class CommandGraphicPanels : CommandDBExtension
     private static string[] PARAM_BLENDTEX = new string[] { "-b", "-blend" };
     private static string[] PARAM_USEVIDEOAUDIO = new string[] { "-aud", "-audio" };
     private const string HOME_DIRECTORY_SYMBOL = "~/";
+
     new public static void Extend(CommandDB commandDB)
     {
         commandDB.AddCommand("setlayermedia", new Func<string[], IEnumerator>(SetLayerMedia));
+        commandDB.AddCommand("clearlayermedia", new Func<string[], IEnumerator>(ClearLayerMedia));
     }
     private static IEnumerator SetLayerMedia(string[] data)
     {
@@ -74,6 +76,54 @@ public class CommandGraphicPanels : CommandDBExtension
             yield return graphicLayer.SetVideo(graphic as VideoClip, transitionSpeed, useAudio, blendTex, pathToGraphic, immediate);
         }
     }
+
+    private static IEnumerator ClearLayerMedia(string[] data)
+    {
+        string panelName = "";
+        int layer = 0;
+        float transitionSpeed = 0;
+        bool immediate = false;
+        string blendTexName = "";
+
+        Texture blendTex = null;
+
+        var parameters = ConvertToParams(data);
+
+        parameters.TryGetValue(PARAM_PANEL, out panelName);
+        GraphicPanel panel = GraphicPanelController.Instance.GetPanel(panelName);
+        if (panel == null)
+        {
+            Debug.LogError($"Unable to grab panel '{panelName}' because it is not a valid panel. please check the pnael name and adjust the command.");
+            yield break;
+        }
+
+        parameters.TryGetValue(PARAM_LAYER, out layer, defaultVal: -1);
+
+        parameters.TryGetValue(PARAM_IMMEDIATE, out immediate, defaultVal: false);
+
+        if (!immediate)
+            parameters.TryGetValue(PARAM_SPEED, out transitionSpeed, defaultVal: 1);
+
+        parameters.TryGetValue(PARAM_BLENDTEX, out blendTexName);
+
+        if (!immediate && blendTexName != string.Empty)
+            blendTex = Resources.Load<Texture>(FilePaths.ResourcesBlendTexture + blendTexName);
+
+        if (layer == -1)
+            panel.Clear(transitionSpeed, blendTex, immediate);
+        else
+        {
+            GraphicLayer graphicLayer = panel.GetLayer(layer);
+            if (graphicLayer == null)
+            {
+                Debug.LogError($"could not clear layer [{layer}] on panel '{panel.panelName}'");
+                yield break;
+            }
+
+            graphicLayer.Clear(transitionSpeed, blendTex, immediate);
+        }
+    }
+
     private static string GetPathToGraphic(string defaultPath, string graphicName)
     {
         if (graphicName.StartsWith(HOME_DIRECTORY_SYMBOL))

@@ -177,7 +177,7 @@ public class GraphicObject
             DestroyBackgroundGraphicsOnLayer();
     }
 
-    private void Destroy()
+    public void Destroy()
     {
         if (layer.CurrentGraphic != null && layer.CurrentGraphic.renderer == renderer)
             layer.CurrentGraphic = null;
