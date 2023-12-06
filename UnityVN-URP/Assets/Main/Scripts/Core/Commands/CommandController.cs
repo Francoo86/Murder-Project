@@ -12,7 +12,7 @@ public class CommandController : MonoBehaviour
     private CommandDB cmdDatabase;
     //Procesos actuales de distintos comandos.
     private List<CommandProcess> processList = new List<CommandProcess>();
-    private CommandProcess topProcess => processList.LastOrDefault();
+    private CommandProcess topProcess => processList.Last();
     //private static Coroutine process = null;
     //public static bool IsRunning => process != null;
 
@@ -89,6 +89,7 @@ public class CommandController : MonoBehaviour
     {
         foreach(var proc in processList)
         {
+            Debug.Log($"Killing {proc.processName}");
             CoroutineWrapper currProc = proc.currentProcess;
             if(currProc != null && !currProc.IsDone)
             {

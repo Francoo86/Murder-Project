@@ -6,6 +6,9 @@ public class CommandParameters
 {
     private const char PARAM_ID = '-';
     private Dictionary<string, string> parameters = new Dictionary<string, string>();
+    private List<string> unlabeledParams = new List<string>();
+
+
 
     public CommandParameters(string[] paramArray)
     {
@@ -23,6 +26,8 @@ public class CommandParameters
 
                 parameters.Add(paramName, pValue);
             }
+            else
+                unlabeledParams.Add(paramArray[i]);
         }
     }
 
@@ -38,6 +43,15 @@ public class CommandParameters
             if(parameters.TryGetValue(parameter, out string paramValue))
             {
                 if(TryCastParamater(paramValue, out value)) return true;
+            }
+        }
+
+        foreach (string parameter in unlabeledParams)
+        {
+            if (TryCastParamater(parameter, out value))
+            {
+                unlabeledParams.Remove(parameter);
+                return true;
             }
         }
 

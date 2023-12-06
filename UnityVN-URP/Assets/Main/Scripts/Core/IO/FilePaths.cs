@@ -19,8 +19,8 @@ public class FilePaths
 
     //Audio.
     public static readonly string ResourcesAudio = "Audio/";
-    public static readonly string ResourcesSFX = $"{ResourcesAudio}SFX";
-    public static readonly string ResourcesMusic = $"{ResourcesAudio}Music";
+    public static readonly string ResourcesSFX = $"{ResourcesAudio}SFX/";
+    public static readonly string ResourcesMusic = $"{ResourcesAudio}Music/";
 
     public static string GetPathToResource(string defPath, string resourceName)
     {

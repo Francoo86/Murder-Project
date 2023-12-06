@@ -1,3 +1,4 @@
+playsfx(PizzaTaunt)
 CreateCharacter(Marcelo -e true)
 show(Marcelo -i)
 

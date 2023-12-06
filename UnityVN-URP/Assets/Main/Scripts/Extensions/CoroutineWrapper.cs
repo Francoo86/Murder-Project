@@ -4,7 +4,7 @@ using UnityEngine;
 
 //Esta clase nos permitirá saber si la corutina termino.
 //Aparte nos ayudará con el tema de que podremos controlar un bucle hasta que termine.
-public class CoroutineWrapper : MonoBehaviour
+public class CoroutineWrapper
 {
     private MonoBehaviour owner;
     private Coroutine coroutine;

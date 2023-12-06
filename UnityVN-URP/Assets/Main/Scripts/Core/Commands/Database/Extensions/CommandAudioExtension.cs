@@ -21,6 +21,28 @@ public class CommandAudioExtension : CommandDBExtension
         float volume, pitch;
         bool loop;
 
-        //var param = ConvertDataToParameters(data);
+        //finally?!!?!!?!?
+        var parameters = ConvertToParams(data);
+
+        //Directorio.
+        parameters.TryGetValue(PARAM_SFX, out filepath);
+
+        //Volumen.
+        parameters.TryGetValue(PARAM_VOLUME, out volume, 1f);
+
+        //Pitch del sonido (creo que no está implementado).
+        parameters.TryGetValue(PARAM_PITCH, out pitch, 1f);
+
+        //Se loopea.
+        parameters.TryGetValue(PARAM_LOOP, out loop, false);
+
+        AudioClip sound = Resources.Load<AudioClip>(FilePaths.GetPathToResource(FilePaths.ResourcesSFX, filepath));
+
+        if (sound == null) return;
+
+        AudioController.Instance.PlaySoundEffect(sound, volume: volume, pitch: pitch, loop: loop);
+
+        //Obtener el directorio.
+
     }
 }
