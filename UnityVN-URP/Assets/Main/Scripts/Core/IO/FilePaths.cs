@@ -10,17 +10,19 @@ public class FilePaths
     public static readonly string rootPath = $"{Application.dataPath}/Main/Resources/";
 
     //Paneles graficos, vale decir escenarios, videos de fondo.
-    public static readonly string resourcesGraphics = "Graphics/";
+    public static readonly string ResourcesGraphics = "Graphics/";
 
     //Fondos y videos.
-    public static readonly string resourcesBGImages = $"{resourcesGraphics}BG Images/";
-    public static readonly string resourcesBGVideos = $"{resourcesGraphics}BG Videos/";
-    public static readonly string resourcesBlendTexture = $"{resourcesGraphics}Transition Effects/";
+    public static readonly string ResourcesBGImages = $"{ResourcesGraphics}BG Images/";
+    public static readonly string ResourcesBGVideos = $"{ResourcesGraphics}BG Videos/";
+    public static readonly string ResourcesBlendTexture = $"{ResourcesGraphics}Transition Effects/";
 
     //Audio.
-    public static readonly string resourcesAudio = "Audio/";
-    public static readonly string resourcesSFX = $"{resourcesAudio}SFX";
-    public static readonly string resourcesMusic = $"{resourcesAudio}Music";
+    public static readonly string ResourcesAudio = "Audio/";
+    public static readonly string ResourcesSFX = $"{ResourcesAudio}SFX/";
+    public static readonly string ResourcesMusic = $"{ResourcesAudio}Music/";
+    //Puede darse el caso? He visto que tenemos ese material.
+    public static readonly string ResourcesAmbience = $"{ResourcesAudio}Ambience/";
 
     public static string GetPathToResource(string defPath, string resourceName)
     {

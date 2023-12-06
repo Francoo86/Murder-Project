@@ -127,6 +127,20 @@ public class AudioController : MonoBehaviour
         chan.StopTrack();
     }
 
+    public void StopTrack(string trackName)
+    {
+        trackName = trackName.ToLower();
+        foreach(var channel in channels.Values)
+        {
+            AudioTrack chanTrack = channel.CurrentTrack;
+            if(chanTrack != null && chanTrack.Name.ToLower() == trackName)
+            {
+                chanTrack.Stop();
+                return;
+            }
+        }
+    }
+
     public AudioChannel TryToGetChannel(int channelNum, bool forceCreation = false)
     {
         AudioChannel channel = null;

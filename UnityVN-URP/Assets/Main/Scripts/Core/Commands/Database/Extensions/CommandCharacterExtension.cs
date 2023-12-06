@@ -73,6 +73,7 @@ public class CommandCharacterExtension : CommandDBExtension
         if (inmediate)
             character.SetPos(pos);
         else
+            CommandController.Instance.AddTerminationActionToActualProcess(() => { character.SetPos(pos); });
             yield return character.MoveToPosition(pos, speed, smooth);
 
         //yield return null;

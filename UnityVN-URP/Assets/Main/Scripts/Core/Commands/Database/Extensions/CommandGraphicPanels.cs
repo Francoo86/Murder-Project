@@ -50,11 +50,11 @@ public class CommandGraphicPanels : CommandDBExtension
 
         parameters.TryGetValue(PARAM_USEVIDEOAUDIO, out useAudio, defaultVal: false);
 
-        pathToGraphic = GetPathToGraphic(FilePaths.resourcesBGImages, mediaName);
+        pathToGraphic = GetPathToGraphic(FilePaths.ResourcesBGImages, mediaName);
         graphic = Resources.Load<Texture>(pathToGraphic);
         if (graphic == null)
         {
-            pathToGraphic = GetPathToGraphic(FilePaths.resourcesBGVideos, mediaName);
+            pathToGraphic = GetPathToGraphic(FilePaths.ResourcesBGVideos, mediaName);
             graphic = Resources.Load<VideoClip>(pathToGraphic);
         }
         if (graphic == null)
@@ -63,7 +63,7 @@ public class CommandGraphicPanels : CommandDBExtension
             yield break;
         }
         if (!immediate && blendTexName != string.Empty)
-            blendTex = Resources.Load<Texture>(FilePaths.resourcesBlendTexture + blendTexName);
+            blendTex = Resources.Load<Texture>(FilePaths.ResourcesBlendTexture + blendTexName);
         GraphicLayer graphicLayer = panel.GetLayer(layer, createIfDoesNotExist: true);
         if (graphic is Texture)
         {
