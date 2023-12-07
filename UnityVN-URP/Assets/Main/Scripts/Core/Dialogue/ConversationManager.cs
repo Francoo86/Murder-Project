@@ -98,7 +98,9 @@ public class ConversationManager
             HandleSpeaker(dialogLine.speakerMdl);
             //Mostrar al personaje en la interfaz.
         }
-            
+
+        if (!Controller.dialogContainer.IsVisible)
+            Controller.dialogContainer.Show();
 
         //Construir el dialogo.
         //yield return BuildDialogue(dialogLine.dialog);

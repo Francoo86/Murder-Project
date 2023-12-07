@@ -14,6 +14,7 @@ public class GraphicObject
     private const string MAT_FIELD_BLENDTEX = "_BlendTex";
     private const string MAT_FIELD_BLEND = "_Blend";
     private const string MAT_FIELD_ALPHA = "_Alpha";
+    private const string DEFAULT_UI_MAT = "Default UI Material";
 
     private GraphicLayer layer;
 
@@ -150,6 +151,13 @@ public class GraphicObject
         bool isBlending = blend != null;
         bool fadingIn = target > 0f;
 
+        if(renderer.material.name == DEFAULT_UI_MAT)
+        {
+            Texture tex = renderer.material.GetTexture(MAT_FIELD_MAINTEX);
+            renderer.material = GetTransitionMaterial();
+            renderer.material.SetTexture(MAT_FIELD_MAINTEX, tex);
+        }
+
         Material renderMat = renderer.material;
         renderMat.SetTexture(MAT_FIELD_BLENDTEX, blend);
         renderMat.SetFloat(MAT_FIELD_ALPHA, isBlending ? 1f : fadingIn ? 0f : 1f);
@@ -174,7 +182,11 @@ public class GraphicObject
         if (target == 0)
             Destroy();
         else
+        {
             DestroyBackgroundGraphicsOnLayer();
+            renderer.texture = renderer.material.GetTexture(MAT_FIELD_MAINTEX);
+            renderer.material = null;
+        }
     }
 
     public void Destroy()

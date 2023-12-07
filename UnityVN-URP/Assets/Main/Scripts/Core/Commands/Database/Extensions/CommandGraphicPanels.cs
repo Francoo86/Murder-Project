@@ -38,7 +38,7 @@ public class CommandGraphicPanels : CommandDBExtension
         GraphicPanel panel = GraphicPanelController.Instance.GetPanel(panelName);
         if (panel == null)
         {
-            Debug.LogError($"Unable to grab panel '{panelName}' because it is not a valid panel. please check the pnael name and adjust the command.");
+            Debug.LogError($"Unable to grab panel '{panelName}' because it is not a valid panel. please check the panel name and adjust the command.");
             yield break;
         }
         parameters.TryGetValue(PARAM_LAYER, out layer, defaultVal: 0);
@@ -52,6 +52,7 @@ public class CommandGraphicPanels : CommandDBExtension
 
         parameters.TryGetValue(PARAM_USEVIDEOAUDIO, out useAudio, defaultVal: false);
 
+        Debug.LogWarning($"Current graphic path thing.");
         pathToGraphic = GetPathToGraphic(FilePaths.ResourcesBGImages, mediaName);
         graphic = Resources.Load<Texture>(pathToGraphic);
         if (graphic == null)
@@ -66,7 +67,7 @@ public class CommandGraphicPanels : CommandDBExtension
         }
         if (!immediate && blendTexName != string.Empty)
             blendTex = Resources.Load<Texture>(FilePaths.ResourcesBlendTexture + blendTexName);
-        GraphicLayer graphicLayer = panel.GetLayer(layer, createIfDoesNotExist: true);
+        GraphicLayer graphicLayer = panel.GetLayer(layer, forceCreation: true);
         if (graphic is Texture)
         {
             yield return graphicLayer.SetTexture(graphic as Texture, transitionSpeed, blendTex, pathToGraphic, immediate);

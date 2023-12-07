@@ -6,6 +6,7 @@ using UnityEngine;
 public class DialogController : MonoBehaviour
 {
     [SerializeField] private DialogConfig _config;
+    [SerializeField] private CanvasGroup canvas;
     private const string NARRATOR_CHARACTER = "narrator";
 
     public DialogConfig Config => _config;
@@ -14,6 +15,7 @@ public class DialogController : MonoBehaviour
     private ConversationManager convManager;
     public static DialogController Instance { get; private set; }
     private TextArchitect architect;
+    private CanvasGroupController CGController;
 
     //Definimos una "funcion" que es m�s o menos personalizable.
     public delegate void DialogSystemEvent();
@@ -43,6 +45,10 @@ public class DialogController : MonoBehaviour
 
         architect = new TextArchitect(dialogContainer.dialogText);
         convManager = new ConversationManager(architect);
+
+        CGController = new CanvasGroupController(this, canvas);
+        dialogContainer.Initialize();
+
         _hasInitialized = true;
     }
 
@@ -87,4 +93,9 @@ public class DialogController : MonoBehaviour
     public Coroutine Say(List<string> conversation) {
         return convManager.StartConversation(conversation);
     }
+
+    //THIS SHOULD BE IMPLEMENT ON A GENERIC INTERFACE.
+    public Coroutine Show(float speed, bool inmediate) => CGController.Show(speed, inmediate);
+    public Coroutine Hide(float speed, bool inmediate) => CGController.Hide(speed, inmediate);
+    public bool IsVisible => CGController.IsVisible;
 }
