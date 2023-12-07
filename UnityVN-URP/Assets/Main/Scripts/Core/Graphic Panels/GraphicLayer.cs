@@ -9,7 +9,7 @@ public class GraphicLayer
     public Transform panel;
     public int layerDepth = 0;
     public GraphicObject CurrentGraphic = null;
-    private List<GraphicObject> oldGraphics = new List<GraphicObject>();
+    public List<GraphicObject> oldGraphics = new List<GraphicObject>();
 
     // Start is called before the first frame update
     public Coroutine SetTexture(string path, float transitionSpeed = 2.0f, Texture blendingTexture = null, bool immediate = false)
@@ -79,7 +79,8 @@ public class GraphicLayer
     public void DestroyOldGraphics()
     {
         foreach (var g in oldGraphics)
-            Object.Destroy(g.renderer.gameObject);
+            if(g.renderer != null)
+                Object.Destroy(g.renderer.gameObject);
 
         oldGraphics.Clear();
     }

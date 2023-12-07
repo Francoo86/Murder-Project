@@ -16,6 +16,7 @@ ShowUI()
 
 
 enter Marcelo [pensativo] "Hola"
+Marcelo [feliz] "Toy feliz"
 MoveCharacter(Marcelo -x 0.1 -smoothness true -i true)
 Frieren "comando(gracioso, xd, xdxdxd) hola ayuda"
 

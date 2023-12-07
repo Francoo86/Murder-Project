@@ -84,7 +84,8 @@ public abstract class Character
     public virtual Coroutine Show()
     {
         if (IsShowing)
-            return CO_Showing;
+            //return CO_Showing;
+            controller.StopCoroutine(CO_Showing);
 
         if(IsHiding)
             controller.StopCoroutine(CO_Hiding);
@@ -97,7 +98,8 @@ public abstract class Character
     public virtual Coroutine Hide()
     {
         if (IsHiding)
-            return CO_Hiding;
+            //return CO_Hiding;
+            controller.StopCoroutine(CO_Hiding);
 
         if (IsShowing)
             controller.StopCoroutine(CO_Showing);
@@ -198,10 +200,7 @@ public abstract class Character
   
     public Coroutine Highlight(float speed = 1f)
     {
-        if (isHighlighting)
-            return co_highlighting;
-
-        if (isUnHighlighting)
+        if (isHighlighting || isUnHighlighting)
             controller.StopCoroutine(co_highlighting);
 
         highlighted = true;
@@ -212,10 +211,7 @@ public abstract class Character
 
     public Coroutine UnHighlight(float speed = 1f)
     {
-        if (isUnHighlighting)
-            return co_highlighting;
-
-        if (isHighlighting)
+        if (isUnHighlighting || isHighlighting)
             controller.StopCoroutine(co_highlighting);
 
         highlighted = false;
