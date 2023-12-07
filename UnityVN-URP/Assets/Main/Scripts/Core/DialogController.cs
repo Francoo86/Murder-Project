@@ -16,6 +16,7 @@ public class DialogController : MonoBehaviour
     public static DialogController Instance { get; private set; }
     private TextArchitect architect;
     private CanvasGroupController CGController;
+    private AutoReader autoReader;
 
     //Definimos una "funcion" que es m�s o menos personalizable.
     public delegate void DialogSystemEvent();
@@ -50,13 +51,29 @@ public class DialogController : MonoBehaviour
         dialogContainer.Initialize();
 
         _hasInitialized = true;
+
+        if (TryGetComponent(out autoReader))
+            autoReader.Initialize(convManager);
     }
 
     public void OnUserPrompt_Next() {
         //Debug.Log("Invoking...");
         //Si no es nulo lo invoca.
         onUserPrompt_Next?.Invoke();
+        
+        if(autoReader != null && autoReader.IsOn)
+        {
+            autoReader.Disable();
+        }
     }
+
+    public void OnSystemPrompt_Next()
+    {
+        //Debug.Log("Invoking...");
+        //Si no es nulo lo invoca.
+        onUserPrompt_Next?.Invoke();
+    }
+
 
     public void ApplySpeakerDataToBox(CharacterConfigData config)
     {

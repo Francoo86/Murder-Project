@@ -5,7 +5,7 @@ using UnityEngine;
 public class ConversationManager
 {
     private Coroutine process = null;
-    private TextArchitect arch;
+    public TextArchitect arch;
     public bool IsRunning => process != null;
 
     private DialogController Controller => DialogController.Instance;
@@ -155,6 +155,7 @@ public class ConversationManager
         }
     }
 
+    public bool IsWaitingOnAutoTimer { get; private set; }
     IEnumerator WaitForDialogSegmentSignalToBeTriggered(DialogData.DIALOG_SEGMENT segment)
     {
         switch (segment.startSignal)
@@ -165,7 +166,9 @@ public class ConversationManager
                 break;
             case DialogData.DIALOG_SEGMENT.StartSignal.WC:
             case DialogData.DIALOG_SEGMENT.StartSignal.WA:
+                IsWaitingOnAutoTimer = true;
                 yield return new WaitForSeconds(segment.signalDelay);
+                IsWaitingOnAutoTimer = false;
                 break;
         }
     }
