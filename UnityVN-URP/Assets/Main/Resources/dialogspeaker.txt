@@ -6,6 +6,8 @@ setlayerMedia(fondo consejeria)
 Narrator "Aqui es cuando aparece el marselo..."
 Marcelo "When despiertas"
 
+<playerName> "Soy ese, la hora es <time>"
+
 [wait]HideUI(-speed 0.5)
 
 wait(2)

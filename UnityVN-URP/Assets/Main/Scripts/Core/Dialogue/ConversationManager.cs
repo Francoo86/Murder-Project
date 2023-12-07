@@ -9,10 +9,13 @@ public class ConversationManager
     public bool IsRunning => process != null;
 
     private DialogController Controller => DialogController.Instance;
+    private TagController tagController;
 
     public ConversationManager(TextArchitect arch) { 
         this.arch = arch;
         Controller.onUserPrompt_Next += OnUserPrompt_Next;
+
+        tagController = new TagController();
     }
 
     private bool isUserManipulated = false;
@@ -74,7 +77,7 @@ public class ConversationManager
             character.Show();
             
         //Muestra el nombre del personaje.
-        Controller.ShowSpeakerName(speakerModel.DisplayName);
+        Controller.ShowSpeakerName(tagController.InjectTags(speakerModel.DisplayName));
 
         //Carga los datos creados por la configuración escrita en su clase.
         Controller.ApplySpeakerDataToBox(speakerModel.name);
@@ -168,6 +171,8 @@ public class ConversationManager
     }
 
     IEnumerator BuildDialog(string diag, bool append = false) {
+        diag = tagController.InjectTags(diag);
+
         if (!append)
             arch.Build(diag);
         else
