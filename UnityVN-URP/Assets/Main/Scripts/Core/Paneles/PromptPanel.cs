@@ -26,7 +26,7 @@ public class PromptPanel : MonoBehaviour
         cgController = new CanvasGroupController(this, canvasGroup);
 
         canvasGroup.alpha = 0;
-        SetCanvasState(false);
+        cgController.SetInteractableState(false);
         acceptButton.gameObject.SetActive(false);
 
         inputField.onValueChanged.AddListener(OnInputChanged);
@@ -38,21 +38,16 @@ public class PromptPanel : MonoBehaviour
         titleText.text = title;
         inputField.text = string.Empty;
         cgController.Show();
-        SetCanvasState(true);
+        cgController.SetInteractableState(true);
         IsWaitingOnUserInput = true;
     }
 
     public void Hide() {
         cgController.Hide();
-        SetCanvasState(false);
+        cgController.SetInteractableState(false);
         IsWaitingOnUserInput = false;
     }
 
-    private void SetCanvasState(bool active)
-    {
-        canvasGroup.blocksRaycasts = active;
-        canvasGroup.interactable = active;
-    }
 
     public void OnAcceptInput()
     {
