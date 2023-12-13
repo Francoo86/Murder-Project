@@ -23,6 +23,7 @@ public class TagController
         tags["<playerName>"] = () => "Juanito";
         tags["<time>"] = () => DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss");
         tags["<tempVal>"] = () => "test2";
+        tags["<input>"] = () => PromptPanel.Instance.LastInput;
     }
 
     public string InjectTags(string text)

@@ -9,13 +9,15 @@ public class ConversationManager
     public bool IsRunning => process != null;
 
     private DialogController Controller => DialogController.Instance;
+    //Para inyectar variables en su caso de tipo XML.
     private TagController tagController;
-
+    private LogicalLineManager logicalLineManager;
     public ConversationManager(TextArchitect arch) { 
         this.arch = arch;
         Controller.onUserPrompt_Next += OnUserPrompt_Next;
 
         tagController = new TagController();
+        logicalLineManager = new LogicalLineManager();
     }
 
     private bool isUserManipulated = false;
@@ -45,24 +47,33 @@ public class ConversationManager
             string currentConversation = conversation[i];
             if(currentConversation == string.Empty) continue;
 
-            DialogLineModel dialogLine = DialogParser.Parse(currentConversation);
+            DialogLineModel line = DialogParser.Parse(currentConversation);
 
-            //Revisamos si tenemos dialogo.
-            if (dialogLine.HasDialog) { 
-                yield return RunDialogForLine(dialogLine);
+            if (logicalLineManager.TryGetLogic(line, out Coroutine logic)) {
+                yield return logic;
             }
-
-            //Revisamos si tenemos comandos a ejecutar.
-            if (dialogLine.HasCommands) {
-                yield return RunDialogForCommands(dialogLine);
-            }
-
-            if (dialogLine.HasDialog)
+            else
             {
-                yield return WaitForUserInput();
+                //Revisamos si tenemos dialogo.
+                if (line.HasDialog)
+                {
+                    yield return RunDialogForLine(line);
+                }
 
-                CommandController.Instance.StopAllProcesses();
+                //Revisamos si tenemos comandos a ejecutar.
+                if (line.HasCommands)
+                {
+                    yield return RunDialogForCommands(line);
+                }
+
+                if (line.HasDialog)
+                {
+                    yield return WaitForUserInput();
+
+                    CommandController.Instance.StopAllProcesses();
+                }
             }
+
             //yield return new WaitForSeconds(1);
 
         }

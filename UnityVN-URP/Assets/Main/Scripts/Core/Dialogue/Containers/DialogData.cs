@@ -10,6 +10,7 @@ using UnityEngine;
 /// </summary>
 public class DialogData
 {
+    public string RawData { get; private set; } = string.Empty;
     public List<DIALOG_SEGMENT> segments;
     /// <summary>
     /// Busca primero si hay Clear o Append, o también si hay Wait para esos dos.
@@ -18,6 +19,7 @@ public class DialogData
     private const string segmentIdPattern = @"\{[ca]\}|\{w[ca]\s\d*\.?\d*\}";
     public bool HasDialog => segments.Count > 0;
     public DialogData(string rawDialog) { 
+        RawData = rawDialog;
         segments = ExtractSegments(rawDialog);
     }
     public List<DIALOG_SEGMENT> ExtractSegments(string rawDialog) {

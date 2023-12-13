@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class DialogLineModel {
     //public string speaker;
+    public string RawData { get; private set; } = string.Empty;
     public SpeakerModel speakerMdl;
     public DialogData dialogData;
     public CommandData commandData;
@@ -15,8 +16,9 @@ public class DialogLineModel {
     public bool HasDialog => (dialogData != null && dialogData.HasDialog);//=> dialog != string.Empty;
     public bool HasCommands => commandData != null;//commands != string.Empty;
     public bool HasSpeaker => speakerMdl != null;//speaker != string.Empty;
-    public DialogLineModel(string speaker, string dialog, string commands)
+    public DialogLineModel(string rawData, string speaker, string dialog, string commands)
     {
+        RawData = rawData;
         speakerMdl = (!string.IsNullOrEmpty(speaker) ? new SpeakerModel(speaker) : null);
         dialogData = (!string.IsNullOrEmpty(dialog) ? new DialogData(dialog) : null);
         commandData = (!string.IsNullOrEmpty(commands) ? new CommandData(commands) : null);//commands;

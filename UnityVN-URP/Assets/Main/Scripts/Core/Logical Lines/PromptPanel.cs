@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PromptPanel : MonoBehaviour
 {
+    public static PromptPanel Instance { get; private set; }
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private Button acceptButton;
@@ -14,6 +15,11 @@ public class PromptPanel : MonoBehaviour
     private CanvasGroupController cgController;
     public string LastInput { get; private set; } = string.Empty;
     public bool IsWaitingOnUserInput { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {

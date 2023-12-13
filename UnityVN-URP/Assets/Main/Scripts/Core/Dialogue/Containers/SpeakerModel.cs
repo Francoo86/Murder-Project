@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class SpeakerModel
 {
-    // Start is called before the first frame update
+    public string RawData { get; private set; } = string.Empty;
+
     public string name, screenName;
     //Posicion del personaje en pantalla, tal como RenPy.
     public Vector2 speakerScrPos;
@@ -32,6 +33,7 @@ public class SpeakerModel
     //Palabra clave para mostrar al personaje en pantalla.
     private const string SHOWCHARACTER_ID = "enter ";
     public SpeakerModel(string speaker) {
+        RawData = speaker;
         InitializeSpeakerModel();
         Debug.Log($"Getting the speaker {speaker}");
         //Revisar si se encuentran estos "comandos".
