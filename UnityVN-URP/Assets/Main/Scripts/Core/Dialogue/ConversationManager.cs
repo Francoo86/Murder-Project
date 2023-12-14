@@ -8,6 +8,7 @@ public class ConversationManager
     public TextArchitect arch;
     public bool IsRunning => process != null;
 
+    private ConversationQueue convQueue;
     private DialogController Controller => DialogController.Instance;
     //Para inyectar variables en su caso de tipo XML.
     private TagController tagController;
@@ -18,7 +19,11 @@ public class ConversationManager
 
         tagController = new TagController();
         logicalLineManager = new LogicalLineManager();
+        convQueue = new ConversationQueue();
     }
+
+    public void Enqueue(Conversation conversation) => convQueue.Enqueue(conversation);
+    public void EnqueuePriority(Conversation conversation) => convQueue.EnqueuePriority(conversation);
 
     private bool isUserManipulated = false;
     private void OnUserPrompt_Next() {
