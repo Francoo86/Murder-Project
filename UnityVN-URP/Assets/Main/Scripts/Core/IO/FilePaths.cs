@@ -23,6 +23,7 @@ public class FilePaths
     public static readonly string ResourcesMusic = $"{ResourcesAudio}Music/";
     //Puede darse el caso? He visto que tenemos ese material.
     public static readonly string ResourcesAmbience = $"{ResourcesAudio}Ambience/";
+    public static readonly string ResourcesDialogFiles = $"Dialog Files/";
 
     public static string GetPathToResource(string defPath, string resourceName)
     {

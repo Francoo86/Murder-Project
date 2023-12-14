@@ -32,6 +32,9 @@ public class ConversationManager
 
     public Coroutine StartConversation(Conversation conversation) {
         StopConversation();
+
+        convQueue.Clear();
+
         Enqueue(conversation);
 
         process = Controller.StartCoroutine(RunningConversation());
