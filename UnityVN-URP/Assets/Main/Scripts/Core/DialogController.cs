@@ -12,7 +12,7 @@ public class DialogController : MonoBehaviour
     public DialogConfig Config => _config;
 
     public DialogContainer dialogContainer = new DialogContainer();
-    private ConversationManager convManager;
+    public ConversationManager convManager;
     public static DialogController Instance { get; private set; }
     private TextArchitect architect;
     private CanvasGroupController CGController;
@@ -107,7 +107,13 @@ public class DialogController : MonoBehaviour
         List<string> conversation = new List<string>() {$"{speaker} \"{dialogue}\""};
         return Say(conversation);
     }
-    public Coroutine Say(List<string> conversation) {
+    public Coroutine Say(List<string> lines) {
+        Conversation conversation = new Conversation(lines);
+        return convManager.StartConversation(conversation);
+    }
+
+    public Coroutine Say(Conversation conversation)
+    {
         return convManager.StartConversation(conversation);
     }
 

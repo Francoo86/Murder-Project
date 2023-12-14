@@ -30,10 +30,11 @@ public class ConversationManager
         isUserManipulated = true;
     }
 
-    public Coroutine StartConversation(List<string> conversation) {
+    public Coroutine StartConversation(Conversation conversation) {
         StopConversation();
+        Enqueue(conversation);
 
-        process = Controller.StartCoroutine(RunningConversation(conversation));
+        process = Controller.StartCoroutine(RunningConversation());
         return process;
     }
 
@@ -45,14 +46,23 @@ public class ConversationManager
         process = null;
     }
 
-    IEnumerator RunningConversation(List <string> conversation)
-    {
-        for(int i = 0; i < conversation.Count; i++)
-        {
-            string currentConversation = conversation[i];
-            if(currentConversation == string.Empty) continue;
+    public Conversation conversation => (convQueue.IsEmpty() ? null : convQueue.top);
 
-            DialogLineModel line = DialogParser.Parse(currentConversation);
+    IEnumerator RunningConversation()
+    {
+        //for(int i = 0; i < conversation.Count; i++)
+        while(!convQueue.IsEmpty())
+        {
+            Conversation currentConversation = conversation;
+
+            string rawLine = currentConversation.GetCurrentLine();
+            if (string.IsNullOrWhiteSpace(rawLine))
+            {
+                TryAdvanceConversation(currentConversation);
+                continue;
+            }
+
+            DialogLineModel line = DialogParser.Parse(rawLine);
 
             if (logicalLineManager.TryGetLogic(line, out Coroutine logic)) {
                 yield return logic;
@@ -79,9 +89,21 @@ public class ConversationManager
                 }
             }
 
+            TryAdvanceConversation(currentConversation);
+
             //yield return new WaitForSeconds(1);
 
         }
+
+        process = null;
+    }
+
+    private void TryAdvanceConversation(Conversation conversation)
+    {
+        conversation.IncrementProgress();
+
+        if (conversation.HasReachedEnd())
+            convQueue.Dequeue();
     }
 
     private void HandleSpeaker(SpeakerModel speakerModel)

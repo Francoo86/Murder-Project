@@ -20,6 +20,6 @@ public class Conversation
     public int Count => lines.Count;
     public List<string> GetLines() => lines;
     public string GetCurrentLine() => lines[progress];
-    public bool HasReachedEnd() => progress >= lines.Count - 1;
+    public bool HasReachedEnd() => progress >= lines.Count;
 
 }
