@@ -57,6 +57,12 @@ public class ConversationManager
         {
             Conversation currentConversation = conversation;
 
+            if (currentConversation.HasReachedEnd())
+            {
+                convQueue.Dequeue();
+                continue;
+            }
+
             string rawLine = currentConversation.GetCurrentLine();
             if (string.IsNullOrWhiteSpace(rawLine))
             {
@@ -103,6 +109,9 @@ public class ConversationManager
     private void TryAdvanceConversation(Conversation conversation)
     {
         conversation.IncrementProgress();
+
+        if (conversation != convQueue.top)
+            return;
 
         if (conversation.HasReachedEnd())
             convQueue.Dequeue();
