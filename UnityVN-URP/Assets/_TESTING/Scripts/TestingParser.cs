@@ -19,7 +19,7 @@ public class TestingParser : MonoBehaviour
     void SendFileToParser()
     {
 
-        List<string> lines = FileManager.ReadTextFile("dialogspeaker.txt");
+        //List<string> lines = FileManager.ReadTextFile("dialogspeaker.txt");
 
         //Command testing.
         /*

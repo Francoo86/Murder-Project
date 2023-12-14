@@ -47,6 +47,8 @@ public class ConversationManager
     }
 
     public Conversation conversation => (convQueue.IsEmpty() ? null : convQueue.top);
+    //TODO: Refactorizar un poco si es posible.
+    public int conversationProgress => (convQueue.IsEmpty() ? -1 : convQueue.top.GetProgress());
 
     IEnumerator RunningConversation()
     {

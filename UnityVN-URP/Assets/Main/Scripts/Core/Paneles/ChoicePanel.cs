@@ -52,6 +52,7 @@ public class ChoicePanel : MonoBehaviour
     public void Hide()
     {
         cgController.Hide();
+        cgController.SetInteractableState(false);
     }
 
     private IEnumerator GenerateChoices(string[] choices)

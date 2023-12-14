@@ -5,8 +5,21 @@
 setlayerMedia(fondo consejeria)
 Narrator "Aqui es cuando aparece el marselo..."
 Marcelo "When despiertas"
+Input "Cual es tu nombre bro?"
+
+narrator "Ahh entonces te llamas <input>"
 
 <playerName> "Soy ese, la hora es <time>"
+
+choice "What do you like to do?"
+{
+	-Lua
+		Marcelo "Me gusta ese lenguaje."
+	-C#
+		Marcelo "No se, ayuda a pasar TIS."
+	-PHP
+		Marcelo "Revivan PHP."
+}
 
 [wait]HideUI(-speed 0.5)
 

@@ -14,6 +14,7 @@ public class InputPanelTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         Conversation conversation = null;
 
         if (Input.GetKeyDown(KeyCode.K))
@@ -44,7 +45,7 @@ public class InputPanelTest : MonoBehaviour
 
             conversation = new Conversation(luaTopics);
             DialogController.Instance.convManager.EnqueuePriority(conversation);
-        }
+        }*/
     }
 
     IEnumerator RunningPrompt()
