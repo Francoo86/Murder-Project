@@ -5,7 +5,7 @@
 setlayerMedia(fondo consejeria)
 Narrator "Aqui es cuando aparece el marselo..."
 Marcelo "When despiertas"
-Input "Cual es tu nombre bro?"
+input "Cual es tu nombre bro?"
 
 narrator "Ahh entonces te llamas <input>"
 

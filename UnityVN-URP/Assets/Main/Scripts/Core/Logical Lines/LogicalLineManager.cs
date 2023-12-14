@@ -32,6 +32,7 @@ public class LogicalLineManager
             if (logicalLine.Matches(line))
             {
                 logic = DiagController.StartCoroutine(logicalLine.Execute(line));
+                return true;
             }
         }
 
