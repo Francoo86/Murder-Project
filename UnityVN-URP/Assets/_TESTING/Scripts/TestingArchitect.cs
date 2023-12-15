@@ -6,6 +6,7 @@ using UnityEngine;
 namespace TESTING {
     public class TestingArchitect : MonoBehaviour
     {
+        /*
         DialogController dc;
         TextArchitect arch;
 
@@ -23,13 +24,14 @@ namespace TESTING {
         void Start()
         {
             dc = DialogController.Instance;
-            arch = new TextArchitect(dc.dialog.dialogText);
+            arch = new TextArchitect(dc.dialogContainer.dialogText);
             arch.buildMethod = TextArchitect.BuildMethod.fade;
-        }
+        }*/
 
         // Update is called once per frame
         void Update()
         {
+            /*
             if (bm != arch.buildMethod) {
                 arch.buildMethod = bm;
                 arch.Stop();
@@ -56,7 +58,7 @@ namespace TESTING {
             else if (Input.GetKeyDown("a"))
             {
                 arch.Append(lines[UnityEngine.Random.Range(0, lines.Length)]);
-            }
+            }*/
         }
     }
 }

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b98b8ea5a4c40284db62b4c86840859a, type: 3}
+  m_Name: Character Configuration File
+  m_EditorClassIdentifier: 
+  characters:
+  - name: Patricia
+    alias: Mr. Alcalde
+    charType: 1
+    nameCol: {r: 0, g: 1, b: 1, a: 1}
+    diagCol: {r: 0, g: 1, b: 0, a: 1}
+    nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - name: Luis
+    alias: xdddd
+    charType: 1
+    nameCol: {r: 1, g: 0, b: 0.042004585, a: 1}
+    diagCol: {r: 1, g: 0.90990627, b: 0, a: 1}
+    nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - name: Marcelo
+    alias: marselo
+    charType: 1
+    nameCol: {r: 0, g: 1, b: 1, a: 1}
+    diagCol: {r: 1, g: 0, b: 0, a: 1}
+    nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - name: Player
+    alias: noseaskldxd
+    charType: 0
+    nameCol: {r: 0, g: 1, b: 1, a: 1}
+    diagCol: {r: 1, g: 0, b: 0, a: 1}
+    nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
