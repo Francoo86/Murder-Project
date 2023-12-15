@@ -25,7 +25,7 @@ public class VariableStore
     }
 
     private const string DEFAULT_DATABASE = "Default";
-    private const char DATABASE_SEP_ID = '.';
+    public static readonly char DATABASE_RELATIONAL_ID = '.';
 
     private static Dictionary<string, Database> databases = new Dictionary<string, Database>() { { DEFAULT_DATABASE, new Database(DEFAULT_DATABASE) } };
     private static Database defaultDatabase => databases[DEFAULT_DATABASE];
@@ -92,6 +92,12 @@ public class VariableStore
     {
         databases.Clear();
         databases[DEFAULT_DATABASE] = new Database(DEFAULT_DATABASE);
+    }
+
+    public static bool HasVariable(string name)
+    {
+        (string[] _, Database db, string varName) = ExtractInfo(name);
+        return db.variables.ContainsKey(varName);
     }
 
     public static void RemoveVariable(string name)
@@ -176,7 +182,7 @@ public class VariableStore
     private static (string[], Database, string) ExtractInfo(string name)
     {
         //Para cada BD agregar un elemento. Onda, DB1.VarName = 1.
-        string[] parts = name.Split(DATABASE_SEP_ID);
+        string[] parts = name.Split(DATABASE_RELATIONAL_ID);
         Database db = GetDatabase(parts[0]);
         string variableName = parts.Length > 1 ? parts[1] : parts[0];
 

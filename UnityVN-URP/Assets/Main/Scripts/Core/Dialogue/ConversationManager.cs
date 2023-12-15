@@ -11,13 +11,13 @@ public class ConversationManager
     private ConversationQueue convQueue;
     private DialogController Controller => DialogController.Instance;
     //Para inyectar variables en su caso de tipo XML.
-    private TagController tagController;
+    //private TagController tagController;
     private LogicalLineManager logicalLineManager;
     public ConversationManager(TextArchitect arch) { 
         this.arch = arch;
         Controller.onUserPrompt_Next += OnUserPrompt_Next;
 
-        tagController = new TagController();
+        //tagController = new TagController();
         logicalLineManager = new LogicalLineManager();
         convQueue = new ConversationQueue();
     }
@@ -129,7 +129,7 @@ public class ConversationManager
             character.Show();
             
         //Muestra el nombre del personaje.
-        Controller.ShowSpeakerName(tagController.InjectTags(speakerModel.DisplayName));
+        Controller.ShowSpeakerName(TagController.Inject(speakerModel.DisplayName));
 
         //Carga los datos creados por la configuración escrita en su clase.
         Controller.ApplySpeakerDataToBox(speakerModel.name);
@@ -226,7 +226,7 @@ public class ConversationManager
     }
 
     IEnumerator BuildDialog(string diag, bool append = false) {
-        diag = tagController.InjectTags(diag);
+        diag = TagController.Inject(diag);
 
         if (!append)
             arch.Build(diag);

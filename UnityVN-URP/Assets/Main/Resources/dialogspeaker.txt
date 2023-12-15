@@ -1,6 +1,19 @@
 ﻿//Setear el fondo.
 //Probando comentarios...
 
+$monea = 50
+$litros = 100
+
+$money = $monea + $litros
+
+if($monea > 200)
+{
+	narrator "i like turtles"
+}
+else
+{
+	narrator "si soy"
+}
 
 setlayerMedia(fondo consejeria)
 Narrator "Aqui es cuando aparece el marselo..."
