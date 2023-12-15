@@ -4,69 +4,79 @@ using UnityEngine;
 
 public class CanvasGroupController
 {
-    private const float DEFAULT_FADE_SPEED = 3f;
-
     private MonoBehaviour owner;
-    private CanvasGroup rootCG;
+    private CanvasGroup canvas;
 
-    private Coroutine co_showing = null;
-    private Coroutine co_hiding = null;
+    private const float DEFAULT_FADE_SPEED = 2.5f;
 
-    public bool isShowing => co_showing != null;
-    public bool isHiding => co_hiding != null;
-    public bool isFading => isShowing || isHiding;
-    public bool isVisible => co_showing != null || rootCG.alpha > 0;
+    //Coroutinas para mostrar y ocultar texto.
+    private Coroutine co_Hiding = null;
+    private Coroutine co_Showing = null;
 
-    public float alpha { get { return rootCG.alpha; } set { rootCG.alpha = value; } }
+    //Checks importantes.
+    public bool IsHiding => co_Hiding != null;
+    public bool IsShowing => co_Showing != null;
+    public bool IsFading => IsHiding || IsShowing;
+    public bool IsVisible => IsShowing || canvas.alpha > 0;
 
-    public CanvasGroupController(MonoBehaviour owner, CanvasGroup rootCG)
+    public float Alpha { get { return canvas.alpha; } set { canvas.alpha = value; } }
+
+    public CanvasGroupController(MonoBehaviour owner, CanvasGroup canvas)
     {
         this.owner = owner;
-        this.rootCG = rootCG;
+        this.canvas = canvas;
     }
 
-    public Coroutine Show()
+    public Coroutine Show(float speed = 1, bool inmediate = false)
     {
-        if (isShowing)
-            return co_showing;
-        else if (isHiding)
+        if (IsShowing) return co_Showing;
+        else if (IsHiding)
         {
-            DialogController.Instance.StopCoroutine(co_hiding);
-            co_hiding = null;
+            DialogController.Instance.StopCoroutine(co_Hiding);
+            co_Hiding = null;
         }
-        co_showing = DialogController.Instance.StartCoroutine(Fading(1));
-        return co_showing;
+
+        co_Showing = DialogController.Instance.StartCoroutine(Fade(1, speed, inmediate));
+
+        return co_Showing;
     }
 
-    public Coroutine Hide()
+    public Coroutine Hide(float speed = 1, bool inmediate = false)
     {
-        if (isHiding)
-            return co_hiding;
-        else if (isShowing)
+        if (IsHiding) return co_Hiding;
+        else if (IsShowing)
         {
-            DialogController.Instance.StopCoroutine(co_showing);
-            co_showing = null;
+            owner.StopCoroutine(co_Showing);
+            co_Showing = null;
         }
-        co_hiding = DialogController.Instance.StartCoroutine(Fading(0));
-        return co_hiding;
+
+        co_Hiding = owner.StartCoroutine(Fade(0, speed, inmediate));
+        return co_Hiding;
     }
 
-    private IEnumerator Fading(float alpha)
+    //Alpha hacia 1 signfica que se va a mostrar. Para 0 es lo contrario, se esconderá.
+    //Estos tipos de metodos son mucha paja xdddd
+    private IEnumerator Fade(float alpha, float speed = 1, bool inmediate = false)
     {
-        CanvasGroup cg = rootCG;
+        CanvasGroup cg = canvas;
+
+        if (inmediate)
+            cg.alpha = alpha;
+
         while (cg.alpha != alpha)
         {
-            cg.alpha = Mathf.MoveTowards(cg.alpha, alpha, Time.deltaTime * DEFAULT_FADE_SPEED);
+            cg.alpha = Mathf.MoveTowards(cg.alpha, alpha, Time.deltaTime * DEFAULT_FADE_SPEED * speed);
             yield return null;
         }
-        co_showing = null;
-        co_hiding = null;
+
+        co_Hiding = null;
+        co_Showing = null;
     }
 
     public void SetInteractableState(bool active)
     {
-        rootCG.interactable = active;
-        rootCG.blocksRaycasts = active;
+        canvas.blocksRaycasts = active;
+        canvas.interactable = active;
     }
 
 }

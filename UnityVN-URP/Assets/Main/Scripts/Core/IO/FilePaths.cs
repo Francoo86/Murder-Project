@@ -1,19 +1,37 @@
 using UnityEngine;
 
+/// <summary>
+/// Clase que se encarga de manejar los directorios. Aunque funciona más como una estatica.
+/// </summary>
 public class FilePaths
 {
     private const string HOME_DIRECTORY_SYMBOL = "~/";
-    public static readonly string rootPath = $"{Application.dataPath}/gameData/";
-    //Resources Paths
-    public static readonly string resources_font = "Font/";
-    public static readonly string resources_graphics = "Graphics/";
-    public static readonly string resources_backgroundImages = $"{resources_graphics}BG Images/";
-    public static readonly string resources_backgroundVideos = $"{resources_graphics}BG Videos/";
-    public static readonly string resources_blendTextures = $"{resources_graphics}Transition Effects/";
-    public static readonly string resources_audio = "Audio/";
-    public static readonly string resources_sfx = $"{resources_audio}SFX/";
-    public static readonly string resources_voices = $"{resources_audio}Voices/";
-    public static readonly string resources_music = $"{resources_audio}Music/";
-    public static readonly string resources_ambience = $"{resources_audio}Ambience/";
-    public static readonly string resources_dialogueFiles = $"Dialogue Files/";
+
+    public static readonly string rootPath = $"{Application.dataPath}/Main/Resources/";
+
+    //Paneles graficos, vale decir escenarios, videos de fondo.
+    public static readonly string ResourcesGraphics = "Graphics/";
+
+    //Fondos y videos.
+    public static readonly string ResourcesBGImages = $"{ResourcesGraphics}BG Images/";
+    public static readonly string ResourcesBGVideos = $"{ResourcesGraphics}BG Videos/";
+    public static readonly string ResourcesBlendTexture = $"{ResourcesGraphics}Transition Effects/";
+
+    //Audio.
+    public static readonly string ResourcesAudio = "Audio/";
+    public static readonly string ResourcesSFX = $"{ResourcesAudio}SFX/";
+    public static readonly string ResourcesMusic = $"{ResourcesAudio}Music/";
+    //Puede darse el caso? He visto que tenemos ese material.
+    public static readonly string ResourcesAmbience = $"{ResourcesAudio}Ambience/";
+    public static readonly string ResourcesDialogFiles = $"Dialog Files/";
+
+    public static string GetPathToResource(string defPath, string resourceName)
+    {
+        if (resourceName.StartsWith(HOME_DIRECTORY_SYMBOL))
+        {
+            return resourceName.Substring(HOME_DIRECTORY_SYMBOL.Length);
+        }
+
+        return defPath + resourceName;
+    }
 }

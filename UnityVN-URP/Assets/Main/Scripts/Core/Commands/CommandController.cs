@@ -1,15 +1,20 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CommandController : MonoBehaviour
 {
     public static CommandController Instance { get; private set; }
     private CommandDB cmdDatabase;
-    private static Coroutine process = null;
-    public static bool IsRunning => process != null;
+    //Procesos actuales de distintos comandos.
+    private List<CommandProcess> processList = new List<CommandProcess>();
+    private CommandProcess topProcess => processList.Last();
+    //private static Coroutine process = null;
+    //public static bool IsRunning => process != null;
 
     private void Awake()
     {
@@ -33,44 +38,78 @@ public class CommandController : MonoBehaviour
             DestroyImmediate(Instance);
     }
     // Start is called before the first frame update
-    public Coroutine Execute(string command, params string[] args) { 
+    public CoroutineWrapper Execute(string command, params string[] args) { 
         Delegate cmd = cmdDatabase.GetCommand(command);
-        //cmd?.DynamicInvoke(null);
         if (cmd == null) return null;
 
         return StartProcess(command, cmd, args);
     }
 
-    private Coroutine StartProcess(string commandName, Delegate command, string[] args) {
+    private CoroutineWrapper StartProcess(string commandName, Delegate command, string[] args) {
+        Guid procID = Guid.NewGuid();
+
+        CommandProcess cmdProc = new CommandProcess(procID, commandName, command, args, null, null);
+        processList.Add(cmdProc);
+
+        Coroutine co = StartCoroutine(RunningProc(cmdProc));
+        cmdProc.currentProcess = new CoroutineWrapper(this, co);
+
+        return cmdProc.currentProcess;
+        /*
         StopCurrentProcess();
         process = StartCoroutine(RunningProc(command, args));
-        return process;
+        return process;*/
     }
 
-    private void StopCurrentProcess()
+    public void StopCurrentProcess()
     {
-        if (process != null)
-        {
-            StopCoroutine(process);
-        }
-
-        process = null;
+        if(topProcess != null)
+            KillProcess(topProcess);
     }
 
     //Esto es para poder correr el proceso dentro de otra corutina.
-    private IEnumerator RunningProc(Delegate commandProc, string[] args)
+    private IEnumerator RunningProc(CommandProcess cmdProc)
     {
-        yield return WaitForCommandToFinish(commandProc, args);
-        process = null;
+        yield return WaitForCommandToFinish(cmdProc.command, cmdProc.args);
+        KillProcess(cmdProc);
+    }
+
+    public void KillProcess(CommandProcess cmdProc)
+    {
+        processList.Remove(cmdProc);
+
+        if (cmdProc.currentProcess != null && !cmdProc.currentProcess.IsDone)
+            cmdProc.currentProcess.Stop();
+
+        cmdProc.onTerminateAction?.Invoke();
+    }
+
+    //THIS SHOULDN'T STOP THE INWORLD PROCESS!!!!!!
+    public void StopAllProcesses()
+    {
+        foreach(var proc in processList)
+        {
+            Debug.Log($"Killing {proc.processName}");
+            CoroutineWrapper currProc = proc.currentProcess;
+            if(currProc != null && !currProc.IsDone)
+            {
+                currProc.Stop();
+            }
+
+            proc.onTerminateAction?.Invoke();
+        }
+
+        processList.Clear();
     }
 
     //TODO: Make it to factory pattern.
+    //Callback my beloved.
     private IEnumerator WaitForCommandToFinish(Delegate commandProc, string[] args) {
         if (commandProc is Action)
             commandProc.DynamicInvoke(null);
         //Es un comando que tiene strings como parametros.
         else if (commandProc is Action<string>)
-            commandProc.DynamicInvoke(args[0]);
+            commandProc.DynamicInvoke(args.Length == 0 ? string.Empty : args[0]);
         //Tiene argumentos variables.
         else if (commandProc is Action<string[]>)
             commandProc.DynamicInvoke((object)args);
@@ -81,5 +120,14 @@ public class CommandController : MonoBehaviour
             yield return ((Func<string, IEnumerator>)commandProc)(args[0]);
         else if (commandProc is Func<string[], IEnumerator>)
             yield return ((Func<string[], IEnumerator>)commandProc)(args);
+    }
+
+    public void AddTerminationActionToActualProcess(UnityAction action)
+    {
+        CommandProcess proc = topProcess;
+        if (proc == null) return;
+
+        proc.onTerminateAction = new UnityEvent();
+        proc.onTerminateAction.AddListener(action);
     }
 }

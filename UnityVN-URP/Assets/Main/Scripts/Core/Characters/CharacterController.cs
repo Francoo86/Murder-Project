@@ -24,7 +24,7 @@ public class CharacterController : MonoBehaviour
     }
     
     //TODO: Make factory method with this.
-    public Character CreateCharacter(string charName) {
+    public Character CreateCharacter(string charName, bool revealAfterCreated = false) {
         if (storedChars.ContainsKey(charName.ToLower()))
         {
             Debug.LogError($"The character {charName} already exists, the character was not created.");
@@ -34,6 +34,9 @@ public class CharacterController : MonoBehaviour
         CharacterModel characterModel = GetCharacterModel(charName);
         Character character = CreateCharacterFromModel(characterModel);
         storedChars.Add(charName.ToLower(), character);
+
+        if (revealAfterCreated)
+            character.Show();
 
         return character;
     }
@@ -64,7 +67,7 @@ public class CharacterController : MonoBehaviour
             case Character.CharacterType.Text:
                 return new TextCharacter(characterModel.name, data);
             case Character.CharacterType.Sprite:
-            case Character.CharacterType.SpriteSheet:
+            //case Character.CharacterType.SpriteSheet:
                 return new SpriteCharacter(characterModel.name, data, characterModel.prefab, characterModel.baseCharacterFolder);
             default:
                 break;
@@ -79,17 +82,17 @@ public class CharacterController : MonoBehaviour
         model.name = charName;
         model.config = config.GetConfig(charName);
         model.prefab = LookupPrefab(charName);
-        model.baseCharacterFolder = FormatCharacterPrefabPath(characterPrefabPath, charName);
+        model.baseCharacterFolder = FormatCharacterPath(characterPath, charName);
         return model;
     }
 
     private GameObject LookupPrefab(string charName)
     {
-        string resPath = FormatCharacterPrefabPath(characterPrefabPath, charName);
+        string resPath = FormatCharacterPath(characterPrefabPath, charName);
         return Resources.Load<GameObject>(resPath);
     }
 
-    private string FormatCharacterPrefabPath(string path, string charName) => path.Replace(CHARACTER_ID, charName);
+    private string FormatCharacterPath(string path, string charName) => path.Replace(CHARACTER_ID, charName);
 
 }
 

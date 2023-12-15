@@ -6,6 +6,7 @@ using UnityEngine;
 namespace TESTING {
     public class TestingArchitect : MonoBehaviour
     {
+        /*
         DialogController dc;
         TextArchitect arch;
 
@@ -25,7 +26,7 @@ namespace TESTING {
             dc = DialogController.Instance;
             arch = new TextArchitect(dc.dialogContainer.dialogText);
             arch.buildMethod = TextArchitect.BuildMethod.fade;
-        }
+        }*/
 
         // Update is called once per frame
         void Update()

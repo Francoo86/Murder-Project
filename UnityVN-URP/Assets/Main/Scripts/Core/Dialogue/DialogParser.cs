@@ -17,7 +17,7 @@ public class DialogParser {
 
         //Debug.Log($"Speaker is {speaker}, dialog is {dialogue}, command is {commands}");
 
-        return new DialogLineModel(speaker, dialogue, commands);
+        return new DialogLineModel(line, speaker, dialogue, commands);
     }
 
     private static (string, string, string) ExtractContent(string line)

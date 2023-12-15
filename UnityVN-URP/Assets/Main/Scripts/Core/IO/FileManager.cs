@@ -18,6 +18,9 @@ public class FileManager
                 while(!sr.EndOfStream)
                 {
                     string line = sr.ReadLine();
+                    //Skip goofy aahh comments.
+                    if (line.StartsWith("//")) continue;
+
                     if (includeBlankLines || !string.IsNullOrWhiteSpace(line)) {
                         savedLines.Add(line);
                     }

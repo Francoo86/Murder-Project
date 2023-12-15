@@ -38,10 +38,10 @@ public class TextArchitect
     private int characterMul = 1;
 
     public float GetProperTextSpeed() { 
-        return CharsPerCycle* (shouldSpeedUp? FASTER_TEXT_SPEED : 1);
+        return CharsPerCycle * (shouldSpeedUp? FASTER_TEXT_SPEED : 1);
     }
 
-public TextArchitect(TextMeshProUGUI tmpro_ui) {
+    public TextArchitect(TextMeshProUGUI tmpro_ui) {
         this.tmpro_ui = tmpro_ui;
     }
 
@@ -72,14 +72,6 @@ public TextArchitect(TextMeshProUGUI tmpro_ui) {
     /// <returns></returns>
     public Coroutine Build(string text) {
         return StartTextCoroutine(text);
-        /*
-        preText = "";
-        targetText = text;
-
-        Stop();
-
-        buildProcess = tmpro.StartCoroutine(Building());
-        return buildProcess;*/
     }
 
     /// <summary>
@@ -89,17 +81,8 @@ public TextArchitect(TextMeshProUGUI tmpro_ui) {
     /// <returns></returns>
     public Coroutine Append(string text)
     {
-        /*
-        preText = tmpro.text;
-        targetText = text;
-
-        Stop();
-
-        buildProcess = tmpro.StartCoroutine(Building());
-        return buildProcess;*/
         return StartTextCoroutine(text, tmpro.text);
     }
-
 
     public Coroutine buildProcess = null;
     public bool isBuilding => buildProcess != null;
@@ -242,7 +225,6 @@ public TextArchitect(TextMeshProUGUI tmpro_ui) {
             tmpro.maxVisibleCharacters += (int)GetProperTextSpeed();
             yield return new WaitForSeconds(BASE_TEXT_SPEED / speed);
         }
-        //yield return null;
     }
 
     private IEnumerator Build_Fade() {
@@ -290,6 +272,5 @@ public TextArchitect(TextMeshProUGUI tmpro_ui) {
 
             yield return new WaitForEndOfFrame();
         }
-        //yield return null;
     }
 }

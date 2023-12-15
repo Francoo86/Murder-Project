@@ -6,21 +6,44 @@ using UnityEngine;
 
 public abstract class Character
 {
+    public const bool ENABLE_ON_START = false;
+    private const float UNHIGHLIGHTED_DARKEN_STRENGTH = 0.65f;
+    public const bool DEFAULT_ORIENTATION_IS_FACING_LEFT = true;
+
     public string name;
     public string displayName;
     //Hacer un cuadro para cada imagen de personaje.
     public RectTransform root;
     public CharacterConfigData config;
     public Animator animator;
+
+    public Color color { get; protected set; } = Color.white;
+    protected Color displayColor => highlighted ? highlightedColor : unhighlightedColor;
+
     protected CharacterController controller => CharacterController.Instance;
 
-    //Corutinas de mostrado.
-    protected Coroutine CO_Hiding, CO_Showing, CO_Moving;
+    
+    protected Color highlightedColor => color;
+    protected Color unhighlightedColor => new Color(color.r * UNHIGHLIGHTED_DARKEN_STRENGTH, color.g * UNHIGHLIGHTED_DARKEN_STRENGTH, color.b * UNHIGHLIGHTED_DARKEN_STRENGTH, color.a);
+    public bool highlighted { get; private set; } = true;
+    protected bool facingLeft = DEFAULT_ORIENTATION_IS_FACING_LEFT;
+
+
+    //Corutinas de mostrado.                              
+    protected Coroutine CO_Hiding, CO_Showing, CO_Moving, co_highlighting, co_changingColor, co_flipping;
     //Logica de mostrar.
-    private bool IsShowing => CO_Showing != null;
-    private bool IsHiding => CO_Hiding != null;
+    public bool IsShowing => CO_Showing != null;
+    public bool IsHiding => CO_Hiding != null;
     private bool IsMoving => CO_Moving != null;
-    public virtual bool IsVisible => false;
+
+    private bool isChangingColor => co_changingColor != null;
+    private bool isHighlighting => (highlighted && co_highlighting != null);
+    private bool isUnHighlighting => (!highlighted && co_highlighting != null);
+
+    public virtual bool IsVisible { get; set; } = false;
+    public bool isFacingLeft => facingLeft;
+    public bool isFacingRight => !facingLeft;
+    public bool isFlipping => co_flipping != null;
 
     //Cada personaje tendrá su propio nombre.
     public Character(string name, CharacterConfigData config, GameObject prefab) {
@@ -61,7 +84,8 @@ public abstract class Character
     public virtual Coroutine Show()
     {
         if (IsShowing)
-            return CO_Showing;
+            //return CO_Showing;
+            controller.StopCoroutine(CO_Showing);
 
         if(IsHiding)
             controller.StopCoroutine(CO_Hiding);
@@ -74,7 +98,8 @@ public abstract class Character
     public virtual Coroutine Hide()
     {
         if (IsHiding)
-            return CO_Hiding;
+            //return CO_Hiding;
+            controller.StopCoroutine(CO_Hiding);
 
         if (IsShowing)
             controller.StopCoroutine(CO_Showing);
@@ -90,6 +115,10 @@ public abstract class Character
         (Vector2 minAnchor, Vector2 maxAnchor) = ConvertPosToRelative(pos);
         root.anchorMin = minAnchor;
         root.anchorMax = maxAnchor;
+    }
+
+    public virtual (Vector2, Vector2) GetPos() {
+        return (root.anchorMin, root.anchorMax);
     }
 
     public virtual Coroutine MoveToPosition(Vector2 pos, float speed = 2f, bool smooth = false)
@@ -147,11 +176,95 @@ public abstract class Character
         yield return null;
     }
 
+ 
+    public virtual void SetColor(Color color)
+    {
+        this.color = color;
+    }
+    public Coroutine TransitionColor(Color color, float speed = 1f)
+    {
+        this.color = color;
+
+        if (isChangingColor)
+            controller.StopCoroutine(co_changingColor);
+
+        co_changingColor = controller.StartCoroutine(ChangingColor(displayColor, speed));
+        return co_changingColor;
+    }
+    public virtual IEnumerator ChangingColor(Color color, float speed)
+    {
+        Debug.LogWarning("Color changing is not applicable on this character type!");
+        yield return null;
+    }
+
+  
+    public Coroutine Highlight(float speed = 1f)
+    {
+        if (isHighlighting || isUnHighlighting)
+            controller.StopCoroutine(co_highlighting);
+
+        highlighted = true;
+        co_highlighting = controller.StartCoroutine(Highlighting(highlighted, speed));
+
+        return co_highlighting;
+    }
+
+    public Coroutine UnHighlight(float speed = 1f)
+    {
+        if (isUnHighlighting || isHighlighting)
+            controller.StopCoroutine(co_highlighting);
+
+        highlighted = false;
+        co_highlighting = controller.StartCoroutine(Highlighting(highlighted, speed));
+
+        return co_highlighting;
+    }
+
+    public virtual IEnumerator Highlighting(bool highlight, float speedMultiplier)
+    {
+        Debug.Log("Highlighting is not available on this character type!");
+        yield return null;
+    }
+
+    public Coroutine Flip(float speed = 1, bool immediate = false)
+    {
+        if (isFacingLeft)
+            return FaceRight(speed, immediate);
+        else
+            return FaceLeft(speed, immediate);
+    }
+    public Coroutine FaceLeft(float speed = 1, bool immediate = false)
+    {
+        if (isFlipping)
+            controller.StopCoroutine(co_flipping);
+        facingLeft = true;
+        co_flipping = controller.StartCoroutine(FaceDirection(facingLeft, speed, immediate));
+        return co_flipping;
+    }
+    public Coroutine FaceRight(float speed = 1, bool immediate = false)
+    {
+        if (isFlipping)
+            controller.StopCoroutine(co_flipping);
+        facingLeft = false;
+        co_flipping = controller.StartCoroutine(FaceDirection(facingLeft, speed, immediate));
+        return co_flipping;
+    }
+    public virtual IEnumerator FaceDirection(bool faceLeft, float speedMultiplier, bool immediate)
+    {
+        Debug.Log("Cannot flip a character of this type!");
+        yield return null;
+    }
+
+    public virtual void OnExpressionReceive(int layer, string expression)
+    {
+        return;
+    }
+
     public enum CharacterType
     {
         //Los mas usados en VN.
         Text,
         Sprite,
-        SpriteSheet,
+        //SpriteSheet,
     }
 }
