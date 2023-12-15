@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DIALOGUE;
 
 namespace History
 {
@@ -29,7 +28,9 @@ namespace History
             var nameText = ds.dialogContainer.nameContainer.nameText;
 
             data.currentDialogue = dialogueText.text;
-            data.dialogueFont = FilePaths.dialogueText.font.name;
+            //Le pegue una vuelta, y era porque no estaba el codigo de las fuentes en la carpeta.
+            //Ya esta => Resources/Fonts, btw no creo que sea muy relevante el tema de las fuentes.
+            data.dialogueFont = FilePaths.ResourcesFonts + dialogueText.font.name;
 
             return data;
         }
