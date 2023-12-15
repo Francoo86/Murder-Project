@@ -29,7 +29,7 @@ namespace History
 
             data.currentDialogue = dialogueText.text;
             //Le pegue una vuelta, y era porque no estaba el codigo de las fuentes en la carpeta.
-            //Ya esta => Resources/Fonts, btw no creo que sea muy relevante el tema de las fuentes.
+            //Es esta Resources/Fonts, btw no creo que sea muy relevante el tema de las fuentes.
             data.dialogueFont = FilePaths.ResourcesFonts + dialogueText.font.name;
 
             return data;

@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class VNMenuManager : MonoBehaviour
 {
+    //Filepath por lo que veo, webea mucho, de todas formas me imagino que nosotros debemos asignarlas.
     /*
     public static VNMenuManager instance;
 
