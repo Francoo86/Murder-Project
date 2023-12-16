@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+using CHARACTERS;
+
 public class DialogController : MonoBehaviour
 {
     [SerializeField] private DialogConfig _config;
@@ -95,8 +97,10 @@ public class DialogController : MonoBehaviour
         //No hay raz�n para mostrar al narrador, similar a RenPy.
         if (speakerName.ToLower() != NARRATOR_CHARACTER)
             dialogContainer.nameContainer.Show(speakerName);
-        else
+        else { 
             HideSpeakerName();
+            dialogContainer.nameContainer.nameText.text = "";
+        }
     }
 
     public void HideSpeakerName() => dialogContainer.nameContainer.Hide();

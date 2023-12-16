@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using CHARACTERS;
+
 public class ConversationManager
 {
     private Coroutine process = null;

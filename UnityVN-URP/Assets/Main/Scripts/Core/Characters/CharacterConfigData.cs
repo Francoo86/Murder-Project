@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+using CHARACTERS;
+
 [System.Serializable]
 public class CharacterConfigData
 {

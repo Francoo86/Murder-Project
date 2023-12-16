@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+using CHARACTERS;
+
 class CharacterInteraction
 {
     private List<string> lastText;

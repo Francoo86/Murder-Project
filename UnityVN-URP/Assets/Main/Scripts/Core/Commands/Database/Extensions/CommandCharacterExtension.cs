@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using CHARACTERS;
+
 public class CommandCharacterExtension : CommandDBExtension
 {
     //Activar personajes y eso.
