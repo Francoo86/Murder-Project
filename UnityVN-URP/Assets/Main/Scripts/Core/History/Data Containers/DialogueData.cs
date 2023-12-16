@@ -31,6 +31,13 @@ namespace History
             //Le pegue una vuelta, y era porque no estaba el codigo de las fuentes en la carpeta.
             //Es esta Resources/Fonts, btw no creo que sea muy relevante el tema de las fuentes.
             data.dialogueFont = FilePaths.ResourcesFonts + dialogueText.font.name;
+            data.dialogueColor = dialogueText.color;
+            data.dialogueScale = dialogueText.fontSize;
+
+            data.currentSpeaker = nameText.text;
+            data.speakerFont = FilePaths.ResourcesFonts + nameText.font.name;
+            data.speakerNameColor = nameText.color;
+            data.speakerScale = nameText.fontSize;
 
             return data;
         }

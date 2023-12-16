@@ -25,7 +25,10 @@ public class GraphicObject
     public VideoPlayer vidPlayer = null;
     public AudioSource audioSource = null;
     public string graphicPath = "";
+
     public bool IsVideo { get { return vidPlayer != null; } }
+    public bool useAudio => (audioSource != null ? true : false);
+
     public string GraphicName { get; private set; }
 
     public GraphicObject(GraphicLayer layer, string graphicPath, Texture texture, bool immediate, Texture blendingTexture = null)

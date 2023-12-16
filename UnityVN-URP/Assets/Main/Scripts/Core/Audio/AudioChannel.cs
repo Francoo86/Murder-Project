@@ -21,7 +21,7 @@ public class AudioChannel
         TrackContainer.transform.SetParent(AudioController.Instance.transform);
     }
     
-    public AudioTrack PlayTrack(AudioClip clip, bool loop, float startVol, float volCap, string filePath = "")
+    public AudioTrack PlayTrack(AudioClip clip, bool loop, float startVol, float volCap, string filePath)
     {
         if(TryToGetTrack(clip.name, out AudioTrack existingTrack))
         {
@@ -33,7 +33,7 @@ public class AudioChannel
             return existingTrack;
         }
 
-        AudioTrack track = new AudioTrack(clip, loop, startVol, volCap, this, AudioController.Instance.musicMixer);
+        AudioTrack track = new AudioTrack(clip, loop, startVol, volCap, this, AudioController.Instance.musicMixer, filePath);
         track.Play();
 
         //Save this track to current one.

@@ -11,7 +11,7 @@ using UnityEngine;
 public class NameContainer
 {
     [SerializeField] public GameObject root;
-    [SerializeField] public TextMeshProUGUI nameText;
+    [field:SerializeField] public TextMeshProUGUI nameText { get; private set; }
     // Start is called before the first frame update
     public void Show(string newName = "") {
         root.SetActive(true);

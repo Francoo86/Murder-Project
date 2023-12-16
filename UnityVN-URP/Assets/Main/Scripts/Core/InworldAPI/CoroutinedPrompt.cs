@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using CHARACTERS;
+
 public class CoroutinePrompt {
     //Another singleton moment.
     private static CoroutinePrompt instance;

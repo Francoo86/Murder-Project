@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+using CHARACTERS;
+
 public class CharacterController : MonoBehaviour
 {
     //Estos objetos de tipo controlador solo existen una sola vez en el "sistema".
     public static CharacterController Instance { get; private set; }
-    private Dictionary<string, Character> storedChars = new Dictionary<string, Character>();
+    public Dictionary<string, Character> storedChars = new Dictionary<string, Character>();
     private CharacterConfig config => DialogController.Instance.Config.charConfigAsset;
 
     //Constantes para poder realizar un lookup a un personaje.
