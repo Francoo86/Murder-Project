@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using CHARACTERS;
 
 public class APITesting : MonoBehaviour
 {

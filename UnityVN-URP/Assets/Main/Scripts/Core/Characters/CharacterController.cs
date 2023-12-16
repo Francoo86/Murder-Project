@@ -4,12 +4,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 using CHARACTERS;
+using System.Linq;
 
 public class CharacterController : MonoBehaviour
 {
     //Estos objetos de tipo controlador solo existen una sola vez en el "sistema".
     public static CharacterController Instance { get; private set; }
-    public Dictionary<string, Character> storedChars = new Dictionary<string, Character>();
+    public Character[] allCharacters => storedChars.Values.ToArray();
+    private Dictionary<string, Character> storedChars = new Dictionary<string, Character>();
     private CharacterConfig config => DialogController.Instance.Config.charConfigAsset;
 
     //Constantes para poder realizar un lookup a un personaje.
@@ -55,6 +57,8 @@ public class CharacterController : MonoBehaviour
 
         return null;
     }
+
+    public bool HasCharacter(string charName) => storedChars.ContainsKey(charName.ToLower());
 
     public CharacterConfigData GetCharacterConfig(string charName)
     {

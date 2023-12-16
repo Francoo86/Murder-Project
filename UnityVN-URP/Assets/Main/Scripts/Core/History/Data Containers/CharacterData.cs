@@ -39,42 +39,44 @@ namespace History
             {
                 name = reference.name;
                 alias = reference.alias;
-                characterType = reference.characterType;
+                characterType = reference.charType;
 
                 nameCol = reference.nameCol;
                 diagCol = reference.diagCol;
 
                 // No los pillo en CharacterConfig Data
+                // No estan por que dentro de los requerimientos no necesitamos tanta info.
+                /*
                 nameFontScale = FilePaths.ResourcesFonts + reference.nameFont.name;
                 dialogueFontScale = FilePaths.ResourcesFonts + reference.diagFont.name;
 
                 nameFont = reference.nameFont;
-                diagFont = reference.diagFont;
+                diagFont = reference.diagFont;*/
             }
         }
 
         public static List<CharacterData> Capture()
         {
             List<CharacterData> characters = new List<CharacterData>();
-            foreach (var character in CharacterController.Instance.storedChars)
+            foreach (var character in CharacterController.Instance.allCharacters)
             {
-                if (!character.isVisible)
+                if (!character.IsVisible)
                     continue;
 
                 CharacterData entry = new CharacterData();
                 entry.characterName = character.name;
                 entry.displayName = character.displayName;
-                entry.enabled = character.isVisible;
+                entry.enabled = character.IsVisible;
                 entry.color = character.color;
                 entry.priority = character.priority;
                 entry.isHighlighted = character.highlighted;
                 entry.position = character.targetPosition;
                 entry.characterConfig = new CharacterConfigCache(character.config);
 
-                switch (character.config.characterType)
+                switch (character.config.charType)
                 {
                     case Character.CharacterType.Sprite:
-                    case Character.CharacterType.SpriteSheet:
+                    //case Character.CharacterType.SpriteSheet:
                         SpriteData sData = new SpriteData();
                         sData.layers = new List<SpriteData.LayerData>();
 
