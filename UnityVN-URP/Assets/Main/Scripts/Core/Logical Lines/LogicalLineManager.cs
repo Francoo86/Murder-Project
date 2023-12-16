@@ -14,6 +14,10 @@ public class LogicalLineManager
         LoadLogicalLines();
     }
 
+    /// <summary>
+    /// Carga las interfaces que definen la logica de los dialogos.
+    /// Es lo que se espera de un motor de VN.
+    /// </summary>
     private void LoadLogicalLines()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();

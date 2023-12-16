@@ -5,13 +5,14 @@ using CandyCoded.env;
 using Newtonsoft.Json;
 using System;
 using UnityEngine.Networking;
-using Unity.VisualScripting;
 
 //Creación de un cliente API pero con Corutinas (es mejor que usar HttpClient).
 public class APIClientV2 : MonoBehaviour
 {
     private static readonly string API_URL = "https://studio.inworld.ai/v1/";
     private const string GRPC_ID = "Grpc-Metadata-session-id";
+    private const string PREFERRED_METHOD = "POST";
+    private static readonly HashSet<long> SUCCESFUL_CODES = new HashSet<long> { 200, 201 };
     public static APIClientV2 Instance {  get; private set; }
 
     //Variables de vital importancia.
@@ -35,7 +36,7 @@ public class APIClientV2 : MonoBehaviour
         //HACK: Unity doesn't fix this since 2021.
         //Make the request.
         UnityWebRequest webRequest = UnityWebRequest.Put(fullUrl, serializedContent);
-        webRequest.method = "POST";
+        webRequest.method = PREFERRED_METHOD;
         webRequest.SetRequestHeader("Content-Type", "application/json");
         webRequest.SetRequestHeader("authorization", apiKey);
 
@@ -48,7 +49,7 @@ public class APIClientV2 : MonoBehaviour
 
         Debug.Log($"Last response: {webRequest.responseCode}");
 
-        if (webRequest.responseCode == 200 || webRequest.responseCode == 201)
+        if (SUCCESFUL_CODES.Contains(webRequest.responseCode))
         {
             Debug.Log(webRequest.downloadHandler.text);
             callback?.Invoke(webRequest.downloadHandler.text);
@@ -66,17 +67,6 @@ public class APIClientV2 : MonoBehaviour
     {
         env.TryParseEnvironmentVariable("API_KEY", out apiKey);
         env.TryParseEnvironmentVariable("WORKSPACE_PATH", out workspacePath);
-
-        //AISessionManager manager = new AISessionManager("ana", this);
-        //StartCoroutine(manager.UpdateSession());
-
-        //StartCoroutine(RequestCharacterSession("ana", null));
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private IEnumerator CallWithGRPC(string endPoint, string sessionId, Dictionary<string, string> contentData, Action<string> callback)
@@ -92,8 +82,6 @@ public class APIClientV2 : MonoBehaviour
     {
         string session_endpoint = $"/characters/{character}:simpleSendText";
         plyData.Add("text", text);
-
-        //Debug.Log(text);
         yield return CallAPI(session_endpoint, plyData, null, data => Debug.Log($"Current data: {data}"));
     }
 

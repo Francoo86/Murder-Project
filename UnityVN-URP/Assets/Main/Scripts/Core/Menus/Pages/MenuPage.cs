@@ -16,7 +16,7 @@ public class MenuPage : MonoBehaviour
     {
         if (closeAllMenus)
         {
-            VNMenuManager.Instance.CloseRoot();
+            //VNMenuManager.Instance.CloseRoot();
         }
     }
 }
