@@ -209,29 +209,29 @@ namespace CHARACTERS
         }
 
 
-        public Coroutine Highlight(float speed = 1f)
+        public Coroutine Highlight(float speed = 1f, bool inmediate = false)
         {
             if (isHighlighting || isUnHighlighting)
                 controller.StopCoroutine(co_highlighting);
 
             highlighted = true;
-            co_highlighting = controller.StartCoroutine(Highlighting(highlighted, speed));
+            co_highlighting = controller.StartCoroutine(Highlighting(highlighted, speed, inmediate));
 
             return co_highlighting;
         }
 
-        public Coroutine UnHighlight(float speed = 1f)
+        public Coroutine UnHighlight(float speed = 1f, bool inmediate = false)
         {
             if (isUnHighlighting || isHighlighting)
                 controller.StopCoroutine(co_highlighting);
 
             highlighted = false;
-            co_highlighting = controller.StartCoroutine(Highlighting(highlighted, speed));
+            co_highlighting = controller.StartCoroutine(Highlighting(highlighted, speed, inmediate));
 
             return co_highlighting;
         }
 
-        public virtual IEnumerator Highlighting(bool highlight, float speedMultiplier)
+        public virtual IEnumerator Highlighting(bool highlight, float speedMultiplier, bool inmediate = false)
         {
             Debug.Log("Highlighting is not available on this character type!");
             yield return null;

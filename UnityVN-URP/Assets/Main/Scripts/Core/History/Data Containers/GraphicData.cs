@@ -73,9 +73,9 @@ namespace History
                     {
                         if (!layerData.isVideo)
                         {
-                            Texture tex = HistoryCache.LoadImage(layerData.graphicData);
+                            Texture tex = HistoryCache.LoadImage(layerData.graphicPath);
                             if (tex != null)
-                                layer.SetTexture(tex, filePath: layerData.graphicData, immediate: true);
+                                layer.SetTexture(tex, path: layerData.graphicPath, immediate: true);
                             else
                                 Debug.LogWarning($"History State: Could not load image from path '{layerData.graphicPath}'");
                         }

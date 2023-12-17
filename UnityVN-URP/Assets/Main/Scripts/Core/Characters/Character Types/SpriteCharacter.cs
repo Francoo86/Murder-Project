@@ -114,12 +114,18 @@ public class SpriteCharacter : Character
 
 
 
-    public override IEnumerator Highlighting(bool highlight, float speedMultiplier)
+    public override IEnumerator Highlighting(bool highlight, float speedMultiplier, bool inmediate = false)
     {
         Color targetColor = displayColor;
 
         foreach (CharacterSpriteLayer layer in layers)
-            layer.TransitionColor(targetColor, speedMultiplier);
+        {
+            if (inmediate)
+                layer.SetColor(targetColor);
+            else
+                layer.TransitionColor(targetColor, speedMultiplier);
+        }
+            
 
         yield return null;
 
