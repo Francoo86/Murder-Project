@@ -25,6 +25,7 @@ public class DialogController : MonoBehaviour
     //Esta definicion de evento se comporta como el patr�n Observador.
     //Lo que haremos con el es llamarlo cada vez que hagamos click en algo.
     public event DialogSystemEvent onUserPrompt_Next;
+    public event DialogSystemEvent onClear;
 
     public bool IsRunning => convManager.IsRunning;
 
@@ -67,6 +68,25 @@ public class DialogController : MonoBehaviour
         {
             autoReader.Disable();
         }
+    }
+
+    public void OnSystemPrompt_Clear()
+    {
+        onClear?.Invoke();
+    }
+
+    public void OnStartViewingHistory()
+    {
+        prompt.Hide();
+        if (autoReader.isOn) 
+        {
+            autoReader.Disable();
+        }
+    }
+
+    public void OnStopViewingHistory()
+    {
+        prompt.Show();
     }
 
     public void OnSystemPrompt_Next()

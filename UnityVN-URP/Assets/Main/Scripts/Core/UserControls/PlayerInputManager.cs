@@ -13,7 +13,14 @@ public class PlayerInputManager : MonoBehaviour
     void Awake()
     {
         input = GetComponent<PlayerInput>();
+        InitializeActions();
+    }
+
+    private void InitializeActions()
+    {
         actions.Add((input.actions["Next"], PromptAdvance));
+        actions.Add((input.actions["HistoryBack"], OnHistoryBack));
+        actions.Add((input.actions["historyFoward"], OnHistoryFoward));
     }
 
     /// <summary>
@@ -32,5 +39,15 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void PromptAdvance(InputAction.CallbackContext c) {
         DialogController.Instance.OnUserPrompt_Next();
+    }
+
+    public void OnHistoryBack(InputAction.CallbackContext c)
+    {
+        HistoryManager.Instance.GoBack();
+    }
+
+    public void OnHistoryFoward(InputAction.CallbackContext c)
+    {
+        HistoryManager.Instance.GoFoward();
     }
 }

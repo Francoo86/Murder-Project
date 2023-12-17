@@ -99,6 +99,8 @@ public class ConversationManager
                     yield return WaitForUserInput();
 
                     CommandController.Instance.StopAllProcesses();
+
+                    dialogController.OnSystemPrompt_Clear();
                 }
             }
 
@@ -215,10 +217,18 @@ public class ConversationManager
         switch (segment.startSignal)
         {
             case DialogData.DIALOG_SEGMENT.StartSignal.C:
+                yield return WaitForUserInput();
+                dialogController.OnSystemPrompt_Clear();
+                break;
             case DialogData.DIALOG_SEGMENT.StartSignal.A:
                 yield return WaitForUserInput(); 
                 break;
             case DialogData.DIALOG_SEGMENT.StartSignal.WC:
+                IsWaitingOnAutoTimer = true;
+                yield return new WaitForSeconds(segment.signalDelay);
+                IsWaitingOnAutoTimer = false;
+                dialogController.OnSystemPrompt_Clear();
+                break;
             case DialogData.DIALOG_SEGMENT.StartSignal.WA:
                 IsWaitingOnAutoTimer = true;
                 yield return new WaitForSeconds(segment.signalDelay);
