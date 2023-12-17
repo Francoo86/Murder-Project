@@ -1,0 +1,21 @@
+entra Marcelo (muestra en pantalla)
+hide Marcelo (lo esconde)
+
+Marcelo "lo que va a decir"
+
+CambiarFondo(Fondo Nombre)
+
+Si (ocurreAlgo) 
+{
+	narrator "decir algo"
+}
+
+Cierta accion como (Activar charla con personaje)
+Muestra decisiones como:
+	Decision1:
+		Lo que ocurre en esa decision.
+	Decision2:
+		Lo que podría ocurrir o cualquier cosa"
+
+Mover(Marcelo) derecha o izquierda-
+

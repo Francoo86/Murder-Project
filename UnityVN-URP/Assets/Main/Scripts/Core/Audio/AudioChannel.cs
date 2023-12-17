@@ -117,13 +117,13 @@ public class AudioChannel
         Object.Destroy(track.Root);
     }
 
-    public void StopTrack(bool immediate = false)
+    public void StopTrack(bool inmediate = false)
     {
         if(CurrentTrack == null) { return; }
         if (inmediate)
         {
-            DestroyTrack(activeTrack);
-            SetActiveTrack = null;
+            DestroyTrack(CurrentTrack);
+            SetActiveTrack(null);
         }
         else 
         {

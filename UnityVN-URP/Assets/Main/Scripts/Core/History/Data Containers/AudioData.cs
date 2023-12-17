@@ -54,14 +54,14 @@ namespace History
 
             foreach (var channelData in data)
             {
-                AudioChannel channel = AudioManager.instance.TryGetChannel(channelData.channel, createIfDoesNotExist: true);
-                if (channel.activeTrack == null || channel.activeTrack.name != channelData.trackName)
+                AudioChannel channel = AudioController.Instance.TryToGetChannel(channelData.channel, forceCreation: true);
+                if (channel.CurrentTrack == null || channel.CurrentTrack.Name != channelData.trackName)
                 {
                     AudioClip clip = HistoryCache.LoadAudio(channelData.trackPath);
-                    if (cliop != null)
+                    if (clip != null)
                     {
-                        channel.StopTrack(immediate: true);
-                        channel.PlayTrack(clip, ChannelData.loop, channelData.trackVolume, channelData.trackVolume, channelData.trackPitch, channelData.trackPath);
+                        channel.StopTrack(inmediate: true);
+                        channel.PlayTrack(clip, channelData.loop, channelData.trackVolume, channelData.trackVolume, channelData.trackPath);
                     }
                     else
                         Debug.LogWarning("$History State: Could not load audio track '{channelData.trackPath}'");
@@ -69,10 +69,10 @@ namespace History
                 cache.Add(channelData.channel);
             }
 
-            foreach (var channel in AudioManager.instance.channels)
+            foreach (var channel in AudioController.Instance.channels)
             {
-                if (!cache.Contains(channel.Value.channelIndex))
-                    channel.Value.StopTrack(immediate: true);
+                if (!cache.Contains(channel.Value.ChannelIndex))
+                    channel.Value.StopTrack(inmediate: true);
             }
         }
     }

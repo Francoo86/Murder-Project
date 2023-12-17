@@ -102,38 +102,38 @@ namespace History
 
             foreach (CharacterData characterData in data)
             {
-                CharacterData character = CharacterManager.instance.GetCharacter(characterData.characterName, createIfDoesNotExist: true);
+                Character character = CharacterController.Instance.GetCharacter(characterData.characterName, create: true);
                 character.displayName = characterData.displayName;
                 character.SetColor(characterData.color);
 
                 if (characterData.isHighlighted)
-                    character.Highlight(immediate: true);
+                    character.Highlight(inmediate: true);
                 else
-                    character.UnHighlight(immediate: true);
+                    character.UnHighlight(inmediate: true);
 
-                character.SetPriority(characterData.priority);
+                //character.SetPriority(characterData.priority);
 
                 if (characterData.isFacingLeft)
                     character.FaceLeft(immediate: true);
                 else
                     character.FaceRight(immediate: true);
 
-                character.SetPosition(characterData.position);
+                character.SetPos(characterData.position);
 
-                character.isVisible = characterData.enabled;
+                character.IsVisible = characterData.enabled;
 
-                switch (character.config.characterType)
+                switch (character.config.charType)
                 {
                     case Character.CharacterType.Sprite:
                         SpriteData sData = JsonUtility.FromJson<SpriteData>(characterData.dataJSON);
-                        Character_Sprite sc = character as Character_Sprite;
+                        SpriteCharacter sc = character as SpriteCharacter;
                         int i;
                         for (i = 0; i < sData.layers.Count; i++) 
                         {
                             var layer = sData.layers[i];
                             if (sc.layers[i].renderer.sprite != null && sc.layers[i].renderer.sprite.name != layer.spriteName) 
                             {
-                                Sprite sprite = sc.GetSprite(layer.SpriteName);
+                                Sprite sprite = sc.GetSprite(layer.spriteName);
                                 if (sprite != null)
                                     sc.SetSprite(sprite, i);
                                 else
@@ -146,10 +146,10 @@ namespace History
                 cache.Add(character.name);
             }
 
-            foreach (Character character in CharacterManager.instance.allCharacters)
+            foreach (Character character in CharacterController.Instance.allCharacters)
             {
                 if (!cache.Contains(character.name))
-                    character.isVisible = false;
+                    character.IsVisible = false;
             }
         }
 

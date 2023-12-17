@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.Video;
 
 namespace History
 {
@@ -17,7 +19,7 @@ namespace History
                 resource = (T)loadedAssets[key].asset;
             else 
             {
-                resource = Resources.load(key);
+                resource = Resources.Load(key);
                 if (resource != null) 
                 {
                     loadedAssets[key] = (resource,0);
@@ -26,7 +28,7 @@ namespace History
 
             if (resource != null)
             {
-                if (resource == T)
+                if (resource is T)
                     return (T)resource;
                 else 
                     Debug.LogWarning("$Retrive object '{key}' was not the expected type");
