@@ -42,9 +42,9 @@ namespace History
             if (isOnCachedState)
             {
                 isViewingHistory = false;
-                DialogControlller.Instance.onUserPrompt_Next -= GoFoward;
+                DialogController.Instance.onUserPrompt_Next -= GoFoward;
                 statusText.text = "";
-                DialogControlller.Instance.OnStopViewingHistory();
+                DialogController.Instance.OnStopViewingHistory();
             }
             else 
             {

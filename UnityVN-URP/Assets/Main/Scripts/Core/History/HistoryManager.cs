@@ -22,7 +22,7 @@ namespace History
         // Start is called before the first frame update
         void Start()
         {
-            DialogController.instance.OnClear() += LogCurrentState;
+            DialogController.Instance.onClear += LogCurrentState;
         }
 
         public void LogCurrentState()

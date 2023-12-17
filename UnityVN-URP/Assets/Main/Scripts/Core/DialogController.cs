@@ -27,6 +27,8 @@ public class DialogController : MonoBehaviour
     public event DialogSystemEvent onUserPrompt_Next;
     public event DialogSystemEvent onClear;
 
+    //El 'prompt' que aparece aqui, fue removido debido a limitaciones de tiempo.
+
     public bool IsRunning => convManager.IsRunning;
 
     //Inicializa el objeto en el script.
@@ -77,8 +79,8 @@ public class DialogController : MonoBehaviour
 
     public void OnStartViewingHistory()
     {
-        prompt.Hide();
-        if (autoReader.isOn) 
+        //prompt.Hide();
+        if (autoReader.IsOn) 
         {
             autoReader.Disable();
         }
@@ -86,7 +88,7 @@ public class DialogController : MonoBehaviour
 
     public void OnStopViewingHistory()
     {
-        prompt.Show();
+        //prompt.Show();
     }
 
     public void OnSystemPrompt_Next()

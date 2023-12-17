@@ -111,6 +111,7 @@ namespace History
                 else
                     character.UnHighlight(inmediate: true);
 
+                //Vere esté video después si puedo.
                 //character.SetPriority(characterData.priority);
 
                 if (characterData.isFacingLeft)
