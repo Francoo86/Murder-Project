@@ -76,7 +76,7 @@ namespace History
                 switch (character.config.charType)
                 {
                     case Character.CharacterType.Sprite:
-                    //case Character.CharacterType.SpriteSheet:
+                        //case Character.CharacterType.SpriteSheet:
                         SpriteData sData = new SpriteData();
                         sData.layers = new List<SpriteData.LayerData>();
 
@@ -94,6 +94,63 @@ namespace History
                 characters.Add(entry);
             }
             return characters;
+        }
+
+        public static void Apply(List<CharacterData> data)
+        {
+            List<string> cache = new List<string>();
+
+            foreach (CharacterData characterData in data)
+            {
+                CharacterData character = CharacterManager.instance.GetCharacter(characterData.characterName, createIfDoesNotExist: true);
+                character.displayName = characterData.displayName;
+                character.SetColor(characterData.color);
+
+                if (characterData.isHighlighted)
+                    character.Highlight(immediate: true);
+                else
+                    character.UnHighlight(immediate: true);
+
+                character.SetPriority(characterData.priority);
+
+                if (characterData.isFacingLeft)
+                    character.FaceLeft(immediate: true);
+                else
+                    character.FaceRight(immediate: true);
+
+                character.SetPosition(characterData.position);
+
+                character.isVisible = characterData.enabled;
+
+                switch (character.config.characterType)
+                {
+                    case Character.CharacterType.Sprite:
+                        SpriteData sData = JsonUtility.FromJson<SpriteData>(characterData.dataJSON);
+                        Character_Sprite sc = character as Character_Sprite;
+                        int i;
+                        for (i = 0; i < sData.layers.Count; i++) 
+                        {
+                            var layer = sData.layers[i];
+                            if (sc.layers[i].renderer.sprite != null && sc.layers[i].renderer.sprite.name != layer.spriteName) 
+                            {
+                                Sprite sprite = sc.GetSprite(layer.SpriteName);
+                                if (sprite != null)
+                                    sc.SetSprite(sprite, i);
+                                else
+                                    Debug.LogWarning("$History State could not load sprite '{layer.spriteName}'");
+                            }
+                        }
+                        break;
+                }
+
+                cache.Add(character.name);
+            }
+
+            foreach (Character character in CharacterManager.instance.allCharacters)
+            {
+                if (!cache.Contains(character.name))
+                    character.isVisible = false;
+            }
         }
 
         [System.Serializable]

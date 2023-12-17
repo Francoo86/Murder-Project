@@ -22,7 +22,12 @@ namespace History
             return state;
         }
 
-        public void Load() { 
+        public void Load() 
+        {
+            DialogueData.Apply(dialogue);
+            CharacterData.Apply(characters);
+            AudioData.Apply(audio);
+            GraphicData.Apply(graphics);
         }
     }
 }

@@ -41,5 +41,34 @@ namespace History
 
             return data;
         }
+
+        public static void Apply(DialogueData data)
+        {
+            var ds = DialogController.Instance;
+            var dialogueText = ds.dialogContainer.dialogText;
+            var nameText = ds.dialogContainer.nameContainer.nameText;
+
+            dialogueText.text = data.currentDialogue;
+            dialogueText.color = data.dialogueColor;
+            dialogueText.fontSize = data.dialogueScale;
+
+            nameText.text = data.currentSpeaker;
+            nameText.color = data.speakerNameColor;
+            nameText.fontSize = data.speakerScale;
+
+            if (data.dialogueFont != dialogueText.font.name) 
+            {
+                TMP_FontAsset fontAsset = HistoryCache.LoadFont(data.dialogueFont);
+                if (fontAsset != null)
+                    dialogueText.font = fontAsset;
+            }
+
+            if (data.speakerFont != nameText.font.name)
+            {
+                TMP_FontAsset fontAsset = HistoryCache.LoadFont(data.speakerFont);
+                if (fontAsset != null)
+                    nameText.font = fontAsset;
+            }
+        }
     }
 }
