@@ -20,14 +20,17 @@ public class AutoReader : MonoBehaviour
     public bool Skip { get; set; } = false;
     public float Speed { get; set; } = 1f;
 
+    private Coroutine co_Running = null;
+    public bool IsOn => co_Running != null;
+
+    [HideInInspector] public bool allowToggle = true;
+
     public void Initialize(ConversationManager convManager)
     {
         this.convManager = convManager;
         statusText.text = string.Empty;
     }
 
-    private Coroutine co_Running = null;
-    public bool IsOn => co_Running != null;
     public void Enable()
     {
         if (IsOn)
@@ -98,6 +101,9 @@ public class AutoReader : MonoBehaviour
 
     public void ToggleAuto()
     {
+        if (!allowToggle)
+            return;
+
         if (Skip)
             Enable();
         else
@@ -109,11 +115,15 @@ public class AutoReader : MonoBehaviour
         }
 
         Skip = false;
-        statusText.text = STATUS_TEXT_AUTO;
+        if (IsOn)
+            statusText.text = STATUS_TEXT_AUTO;
     }
 
     public void ToggleSkip()
     {
+        if (!allowToggle)
+            return;
+
         if (!Skip)
             Enable();
         else
@@ -125,6 +135,7 @@ public class AutoReader : MonoBehaviour
         }
 
         Skip = true;
-        statusText.text = STATUS_TEXT_SKIP;
+        if (IsOn)
+            statusText.text = STATUS_TEXT_SKIP;
     }
 }

@@ -8,6 +8,8 @@ namespace History
     public class HistoryManager : MonoBehaviour
     {
 
+        public const int HISTORY_CACHE_LIMIT = 111;
+
         public static HistoryManager Instance { get; private set; }
         public List<HistoryState> history = new List<HistoryState>();
 
@@ -29,6 +31,9 @@ namespace History
         {
             HistoryState state = HistoryState.Capture();
             history.Add(state);
+
+            if (history.Count > HISTORY_CACHE_LIMIT)
+                history.RemoveAt(0);
         }
 
         public void LoadState(HistoryState state)

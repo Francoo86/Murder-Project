@@ -80,6 +80,9 @@ public class DialogController : MonoBehaviour
     public void OnStartViewingHistory()
     {
         //prompt.Hide();
+        autoReader.allowToggle = false;
+        convManager.allowUserPrompts = false;
+
         if (autoReader.IsOn) 
         {
             autoReader.Disable();
@@ -89,6 +92,8 @@ public class DialogController : MonoBehaviour
     public void OnStopViewingHistory()
     {
         //prompt.Show();
+        autoReader.allowToggle = true;
+        convManager.allowUserPrompts = true;
     }
 
     public void OnSystemPrompt_Next()

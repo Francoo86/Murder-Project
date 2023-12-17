@@ -24,12 +24,16 @@ public class ConversationManager
         convQueue = new ConversationQueue();
     }
 
+    public bool allowUserPrompts = true;
+
     public void Enqueue(Conversation conversation) => convQueue.Enqueue(conversation);
     public void EnqueuePriority(Conversation conversation) => convQueue.EnqueuePriority(conversation);
 
     private bool isUserManipulated = false;
+
     private void OnUserPrompt_Next() {
-        isUserManipulated = true;
+        if(allowUserPrompts)
+            isUserManipulated = true;
     }
 
     public Coroutine StartConversation(Conversation conversation) {
