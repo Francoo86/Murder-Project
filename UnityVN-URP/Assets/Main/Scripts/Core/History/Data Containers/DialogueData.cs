@@ -56,11 +56,11 @@ namespace History
             nameText.text = data.currentSpeaker;
             if (nameText.text != string.Empty)
             {
-                ds.dialogueContainer.nameContainer.Show();
+                ds.dialogContainer.nameContainer.Show();
             }
             else
             {
-                ds.dialogueContainer.nameContainer.Hide();
+                ds.dialogContainer.nameContainer.Hide();
             }
 
             nameText.color = data.speakerNameColor;
