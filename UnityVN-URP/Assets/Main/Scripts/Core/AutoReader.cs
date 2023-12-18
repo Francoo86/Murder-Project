@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Makes the text run automatically or be skippable in the dialog box.
+/// Can be stopped by user pressiing buttons.
+/// </summary>
 public class AutoReader : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI statusText;
@@ -25,12 +29,19 @@ public class AutoReader : MonoBehaviour
 
     [HideInInspector] public bool allowToggle = true;
 
+    /// <summary>
+    /// Initializes the AutoReader, by passing the Conversation Manager.
+    /// </summary>
+    /// <param name="convManager">The Conversation manager.</param>
     public void Initialize(ConversationManager convManager)
     {
         this.convManager = convManager;
         statusText.text = string.Empty;
     }
 
+    /// <summary>
+    /// Enables the auto status.
+    /// </summary>
     public void Enable()
     {
         if (IsOn)
@@ -39,6 +50,9 @@ public class AutoReader : MonoBehaviour
         co_Running = StartCoroutine(AutoRead());
     }
 
+    /// <summary>
+    /// Disables the auto or skip state by resetting it.
+    /// </summary>
     public void Disable()
     {
         if(!IsOn) return;
@@ -50,6 +64,10 @@ public class AutoReader : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Handles the logic of the AutoRead text also approaching the user input.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator AutoRead()
     {
         if (!convManager.IsRunning)
@@ -80,7 +98,7 @@ public class AutoReader : MonoBehaviour
                     yield return null;
                 }
 
-                float characterCount = (float)Architect.tmpro.textInfo.characterCount;
+                float characterCount = Architect.tmpro.textInfo.characterCount;
                 float timeToRead = Mathf.Clamp(characterCount / DEFAULT_READ_CHARACTERS_PER_SEC, MIN_READ_TIME, MAX_READ_TIME);
                 timeToRead = Mathf.Clamp((timeToRead - (Time.time - timeStarted)), MIN_READ_TIME, MAX_READ_TIME);
                 timeToRead = (timeToRead / Speed) + READ_TIME_PADDING;
