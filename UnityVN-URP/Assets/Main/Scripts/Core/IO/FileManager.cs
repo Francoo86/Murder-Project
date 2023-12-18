@@ -3,10 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+/// <summary>
+/// Static class that handles the file reading stuff.
+/// </summary>
 public class FileManager
 {
     //TODO: Split into multiple classes.
     //En este caso podríamos usar el Factory Pattern para poder leer incluyendo archivos JSON.
+    /// <summary>
+    /// Reads a .txt file or a binary file with some format.
+    /// </summary>
+    /// <param name="path">The path of the file.</param>
+    /// <param name="includeBlankLines">Include lines that are only empty spaces.</param>
+    /// <returns>The list of lines that were read.</returns>
     public static List<string> ReadTextFile(string path, bool includeBlankLines = true) {
         if(!path.StartsWith("/")) path = FilePaths.rootPath + path;
 
@@ -37,6 +46,12 @@ public class FileManager
         return null;
     }
 
+    /// <summary>
+    /// Loads a TextAsset to be read, wrapper function for the overloaded method.
+    /// </summary>
+    /// <param name="path">The path of the file.</param>
+    /// <param name="includeBlankLines">Include empty lines.</param>
+    /// <returns>The lines that were read.</returns>
     public static List<string> ReadTextAsset(string path, bool includeBlankLines = true) { 
         TextAsset asset = Resources.Load<TextAsset>(path);
 
@@ -50,6 +65,12 @@ public class FileManager
 
     }
 
+    /// <summary>
+    ///  Reads a TextAsset file.
+    /// </summary>
+    /// <param name="asset">The TextAsset file object.</param>
+    /// <param name="includeBlankLines">Include empty space.</param>
+    /// <returns>The lines that were read.</returns>
     public static List<string> ReadTextAsset(TextAsset asset, bool includeBlankLines = true)
     {
         using (StringReader sr = new StringReader(asset.text))
