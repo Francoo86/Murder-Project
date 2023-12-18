@@ -25,7 +25,7 @@ public class CanvasGroupController
     public float Alpha { get { return canvas.alpha; } set { canvas.alpha = value; } }
 
     /// <summary>
-    /// Initializes the CanvasGroupController with an owner and its CanvasGroup.
+    /// Initializes the CanvasGroupController with an owner and its CanvasGroup (or elements associated with the Owner canvas group).
     /// </summary>
     /// <param name="owner">The MonoBehaviour owner.</param>
     /// <param name="canvas">The associated CanvasGroup from the owner.</param>
