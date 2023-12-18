@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-//Minuto 39.
+/// <summary>
+/// Class that customizes the dialog inside Unity.
+/// </summary>
 [CreateAssetMenu(fileName = "Dialog System Configuration", menuName ="Dialog System/Dialog System Configuration File")]
 public class DialogConfig : ScriptableObject
 {
