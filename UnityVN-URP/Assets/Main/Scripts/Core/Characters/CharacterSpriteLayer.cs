@@ -181,11 +181,6 @@ namespace CHARACTERS
                     else
                         oldImages.RemoveAt(i);
                 }
-                /*
-                foreach (Image oldImage in oldImages)
-                {
-                    oldImage.color = renderer.color;
-                }*/
 
                 yield return null;
             }
