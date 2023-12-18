@@ -9,13 +9,19 @@ public class CoroutinePrompt {
     //Another singleton moment.
     private static CoroutinePrompt instance;
     private AISessionManager currentSession;
-    private CharacterInteraction lastInteraction = new CharacterInteraction();
+    private CharacterInteraction lastInteraction;
 
     /// <summary>
     /// Initializes the Coroutined Prompt class, in singleton way.
     /// </summary>
-    private CoroutinePrompt() {}
+    private CoroutinePrompt() {
+        lastInteraction = new CharacterInteraction();
+    }
 
+    /// <summary>
+    /// Get the current instance of this class.
+    /// </summary>
+    /// <returns>The instance.</returns>
     public static CoroutinePrompt GetInstance()
     {
         if(instance == null)
