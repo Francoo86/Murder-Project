@@ -8,7 +8,7 @@ using UnityEngine;
 using static LogicalLineUtils.Expressions;
 
 /// <summary>
-/// Clase encargada de identificar las variables dinamicas que se usaran para el juego.
+/// Class that holds the logic of how to parse dynamic variables. Like tags of HTML or variables defined with the dollar sign.
 /// </summary>
 public class TagController
 {   
@@ -20,17 +20,13 @@ public class TagController
     };
 
     private static readonly Regex regPattern = new Regex("<\\w+>");
-
-    //TODO: Ajustarlo a los requisitos.
-    /*
-    private void InitializeTags()
-    {
-        //Harcoded af.
-        tags["<playerName>"] = () => "Juanito";
-        tags["<time>"] = () => DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss");
-        tags["<tempVal>"] = () => "test2";
-        tags["<input>"] = () => PromptPanel.Instance.LastInput;
-    }*/
+    /// <summary>
+    /// Makes the fully injection of variables of any type (if needed).
+    /// </summary>
+    /// <param name="text">The line with the variables.</param>
+    /// <param name="injectTags">Inject tags like XML or HTML ones, these should be defined above.</param>
+    /// <param name="injectVariables">Inject variables with the dollar sign (these are more dynamic).</param>
+    /// <returns>The parsed text without the variables.</returns>
     public static string Inject(string text, bool injectTags = true, bool injectVariables = true)
     {
         if(injectTags)
@@ -41,6 +37,12 @@ public class TagController
 
         return text;
     }
+
+    /// <summary>
+    /// Internal method used by Inject for parsing the variable tags and executing the code associated with the tag.
+    /// </summary>
+    /// <param name="text">Line with the variables.</param>
+    /// <returns>Line without the variables.</returns>
 
     private static string InjectTags(string text)
     {
@@ -58,6 +60,11 @@ public class TagController
         return text;
     }
 
+    /// <summary>
+    /// Internal method used by Inject por parsing the dynamic variables like ($variable) and trying to store them in the VariableStore class.
+    /// </summary>
+    /// <param name="value">The line to parse and get the variables.</param>
+    /// <returns>The text parsed without the variables.</returns>
     private static string InjectVariables(string value)
     {
         var matches = Regex.Matches(value, REGEX_VARIABLE_IDS);
