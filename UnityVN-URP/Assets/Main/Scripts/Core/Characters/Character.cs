@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace CHARACTERS 
 {
+    /// <summary>
+    /// Base class of Character.
+    /// </summary>
     public abstract class Character
     {
         public const bool ENABLE_ON_START = false;
@@ -47,7 +50,12 @@ namespace CHARACTERS
         public bool isFacingRight => !facingLeft;
         public bool isFlipping => co_flipping != null;
 
-        //Cada personaje tendrá su propio nombre.
+        /// <summary>
+        /// Setups the character to be associated with its config and its prefab (image collection to be rendered).
+        /// </summary>
+        /// <param name="name">Character name</param>
+        /// <param name="config">Configuration associated with it</param>
+        /// <param name="prefab">Images associated with the character.</param>
         public Character(string name, CharacterConfigData config, GameObject prefab)
         {
             this.name = name;
@@ -66,17 +74,49 @@ namespace CHARACTERS
 
         public DialogController DController => DialogController.Instance;
 
+        /// <summary>
+        /// Changes the dialog color of the character in the dialog box.
+        /// </summary>
+        /// <param name="col">New color.</param>
         public void SetDialogColor(Color col) => config.diagCol = col;
+        /// <summary>
+        /// Changes the name color of the character in the name box.
+        /// </summary>
+        /// <param name="col">New color.</param>
         public void SetNameColor(Color col) => config.nameCol = col;
 
+        /// <summary>
+        /// Changes the name font of the character in the name box.
+        /// </summary>
+        /// <param name="font">New TMPro font (this can be assigned manually in the config).</param>
         public void SetNameFont(TMP_FontAsset font) => config.nameFont = font;
+        /// <summary>
+        /// Changes the dialog font of the character in the dialog box.
+        /// </summary>
+        /// <param name="font">New TMPro font (this can be assigned manually in the config).</param>
         public void SetDialogFont(TMP_FontAsset font) => config.diagFont = font;
 
+        /// <summary>
+        /// Updates the configuration by the settings applied before (font, color, name).
+        /// </summary>
         public void UpdateConfigOnScreen() => DController.ApplySpeakerDataToBox(config);
+        /// <summary>
+        /// Resets the character configuration to the defaults.
+        /// </summary>
         public void ResetCharacterConfig() => config = CharacterController.Instance.GetCharacterConfig(name);
 
         //Hacer que el personaje hable.
+        /// <summary>
+        /// Makes the character say something raw.
+        /// </summary>
+        /// <param name="dialog">The line the character should say.</param>
+        /// <returns>The talking process to be yielded.</returns>
         public Coroutine Say(string dialog) => Say(new List<string> { dialog });
+        /// <summary>
+        /// Makes the character say something line by line.
+        /// </summary>
+        /// <param name="dialogLines">The dialog lines.</param>
+        /// <returns>The talking process to be yielded.</returns>
         public Coroutine Say(List<string> dialogLines)
         {
             DController.ShowSpeakerName(displayName);
@@ -84,10 +124,13 @@ namespace CHARACTERS
             return DController.Say(dialogLines);
         }
 
+        /// <summary>
+        /// Shows the character on the screen.
+        /// </summary>
+        /// <returns>The coroutine process of showing.</returns>
         public virtual Coroutine Show()
         {
             if (IsShowing)
-                //return CO_Showing;
                 controller.StopCoroutine(CO_Showing);
 
             if (IsHiding)
@@ -98,10 +141,13 @@ namespace CHARACTERS
             return CO_Showing;
         }
 
+        /// <summary>
+        /// Hides the character on the screen.
+        /// </summary>
+        /// <returns>The coroutine of hiding.</returns>
         public virtual Coroutine Hide()
         {
             if (IsHiding)
-                //return CO_Hiding;
                 controller.StopCoroutine(CO_Hiding);
 
             if (IsShowing)
@@ -113,6 +159,10 @@ namespace CHARACTERS
         }
 
         //Estos elementos no corresponden a esta clase.
+        /// <summary>
+        /// Changes the position of a character based on their anchors, also changes it to normalized vector for screen operatins.
+        /// </summary>
+        /// <param name="pos">The target position.</param>
         public virtual void SetPos(Vector2 pos)
         {
             if (root == null) return;
@@ -123,10 +173,21 @@ namespace CHARACTERS
             targetPosition = pos;
         }
 
+        /// <summary>
+        /// Gets the position of the character based on their anchors. Think this like a box.
+        /// </summary>
+        /// <returns>The anchor minimums, The anchor maximums.</returns>
         public virtual (Vector2, Vector2) GetPos()
         {
             return (root.anchorMin, root.anchorMax);
         }
+        /// <summary>
+        /// Moves the character across the screen, but not inmediatly.
+        /// </summary>
+        /// <param name="pos">Target pos</param>
+        /// <param name="speed">How fast the character should move.</param>
+        /// <param name="smooth">Makes the movement smooth.</param>
+        /// <returns>The Coroutine process related to the moving process.</returns>
 
         public virtual Coroutine MoveToPosition(Vector2 pos, float speed = 2f, bool smooth = false)
         {
@@ -140,6 +201,13 @@ namespace CHARACTERS
             return CO_Moving;
         }
 
+        /// <summary>
+        /// The wrapped function of MoveToPosition that handles the logic for character movement in the screen.
+        /// </summary>
+        /// <param name="pos">Target pos</param>
+        /// <param name="speed">How fast the character should move.</param>
+        /// <param name="smooth">Makes the movement smooth.</param>
+        /// <returns>The IEnumerator to be yielded.</returns>
         private IEnumerator MoveToPositionCoroutine(Vector2 pos, float speed = 2f, bool smooth = false)
         {
             (Vector2 minAnch, Vector2 maxAnch) = ConvertPosToRelative(pos);
@@ -166,6 +234,11 @@ namespace CHARACTERS
             CO_Moving = null;
         }
 
+        /// <summary>
+        /// Converts the world position to a normalized position for screen coordinates.
+        /// </summary>
+        /// <param name="pos">Position to be converted.</param>
+        /// <returns>New anchor bounds.</returns>
         protected (Vector2, Vector2) ConvertPosToRelative(Vector2 pos)
         {
             //Vector normalizado ya que es una posición relativa como en cualquier juego.
@@ -181,17 +254,33 @@ namespace CHARACTERS
 
         }
 
+        /// <summary>
+        /// Handles the showing logic of the characters.
+        /// </summary>
+        /// <param name="shouldShow">Indicates if it should be shown or hidden.</param>
+        /// <returns></returns>
         public virtual IEnumerator HandleShowing(bool shouldShow)
         {
             //Debug.LogWarning("Can't be called on abstract character class");
             yield return null;
         }
 
+        /// <summary>
+        /// Changes the character color.
+        /// </summary>
+        /// <param name="color">New color of the character.</param>
 
         public virtual void SetColor(Color color)
         {
             this.color = color;
         }
+
+        /// <summary>
+        /// Changes the color but with a transition to make it smoother.
+        /// </summary>
+        /// <param name="color">New color of the character.</param>
+        /// <param name="speed">How fast should be the transition.</param>
+        /// <returns>The coroutine process of changing color.</returns>
         public Coroutine TransitionColor(Color color, float speed = 1f)
         {
             this.color = color;
@@ -202,6 +291,12 @@ namespace CHARACTERS
             co_changingColor = controller.StartCoroutine(ChangingColor(displayColor, speed));
             return co_changingColor;
         }
+        /// <summary>
+        /// The logic of making the transition for changing the color.
+        /// </summary>
+        /// <param name="color">New color to be set.</param>
+        /// <param name="speed">How fast the transition should be.</param>
+        /// <returns>The IEnumerator process to be yielded.</returns>
         public virtual IEnumerator ChangingColor(Color color, float speed)
         {
             Debug.LogWarning("Color changing is not applicable on this character type!");
@@ -209,6 +304,12 @@ namespace CHARACTERS
         }
 
 
+        /// <summary>
+        /// Highlights the character, makes the character like the main one.
+        /// </summary>
+        /// <param name="speed">How fast the transition of highlighting should be.</param>
+        /// <param name="inmediate">Make it inmediate.</param>
+        /// <returns>The coroutine process associated with the highlighting.</returns>
         public Coroutine Highlight(float speed = 1f, bool inmediate = false)
         {
             if (isHighlighting || isUnHighlighting)
@@ -220,6 +321,12 @@ namespace CHARACTERS
             return co_highlighting;
         }
 
+        /// <summary>
+        /// Unhighlights the character, makes the character like if it was hiding.
+        /// </summary>
+        /// <param name="speed">How fast the transition of highlighting should be.</param>
+        /// <param name="inmediate">Make it inmediate.</param>
+        /// <returns>The coroutine process associated with the highlighting.</returns>
         public Coroutine UnHighlight(float speed = 1f, bool inmediate = false)
         {
             if (isUnHighlighting || isHighlighting)
@@ -231,12 +338,25 @@ namespace CHARACTERS
             return co_highlighting;
         }
 
+        /// <summary>
+        /// The highlighting logic for the character.
+        /// </summary>
+        /// <param name="highlight">Make it highlight.</param>
+        /// <param name="speedMultiplier">How fast will the transition be.</param>
+        /// <param name="inmediate"></param>
+        /// <returns>The IEnumerator to be yielded.</returns>
         public virtual IEnumerator Highlighting(bool highlight, float speedMultiplier, bool inmediate = false)
         {
             Debug.Log("Highlighting is not available on this character type!");
             yield return null;
         }
 
+        /// <summary>
+        /// Flips character to another direction.
+        /// </summary>
+        /// <param name="speed">How fast should the character flip.</param>
+        /// <param name="immediate">Make it inmediatly.</param>
+        /// <returns>The Flipping coroutine process (maybe left or right).</returns>
         public Coroutine Flip(float speed = 1, bool immediate = false)
         {
             if (isFacingLeft)
@@ -244,6 +364,12 @@ namespace CHARACTERS
             else
                 return FaceLeft(speed, immediate);
         }
+        /// <summary>
+        /// Faces the character left.
+        /// </summary>
+        /// <param name="speed">How fast it should be facing.</param>
+        /// <param name="immediate">Make it instantly.</param>
+        /// <returns>The flipping coroutine process.</returns>
         public Coroutine FaceLeft(float speed = 1, bool immediate = false)
         {
             if (isFlipping)
@@ -252,6 +378,12 @@ namespace CHARACTERS
             co_flipping = controller.StartCoroutine(FaceDirection(facingLeft, speed, immediate));
             return co_flipping;
         }
+        /// <summary>
+        /// Faces the character right.
+        /// </summary>
+        /// <param name="speed">How fast should be the facing.</param>
+        /// <param name="immediate">Make it instantly.</param>
+        /// <returns>The flipping coroutine process.</returns>
         public Coroutine FaceRight(float speed = 1, bool immediate = false)
         {
             if (isFlipping)
@@ -260,23 +392,36 @@ namespace CHARACTERS
             co_flipping = controller.StartCoroutine(FaceDirection(facingLeft, speed, immediate));
             return co_flipping;
         }
+        /// <summary>
+        /// Changes the character facing direction (left or right).
+        /// </summary>
+        /// <param name="faceLeft">Make it face left.</param>
+        /// <param name="speedMultiplier">How fast should be the facing transition.</param>
+        /// <param name="immediate">Make it instantly.</param>
+        /// <returns>The IEnumerator to be yielded.</returns>
         public virtual IEnumerator FaceDirection(bool faceLeft, float speedMultiplier, bool immediate)
         {
             Debug.Log("Cannot flip a character of this type!");
             yield return null;
         }
 
+        /// <summary>
+        /// Indicates what should do when a character receives an expression.
+        /// </summary>
+        /// <param name="layer">(Most for spritesheet) the layer.</param>
+        /// <param name="expression">The expression associated with the character.</param>
         public virtual void OnExpressionReceive(int layer, string expression)
         {
             return;
         }
 
+        /// <summary>
+        /// Character types used in VNs.
+        /// </summary>
         public enum CharacterType
         {
-            //Los mas usados en VN.
             Text,
             Sprite,
-            //SpriteSheet,
         }
     }
 

@@ -55,10 +55,6 @@ public class CommandController : MonoBehaviour
         cmdProc.currentProcess = new CoroutineWrapper(this, co);
 
         return cmdProc.currentProcess;
-        /*
-        StopCurrentProcess();
-        process = StartCoroutine(RunningProc(command, args));
-        return process;*/
     }
 
     public void StopCurrentProcess()

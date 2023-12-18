@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Command (methods in the dialog file)
+/// </summary>
 public class CommandProcess
 {
     //Identificador del proceso.

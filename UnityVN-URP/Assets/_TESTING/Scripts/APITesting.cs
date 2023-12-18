@@ -40,8 +40,8 @@ public class APITesting : MonoBehaviour
         charPedro.SetSprite(test);
         
         //Dependency injection perhaps.
-        AISessionManager aiManager = new AISessionManager("ana", APIClientV2.Instance);
-        CoroutinePrompt prompt = CoroutinePrompt.Instance;
+        AISessionManager aiManager = new AISessionManager("ana");
+        CoroutinePrompt prompt = CoroutinePrompt.GetInstance();
         prompt.InjectSession(aiManager);
 
         string[] lines = new string[5]

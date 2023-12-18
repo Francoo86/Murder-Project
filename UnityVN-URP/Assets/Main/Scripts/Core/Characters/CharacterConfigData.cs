@@ -5,6 +5,10 @@ using UnityEngine;
 
 using CHARACTERS;
 
+/// <summary>
+/// Serializable class that associates the character configuration data, to make a character.
+/// This is where CharacterController loads info about a character.
+/// </summary>
 [System.Serializable]
 public class CharacterConfigData
 {
@@ -21,6 +25,10 @@ public class CharacterConfigData
     public TMP_FontAsset diagFont;
 
 
+    /// <summary>
+    /// Gets a full copy of the Character configuration, to be used for saving the character in the files.
+    /// </summary>
+    /// <returns>The new copy.</returns>
     public CharacterConfigData Copy() {
         CharacterConfigData copy = new CharacterConfigData();
 
@@ -40,6 +48,9 @@ public class CharacterConfigData
     public static Color DefaultColor => DialogController.Instance.Config.defaultTextColor;
     public static TMP_FontAsset DefaultFont => DialogController.Instance.Config.defaultFont;
 
+    /// <summary>
+    /// Gets the default character configuration as a new CharacterConfigData.
+    /// </summary>
     public static CharacterConfigData Default
     {
         get

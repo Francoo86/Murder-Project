@@ -17,7 +17,7 @@ public class CommandData
     //SIMILAR TO SOME PATTERN.
     //Prolly strategy.
     public CommandData(string rawCommands) {
-        commands= ExtractCommands(rawCommands);
+        commands = ExtractCommands(rawCommands);
     }
 
     private List<Command> ExtractCommands(string rawCommands)

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manipulates the CanvasGroup of a MonoBehaviour object.
+/// </summary>
 public class CanvasGroupController
 {
     private MonoBehaviour owner;
@@ -21,11 +24,24 @@ public class CanvasGroupController
 
     public float Alpha { get { return canvas.alpha; } set { canvas.alpha = value; } }
 
+    /// <summary>
+    /// Initializes the CanvasGroupController with an owner and its CanvasGroup (or elements associated with the Owner canvas group).
+    /// </summary>
+    /// <param name="owner">The MonoBehaviour owner.</param>
+    /// <param name="canvas">The associated CanvasGroup from the owner.</param>
+
     public CanvasGroupController(MonoBehaviour owner, CanvasGroup canvas)
     {
         this.owner = owner;
         this.canvas = canvas;
     }
+
+    /// <summary>
+    /// Shows an element in the screen.
+    /// </summary>
+    /// <param name="speed">How fast will be the show transition.</param>
+    /// <param name="inmediate">Show inmediatly.</param>
+    /// <returns>Coroutine to be used by the owner.</returns>
 
     public Coroutine Show(float speed = 1, bool inmediate = false)
     {
@@ -41,6 +57,12 @@ public class CanvasGroupController
         return co_Showing;
     }
 
+    /// <summary>
+    /// Hides the element in the screen.
+    /// </summary>
+    /// <param name="speed">How fast should be hide.</param>
+    /// <param name="inmediate">Hide inmediatly.</param>
+    /// <returns>Coroutine to be used by the owner.</returns>
     public Coroutine Hide(float speed = 1, bool inmediate = false)
     {
         if (IsHiding) return co_Hiding;
@@ -54,8 +76,14 @@ public class CanvasGroupController
         return co_Hiding;
     }
 
-    //Alpha hacia 1 signfica que se va a mostrar. Para 0 es lo contrario, se esconderá.
-    //Estos tipos de metodos son mucha paja xdddd
+    
+    /// <summary>
+    /// Fades in or fades out the owner.
+    /// </summary>
+    /// <param name="alpha">The target alpha (from 0 to 1)</param>
+    /// <param name="speed">How fast should be the transition.</param>
+    /// <param name="inmediate">Fades inmediatly without any transition.</param>
+    /// <returns>IEnumerator yield.</returns>
     private IEnumerator Fade(float alpha, float speed = 1, bool inmediate = false)
     {
         CanvasGroup cg = canvas;
@@ -73,6 +101,10 @@ public class CanvasGroupController
         co_Showing = null;
     }
 
+    /// <summary>
+    /// Makes the owner interactable with the screen or be able to receive player input.
+    /// </summary>
+    /// <param name="active">Should be active?</param>
     public void SetInteractableState(bool active)
     {
         canvas.blocksRaycasts = active;
