@@ -11,23 +11,25 @@ public class CoroutinePrompt {
     private AISessionManager currentSession;
     private CharacterInteraction lastInteraction = new CharacterInteraction();
 
-    private CoroutinePrompt()
+    /// <summary>
+    /// Initializes the Coroutined Prompt class, in singleton way.
+    /// </summary>
+    private CoroutinePrompt() {}
+
+    public static CoroutinePrompt GetInstance()
     {
-
-    }
-
-    public static CoroutinePrompt Instance
-    {
-        get {
-            if(instance == null)
-            {
-                instance = new CoroutinePrompt();
-            }
-
-            return instance;
+        if(instance == null)
+        {
+            instance = new CoroutinePrompt();
         }
+
+        return instance;
     }
 
+    /// <summary>
+    /// Sets the current session to be used with the instance.
+    /// </summary>
+    /// <param name="session">The session manager.</param>
     public void InjectSession(AISessionManager session)
     {
         currentSession = session;
@@ -42,19 +44,26 @@ public class CoroutinePrompt {
         APIClientV2 client = currentSession.Client;
 
         yield return currentSession.UpdateSession();
-        yield return client.SendPrompt(currentSession.SessionId, currentSession.PlayerSessionId, text, responseData => {
-            var deserializedInteraction = JsonConvert.DeserializeObject<InteractionInfo>(responseData);
-            if (deserializedInteraction != null)
-            {
-                for (int i = 0; i < deserializedInteraction.TextList.Count; i++)
-                {
-                    Debug.LogWarning($"Printing fetched text: {deserializedInteraction.TextList[i]}");
-                }
-            }
+        yield return client.SendPrompt(currentSession.SessionId, currentSession.PlayerSessionId, text, FetchCharacterResponse);
+    }
 
-            EmotionInfo emoteInfo = deserializedInteraction.Emotion;
-            lastInteraction.SetLastInteraction(deserializedInteraction.TextList, emoteInfo.Behavior, emoteInfo.Strength);
-        });
+    /// <summary>
+    /// Fetches the character response with their feeling and the speech.
+    /// </summary>
+    /// <param name="responseData">The received data.</param>
+    private void FetchCharacterResponse(string responseData)
+    {
+        var deserializedInteraction = JsonConvert.DeserializeObject<InteractionInfo>(responseData);
+        if (deserializedInteraction != null)
+        {
+            for (int i = 0; i < deserializedInteraction.TextList.Count; i++)
+            {
+                Debug.LogWarning($"Printing fetched text: {deserializedInteraction.TextList[i]}");
+            }
+        }
+
+        EmotionInfo emoteInfo = deserializedInteraction.Emotion;
+        lastInteraction.SetLastInteraction(deserializedInteraction.TextList, emoteInfo.Behavior, emoteInfo.Strength);
     }
 
     public IEnumerator TestCharacter(Character character)

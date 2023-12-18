@@ -7,6 +7,9 @@ using System;
 using UnityEngine.Networking;
 
 //Creación de un cliente API pero con Corutinas (es mejor que usar HttpClient).
+/// <summary>
+/// Inworld API Wrapper to call its provided methods.
+/// </summary>
 public class APIClientV2 : MonoBehaviour
 {
     private static readonly string API_URL = "https://studio.inworld.ai/v1/";
@@ -19,13 +22,26 @@ public class APIClientV2 : MonoBehaviour
     private string workspacePath;
     private string apiKey;
 
+    /// <summary>
+    /// Sets the authentication data, this might be assigned by default if a .env file is provided.
+    /// </summary>
+    /// <param name="apiKey">Inworld API Key.</param>
+    /// <param name="workspacePath">The workspace provided by URL.</param>
     public void SetAuthData(string apiKey, string workspacePath)
     {
         this.apiKey = apiKey;
         this.workspacePath = workspacePath;
     }
 
-    IEnumerator CallAPI(string endPoint, Dictionary<string, string> contentData, string sessionIdGrpc = null, Action<string> callback = null)
+    /// <summary>
+    /// Calls the API by sending a request.
+    /// </summary>
+    /// <param name="endPoint">The endpoint path.</param>
+    /// <param name="contentData">The content for doing POST request in dictionary format.</param>
+    /// <param name="sessionIdGrpc">Session ID (if provided).</param>
+    /// <param name="callback">Callback for doing any action with the requested data. The callback param is the data.</param>
+    /// <returns>The IEnumerator related to the request.</returns>
+    private IEnumerator CallAPI(string endPoint, Dictionary<string, string> contentData, string sessionIdGrpc = null, Action<string> callback = null)
     {
         //null thing makes unity crazy.
         string serializedContent = contentData != null ? JsonConvert.SerializeObject(contentData) : "";
@@ -58,17 +74,31 @@ public class APIClientV2 : MonoBehaviour
             Debug.LogWarning("Can't connect to Inworld!");
     }
 
+    /// <summary>
+    /// Initializes the instance after the script is loaded.
+    /// </summary>
     void Awake()
     {
         Instance = this;
     }
 
+    /// <summary>
+    /// Initializes the Inworld API Wrapper object, also reads the key and workspace provided in the .env file.
+    /// </summary>
     void Start()
     {
         env.TryParseEnvironmentVariable("API_KEY", out apiKey);
         env.TryParseEnvironmentVariable("WORKSPACE_PATH", out workspacePath);
     }
 
+    /// <summary>
+    /// Wrapped CallAPI method but with the support of the RPC session ID.
+    /// </summary>
+    /// <param name="endPoint">Endpoint path</param>
+    /// <param name="sessionId">The current session.</param>
+    /// <param name="contentData">The content provided to send in POST request.</param>
+    /// <param name="callback">The callback that holds the data of the result.</param>
+    /// <returns>The current IEnumerator requested.</returns>
     private IEnumerator CallWithGRPC(string endPoint, string sessionId, Dictionary<string, string> contentData, Action<string> callback)
     {
         if (sessionId != null)
@@ -78,6 +108,13 @@ public class APIClientV2 : MonoBehaviour
         yield return CallAPI(endPoint, contentData, sessionId, callback);
     }
 
+    /// <summary>
+    /// Sends a single prompt without a session to a character.
+    /// </summary>
+    /// <param name="text">The text to send to the character.</param>
+    /// <param name="character">The character who is receiving the message.</param>
+    /// <param name="plyData">The player data for the character to be contextualized about player.</param>
+    /// <returns>The current request.</returns>
     public IEnumerator SendSimpleText(string text, string character, Dictionary<string, string> plyData)
     {
         string session_endpoint = $"/characters/{character}:simpleSendText";
@@ -85,7 +122,13 @@ public class APIClientV2 : MonoBehaviour
         yield return CallAPI(session_endpoint, plyData, null, data => Debug.Log($"Current data: {data}"));
     }
 
-    //TODO: Refactor these methods (only parameters).
+    /// <summary>
+    /// Requests a character session for the 
+    /// </summary>
+    /// <param name="character"></param>
+    /// <param name="plyData"></param>
+    /// <param name="callback"></param>
+    /// <returns></returns>
     public IEnumerator RequestCharacterSession(string character, Dictionary<string, string> plyData = null, Action<string> callback = null)
     {
         yield return StartCoroutine(CallAPI($"/characters/{character}:openSession", plyData, null, callback));
@@ -96,4 +139,10 @@ public class APIClientV2 : MonoBehaviour
         string promptEndpoint = $"/sessions/{sessId}/sessionCharacters/{plyId}:sendText";
         yield return StartCoroutine(CallWithGRPC(promptEndpoint, sessId, new Dictionary<string, string>() { { "text", text } }, callback));
     }
+}
+
+//Introduce parameter object pattern thing.
+public class APIParams
+{
+    
 }

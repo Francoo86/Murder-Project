@@ -15,9 +15,9 @@ else
 	narrator "si soy"
 }
 
-setlayerMedia(fondo consejeria)
-Narrator "Aqui es cuando aparece el marselo..."
-Marcelo "When despiertas"
+setlayermedia(fondo consejeria)
+narrator "Aqui es cuando aparece el marselo..."
+marcelo "When despiertas"
 input "Cual es tu nombre bro?"
 
 narrator "Ahh entonces te llamas <input>"
