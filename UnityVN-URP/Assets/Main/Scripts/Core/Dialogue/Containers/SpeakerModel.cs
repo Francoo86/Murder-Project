@@ -3,6 +3,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
+/// <summary>
+/// Class that holds all the info about the speaker found in the dialog.
+/// Saves things like expression, pos, casting name, name.
+/// </summary>
 public class SpeakerModel
 {
     public string RawData { get; private set; } = string.Empty;
@@ -32,6 +36,10 @@ public class SpeakerModel
     private const char EXPRESSIONLAYER_DELIMITER = ':';
     //Palabra clave para mostrar al personaje en pantalla.
     private const string SHOWCHARACTER_ID = "enter ";
+    /// <summary>
+    /// Initializes the object and tries to match the speaker data, like enter command or casting name.
+    /// </summary>
+    /// <param name="speaker">Raw name of the speaker and its commands.</param>
     public SpeakerModel(string speaker) {
         RawData = speaker;
         InitializeSpeakerModel();
@@ -40,6 +48,9 @@ public class SpeakerModel
         MatchSpeakerData(speaker);
     }
 
+    /// <summary>
+    /// Initializes placeholder data to avoid problems with null references.
+    /// </summary>
     private void InitializeSpeakerModel() {
         //Inicializar para evitar problemas de referencias.
         screenName = "";
@@ -49,6 +60,11 @@ public class SpeakerModel
 
     //The constructor does too much work.
     //FIXME: Refactor pls.
+    /// <summary>
+    /// Process keywords for showing.
+    /// </summary>
+    /// <param name="speaker">Raw name of the speaker</param>
+    /// <returns>The speaker without the enter command</returns>
     private string ProcessKeywords(string speaker)
     {
         if (speaker.StartsWith(SHOWCHARACTER_ID))
@@ -59,6 +75,12 @@ public class SpeakerModel
 
         return speaker;
     }
+
+    //I hate many parameters but this shit is worth of this.
+    /// <summary>
+    /// Makes the full match logic for getting the character casting and handling commands, like expression, pos, casting.
+    /// </summary>
+    /// <param name="speaker">Raw speaker with the logic.</param>
     private void MatchSpeakerData(string speaker = "") {
         speaker = ProcessKeywords(speaker);
 
@@ -78,8 +100,6 @@ public class SpeakerModel
         {
             Match match = matches[i];
             int startIdx = 0, endIdx = 0;
-
-            //someMethod(match.Value,
 
             //TODO: Refactor.
             if (match.Value == SCREENNAME_ID)
