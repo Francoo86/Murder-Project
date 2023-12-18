@@ -123,26 +123,28 @@ public class APIClientV2 : MonoBehaviour
     }
 
     /// <summary>
-    /// Requests a character session for the 
+    /// Requests a character session for the character based on the player's profile.
     /// </summary>
-    /// <param name="character"></param>
-    /// <param name="plyData"></param>
-    /// <param name="callback"></param>
-    /// <returns></returns>
+    /// <param name="character">Character name</param>
+    /// <param name="plyData">The dictionary that holds information about player data.</param>
+    /// <param name="callback">The callback that holds the response data.</param>
+    /// <returns>The IEnumerator to yield with the request.</returns>
     public IEnumerator RequestCharacterSession(string character, Dictionary<string, string> plyData = null, Action<string> callback = null)
     {
         yield return StartCoroutine(CallAPI($"/characters/{character}:openSession", plyData, null, callback));
     }
 
+    /// <summary>
+    /// Sends a prompt to do conversations with a character.
+    /// </summary>
+    /// <param name="sessId">Session ID provided by Inworld.</param>
+    /// <param name="plyId">Player ID provided by Inworld.</param>
+    /// <param name="text">The text that will be sent to get a response from the character.</param>
+    /// <param name="callback">The callback that holds the response data.</param>
+    /// <returns>The IEnumerator to yield with the request.</returns>
     public IEnumerator SendPrompt(string sessId, string plyId, string text, Action<string> callback)
     {
         string promptEndpoint = $"/sessions/{sessId}/sessionCharacters/{plyId}:sendText";
         yield return StartCoroutine(CallWithGRPC(promptEndpoint, sessId, new Dictionary<string, string>() { { "text", text } }, callback));
     }
-}
-
-//Introduce parameter object pattern thing.
-public class APIParams
-{
-    
 }
