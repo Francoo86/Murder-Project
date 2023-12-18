@@ -5,11 +5,19 @@ using System.Linq;
 using UnityEngine;
 using static LogicalLineUtils.Encapsulation;
 
+/// <summary>
+/// Logical line of choice, called with 'choice' calls choices in-game by parsing the dialog file.
+/// </summary>
 public class LLChoice : ILogicalLine
 {
     public string Keyword => "choice";
     private const char CHOICE_IDENTIFIER = '-';
 
+    /// <summary>
+    /// Executes the choice code, by parsing the decisions and what it does.
+    /// </summary>
+    /// <param name="line">The line model.</param>
+    /// <returns>The IEnumerator to be yielded.</returns>
     public IEnumerator Execute(DialogLineModel line)
     {
         ConversationManager ConvManager = DialogController.Instance.convManager;
@@ -36,6 +44,11 @@ public class LLChoice : ILogicalLine
         ConvManager.EnqueuePriority(newConversation);
     }
 
+    /// <summary>
+    /// Gets the choice data or the decision elements encapsulated inside of the brackets.
+    /// </summary>
+    /// <param name="data">The encapsulated data</param>
+    /// <returns>List of choices and their methods.</returns>
     private List<Choice> GetChoicesFromData(EncapsulationData data)
     {
         List<Choice> choices = new List<Choice>();
@@ -78,6 +91,12 @@ public class LLChoice : ILogicalLine
         return choices;
     }
 
+    /// <summary>
+    /// Adds every choice and its results inside the choice list.
+    /// </summary>
+    /// <param name="line">Lines that contains the choices.</param>
+    /// <param name="choice">The choice reference to store the results and the data.</param>
+    /// <param name="encapsulationDepth">The reference of how nested are the choices.</param>
     private void AddLineToResults(string line, ref Choice choice, ref int encapsulationDepth)
     {
         line.Trim();
@@ -104,14 +123,27 @@ public class LLChoice : ILogicalLine
         choice.resultLines.Add(line);
     }
 
+    /// <summary>
+    /// Checks if matches the choice keyword.
+    /// </summary>
+    /// <param name="line">The dialog line model.</param>
+    /// <returns>Wether the line matches with the keyword or not.</returns>
     public bool Matches(DialogLineModel line)
     {
         //throw new System.NotImplementedException();
         return (line.HasSpeaker && line.speakerMdl.name.ToLower() == Keyword);
     }
 
+    /// <summary>
+    /// Checks if the elements of choices starts with the -, that indicates a possible choice.
+    /// </summary>
+    /// <param name="line">Line element.</param>
+    /// <returns>Wether the element is a choice or not.</returns>
     private bool IsChoiceStart(string line) => line.Trim().StartsWith(CHOICE_IDENTIFIER);
 
+    /// <summary>
+    /// Struct that stores the Choice data, contains the title (choice name) and the result lines (the thing that will be executing after choice was selected).
+    /// </summary>
     private struct Choice
     {
         public string title;
