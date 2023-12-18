@@ -27,6 +27,10 @@ public class AISessionManager
 
     //Tiempo maximo que se puede estar en una sesión sin realizar nada.
     private readonly float SESSION_TIMEOUT_MINUTES = 30;
+    /// <summary>
+    /// Initializes the session manager.
+    /// </summary>
+    /// <param name="character">The character we are going to use.</param>
     public AISessionManager(string character)
     {
         this.character = character;
