@@ -6,9 +6,11 @@ public class CommandParameters
 {
     private const char PARAM_ID = '-';
     private Dictionary<string, string> parameters = new Dictionary<string, string>();
+    /// <summary>
+    /// This specifies the params without asignation of them, but with the order.
+    /// Like param1 -50, but now only -50.
+    /// </summary>
     private List<string> unlabeledParams = new List<string>();
-
-
 
     public CommandParameters(string[] paramArray)
     {
