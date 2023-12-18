@@ -22,6 +22,7 @@ public class PlayerInputManager : MonoBehaviour
         actions.Add((input.actions["Next"], PromptAdvance));
         actions.Add((input.actions["HistoryBack"], OnHistoryBack));
         actions.Add((input.actions["historyFoward"], OnHistoryFoward));
+        actions.Add((input.actions["historyLogs"], OnHistoryToggleLog));
     }
 
     /// <summary>
@@ -50,5 +51,19 @@ public class PlayerInputManager : MonoBehaviour
     public void OnHistoryFoward(InputAction.CallbackContext c)
     {
         HistoryManager.Instance.GoFoward();
+    }
+
+    public void OnHistoryToggleLog(InputAction.CallbackContext c)
+    {
+        var logs = HistoryManager.Instance.logManager;
+
+        if (!logs.isOpen)
+        {
+            logs.Open();
+        }
+        else 
+        {
+            logs.Close();
+        }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace History
 {
+    [RequireComponent(typeof(HistoryLogManager))]
     [RequireComponent(typeof(HistoryNavigation))]
     public class HistoryManager : MonoBehaviour
     {
@@ -14,11 +15,13 @@ namespace History
         public List<HistoryState> history = new List<HistoryState>();
 
         private HistoryNavigation navigation;
+        public HistoryLogManager logManager { get; private set; }
 
         private void Awake() 
         {
             Instance = this;
             navigation = GetComponent<HistoryNavigation>();
+            logManager = GetComponent<HistoryLogManager>();
         }
 
         // Start is called before the first frame update
@@ -31,6 +34,7 @@ namespace History
         {
             HistoryState state = HistoryState.Capture();
             history.Add(state);
+            logManager.AddLog(state);
 
             if (history.Count > HISTORY_CACHE_LIMIT)
                 history.RemoveAt(0);
