@@ -7,9 +7,6 @@ using UnityEngine;
 public class AISessionManager
 {
     private string character;
-    //private string sessionId;
-    //private string plySessionId;
-    //private APIClientV2 client;
     private DateTime lastUsed;
 
     public APIClientV2 Client => APIClientV2.Instance;
@@ -40,7 +37,7 @@ public class AISessionManager
     /// <summary>
     /// Checks if current session is not null.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Wether the session is valid or not.</returns>
     public bool IsValid() { 
         return SessionId != null;
     }
@@ -63,7 +60,7 @@ public class AISessionManager
     /// <summary>
     /// Updates the session time.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The IEnumerator that yields the session request.</returns>
     public IEnumerator UpdateSession() {
         if ((!IsValid()) || HasSessionExpired())
         {

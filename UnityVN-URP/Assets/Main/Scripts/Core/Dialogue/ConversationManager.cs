@@ -59,7 +59,7 @@ public class ConversationManager
     //TODO: Refactorizar un poco si es posible.
     public int conversationProgress => (convQueue.IsEmpty() ? -1 : convQueue.top.GetProgress());
 
-    IEnumerator RunningConversation()
+    private IEnumerator RunningConversation()
     {
         //for(int i = 0; i < conversation.Count; i++)
         while(!convQueue.IsEmpty())
@@ -152,7 +152,7 @@ public class ConversationManager
                 character.OnExpressionReceive(exp.layer, exp.expression);
             }
     }
-    IEnumerator RunDialogForLine(DialogLineModel dialogLine)
+    private IEnumerator RunDialogForLine(DialogLineModel dialogLine)
     {
         //Muestra o esconde un hablante existente.
         //Ya se configuro el apartado para narrador.
@@ -173,7 +173,7 @@ public class ConversationManager
         //yield return WaitForUserInput();
     }
 
-    IEnumerator RunDialogForCommands(DialogLineModel dialogLine) {
+    private IEnumerator RunDialogForCommands(DialogLineModel dialogLine) {
         List<CommandData.Command> commands = dialogLine.commandData.commands;
 
         foreach (CommandData.Command command in commands) {
@@ -205,7 +205,7 @@ public class ConversationManager
         yield return null;
     }
 
-    IEnumerator BuildLineSegments(DialogData dialogLine) {
+    private IEnumerator BuildLineSegments(DialogData dialogLine) {
         for(int i = 0; i < dialogLine.segments.Count; i++)
         {
             DialogData.DIALOG_SEGMENT segment = dialogLine.segments[i];
@@ -216,7 +216,7 @@ public class ConversationManager
     }
 
     public bool IsWaitingOnAutoTimer { get; private set; }
-    IEnumerator WaitForDialogSegmentSignalToBeTriggered(DialogData.DIALOG_SEGMENT segment)
+    private IEnumerator WaitForDialogSegmentSignalToBeTriggered(DialogData.DIALOG_SEGMENT segment)
     {
         switch (segment.startSignal)
         {
@@ -241,7 +241,7 @@ public class ConversationManager
         }
     }
 
-    IEnumerator BuildDialog(string diag, bool append = false) {
+    private IEnumerator BuildDialog(string diag, bool append = false) {
         diag = TagController.Inject(diag);
 
         if (!append)
@@ -265,7 +265,7 @@ public class ConversationManager
     }
 
     //TODO: Redux this thing.
-    IEnumerator WaitForUserInput() {
+    private IEnumerator WaitForUserInput() {
         while (!isUserManipulated) {
             yield return null;
         }
