@@ -14,6 +14,13 @@ public class TestingDialog : MonoBehaviour
 
     IEnumerator StartTalking()
     {
+        string fullPath = AssetDatabase.GetAssetPath(fileToRead);
+        int resourcesIndex = fullPath.IndexOf("Resources/");
+        string relativePath = fullPath.Substring(resourcesIndex + 10);
+        string filePath = Path.ChangeExtension(relativePath, null);
+
+        VNManager.Instance.LoadFile(filePath);
+
         SpriteCharacter charPedro = CharacterController.Instance.CreateCharacter("Marcelo") as SpriteCharacter;
         Character alfonso = CharacterController.Instance.CreateCharacter("Patricia");
         List<string> lines = new List<string>()

@@ -8,15 +8,27 @@ public class Conversation
     private List<string> lines = new List<string>();
     private int progress = 0;
 
+
+    public string file { get; private set; }
+    public int fileStartIndex { get; private set; }
+    public int fileEndIndex { get; private set; }
+
     /// <summary>
     /// Creates a conversation object with the dialog lines and the progress.
     /// </summary>
     /// <param name="lines">Lines that the conversation will hold.</param>
     /// <param name="progress">In which part we should start, starts with 0 by default.</param>
-    public Conversation(List<string> lines, int progress = 0)
+    public Conversation(List<string> lines, int progress = 0, string file="", int fileStartIndex = -1, int fileEndIndex = -1)
     {
         this.lines = lines;
         this.progress = progress;
+        this.file = file;
+
+        if (fileStartIndex == -1)
+            fileStartIndex = 0;
+
+        if (fileEndIndex == -1)
+            fileEndIndex = lines.Count - 1;
     }
 
     /// <summary>

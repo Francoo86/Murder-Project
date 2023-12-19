@@ -27,7 +27,7 @@ public class LLCondition : ILogicalLine
         Conversation currentConv = DialogController.Instance.convManager.conversation;
         int currentProgress = DialogController.Instance.convManager.conversationProgress;
 
-        EncapsulationData ifData = RipEncapsulationData(currentConv, currentProgress, false);
+        EncapsulationData ifData = RipEncapsulationData(currentConv, currentProgress, false, parentStartingIndex: currentConv.fileStartIndex);
         EncapsulationData elseData = new EncapsulationData();
 
         if(ifData.endingIndex + 1 < currentConv.Count)
@@ -35,7 +35,7 @@ public class LLCondition : ILogicalLine
             string nextLine = currentConv.GetLines()[ifData.endingIndex + 1].Trim();
             if(nextLine == ELSE)
             {
-                elseData = RipEncapsulationData(currentConv, ifData.endingIndex + 1, false);
+                elseData = RipEncapsulationData(currentConv, ifData.endingIndex + 1, false, parentStartingIndex: currentConv.fileStartIndex);
                 ifData.endingIndex = elseData.endingIndex;
             }
         }
@@ -46,7 +46,7 @@ public class LLCondition : ILogicalLine
 
         if (!selData.IsNull && selData.lines.Count > 0)
         {
-            Conversation conv = new Conversation(selData.lines);
+            Conversation conv = new Conversation(selData.lines, file: currentConv.file, fileStartIndex: currentConv.fileStartIndex, fileEndIndex: currentConv.fileEndIndex);
             //DialogController.Instance.convManager.conversation.SetProgress(selData.endingIndex);
             DialogController.Instance.convManager.EnqueuePriority(conv);
         }

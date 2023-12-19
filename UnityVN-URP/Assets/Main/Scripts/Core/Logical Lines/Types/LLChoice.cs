@@ -24,7 +24,7 @@ public class LLChoice : ILogicalLine
         Conversation currentConversation = ConvManager.conversation;
         int currentProgress = ConvManager.conversationProgress;
         //Necesitamos el titulo.
-        EncapsulationData data = RipEncapsulationData(currentConversation, currentProgress, true);
+        EncapsulationData data = RipEncapsulationData(currentConversation, currentProgress, true, parentStartingIndex: currentConversation.fileStartIndex);
         List<Choice> choices = GetChoicesFromData(data);
 
         string title = line.dialogData.RawData;
@@ -39,7 +39,7 @@ public class LLChoice : ILogicalLine
         Choice selectedChoice = choices[panel.LastDecision.answerIndex];
 
         //Evitar que las conversaciones se solapen dentro de la cola.
-        Conversation newConversation = new Conversation(selectedChoice.resultLines);
+        Conversation newConversation = new Conversation(selectedChoice.resultLines, file: currentConversation.file, fileStartIndex: selectedChoice.startIndex, fileEndIndex: selectedChoice.endIndex);
         ConvManager.conversation.SetProgress(data.endingIndex);
         ConvManager.EnqueuePriority(newConversation);
     }
@@ -61,14 +61,20 @@ public class LLChoice : ILogicalLine
             resultLines = new List<string>(),
         };
 
-        foreach(var line in data.lines.Skip(1))
+        int choiceIndex = 0;
+        int i = 0;
+
+        for( i=0; i<data.lines.Count ; i++ )
+        //foreach(var line in data.lines.Skip(1))
         {
+            var line = data.lines[i];
             if(IsChoiceStart(line) && encapsulationDepth == 1)
             {
                 if(!IsFirstChoice)
                 {
+                    choice.startIndex = data.startingIndex + (choiceIndex+1);
+                    choice.endIndex = data.startingIndex + (i-1);
                     choices.Add(choice);
-
                     choice = new Choice
                     {
                         title = string.Empty,
@@ -76,6 +82,7 @@ public class LLChoice : ILogicalLine
                     };
                 }
 
+                choiceIndex = i;
                 choice.title = line.Trim().Substring(1);
                 IsFirstChoice = false;
                 continue;
@@ -85,8 +92,12 @@ public class LLChoice : ILogicalLine
             AddLineToResults(line, ref choice, ref encapsulationDepth);
         }
 
-        if(!choices.Contains(choice))
+        if (!choices.Contains(choice))
+        {
+            choice.startIndex = data.startingIndex + (choiceIndex + 1);
+            choice.endIndex = data.startingIndex + (i - 2);
             choices.Add(choice);
+        }
 
         return choices;
     }
@@ -148,5 +159,7 @@ public class LLChoice : ILogicalLine
     {
         public string title;
         public List<string> resultLines;
+        public int startIndex;
+        public int endIndex;
     }
 }
