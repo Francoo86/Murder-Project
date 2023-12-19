@@ -56,7 +56,7 @@ namespace History
         
         public void GoBack() 
         {
-            if ( (progress == 0 && isViewingHistory) || !canNavigate)
+            if (history.Count == 0 || (progress == 0 && isViewingHistory) || !canNavigate)
                 return;
 
             progress = isViewingHistory ? progress - 1 : history.Count - 1;
