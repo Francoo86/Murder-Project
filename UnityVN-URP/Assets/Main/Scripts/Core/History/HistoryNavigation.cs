@@ -19,9 +19,11 @@ namespace History
 
         public bool isViewingHistory = false;
 
+        public bool canNavigate => !DialogController.Instance.convManager.isOnLogicalLine;
+
         public void GoFoward() 
         {
-            if (!isViewingHistory) 
+            if (!isViewingHistory || !canNavigate) 
                 return;
 
             HistoryState state = null;
@@ -54,7 +56,7 @@ namespace History
         
         public void GoBack() 
         {
-            if (progress == 0 && isViewingHistory)
+            if ( (progress == 0 && isViewingHistory) || !canNavigate)
                 return;
 
             progress = isViewingHistory ? progress - 1 : history.Count - 1;

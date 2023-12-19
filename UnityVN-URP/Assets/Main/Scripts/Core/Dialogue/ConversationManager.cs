@@ -9,6 +9,7 @@ public class ConversationManager
     private Coroutine process = null;
     public TextArchitect arch;
     public bool IsRunning => process != null;
+    public bool isOnLogicalLine { get; private set; } = false;
 
     private ConversationQueue convQueue;
     private DialogController Controller => DialogController.Instance;
@@ -81,7 +82,9 @@ public class ConversationManager
 
             DialogLineModel line = DialogParser.Parse(rawLine);
 
-            if (logicalLineManager.TryGetLogic(line, out Coroutine logic)) {
+            if (logicalLineManager.TryGetLogic(line, out Coroutine logic)) 
+            {
+                isOnLogicalLine = true;
                 yield return logic;
             }
             else
@@ -109,7 +112,7 @@ public class ConversationManager
             }
 
             TryAdvanceConversation(currentConversation);
-
+            isOnLogicalLine = false;
             //yield return new WaitForSeconds(1);
 
         }
