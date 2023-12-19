@@ -21,8 +21,8 @@ public class PlayerInputManager : MonoBehaviour
     {
         actions.Add((input.actions["Next"], PromptAdvance));
         actions.Add((input.actions["HistoryBack"], OnHistoryBack));
-        actions.Add((input.actions["historyFoward"], OnHistoryFoward));
-        actions.Add((input.actions["historyLogs"], OnHistoryToggleLog));
+        actions.Add((input.actions["HistoryFoward"], OnHistoryFoward));
+        actions.Add((input.actions["HistoryLogs"], OnHistoryToggleLog));
     }
 
     /// <summary>
