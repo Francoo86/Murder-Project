@@ -32,7 +32,7 @@ public class DialogController : MonoBehaviour
     public bool IsRunning => convManager.IsRunning;
 
     //Inicializa el objeto en el script.
-    public void Awake()
+    void Awake()
     {
         if (Instance == null)
         {

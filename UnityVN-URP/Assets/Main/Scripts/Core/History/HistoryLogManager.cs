@@ -19,6 +19,7 @@ namespace History
         private float logScaling = 1f;
 
         [SerializeField] private GameObject logPrefab;
+        [SerializeField] private CanvasGroup PanelCG;
 
         HistoryManager manager = HistoryManager.Instance;
         private List<HistoryLog> logs = new List<HistoryLog>();
@@ -29,12 +30,22 @@ namespace History
 
         private float textScaling => logScaling * 3f;
 
+        //Estos tienen problema ya que no tienen algo que pueda arreglar el canvas.
+        private void SetActive(bool active)
+        {
+            PanelCG.alpha = active ? 1f : 0f;
+            PanelCG.interactable = active;
+            PanelCG.blocksRaycasts = active;
+        }
+
         public void Open()
         {
             if (isOpen)
             {
                 return;
             }
+
+            SetActive(true);
             isOpen = true;
         }
 
@@ -44,6 +55,7 @@ namespace History
             {
                 return;
             }
+            SetActive(false);
             isOpen = false;
         }
 
