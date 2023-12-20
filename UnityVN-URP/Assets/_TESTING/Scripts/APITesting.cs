@@ -58,7 +58,7 @@ public class APITesting : MonoBehaviour
         {
             yield return textChar.Say(lines[i]);
             yield return prompt.Talk(lines[i]);
-            yield return prompt.TestCharacter(charPedro);
+            yield return prompt.Interact(charPedro);
         }
     }
 
