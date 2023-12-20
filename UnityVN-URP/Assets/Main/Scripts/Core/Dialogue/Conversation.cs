@@ -29,6 +29,9 @@ public class Conversation
 
         if (fileEndIndex == -1)
             fileEndIndex = lines.Count - 1;
+
+        this.fileStartIndex = fileStartIndex;
+        this.fileEndIndex = fileEndIndex; 
     }
 
     /// <summary>

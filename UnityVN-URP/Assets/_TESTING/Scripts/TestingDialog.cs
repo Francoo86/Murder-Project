@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CHARACTERS;
+using UnityEditor;
+using System.IO;
+using VISAULNOVEL;
 
 public class TestingDialog : MonoBehaviour
 {
+
+    [SerializeField] private TextAsset fileToRead = null; 
     
     // Start is called before the first frame update
     void Start()

@@ -17,14 +17,14 @@ public class FileManager
     /// <param name="includeBlankLines">Include lines that are only empty spaces.</param>
     /// <returns>The list of lines that were read.</returns>
     public static List<string> ReadTextFile(string path, bool includeBlankLines = true) {
-        if(!path.StartsWith("/")) path = FilePaths.rootPath + path;
+        if (!path.StartsWith("/")) path = FilePaths.rootPath + path;
 
         try
         {
             using (StreamReader sr = new StreamReader(path))
             {
-                List <string> savedLines = new List<string>();
-                while(!sr.EndOfStream)
+                List<string> savedLines = new List<string>();
+                while (!sr.EndOfStream)
                 {
                     string line = sr.ReadLine();
                     //Skip goofy aahh comments.
@@ -39,10 +39,10 @@ public class FileManager
                 return savedLines;
             }
         }
-        catch (FileNotFoundException e){
+        catch (FileNotFoundException e) {
             Debug.LogError(e.Message);
         }
-   
+
         return null;
     }
 
@@ -52,7 +52,7 @@ public class FileManager
     /// <param name="path">The path of the file.</param>
     /// <param name="includeBlankLines">Include empty lines.</param>
     /// <returns>The lines that were read.</returns>
-    public static List<string> ReadTextAsset(string path, bool includeBlankLines = true) { 
+    public static List<string> ReadTextAsset(string path, bool includeBlankLines = true) {
         TextAsset asset = Resources.Load<TextAsset>(path);
 
         if (asset == null)
@@ -90,4 +90,46 @@ public class FileManager
         }
     }
 
+    public static bool TryCreateDirectoryFromPath(string path)
+    {
+        if (Directory.Exists(path) || File.Exists(path))
+            return true;
+
+        if (path.Contains("."))
+        {
+            path = Path.GetDirectoryName(path);
+            if (Directory.Exists(path))
+                return true;
+        }
+
+        if (path == string.Empty)
+            return false;
+
+        try
+        {
+            Directory.CreateDirectory(path);
+            return true;
+
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Could not create directory! {e}");
+            return false;
+        }
+    }
+
+    public static void Save(string filePath, string JSONData)
+    {
+        if(!TryCreateDirectoryFromPath(filePath))
+        {
+            Debug.LogError($"Failed to save file '{filePath}' ");
+            return;
+        }
+
+        StreamWriter sw = new StreamWriter(filePath);
+        sw.Write(JSONData);
+        sw.Close();
+
+        Debug.Log($"Saved data to '{filePath}'");
+    }
 }

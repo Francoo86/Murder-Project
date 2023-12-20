@@ -50,4 +50,6 @@ public class ConversationQueue
     /// Empties the queue.
     /// </summary>
     public void Clear() => conversationQueue.Clear();
+
+    public Conversation[] GetReadOnly => conversationQueue.ToArray();
 }

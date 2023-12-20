@@ -9,6 +9,9 @@ public class FilePaths
 
     public static readonly string rootPath = $"{Application.dataPath}/Main/Resources/";
 
+    //RunTime Paths
+    public static readonly string gameSaves = $"{runTimePath}Save Files/";
+
     //Paneles graficos, vale decir escenarios, videos de fondo.
     public static readonly string ResourcesGraphics = "Graphics/";
 
@@ -41,4 +44,17 @@ public class FilePaths
 
         return defPath + resourceName;
     }
+
+    public static string runTimePath 
+    { 
+        get
+        {
+            #if UNITY_EDITOR
+                  return "Assets/appdata/";
+            #else
+                  return Application.persistentDataPath + "/appdata";
+            #endif
+        }
+    }
+
 }

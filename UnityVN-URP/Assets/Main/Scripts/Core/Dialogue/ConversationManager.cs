@@ -16,6 +16,7 @@ public class ConversationManager
     //Para inyectar variables en su caso de tipo XML.
     //private TagController tagController;
     private LogicalLineManager logicalLineManager;
+
     public ConversationManager(TextArchitect arch) { 
         this.arch = arch;
         Controller.onUserPrompt_Next += OnUserPrompt_Next;
@@ -24,6 +25,8 @@ public class ConversationManager
         logicalLineManager = new LogicalLineManager();
         convQueue = new ConversationQueue();
     }
+
+    public Conversation[] GetConversationQueue() => ConversationQueue.GetReadOnly();
 
     public bool allowUserPrompts = true;
 
