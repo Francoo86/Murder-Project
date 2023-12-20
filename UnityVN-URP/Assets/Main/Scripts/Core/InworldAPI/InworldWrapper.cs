@@ -10,13 +10,13 @@ using UnityEngine.Networking;
 /// <summary>
 /// Inworld API Wrapper to call its provided methods.
 /// </summary>
-public class APIClientV2 : MonoBehaviour
+public class InworldWrapper : MonoBehaviour
 {
     private static readonly string API_URL = "https://studio.inworld.ai/v1/";
     private const string GRPC_ID = "Grpc-Metadata-session-id";
     private const string PREFERRED_METHOD = "POST";
     private static readonly HashSet<long> SUCCESFUL_CODES = new HashSet<long> { 200, 201 };
-    public static APIClientV2 Instance {  get; private set; }
+    public static InworldWrapper Instance {  get; private set; }
 
     //Variables de vital importancia.
     private string workspacePath;

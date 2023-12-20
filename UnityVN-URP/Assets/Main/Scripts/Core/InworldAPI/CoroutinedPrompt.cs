@@ -47,7 +47,7 @@ public class CoroutinePrompt {
         if (currentSession == null) {
             yield return null;
         }
-        APIClientV2 client = currentSession.Client;
+        InworldWrapper client = currentSession.Client;
 
         yield return currentSession.UpdateSession();
         yield return client.SendPrompt(currentSession.SessionId, currentSession.PlayerSessionId, text, FetchCharacterResponse);

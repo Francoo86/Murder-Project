@@ -9,7 +9,7 @@ public class AISessionManager
     private string character;
     private DateTime lastUsed;
 
-    public APIClientV2 Client => APIClientV2.Instance;
+    public InworldWrapper Client => InworldWrapper.Instance;
 
     public string SessionId { get; private set; }
     public string PlayerSessionId { get; private set; }
