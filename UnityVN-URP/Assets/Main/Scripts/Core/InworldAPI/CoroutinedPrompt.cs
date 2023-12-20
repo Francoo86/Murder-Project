@@ -72,7 +72,7 @@ public class CoroutinePrompt {
         lastInteraction.SetLastInteraction(deserializedInteraction.TextList, emoteInfo.Behavior, emoteInfo.Strength);
     }
 
-    public IEnumerator TestCharacter(Character character)
+    public IEnumerator Interact(Character character)
     {
         yield return lastInteraction.DisplayText(character);
     }

@@ -26,6 +26,7 @@ public class SpriteCharacter : Character
         Debug.Log($"Character based on sprites loaded. {name}");
     }
 
+    //FIXME: Remove the layers thing, we only use one.
     private void GetLayers()
     {
         Transform renderRoot = animator.transform.Find(SPRITE_RENDERED_PARENT_NAME);
@@ -56,13 +57,7 @@ public class SpriteCharacter : Character
 
     public Sprite GetSprite(string spriteName)
     {
-        /*
-        if (config.charType == CharacterType.SpriteSheet)
-        {
-            return null;
-        }
-        else*/
-            return Resources.Load<Sprite>($"{assetsDirectory}/{spriteName}");
+        return Resources.Load<Sprite>($"{assetsDirectory}/{spriteName}");
     }
 
     public Coroutine TransitionSprite(Sprite sprite, int layer = 0, float speed = 1)
