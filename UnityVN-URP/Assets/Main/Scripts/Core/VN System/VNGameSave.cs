@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using History;
+using System.Linq;
 
 namespace VISAULNOVEL
 {
@@ -34,7 +35,20 @@ namespace VISAULNOVEL
             FileManager.Save(filePath, saveJSON);
         }
 
-        public void Load() { }
+        public void Load() 
+        {
+            if (activeState != null)
+                activeState.Load();
+            
+            HistoryManager.Instance.history = historyLog.ToList();
+            HistoryManager.Instance.logManager.Clear();
+            HistoryManager.Instance.logManager.Rebuild();
+
+            SetConversationData();
+            
+            //Esconder el cursor.
+            //DialogController.Instance.prompt.Hide();
+        }
 
         public string[] GetConversationData()
         {
@@ -67,6 +81,53 @@ namespace VISAULNOVEL
                 retData.Add(data);
             }
             return retData.ToArray();
+        }
+
+        private void SetConversationData()
+        {
+            int i = 0;
+            for(i = 0; i < activeConversations.Length; i++) 
+            {
+                try
+                {
+                    string data = activeConversations[i];
+                    Conversation conversation = null;
+
+                    var fullData = JsonUtility.FromJson<VN_ConversationData>(data);
+                    if (fullData != null && fullData.conversation != null && fullData.conversation.Count > 0)
+                    {
+                        conversation = new Conversation(fullData.conversation, fullData.progress);
+                    }
+                    else
+                    {
+                        var compressedData = JsonUtility.FromJson<VN_ConversationDataCompressed>(data);
+                        if (compressedData != null && compressedData.fileName != string.Empty)
+                        {
+                            TextAsset file = Resources.Load<TextAsset>(compressedData.fileName);
+                            int count = compressedData.endIndex - compressedData.startIndex;
+                            List<string> lines = FileManager.ReadTextAsset(file).Skip(compressedData.startIndex).Take(count+1).ToList();
+                            conversation = new Conversation(lines, compressedData.progress, compressedData.fileName, compressedData.startIndex, compressedData.endIndex);
+                        }
+                        else
+                        {
+                            Debug.LogError($"Unable to reload conversation from VNGameSave data '{data}'");
+                        }
+                    }
+
+                    if (conversation != null && conversation.GetLines().Count > 0) 
+                    {
+                        if (i == 0)
+                            DialogController.Instance.convManager.StartConversation(conversation);
+                        else
+                            DialogController.Instance.convManager.Enqueue(conversation);
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError($"Error while extracting saved conversation data {e}");
+                    continue;
+                }
+            }
         }
     }
 }

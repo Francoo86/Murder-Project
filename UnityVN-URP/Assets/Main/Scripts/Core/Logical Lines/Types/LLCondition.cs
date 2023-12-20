@@ -5,6 +5,7 @@ using static LogicalLineUtils.Conditions;
 using static LogicalLineUtils.Expressions;
 using static LogicalLineUtils.Encapsulation;
 
+
 /// <summary>
 /// Class that handles the if-else clauses in the dialog file.
 /// </summary>
@@ -36,17 +37,20 @@ public class LLCondition : ILogicalLine
             if(nextLine == ELSE)
             {
                 elseData = RipEncapsulationData(currentConv, ifData.endingIndex + 1, false, parentStartingIndex: currentConv.fileStartIndex);
-                ifData.endingIndex = elseData.endingIndex;
+                //ifData.endingIndex = elseData.endingIndex;
             }
         }
 
-        currentConv.SetProgress(ifData.endingIndex);
+        currentConv.SetProgress(elseData.IsNull? ifData.endingIndex : elseData.endingIndex);
 
         EncapsulationData selData = conditionResult ? ifData : elseData;
 
         if (!selData.IsNull && selData.lines.Count > 0)
         {
-            Conversation conv = new Conversation(selData.lines, file: currentConv.file, fileStartIndex: currentConv.fileStartIndex, fileEndIndex: currentConv.fileEndIndex);
+            selData.startingIndex += 2;
+            selData.endingIndex -= 1;   
+
+            Conversation conv = new Conversation(selData.lines, file: currentConv.file, fileStartIndex: selData.startingIndex, fileEndIndex: selData.endingIndex);
             //DialogController.Instance.convManager.conversation.SetProgress(selData.endingIndex);
             DialogController.Instance.convManager.EnqueuePriority(conv);
         }

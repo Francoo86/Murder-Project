@@ -40,7 +40,7 @@ public class LLChoice : ILogicalLine
 
         //Evitar que las conversaciones se solapen dentro de la cola.
         Conversation newConversation = new Conversation(selectedChoice.resultLines, file: currentConversation.file, fileStartIndex: selectedChoice.startIndex, fileEndIndex: selectedChoice.endIndex);
-        ConvManager.conversation.SetProgress(data.endingIndex);
+        ConvManager.conversation.SetProgress(data.endingIndex - currentConversation.fileStartIndex);
         ConvManager.EnqueuePriority(newConversation);
     }
 

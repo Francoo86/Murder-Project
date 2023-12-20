@@ -132,4 +132,18 @@ public class FileManager
 
         Debug.Log($"Saved data to '{filePath}'");
     }
+
+    public static T Load<T>(string filePath) 
+    {
+        if (File.Exists(filePath))
+        {
+            string JSONData = File.ReadAllLines(filePath)[0];
+            return JsonUtility.FromJson<T>(JSONData);
+        }
+        else 
+        {
+            Debug.LogError($"Error file does not exists '{filePath}'");
+            return default(T);
+        }
+    }
 }
