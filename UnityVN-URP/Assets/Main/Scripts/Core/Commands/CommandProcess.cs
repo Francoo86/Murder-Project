@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// Command (methods in the dialog file)
+/// Class that holds information about a command and how it would be executed.
 /// </summary>
 public class CommandProcess
 {
