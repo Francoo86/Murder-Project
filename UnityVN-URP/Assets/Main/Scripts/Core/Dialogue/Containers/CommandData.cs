@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
+/// <summary>
+/// Gets all the data associated to a command that were read from some line.
+/// </summary>
 public class CommandData
 {
     public List<Command> commands;
@@ -16,10 +19,19 @@ public class CommandData
 
     //SIMILAR TO SOME PATTERN.
     //Prolly strategy.
+    /// <summary>
+    /// Creates the object and extracts all the commands in the raw line.
+    /// </summary>
+    /// <param name="rawCommands">The line that has the commands.</param>
     public CommandData(string rawCommands) {
         commands = ExtractCommands(rawCommands);
     }
 
+    /// <summary>
+    /// Extracts the commands from a raw line that has commands.
+    /// </summary>
+    /// <param name="rawCommands">The line that has the commands.</param>
+    /// <returns>All possible commands obtained from the line.</returns>
     private List<Command> ExtractCommands(string rawCommands)
     {
         string[] data = rawCommands.Split(COMMANDSPLITTER_ID, System.StringSplitOptions.RemoveEmptyEntries);
@@ -48,6 +60,11 @@ public class CommandData
         return res;
     }
 
+    /// <summary>
+    /// Gets the arguments defined inside the custom method.
+    /// </summary>
+    /// <param name="args">The raw args.</param>
+    /// <returns>The list of arguments that the command has.</returns>
     private string[] GetArguments(string args) {
         List<string> argsList = new List<string>();
         //StringBuilder para poder modificar directamente la referencia de un string.
