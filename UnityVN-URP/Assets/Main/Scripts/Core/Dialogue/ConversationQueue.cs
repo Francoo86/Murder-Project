@@ -51,5 +51,5 @@ public class ConversationQueue
     /// </summary>
     public void Clear() => conversationQueue.Clear();
 
-    public Conversation[] GetReadOnly => conversationQueue.ToArray();
+    public Conversation[] GetReadOnly() => conversationQueue.ToArray();
 }

@@ -39,7 +39,8 @@ namespace VISAULNOVEL
         public string[] GetConversationData()
         {
             List<string> retData = new List<string>();
-            var conversations = DialogueSystem.Instance.conversationManager.GetConversationQueue();
+
+            var conversations = DialogController.Instance.convManager.GetConversationQueue();
 
             int i = 0;
             for (i = 0; i < conversations.Length; i++)
@@ -52,8 +53,8 @@ namespace VISAULNOVEL
                     var compressedData = new VN_ConversationDataCompressed();
                     compressedData.fileName = conversation.file;
                     compressedData.progress = conversation.GetProgress();
-                    compressedData.startIndex = conversation.FileStartIndex;
-                    compressedData.endIndex = conversation.FileEndIndex;
+                    compressedData.startIndex = conversation.fileStartIndex;
+                    compressedData.endIndex = conversation.fileEndIndex;
                     data = JsonUtility.ToJson(compressedData);
                 }
                 else 

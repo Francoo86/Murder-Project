@@ -26,7 +26,7 @@ public class ConversationManager
         convQueue = new ConversationQueue();
     }
 
-    public Conversation[] GetConversationQueue() => ConversationQueue.GetReadOnly();
+    public Conversation[] GetConversationQueue() => convQueue.GetReadOnly();
 
     public bool allowUserPrompts = true;
 
