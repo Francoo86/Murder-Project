@@ -90,6 +90,11 @@ public class FileManager
         }
     }
 
+    /// <summary>
+    /// Creates a directory if no directory exists, otherwise it uses in the passed parameter.
+    /// </summary>
+    /// <param name="path">The path to check or create.</param>
+    /// <returns>Wether the directory is usable or exists.</returns>
     public static bool TryCreateDirectoryFromPath(string path)
     {
         if (Directory.Exists(path) || File.Exists(path))
@@ -118,6 +123,11 @@ public class FileManager
         }
     }
 
+    /// <summary>
+    /// Saves data in JSON format.
+    /// </summary>
+    /// <param name="filePath">The filepath where it should be stored.</param>
+    /// <param name="JSONData">The JSON data to be saved.</param>
     public static void Save(string filePath, string JSONData)
     {
         if(!TryCreateDirectoryFromPath(filePath))
@@ -133,6 +143,12 @@ public class FileManager
         Debug.Log($"Saved data to '{filePath}'");
     }
 
+    /// <summary>
+    /// Loads a file on a object.
+    /// </summary>
+    /// <typeparam name="T">The base object.</typeparam>
+    /// <param name="filePath">The filepath where the resource is.</param>
+    /// <returns>The JSON loaded.</returns>
     public static T Load<T>(string filePath) 
     {
         if (File.Exists(filePath))
