@@ -4,6 +4,9 @@ using TMPro;
 using System;
 using System.Globalization;
 
+/// <summary>
+/// Builds or appends the text to the screen with an effect.
+/// </summary>
 public class TextArchitect
 {
     private TextMeshProUGUI tmpro_ui;

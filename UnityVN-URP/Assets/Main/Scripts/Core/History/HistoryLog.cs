@@ -5,14 +5,12 @@ using TMPro;
 
 namespace History
 {
-    public class HistoryLog : MonoBehaviour
+    public class HistoryLog
     {
         public GameObject container;
         public TextMeshProUGUI nameText;
         public TextMeshProUGUI dialogueText;
         public float nameFontSize = 0;
         public float dialogueFontSize = 0;
-
     }
-
 }
