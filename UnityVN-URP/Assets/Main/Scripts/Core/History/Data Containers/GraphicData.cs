@@ -6,6 +6,7 @@ using UnityEngine.Video;
 namespace History
 {
 
+    [System.Serializable]
     public class GraphicData
     {
         public string panelName;

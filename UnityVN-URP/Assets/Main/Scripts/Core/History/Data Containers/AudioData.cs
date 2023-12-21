@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace History
 {
-
+    [System.Serializable]
     public class AudioData
     {
         public int channel = 0;

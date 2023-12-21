@@ -21,7 +21,7 @@ namespace History
         [SerializeField] private GameObject logPrefab;
         [SerializeField] private CanvasGroup PanelCG;
 
-        HistoryManager manager = HistoryManager.Instance;
+        HistoryManager manager => HistoryManager.Instance;
         private List<HistoryLog> logs = new List<HistoryLog>();
 
         public bool isOpen { get; private set; } = false;
