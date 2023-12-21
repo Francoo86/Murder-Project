@@ -6,7 +6,7 @@ namespace COMMANDS
 {
     public class CMD_DatabaseExtension_VisualNovel : CommandDBExtension
     {
-        new public static void Extend(CommandDatabase database)
+        new public static void Extend(CommandDB database)
         {
             // Asignacion de variable.
             database.AddCommand("setplayername", new Action<string>(SetPlayerNameVariable));
