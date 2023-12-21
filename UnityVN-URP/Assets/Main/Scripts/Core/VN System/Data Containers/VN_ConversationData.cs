@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VISUALNOVEL;
 
-namespace VISAULNOVEL
+namespace VISUALNOVEL
 {
     
     [System.Serializable]

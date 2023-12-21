@@ -5,7 +5,7 @@ using static UnityEditor.UIElements.ToolbarMenu;
 
 namespace VISUALNOVEL
 {
-    public class VNDatbaseLinkSetup : MonoBehaviour
+    public class VNDatabaseLinkSetup : MonoBehaviour
     {
         public void SetupExternalLinks() 
         {

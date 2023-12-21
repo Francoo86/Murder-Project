@@ -141,12 +141,12 @@ namespace VISUALNOVEL
         {
             List<VN_VariableData> retData = new List<VN_VariableData>();
 
-            foreach (var database in VariableStore.database.Values)
+            foreach (var database in VariableStore.databases.Values)
             {
                 foreach (var variable in database.variables)
                 {
                     VN_VariableData variableData = new VN_VariableData();
-                    variableData.name = $"{database.name}.{variable.key}";
+                    variableData.name = $"{database.name}.{variable.Key}";
                     string val = $"{variable.Value.Get()}";
                     variableData.value = val;
                     variableData.type = val == string.Empty ? "System.String" : variable.Value.Get().GetType().ToString(); 

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using VISUALNOVEL;
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 namespace VISUALNOVEL
 {
     [System.Serializable]
