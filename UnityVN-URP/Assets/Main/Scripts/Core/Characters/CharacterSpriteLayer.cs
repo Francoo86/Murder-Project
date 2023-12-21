@@ -149,7 +149,7 @@ namespace CHARACTERS
         }
         public void StopChangingColor()
         {
-            if (isChangingColor)
+            if (!isChangingColor)
                 return;
             
             charController.StopCoroutine(co_changingColor);
