@@ -25,11 +25,11 @@ public class VariableStore
         {
             this.name = name;
             //Siento que esto no tiene mucho sentido, pero al finalizar estos videos lo corregire.
-            variables = new Dictionary<string, Variable> ();
+            variables = new Dictionary<string, AbstractVariable> ();
 
         }
         public string name;
-        public Dictionary<string, Variable> variables = new Dictionary<string, Variable>();
+        public Dictionary<string, AbstractVariable> variables = new Dictionary<string, AbstractVariable>();
     }
 
     private const string DEFAULT_DATABASE = "Default";
@@ -41,7 +41,7 @@ public class VariableStore
     /// <summary>
     /// Helper class to define Variable types.
     /// </summary>
-    public abstract class Variable {
+    public abstract class AbstractVariable {
         /// <summary>
         /// The variable getter function.
         /// </summary>
@@ -58,7 +58,7 @@ public class VariableStore
     /// Class that defines variables.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Variable<T> : Variable
+    public class Variable<T> : AbstractVariable
     {
         private T value;
         private Func<T> getter;
@@ -194,7 +194,7 @@ public class VariableStore
     /// <param name="database">Database where we are fetching from.</param>
     public static void PrintAllDatabaseVariables(Database database)
     {
-        foreach (KeyValuePair<string, Variable> variableEntry in database.variables)
+        foreach (KeyValuePair<string, AbstractVariable> variableEntry in database.variables)
         {
             string varName = variableEntry.Key;
             object varValue = variableEntry.Value.Get();
