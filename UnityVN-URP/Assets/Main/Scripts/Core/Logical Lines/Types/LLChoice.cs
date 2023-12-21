@@ -64,7 +64,7 @@ public class LLChoice : ILogicalLine
         int choiceIndex = 0;
         int i = 0;
 
-        for( i=0; i<data.lines.Count ; i++ )
+        for(i = 1; i < data.lines.Count; i++)
         //foreach(var line in data.lines.Skip(1))
         {
             var line = data.lines[i];
