@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.UIElements.ToolbarMenu;
 
-namespace VISAULNOVEL
+namespace VISUALNOVEL
 {
     public class VNDatbaseLinkSetup : MonoBehaviour
     {

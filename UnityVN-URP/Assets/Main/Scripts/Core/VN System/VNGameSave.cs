@@ -5,7 +5,7 @@ using History;
 using System.Linq;
 using VISUALNOVEL;
 
-namespace VISAULNOVEL
+namespace VISUALNOVEL
 {
     [System.Serializable]
 
@@ -156,7 +156,7 @@ namespace VISAULNOVEL
             return retData.ToArray();
         }
 
-        private string[] SetVariableData()
+        private void SetVariableData()
         {
             foreach (var variable in variables)
             {

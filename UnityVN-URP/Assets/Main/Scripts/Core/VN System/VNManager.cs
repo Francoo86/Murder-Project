@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace VISAULNOVEL
+namespace VISUALNOVEL
 {
 
     public class VNManager : MonoBehaviour

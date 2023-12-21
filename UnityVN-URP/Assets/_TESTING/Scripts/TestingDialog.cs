@@ -4,7 +4,7 @@ using UnityEngine;
 using CHARACTERS;
 using UnityEditor;
 using System.IO;
-using VISAULNOVEL;
+using VISUALNOVEL;
 
 public class TestingDialog : MonoBehaviour
 {

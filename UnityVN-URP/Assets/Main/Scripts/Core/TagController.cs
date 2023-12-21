@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using static LogicalLineUtils.Expressions;
-using VISAULNOVEL;
+using VISUALNOVEL;
 
 /// <summary>
 /// Class that holds the logic of how to parse dynamic variables. Like tags of HTML or variables defined with the dollar sign.
