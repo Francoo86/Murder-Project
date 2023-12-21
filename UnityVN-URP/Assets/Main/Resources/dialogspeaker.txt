@@ -18,6 +18,10 @@ else
 setlayermedia(fondo consejeria)
 narrator "Aqui es cuando aparece el marselo..."
 marcelo "When despiertas"
+
+$VN.mainChar= <input>
+//cambiar input por VN.mainChar
+
 input "Cual es tu nombre bro?"
 
 narrator "Ahh entonces te llamas <input>"

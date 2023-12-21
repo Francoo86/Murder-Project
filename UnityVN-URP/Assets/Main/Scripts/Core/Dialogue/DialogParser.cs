@@ -20,8 +20,9 @@ public class DialogParser {
         //Debug.Log($"Parsing this line {line}");
         (string speaker, string dialogue, string commands) = ExtractContent(line);
 
-        //Debug.Log($"Speaker is {speaker}, dialog is {dialogue}, command is {commands}");
+        commands = TagManager.Inject(commands);
 
+        //Debug.Log($"Speaker is {speaker}, dialog is {dialogue}, command is {commands}");
         return new DialogLineModel(line, speaker, dialogue, commands);
     }
 

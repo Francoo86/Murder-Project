@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using static LogicalLineUtils.Expressions;
+using VISAULNOVEL;
 
 /// <summary>
 /// Class that holds the logic of how to parse dynamic variables. Like tags of HTML or variables defined with the dollar sign.
@@ -13,10 +14,10 @@ using static LogicalLineUtils.Expressions;
 public class TagController
 {   
     private static readonly Dictionary<string, Func<string>> tags = new Dictionary<string, Func<string>>() {
-        { "<playerName>", () => "Juanito" },
-        { "<time>", () => DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss") },
-        { "<tempVal>", () => "test2" },
-        { "<input>", () => PromptPanel.Instance.LastInput }
+        { "<playerName>", () => VNGameSave.activeFile.playerName },
+        { "<time>",       () => DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss") },
+        { "<tempVal>",    () => "test2" },
+        { "<input>",      () => PromptPanel.Instance.LastInput }
     };
 
     private static readonly Regex regPattern = new Regex("<\\w+>");

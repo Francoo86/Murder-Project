@@ -35,7 +35,7 @@ public class VariableStore
     private const string DEFAULT_DATABASE = "Default";
     public static readonly char DATABASE_RELATIONAL_ID = '.';
 
-    private static Dictionary<string, Database> databases = new Dictionary<string, Database>() { { DEFAULT_DATABASE, new Database(DEFAULT_DATABASE) } };
+    public static Dictionary<string, Database> databases = new Dictionary<string, Database>() { { DEFAULT_DATABASE, new Database(DEFAULT_DATABASE) } };
     private static Database defaultDatabase => databases[DEFAULT_DATABASE];
 
     /// <summary>
