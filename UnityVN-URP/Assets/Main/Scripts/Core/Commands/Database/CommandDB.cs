@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Holds all the commands created inside the Extend method of the extensions.
+/// </summary>
 public class CommandDB
 {
     private Dictionary<string, Delegate> database = new Dictionary<string, Delegate>();
