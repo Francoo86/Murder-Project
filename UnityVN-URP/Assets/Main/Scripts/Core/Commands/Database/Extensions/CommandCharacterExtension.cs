@@ -107,7 +107,7 @@ public class CommandCharacterExtension : CommandDBExtension
             if (!inmediate)
                 character.Hide();
             else
-                character.IsVisible = false;
+                character.IsVisible = true;
         }
 
         if (!inmediate)

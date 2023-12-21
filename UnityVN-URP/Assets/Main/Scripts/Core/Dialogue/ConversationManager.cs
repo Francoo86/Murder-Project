@@ -140,7 +140,11 @@ public class ConversationManager
         Character character = CharacterController.Instance.GetCharacter(speakerModel.name, shouldBeCreated);
 
         if (speakerModel.MakeCharacterEnter && (!character.IsVisible))
+        {
+            Debug.Log("MAKING CHARACTER ENTER!!!!");
             character.Show();
+            //character.IsVisible = true;
+        }
             
         //Muestra el nombre del personaje.
         Controller.ShowSpeakerName(TagController.Inject(speakerModel.DisplayName));

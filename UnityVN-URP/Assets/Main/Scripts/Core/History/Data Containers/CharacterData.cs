@@ -6,7 +6,7 @@ using CHARACTERS;
 
 namespace History
 {
-
+    [System.Serializable]
     public class CharacterData
     {
         public string characterName;
