@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 namespace CHARACTERS
 {
-
+    /// <summary>
+    /// Manages character sprite layers, currently we use the first layer (the 0th one). This is for doing expressions on the screen.
+    /// </summary>
     public class CharacterSpriteLayer
     {
 
@@ -35,18 +37,32 @@ namespace CHARACTERS
         public bool isFlipping => co_flipping != null;
 
 
+        /// <summary>
+        /// Creates the object and adds the sprite to an associated layer.
+        /// </summary>
+        /// <param name="defaultRenderer">The image that should be rendered with the layer.</param>
+        /// <param name="layer">The layer num, always 0.</param>
         public CharacterSpriteLayer(Image defaultRenderer, int layer = 0)
         {
             renderer = defaultRenderer;
             this.layer = layer;
         }
 
+        /// <summary>
+        /// Sets the current sprite of the character.
+        /// </summary>
+        /// <param name="sprite">The sprite resource.</param>
         public void SetSprite(Sprite sprite)
         {
             renderer.sprite = sprite;
         }
 
-        
+        /// <summary>
+        /// Sets the sprite but with a transition to make it smooth.
+        /// </summary>
+        /// <param name="sprite">The sprite resource.</param>
+        /// <param name="speed">How fast the transition should be.</param>
+        /// <returns>The Coroutine associated to the transition process.</returns>
         public Coroutine TransitionSprite(Sprite sprite, float speed = 1)
         {
             if (sprite == renderer.sprite)
@@ -62,6 +78,13 @@ namespace CHARACTERS
         }
 
         
+        /// <summary>
+        /// Internal method that handles the logic of the sprite transition.
+        /// Creates a new renderer and sets the passed sprite to it.
+        /// </summary>
+        /// <param name="sprite">The sprite resource to be loaded.</param>
+        /// <param name="speedMultiplier">How fast the transition should be.</param>
+        /// <returns>The IEnumerator to be yielded.</returns>
         private IEnumerator TransitioningSprite(Sprite sprite, float speedMultiplier)
         {
             transitionSpeedMultiplier = speedMultiplier;
@@ -75,6 +98,11 @@ namespace CHARACTERS
 
         }
 
+        /// <summary>
+        /// Creates a renderer for an associated parent, this is used for Unity for associating the sprites to the character GameObject.
+        /// </summary>
+        /// <param name="parent">The parent transform.</param>
+        /// <returns>The image to be rendered in that GameObject.</returns>
         private Image CreateRenderer(Transform parent)
         {
             Image newRenderer = Object.Instantiate(renderer, parent);
@@ -89,6 +117,10 @@ namespace CHARACTERS
         }
 
         
+        /// <summary>
+        /// Levels the alpha of the rendered CanvasGroup.
+        /// </summary>
+        /// <returns>The Coroutine associated to alpha leveling.</returns>
         private Coroutine TryStartLevelingAlphas()
         {
             if (isLevelingAlpha)
@@ -100,7 +132,10 @@ namespace CHARACTERS
             return co_levelingAlpha;
         }
 
-        
+        /// <summary>
+        /// Logic of the renderer CanvasGroup leveling.
+        /// </summary>
+        /// <returns>The IEnumerator to be yielded in the animation.</returns>
         private IEnumerator RunAlphaLeveling()
         {
             while (rendererCG.alpha < 1 || oldRenderers.Any(oldCG => oldCG.alpha > 0))
@@ -129,6 +164,10 @@ namespace CHARACTERS
         }
 
         
+        /// <summary>
+        /// Sets the color to the renderer and images of the character.
+        /// </summary>
+        /// <param name="color">The new color.</param>
         public void SetColor(Color color)
         {
             renderer.color = color;
@@ -138,6 +177,12 @@ namespace CHARACTERS
             }
         }
 
+        /// <summary>
+        /// Makes a transition for changing the color of the renderer and the images associated with it.
+        /// </summary>
+        /// <param name="color">The color to be set.</param>
+        /// <param name="speed">How fast should the transition should be.</param>
+        /// <returns>The Coroutine associated to the changing color process.</returns>
         public Coroutine TransitionColor(Color color, float speed)
         {
             if (isChangingColor)
@@ -147,6 +192,9 @@ namespace CHARACTERS
 
             return co_changingColor;
         }
+        /// <summary>
+        /// Stops the ChangingColor coroutine and keeps the color in the same state it was before.
+        /// </summary>
         public void StopChangingColor()
         {
             if (!isChangingColor)
@@ -156,6 +204,12 @@ namespace CHARACTERS
             co_changingColor = null;
         }
 
+        /// <summary>
+        /// The logic for changing the color with a transition.
+        /// </summary>
+        /// <param name="color">The color to be set.</param>
+        /// <param name="speedMultiplier">How fast the transition should be.</param>
+        /// <returns>The IEnumerator to be yielded for the coroutine.</returns>
         private IEnumerator ChangingColor(Color color, float speedMultiplier)
         {
             Color oldColor = renderer.color;
@@ -188,6 +242,12 @@ namespace CHARACTERS
             co_changingColor = null;
         }
 
+        /// <summary>
+        /// Faces the character to the left direction.
+        /// </summary>
+        /// <param name="speed">How fast the transition should be.</param>
+        /// <param name="immediate">Skips the speed and do its instantly.</param>
+        /// <returns>The Coroutine process associated to flipping.</returns>
         public Coroutine FaceLeft(float speed = 1, bool immediate = false)
         {
             if (isFlipping)
@@ -199,6 +259,12 @@ namespace CHARACTERS
             return co_flipping;
         }
 
+        /// <summary>
+        /// Faces the character to the right direction.
+        /// </summary>
+        /// <param name="speed">How fast the transition should be.</param>
+        /// <param name="immediate">Skips the speed and do its instantly.</param>
+        /// <returns>The Coroutine process associated to flipping.</returns>
         public Coroutine FaceRight(float speed = 1, bool immediate = false)
         {
             if (isFlipping)
@@ -210,6 +276,12 @@ namespace CHARACTERS
             return co_flipping;
         }
 
+        /// <summary>
+        /// Flips the character to left or right.
+        /// </summary>
+        /// <param name="speed">How fast should the flip should be.</param>
+        /// <param name="immediate">Skips the speed and do it instantly.</param>
+        /// <returns>The Coroutine associated to the Flip process.</returns>
         public Coroutine Flip(float speed = 1, bool immediate = false)
         {
             if (isFacingLeft)
@@ -218,6 +290,13 @@ namespace CHARACTERS
                 return FaceLeft(speed, immediate);
         }
 
+        /// <summary>
+        /// Internal method that handles the logic of flipping characters direction.
+        /// </summary>
+        /// <param name="faceLeft">Face the character to the left side of screen.</param>
+        /// <param name="speedMultiplier">How fast the transition should be.</param>
+        /// <param name="immediate">Skip the transition and do it instantly.</param>
+        /// <returns>The IEnumerator to be yielded.</returns>
         private IEnumerator FaceDirection(bool faceLeft, float speedMultiplier, bool immediate)
         {
             float xScale = faceLeft ? 1 : -1;
