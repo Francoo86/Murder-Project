@@ -6,6 +6,9 @@ using UnityEngine;
 using CHARACTERS;
 using System.Linq;
 
+/// <summary>
+/// The Character Manager/Controller that handles the logic of the characters across the game.
+/// </summary>
 public class CharacterController : MonoBehaviour
 {
     //Estos objetos de tipo controlador solo existen una sola vez en el "sistema".
