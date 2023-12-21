@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using System.Security.Principal;
 
-
 public class SaveAndLoadMenu : MenuPage
 {
     /*
@@ -31,8 +30,8 @@ public class SaveAndLoadMenu : MenuPage
         Instance = this;       
     }
 
-    /*
-     * Funcion aparentemente buena, comentada para que Unity no webee.
+    
+    //Funcion aparentemente buena, comentada para que Unity no webee.
     public void Open()
     {
         base.Open();

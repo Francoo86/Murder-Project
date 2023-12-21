@@ -8,15 +8,12 @@ using UnityEngine;
 public class VNMenuManager : MonoBehaviour
 {
     //Filepath por lo que veo, webea mucho, de todas formas me imagino que nosotros debemos asignarlas.
-    /*
     public static VNMenuManager instance;
-
     private MenuPage activePage = null;
     private bool isOpen = false;
 
     [SerializeField] private CanvasGroup root;
     [SerializeField] private MenuPage[] pages;
-    
     private CanvasGroupController rootCG;
 
     private void Awake() 
@@ -28,26 +25,25 @@ public class VNMenuManager : MonoBehaviour
     void Start()
     {
         rootCG = new CanvasGroupController(this, root);
-
     }
 
-    private MenuPage GetPage(MenuPage.PageType pagetype)
+    private MenuPage GetPage(MenuPage.PageType pageType)
     {
-        return pages.FirstOrDefault(page => page.pageType == pagetype);
+        return pages.FirstOrDefault(page => page.pageType == pageType);
     }
 
     // Dan probelmas el slm.menuFunction -> se debe crear en VNGAMESAVE.
     public void OpenSavePage()
     {
         var page = GetPage(MenuPage.PageType.SaveAndLoad);
-        var slm.menuFunction = SaveAndLoadMenu.MenuFunction.save;
+        //var slm.menuFunction = SaveAndLoadMenu.MenuFunction.save;
         OpenPage(page);
     }
 
     public void OpenLoadPage()
     {
         var page = GetPage(MenuPage.PageType.SaveAndLoad);
-        var slm.menuFunction = SaveAndLoadMenu.MenuFunction.load;
+        //var slm.menuFunction = SaveAndLoadMenu.MenuFunction.load;
         OpenPage(page);
     }
     
@@ -94,5 +90,5 @@ public class VNMenuManager : MonoBehaviour
         rootCG.SetInteractableState(false);
         isOpen = false;
     }
-    */
+    
 }
