@@ -6,7 +6,7 @@ using VISUALNOVEL;
 public class GameSaveTesting : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         VNGameSave.activeFile = new VNGameSave();
     }
