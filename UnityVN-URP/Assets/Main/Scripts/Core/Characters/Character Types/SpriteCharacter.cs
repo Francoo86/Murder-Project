@@ -13,6 +13,8 @@ public class SpriteCharacter : Character
     private string assetsDirectory = "";
     private CanvasGroup RootCanvas => root.GetComponent<CanvasGroup>();
 
+    public override bool IsVisible => IsShowing || RootCanvas.alpha == 1;
+
     //TODO: Esto hay que cambiarlo por uno solo.
     public List<CharacterSpriteLayer> layers = new List<CharacterSpriteLayer>();
     public SpriteCharacter(string name, CharacterConfigData config, GameObject prefab, string charAssetsFolder) : base(name, config, prefab)
