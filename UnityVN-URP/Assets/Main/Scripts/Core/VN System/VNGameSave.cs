@@ -16,7 +16,7 @@ namespace VISUALNOVEL
         public const string FILE_TYPE = ".vns";
         public const string SCREENSHOT_FILE_TYPE = ".jpg";
         public const bool ENCRYPY_FILE = false;
-        public const float SCREENSHOT_DOWNSCALE = 0.25f;
+        public const float SCREENSHOT_DOWNSCALE = 1;
 
         public string filePath => $"{FilePaths.gameSaves}{slotNumber}{FILE_TYPE}";
         public string screenshotPath => $"{FilePaths.gameSaves}{slotNumber}{SCREENSHOT_FILE_TYPE}";
