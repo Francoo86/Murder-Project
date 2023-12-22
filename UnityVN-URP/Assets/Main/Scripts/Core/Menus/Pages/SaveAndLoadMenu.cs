@@ -11,7 +11,10 @@ public class SaveAndLoadMenu : MenuPage
     
     public static SaveAndLoadMenu Instance { get; private set; }
     private const int MAX_FILES = 6;
-    private string savePath = FilePaths.gameSaves;
+
+    //private string savePath = FilePaths.gameSaves;
+    string savePath;
+
     private int currentPage = 1;
     private bool loadedFilesForFirstTime = false;
 
@@ -28,13 +31,14 @@ public class SaveAndLoadMenu : MenuPage
     /*public static string rootPath { get; private set; }
     private void Awake() 
     {
-        Instance = this;  
         rootPath = $"{Application.dataPath}/Main/Resources/";   
     }*/
 
+    //Original
     private void Awake() 
     {
-        Instance = this;       
+        Instance = this;
+        savePath = FilePaths.gameSaves;    
     }
     
     //Funcion aparentemente buena, comentada para que Unity no webee.

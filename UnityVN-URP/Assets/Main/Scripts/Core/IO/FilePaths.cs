@@ -7,11 +7,11 @@ public class FilePaths
 {
     private const string HOME_DIRECTORY_SYMBOL = "~/";
 
-    //public static readonly string rootPath = $"{Application.dataPath}/Main/Resources/";
+    public static readonly string rootPath = $"{Application.dataPath}/Main/Resources/";
 
     //ERROR: FilePath/SaveAndLoadMenu
     //Parcha Unity pero se cae al darle play
-    public static string rootPath;
+    /*public static string rootPath;
     void Awake() 
     {
         #if UNITY_EDITOR
@@ -19,8 +19,7 @@ public class FilePaths
         #else
             rootPath = $"{Application.persistentDataPath}/Main/Resources/"; // initialize here for builds
         #endif
-        
-    }
+    }*/
 
     //RunTime Paths
     public static readonly string gameSaves = $"{runTimePath}Save Files/";
