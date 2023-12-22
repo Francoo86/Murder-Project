@@ -73,13 +73,13 @@ public class CommandGraphicPanels : CommandDBExtension
         if (graphic is Texture)
         {
             if(!immediate)
-                CommandManager.Instance.AddTerminationActionToCurrentProcess(() => { graphicLayer?. SetTexture (graphic as Texture, filePath: pathToGraphic, immediate: true); });
+                CommandController.Instance.AddTerminationActionToActualProcess(() => { graphicLayer?. SetTexture (graphic as Texture, path: pathToGraphic, immediate: true); });
             yield return graphicLayer.SetTexture(graphic as Texture, transitionSpeed, blendTex, pathToGraphic, immediate);
         }
         else
         {
             if(!immediate)
-                CommandManager.Instance.AddTerminationActionToCurrentProcess(() => { graphicLayer?. SetVideo(graphic as VideoClip, filePath: pathToGraphic, immediate: true); });
+                CommandController.Instance.AddTerminationActionToActualProcess(() => { graphicLayer?. SetVideo(graphic as VideoClip, path: pathToGraphic, immediate: true); });
             yield return graphicLayer.SetVideo(graphic as VideoClip, transitionSpeed, useAudio, blendTex, pathToGraphic, immediate);
         }
     }
