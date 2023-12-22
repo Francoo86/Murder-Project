@@ -38,12 +38,16 @@ public class SaveLoadSlot : MonoBehaviour
     
     private void PopulateDetailsFromFile( SaveAndLoadMenu.MenuFunction function, VNGameSave file) 
     {
+        Debug.Log("IS THIS SAVE BEING CALLED?!!?!?!");
+        Debug.Log($"Current file {file}");
+        Debug.Log($"Actual instance of the file {SaveAndLoadMenu.Instance.emptyFileImage}");
         if (file == null)
         {
             titleText.text = $"{fileNumber}. Empty File";
             deleteButton.gameObject.SetActive(false);
             loadButton.gameObject.SetActive(false);
             saveButton.gameObject.SetActive(function == SaveAndLoadMenu.MenuFunction.save);
+            //Este es el conchesumare que webea.
             previewImage.texture = SaveAndLoadMenu.Instance.emptyFileImage;
         }
         else

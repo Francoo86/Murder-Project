@@ -22,7 +22,7 @@ public class FilePaths
     }*/
 
     //RunTime Paths
-    public static readonly string gameSaves = $"{runTimePath}Save Files/";
+    public static readonly string gameSaves = $"{runtimePath}Save Files/";
 
     //Paneles graficos, vale decir escenarios, videos de fondo.
     public static readonly string ResourcesGraphics = "Graphics/";
@@ -57,16 +57,15 @@ public class FilePaths
         return defPath + resourceName;
     }
 
-    public static string runTimePath 
-    { 
+    public static string runtimePath
+    {
         get
         {
             #if UNITY_EDITOR
-                  return "Assets/appdata/";
+                 return "Assets/appdata/";
             #else
-                  return Application.persistentDataPath + "/appdata";
+                 return Application.persistentDataPath + "/appdata/";
             #endif
         }
     }
-
 }

@@ -9,7 +9,7 @@ public class GameSaveTesting : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        VNGameSave.activeFile = new VNGameSave();
+        //VNGameSave.activeFile = new VNGameSave();
     }
 
     // Update is called once per frame

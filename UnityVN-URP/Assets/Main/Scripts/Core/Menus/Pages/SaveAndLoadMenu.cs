@@ -12,8 +12,8 @@ public class SaveAndLoadMenu : MenuPage
     public static SaveAndLoadMenu Instance { get; private set; }
     private const int MAX_FILES = 6;
 
-    //private string savePath = FilePaths.gameSaves;
-    string savePath;
+    private string savePath => FilePaths.gameSaves;
+    //private string savePath;
 
     private int currentPage = 1;
     private bool loadedFilesForFirstTime = false;
@@ -38,7 +38,7 @@ public class SaveAndLoadMenu : MenuPage
     private void Awake() 
     {
         Instance = this;
-        savePath = FilePaths.gameSaves;    
+        //savePath = FilePaths.gameSaves;    
     }
     
     //Funcion aparentemente buena, comentada para que Unity no webee.
@@ -56,11 +56,11 @@ public class SaveAndLoadMenu : MenuPage
         int startingFile = ((currentPage - 1) * slotsPerPage) + 1;
         int endingFile = startingFile + slotsPerPage - 1;
 
-        int i = 0; 
-        int fileNum = 0;
-        for (i = 0; i < slotsPerPage; i++)
+        //int i = 0; 
+        //int fileNum = 0;
+        for (int i = 0; i < slotsPerPage; i++)
         {
-            fileNum = startingFile + i;
+            int fileNum = startingFile + i;
             SaveLoadSlot slot = saveSlots[i];
 
 
