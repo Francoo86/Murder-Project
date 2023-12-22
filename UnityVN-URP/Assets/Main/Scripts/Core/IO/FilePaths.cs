@@ -9,6 +9,13 @@ public class FilePaths
 
     public static readonly string rootPath = $"{Application.dataPath}/Main/Resources/";
 
+    //ERROR ASD
+    /*public static string rootPath;
+    void Awake() 
+    {
+        rootPath = $"{Application.dataPath}/gameData/"; // initialize here
+    }*/
+
     //RunTime Paths
     public static readonly string gameSaves = $"{runTimePath}Save Files/";
 

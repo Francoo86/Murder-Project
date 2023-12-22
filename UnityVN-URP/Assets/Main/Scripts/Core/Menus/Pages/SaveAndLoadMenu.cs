@@ -24,12 +24,18 @@ public class SaveAndLoadMenu : MenuPage
 
     public Texture emptyFileImage;
 
-    
+    //ERROR ASD
+    /*public static string rootPath { get; private set; }
+    private void Awake() 
+    {
+        Instance = this;  
+        rootPath = $"{Application.dataPath}/Main/Resources/";   
+    }*/
+
     private void Awake() 
     {
         Instance = this;       
     }
-
     
     //Funcion aparentemente buena, comentada para que Unity no webee.
     public override void Open()
