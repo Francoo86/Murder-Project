@@ -24,7 +24,7 @@ public class SaveAndLoadMenu : MenuPage
 
     public Texture emptyFileImage;
 
-    //ERROR ASD
+    //ERROR: FilePath/SaveAndLoadMenu
     /*public static string rootPath { get; private set; }
     private void Awake() 
     {
