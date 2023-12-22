@@ -4,15 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Security.Principal;
+using VISUALNOVEL;
 
 public class SaveAndLoadMenu : MenuPage
 {
-    /*
+    
     public static SaveAndLoadMenu Instance { get; private set; }
-
     private const int MAX_FILES = 6;
     private string savePath = FilePaths.gameSaves;
-
     private int currentPage = 1;
     private bool loadedFilesForFirstTime = false;
 
@@ -25,6 +24,7 @@ public class SaveAndLoadMenu : MenuPage
 
     public Texture emptyFileImage;
 
+    
     private void Awake() 
     {
         Instance = this;       
@@ -32,13 +32,14 @@ public class SaveAndLoadMenu : MenuPage
 
     
     //Funcion aparentemente buena, comentada para que Unity no webee.
-    public void Open()
+    public override void Open()
     {
         base.Open();
         if (!loadedFilesForFirstTime)
             PopulateSaveSlotsForPage(currentPage);
     }
 
+    
     private void PopulateSaveSlotsForPage(int pageNumber)
     {
         currentPage = pageNumber;
@@ -56,9 +57,9 @@ public class SaveAndLoadMenu : MenuPage
             if (fileNum < MAX_FILES)
             {
                 slot.root.SetActive(true);
-                string filepath = $"{FilePaths.gameSaves}{fileNum}{VNGameSave.FILE_TYPE}";
+                string filePath = $"{FilePaths.gameSaves}{fileNum}{VNGameSave.FILE_TYPE}";
                 slot.fileNumber = fileNum;
-                slot.filePath = filepath;
+                slot.filePath = filePath;
                 slot.PopulateDetails(menuFunction);
             }
             else
@@ -67,5 +68,5 @@ public class SaveAndLoadMenu : MenuPage
             }
         }
     }
-    */
+    
 }

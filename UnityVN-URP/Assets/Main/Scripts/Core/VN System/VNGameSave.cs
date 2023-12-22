@@ -4,6 +4,7 @@ using UnityEngine;
 using History;
 using System.Linq;
 using VISUALNOVEL;
+using System;
 
 namespace VISUALNOVEL
 {
@@ -15,6 +16,7 @@ namespace VISUALNOVEL
         public const string FILE_TYPE = ".vns";
         public const string SCREENSHOT_FILE_TYPE = ".jpg";
         public const bool ENCRYPY_FILE = false;
+        public const float SCREENSHOT_DOWNSCALE = 0.25f;
 
         public string filePath => $"{FilePaths.gameSaves}{slotNumber}{FILE_TYPE}";
         public string screenshotPath => $"{FilePaths.gameSaves}{slotNumber}{SCREENSHOT_FILE_TYPE}";
@@ -28,6 +30,8 @@ namespace VISUALNOVEL
 
         public VN_VariableData[] variables;
 
+        public string timestamp;
+
         public void Save() 
         {
             activeState = HistoryState.Capture();
@@ -35,6 +39,9 @@ namespace VISUALNOVEL
             activeConversations = GetConversationData();
 
             variables = GetVariableData();
+
+            timestamp = DateTime.Now.ToString("dd-MM-yy HH:mm:ss");
+            ScreenshootMaster.CaptureScreenshot(VNManager.Instance.mainCamera, Screen.width, Screen.height, SCREENSHOT_DOWNSCALE, screenshotPath);
 
             string saveJSON = JsonUtility.ToJson(this);
             FileManager.Save(filePath, saveJSON);

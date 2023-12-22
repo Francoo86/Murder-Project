@@ -14,11 +14,10 @@ public class MenuPage : MonoBehaviour
 
     public virtual void Close(bool closeAllMenus = false)
     {
-        /*
+        
         if (closeAllMenus)
         {
-            //VNMenuManager.Instance.CloseRoot();
+            VNMenuManager.Instance.CloseRoot();
         }
-        */
     }
 }

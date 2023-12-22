@@ -67,13 +67,19 @@ public class CommandGraphicPanels : CommandDBExtension
         }
         if (!immediate && blendTexName != string.Empty)
             blendTex = Resources.Load<Texture>(FilePaths.ResourcesBlendTexture + blendTexName);
+
         GraphicLayer graphicLayer = panel.GetLayer(layer, forceCreation: true);
+
         if (graphic is Texture)
         {
+            if(!immediate)
+                CommandManager.Instance.AddTerminationActionToCurrentProcess(() => { graphicLayer?. SetTexture (graphic as Texture, filePath: pathToGraphic, immediate: true); });
             yield return graphicLayer.SetTexture(graphic as Texture, transitionSpeed, blendTex, pathToGraphic, immediate);
         }
         else
         {
+            if(!immediate)
+                CommandManager.Instance.AddTerminationActionToCurrentProcess(() => { graphicLayer?. SetVideo(graphic as VideoClip, filePath: pathToGraphic, immediate: true); });
             yield return graphicLayer.SetVideo(graphic as VideoClip, transitionSpeed, useAudio, blendTex, pathToGraphic, immediate);
         }
     }

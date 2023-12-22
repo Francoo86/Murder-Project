@@ -20,6 +20,7 @@ public class ScreenshootMaster : MonoBehaviour
         Texture2D screenshot = new Texture2D(width, height, TextureFormat.ARGB32, false);
 
         cam.Render();
+        
         RenderTexture.active = rt;
         screenshot.ReadPixels(new Rect(0, 0, width, height), 0, 0);
 

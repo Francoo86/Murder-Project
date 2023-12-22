@@ -6,10 +6,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.IO;
-
+using VISUALNOVEL;
+    
 public class SaveLoadSlot : MonoBehaviour
 {
-    /*
+    
     public GameObject root;
     public RawImage previewImage;
     public TextMeshProUGUI titleText;
@@ -17,10 +18,10 @@ public class SaveLoadSlot : MonoBehaviour
     public Button loadButton;
     public Button saveButton;
 
-    [HideInInspector] public int FileNumber = 0;
+    [HideInInspector] public int fileNumber = 0;
     [HideInInspector] public string filePath = "";
 
-
+    
     public void PopulateDetails( SaveAndLoadMenu.MenuFunction function )
     {
         if (File.Exists(filePath))
@@ -33,6 +34,7 @@ public class SaveLoadSlot : MonoBehaviour
             PopulateDetailsFromFile(function, null);
         }
     }
+    
     
     private void PopulateDetailsFromFile( SaveAndLoadMenu.MenuFunction function, VNGameSave file) 
     {
@@ -58,6 +60,7 @@ public class SaveLoadSlot : MonoBehaviour
         }
     }
     
+    
     public void Delete() 
     {
         File.Delete(filePath);
@@ -69,7 +72,8 @@ public class SaveLoadSlot : MonoBehaviour
         VNGameSave file = VNGameSave.Load(filePath, true);
         SaveAndLoadMenu.Instance.Close(closeAllMenus: true);
     }
-
+    
+    
     public void Save()
     {
         var activeSave = VNGameSave.activeFile;
@@ -77,5 +81,5 @@ public class SaveLoadSlot : MonoBehaviour
         activeSave.Save();
         PopulateDetailsFromFile(SaveAndLoadMenu.Instance.menuFunction, activeSave);
     }
-    */
+    
 }

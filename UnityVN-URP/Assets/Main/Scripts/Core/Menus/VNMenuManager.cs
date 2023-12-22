@@ -8,7 +8,7 @@ using UnityEngine;
 public class VNMenuManager : MonoBehaviour
 {
     //Filepath por lo que veo, webea mucho, de todas formas me imagino que nosotros debemos asignarlas.
-    public static VNMenuManager instance;
+    public static VNMenuManager Instance;
     private MenuPage activePage = null;
     private bool isOpen = false;
 
@@ -18,7 +18,7 @@ public class VNMenuManager : MonoBehaviour
 
     private void Awake() 
     {
-        instance = this;
+        Instance = this;
     }
 
     // Start is called before the first frame update
@@ -36,14 +36,16 @@ public class VNMenuManager : MonoBehaviour
     public void OpenSavePage()
     {
         var page = GetPage(MenuPage.PageType.SaveAndLoad);
-        //var slm.menuFunction = SaveAndLoadMenu.MenuFunction.save;
+        var slm = page.GetComponentInParent<SaveAndLoadMenu>();
+        slm.menuFunction = SaveAndLoadMenu.MenuFunction.save;
         OpenPage(page);
     }
 
     public void OpenLoadPage()
     {
         var page = GetPage(MenuPage.PageType.SaveAndLoad);
-        //var slm.menuFunction = SaveAndLoadMenu.MenuFunction.load;
+        var slm = page.GetComponentInParent<SaveAndLoadMenu>();
+        slm.menuFunction = SaveAndLoadMenu.MenuFunction.load;
         OpenPage(page);
     }
     

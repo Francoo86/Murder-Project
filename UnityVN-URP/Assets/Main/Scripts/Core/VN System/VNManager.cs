@@ -8,12 +8,15 @@ namespace VISUALNOVEL
     public class VNManager : MonoBehaviour
     {
         public static VNManager Instance { get; private set; }
+        public Camera mainCamera;
 
         private void Awake()
         {
             Instance = this;
             VNDatabaseLinkSetup linksetup = GetComponent<VNDatabaseLinkSetup>();
             linksetup.SetupExternalLinks();
+
+            VNGameSave.activeFile = new VNGameSave();
         }
 
         public void LoadFile(string filePath)
