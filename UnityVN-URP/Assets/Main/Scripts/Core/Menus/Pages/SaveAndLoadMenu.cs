@@ -4,15 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Security.Principal;
-
+using VISUALNOVEL;
 
 public class SaveAndLoadMenu : MenuPage
 {
-    /*
+    
     public static SaveAndLoadMenu Instance { get; private set; }
-
     private const int MAX_FILES = 6;
-    private string savePath = FilePaths.gameSaves;
+
+    private string savePath => FilePaths.gameSaves;
+    //private string savePath;
 
     private int currentPage = 1;
     private bool loadedFilesForFirstTime = false;
@@ -26,40 +27,49 @@ public class SaveAndLoadMenu : MenuPage
 
     public Texture emptyFileImage;
 
+    //ERROR: FilePath/SaveAndLoadMenu
+    /*public static string rootPath { get; private set; }
     private void Awake() 
     {
-        Instance = this;       
-    }
+        rootPath = $"{Application.dataPath}/Main/Resources/";   
+    }*/
 
-    /*
-     * Funcion aparentemente buena, comentada para que Unity no webee.
-    public void Open()
+    //Original
+    private void Awake() 
+    {
+        Instance = this;
+        //savePath = FilePaths.gameSaves;    
+    }
+    
+    //Funcion aparentemente buena, comentada para que Unity no webee.
+    public override void Open()
     {
         base.Open();
         if (!loadedFilesForFirstTime)
             PopulateSaveSlotsForPage(currentPage);
     }
 
+    
     private void PopulateSaveSlotsForPage(int pageNumber)
     {
         currentPage = pageNumber;
         int startingFile = ((currentPage - 1) * slotsPerPage) + 1;
         int endingFile = startingFile + slotsPerPage - 1;
 
-        int i = 0; 
-        int fileNum = 0;
-        for (i = 0; i < slotsPerPage; i++)
+        //int i = 0; 
+        //int fileNum = 0;
+        for (int i = 0; i < slotsPerPage; i++)
         {
-            fileNum = startingFile + i;
+            int fileNum = startingFile + i;
             SaveLoadSlot slot = saveSlots[i];
 
 
             if (fileNum < MAX_FILES)
             {
                 slot.root.SetActive(true);
-                string filepath = $"{FilePaths.gameSaves}{fileNum}{VNGameSave.FILE_TYPE}";
+                string filePath = $"{FilePaths.gameSaves}{fileNum}{VNGameSave.FILE_TYPE}";
                 slot.fileNumber = fileNum;
-                slot.filePath = filepath;
+                slot.filePath = filePath;
                 slot.PopulateDetails(menuFunction);
             }
             else
@@ -68,5 +78,5 @@ public class SaveAndLoadMenu : MenuPage
             }
         }
     }
-    */
+    
 }

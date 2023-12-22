@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using CHARACTERS;
+
 public class ConversationManager
 {
     private Coroutine process = null;
     public TextArchitect arch;
     public bool IsRunning => process != null;
+    public bool isOnLogicalLine { get; private set; } = false;
 
     private ConversationQueue convQueue;
     private DialogController Controller => DialogController.Instance;
     //Para inyectar variables en su caso de tipo XML.
     //private TagController tagController;
     private LogicalLineManager logicalLineManager;
+
     public ConversationManager(TextArchitect arch) { 
         this.arch = arch;
         Controller.onUserPrompt_Next += OnUserPrompt_Next;
@@ -22,12 +26,18 @@ public class ConversationManager
         convQueue = new ConversationQueue();
     }
 
+    public Conversation[] GetConversationQueue() => convQueue.GetReadOnly();
+
+    public bool allowUserPrompts = true;
+
     public void Enqueue(Conversation conversation) => convQueue.Enqueue(conversation);
     public void EnqueuePriority(Conversation conversation) => convQueue.EnqueuePriority(conversation);
 
     private bool isUserManipulated = false;
+
     private void OnUserPrompt_Next() {
-        isUserManipulated = true;
+        if(allowUserPrompts)
+            isUserManipulated = true;
     }
 
     public Coroutine StartConversation(Conversation conversation) {
@@ -53,7 +63,7 @@ public class ConversationManager
     //TODO: Refactorizar un poco si es posible.
     public int conversationProgress => (convQueue.IsEmpty() ? -1 : convQueue.top.GetProgress());
 
-    IEnumerator RunningConversation()
+    private IEnumerator RunningConversation()
     {
         //for(int i = 0; i < conversation.Count; i++)
         while(!convQueue.IsEmpty())
@@ -75,7 +85,9 @@ public class ConversationManager
 
             DialogLineModel line = DialogParser.Parse(rawLine);
 
-            if (logicalLineManager.TryGetLogic(line, out Coroutine logic)) {
+            if (logicalLineManager.TryGetLogic(line, out Coroutine logic)) 
+            {
+                isOnLogicalLine = true;
                 yield return logic;
             }
             else
@@ -97,11 +109,13 @@ public class ConversationManager
                     yield return WaitForUserInput();
 
                     CommandController.Instance.StopAllProcesses();
+
+                    DialogController.Instance.OnSystemPrompt_Clear();
                 }
             }
 
             TryAdvanceConversation(currentConversation);
-
+            isOnLogicalLine = false;
             //yield return new WaitForSeconds(1);
 
         }
@@ -126,7 +140,11 @@ public class ConversationManager
         Character character = CharacterController.Instance.GetCharacter(speakerModel.name, shouldBeCreated);
 
         if (speakerModel.MakeCharacterEnter && (!character.IsVisible))
+        {
+            Debug.Log("MAKING CHARACTER ENTER!!!!");
             character.Show();
+            //character.IsVisible = true;
+        }
             
         //Muestra el nombre del personaje.
         Controller.ShowSpeakerName(TagController.Inject(speakerModel.DisplayName));
@@ -144,7 +162,7 @@ public class ConversationManager
                 character.OnExpressionReceive(exp.layer, exp.expression);
             }
     }
-    IEnumerator RunDialogForLine(DialogLineModel dialogLine)
+    private IEnumerator RunDialogForLine(DialogLineModel dialogLine)
     {
         //Muestra o esconde un hablante existente.
         //Ya se configuro el apartado para narrador.
@@ -165,7 +183,7 @@ public class ConversationManager
         //yield return WaitForUserInput();
     }
 
-    IEnumerator RunDialogForCommands(DialogLineModel dialogLine) {
+    private IEnumerator RunDialogForCommands(DialogLineModel dialogLine) {
         List<CommandData.Command> commands = dialogLine.commandData.commands;
 
         foreach (CommandData.Command command in commands) {
@@ -197,7 +215,7 @@ public class ConversationManager
         yield return null;
     }
 
-    IEnumerator BuildLineSegments(DialogData dialogLine) {
+    private IEnumerator BuildLineSegments(DialogData dialogLine) {
         for(int i = 0; i < dialogLine.segments.Count; i++)
         {
             DialogData.DIALOG_SEGMENT segment = dialogLine.segments[i];
@@ -208,15 +226,23 @@ public class ConversationManager
     }
 
     public bool IsWaitingOnAutoTimer { get; private set; }
-    IEnumerator WaitForDialogSegmentSignalToBeTriggered(DialogData.DIALOG_SEGMENT segment)
+    private IEnumerator WaitForDialogSegmentSignalToBeTriggered(DialogData.DIALOG_SEGMENT segment)
     {
         switch (segment.startSignal)
         {
             case DialogData.DIALOG_SEGMENT.StartSignal.C:
+                yield return WaitForUserInput();
+                Controller.OnSystemPrompt_Clear();
+                break;
             case DialogData.DIALOG_SEGMENT.StartSignal.A:
                 yield return WaitForUserInput(); 
                 break;
             case DialogData.DIALOG_SEGMENT.StartSignal.WC:
+                IsWaitingOnAutoTimer = true;
+                yield return new WaitForSeconds(segment.signalDelay);
+                IsWaitingOnAutoTimer = false;
+                Controller.OnSystemPrompt_Clear();
+                break;
             case DialogData.DIALOG_SEGMENT.StartSignal.WA:
                 IsWaitingOnAutoTimer = true;
                 yield return new WaitForSeconds(segment.signalDelay);
@@ -225,7 +251,7 @@ public class ConversationManager
         }
     }
 
-    IEnumerator BuildDialog(string diag, bool append = false) {
+    private IEnumerator BuildDialog(string diag, bool append = false) {
         diag = TagController.Inject(diag);
 
         if (!append)
@@ -249,7 +275,7 @@ public class ConversationManager
     }
 
     //TODO: Redux this thing.
-    IEnumerator WaitForUserInput() {
+    private IEnumerator WaitForUserInput() {
         while (!isUserManipulated) {
             yield return null;
         }

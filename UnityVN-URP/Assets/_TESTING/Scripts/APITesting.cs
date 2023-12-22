@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using CHARACTERS;
 
 public class APITesting : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        //StartCoroutine(TestPedro());
+        StartCoroutine(TestPedro());
        
         /*
         AISessionHandler sess = new AISessionHandler("sujeto_5", client);
@@ -33,14 +34,14 @@ public class APITesting : MonoBehaviour
         Character textChar = CharacterController.Instance.CreateCharacter("Player");
         yield return charPedro.Show();
 
-        Sprite test = charPedro.GetSprite("marcelo_sorprendido");
+        Sprite test = charPedro.GetSprite("sorprendido");
         Debug.Log(test);
         yield return new WaitForSeconds(2);
         charPedro.SetSprite(test);
         
         //Dependency injection perhaps.
-        AISessionManager aiManager = new AISessionManager("ana", APIClientV2.Instance);
-        CoroutinePrompt prompt = CoroutinePrompt.Instance;
+        AISessionManager aiManager = new AISessionManager("ana");
+        CoroutinePrompt prompt = CoroutinePrompt.GetInstance();
         prompt.InjectSession(aiManager);
 
         string[] lines = new string[5]
@@ -57,7 +58,7 @@ public class APITesting : MonoBehaviour
         {
             yield return textChar.Say(lines[i]);
             yield return prompt.Talk(lines[i]);
-            yield return prompt.TestCharacter(charPedro);
+            yield return prompt.Interact(charPedro);
         }
     }
 

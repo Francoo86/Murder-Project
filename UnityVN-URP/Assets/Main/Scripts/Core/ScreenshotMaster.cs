@@ -20,6 +20,7 @@ public class ScreenshootMaster : MonoBehaviour
         Texture2D screenshot = new Texture2D(width, height, TextureFormat.ARGB32, false);
 
         cam.Render();
+        
         RenderTexture.active = rt;
         screenshot.ReadPixels(new Rect(0, 0, width, height), 0, 0);
 
@@ -33,7 +34,7 @@ public class ScreenshootMaster : MonoBehaviour
         return screenshot;
     }
 
-    public enum ImageType { PNG, JPG}
+    public enum ImageType { PNG, JPG }
 
     public static void SaveScreenshotToFile(Texture2D screenshot, string filePath, ImageType fileType = ImageType.PNG)
     {
@@ -53,6 +54,8 @@ public class ScreenshootMaster : MonoBehaviour
 
         if(!filePath.Contains('.'))
             filePath = filePath + extension;
+
+        Debug.Log("Is this shit even trying?!");
 
         System.IO.File.WriteAllBytes(filePath, bytes);
     }

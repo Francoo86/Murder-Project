@@ -7,13 +7,12 @@ using UnityEngine;
 public class AISessionManager
 {
     private string character;
-    private string sessionId;
-    private string plySessionId;
-    private APIClientV2 client;
     private DateTime lastUsed;
 
-    public string SessionId { get { return sessionId; } }
-    public string PlayerSessionId { get { return plySessionId; } }
+    public InworldWrapper Client => InworldWrapper.Instance;
+
+    public string SessionId { get; private set; }
+    public string PlayerSessionId { get; private set; }
     //Maybe it can used by another classes.
     public static readonly Dictionary<string, string> PROTAGONIST_DATA = new Dictionary<string, string>()
         {
@@ -25,17 +24,28 @@ public class AISessionManager
 
     //Tiempo maximo que se puede estar en una sesión sin realizar nada.
     private readonly float SESSION_TIMEOUT_MINUTES = 30;
-    public AISessionManager(string character, APIClientV2 client)
+    /// <summary>
+    /// Initializes the session manager.
+    /// </summary>
+    /// <param name="character">The character we are going to use.</param>
+    public AISessionManager(string character)
     {
         this.character = character;
-        this.client = client;
+
     }
 
+    /// <summary>
+    /// Checks if current session is not null.
+    /// </summary>
+    /// <returns>Wether the session is valid or not.</returns>
     public bool IsValid() { 
-        return sessionId != null;
+        return SessionId != null;
     }
 
-    //TODO: Test this.
+    /// <summary>
+    /// Checks if the session surpassed the 30 min AFK threshold.
+    /// </summary>
+    /// <returns>The check.</returns>
     private bool HasSessionExpired() { 
         DateTime currentTime = DateTime.Now;
 
@@ -47,6 +57,10 @@ public class AISessionManager
         return false;
     }
 
+    /// <summary>
+    /// Updates the session time.
+    /// </summary>
+    /// <returns>The IEnumerator that yields the session request.</returns>
     public IEnumerator UpdateSession() {
         if ((!IsValid()) || HasSessionExpired())
         {
@@ -58,31 +72,32 @@ public class AISessionManager
         }
     }
 
+    /// <summary>
+    /// Requests a new session and saves it.
+    /// </summary>
+    /// <returns>Current IEnumerator</returns>
     public IEnumerator RequestNewSession() {
-        Debug.Log($"Is this an object? {client == null}");
-
-        yield return client.RequestCharacterSession(character, PROTAGONIST_DATA, responseData => {
-            var deserialSession = JsonConvert.DeserializeObject<SessionResponseModel>(responseData);
-            var charsData = deserialSession.SessionCharacters;
-
-            //Usually the first one.
-            CharacterSessionInfo Info = charsData[0];
-
-            Debug.LogWarning($"Formatting session data: {Info.Character}");
-            //Save the data in class.
-            sessionId = deserialSession.Name;
-            plySessionId = Info.Character;
-            lastUsed = DateTime.Now;
-
-            Debug.Log($"Data obtained from session: {sessionId}, {plySessionId}");
-        });
+        yield return Client.RequestCharacterSession(character, PROTAGONIST_DATA, FetchSession);
     }
 
     /// <summary>
-    /// Setter y getter para cliente utilizando un alias.
+    /// Internal function that fetchs the session.
     /// </summary>
-    public APIClientV2 Client {
-        get { return client; }
-        set { client = value; }
+    /// <param name="responseData">The data fetched from Inworld.</param>
+    private void FetchSession(string responseData)
+    {
+        var deserialSession = JsonConvert.DeserializeObject<SessionResponseModel>(responseData);
+        var charsData = deserialSession.SessionCharacters;
+
+        //Usually the first one.
+        CharacterSessionInfo Info = charsData[0];
+
+        Debug.LogWarning($"Formatting session data: {Info.Character}");
+        //Save the data in class.
+        SessionId = deserialSession.Name;
+        PlayerSessionId = Info.Character;
+        lastUsed = DateTime.Now;
+
+        Debug.Log($"Data obtained from session: {SessionId}, {PlayerSessionId}");
     }
 }

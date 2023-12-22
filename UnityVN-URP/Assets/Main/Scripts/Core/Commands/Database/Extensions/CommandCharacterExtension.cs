@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using CHARACTERS;
+
 public class CommandCharacterExtension : CommandDBExtension
 {
     //Activar personajes y eso.
@@ -105,7 +107,7 @@ public class CommandCharacterExtension : CommandDBExtension
             if (!inmediate)
                 character.Hide();
             else
-                character.IsVisible = false;
+                character.IsVisible = true;
         }
 
         if (!inmediate)

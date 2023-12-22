@@ -4,6 +4,9 @@ using TMPro;
 using System;
 using System.Globalization;
 
+/// <summary>
+/// Builds or appends the text to the screen with an effect.
+/// </summary>
 public class TextArchitect
 {
     private TextMeshProUGUI tmpro_ui;
@@ -28,8 +31,8 @@ public class TextArchitect
     public Color textColor { get { return tmpro.color; } set { tmpro.color = value; } }
 
     //Text speed handler.
-    public float speed { get { return textSpeed * speedMultiplier; } set { speedMultiplier = value; } }
-    private const float textSpeed = 1;
+    public float speed { get { return DEFAULT_TEXT_SPEED * speedMultiplier; } set { speedMultiplier = value; } }
+    private const float DEFAULT_TEXT_SPEED = 1;
     private float speedMultiplier = 1;
 
     public bool shouldSpeedUp = false;
@@ -37,23 +40,35 @@ public class TextArchitect
     public int CharsPerCycle { get { return speed <= 2f ? characterMul : speed <= 2.5f ? characterMul * 2 : characterMul * 3; } }
     private int characterMul = 1;
 
-    public float GetProperTextSpeed() { 
+    /// <summary>
+    /// Gets a nice text speed for how the text will be displayed.
+    /// </summary>
+    /// <returns>Text speed.</returns>
+    private float GetProperTextSpeed() { 
         return CharsPerCycle * (shouldSpeedUp? FASTER_TEXT_SPEED : 1);
     }
 
+    /// <summary>
+    /// Initializes the TextArchitect with the TextMeshProUGUI (used by panels with text) object.
+    /// </summary>
+    /// <param name="tmpro_ui"></param>
     public TextArchitect(TextMeshProUGUI tmpro_ui) {
         this.tmpro_ui = tmpro_ui;
     }
 
+    /// <summary>
+    /// Initializes the TextArchitect with the TextMeshPro object.
+    /// </summary>
+    /// <param name="tmpro_world"></param>
     public TextArchitect(TextMeshPro tmpro_world) {
         this.tmpro_world = tmpro_world;
     }
 
     /// <summary>
-    /// Manejador de Corutinas para el dialogo.
+    /// Wrapping function to start coroutines related to text building-appending.
     /// </summary>
-    /// <param name="text"></param>
-    /// <param name="oldText"></param>
+    /// <param name="text">Text to display.</param>
+    /// <param name="oldText">Old text that was assigned before, in the build is empty by default.</param>
     /// <returns></returns>
     private Coroutine StartTextCoroutine(string text, string oldText = "") {
         preText = oldText;
@@ -66,19 +81,20 @@ public class TextArchitect
     }
 
     /// <summary>
-    /// Construye el texto inicial que un personaje dirá.
+    /// Initializes the text of the characters to show it after.
+    /// It will replace text.
     /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
+    /// <param name="text">The text or dialog in this case.</param>
+    /// <returns>The coroutine that builds the text.</returns>
     public Coroutine Build(string text) {
         return StartTextCoroutine(text);
     }
 
     /// <summary>
-    /// Agrega el texto ya existente a un dialogo.
+    /// Appends text to an existant dialog.
     /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
+    /// <param name="text">Text to append.</param>
+    /// <returns>The coroutine that appends the new text.</returns>
     public Coroutine Append(string text)
     {
         return StartTextCoroutine(text, tmpro.text);
@@ -146,6 +162,9 @@ public class TextArchitect
     }
 
     //TODO: Create a new class that holds this functionality.
+    /// <summary>
+    /// Prepares the text without any effect for showing instantly.
+    /// </summary>
     private void Prepare_Instant() {
         //Reinciar color.
         tmpro.color = tmpro.color;
@@ -156,6 +175,9 @@ public class TextArchitect
         tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
     }
 
+    /// <summary>
+    /// Prepares the Typewriting effect for VN.
+    /// </summary>
     private void Prepare_Typewriter() {
         //Resetear el texto.
         tmpro.color = tmpro.color;
@@ -173,7 +195,7 @@ public class TextArchitect
     }
 
     /// <summary>
-    /// Prepara al texto para que pueda hacer fade. (Efecto visual).
+    /// Prepares the Fade effect for VN.
     /// </summary>
     private void Prepare_Fade()
     {
@@ -220,6 +242,10 @@ public class TextArchitect
         tmpro.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
     }
 
+    /// <summary>
+    /// Builds the typewriting effect for the text.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Build_TypeWriter() {
         while (tmpro.maxVisibleCharacters < tmpro.textInfo.characterCount) {
             tmpro.maxVisibleCharacters += (int)GetProperTextSpeed();
@@ -227,6 +253,10 @@ public class TextArchitect
         }
     }
 
+    /// <summary>
+    /// Builds the fade effect for the text.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Build_Fade() {
         //TODO: HIPER-REFACTOR.
         int minRange = preTextLength;
@@ -243,7 +273,7 @@ public class TextArchitect
                 TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
                 if(!charInfo.isVisible) continue;
 
-                int vertexIndex = textInfo.characterInfo[i].vertexIndex;
+                //int vertexIndex = textInfo.characterInfo[i].vertexIndex;
                 //Hacer una especie de interpolación lineal, que le daría una transición más bonita.
                 alphas[i] = Mathf.MoveTowards(alphas[i], 255, GetProperTextSpeed() * 4f);
 

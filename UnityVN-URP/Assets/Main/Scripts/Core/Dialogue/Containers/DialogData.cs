@@ -5,8 +5,8 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 
 /// <summary>
-/// Clase que se encarga mantener todos los segmentos e información de una linea de dialogo.
-/// Para poder tener más coherencia.
+/// Class that holds all the segments and the info of a dialog line.
+/// Also supports simple commands like wait and stuff.
 /// </summary>
 public class DialogData
 {
@@ -18,11 +18,21 @@ public class DialogData
     /// </summary>
     private const string segmentIdPattern = @"\{[ca]\}|\{w[ca]\s\d*\.?\d*\}";
     public bool HasDialog => segments.Count > 0;
+    /// <summary>
+    /// Initializes the object and extracts the segments of the dialog.
+    /// </summary>
+    /// <param name="rawDialog">The full dialog.</param>
     public DialogData(string rawDialog) { 
         RawData = rawDialog;
         segments = ExtractSegments(rawDialog);
     }
-    public List<DIALOG_SEGMENT> ExtractSegments(string rawDialog) {
+
+    /// <summary>
+    /// Extracts the segments of the dialog and tries to do some actions (if they are specified) like wait.
+    /// </summary>
+    /// <param name="rawDialog">The full dialog.</param>
+    /// <returns>All dialog segments.</returns>
+    private List<DIALOG_SEGMENT> ExtractSegments(string rawDialog) {
         List <DIALOG_SEGMENT> currentSegments = new List <DIALOG_SEGMENT>();
         MatchCollection matches = Regex.Matches(rawDialog, segmentIdPattern);
 
@@ -70,6 +80,10 @@ public class DialogData
         return currentSegments;
     }
 
+    /// <summary>
+    /// Estructura que guarda información de un segmento de dialogo.
+    /// Guarda también la signal de comienzo de un wait, clear o agregar texto.
+    /// </summary>
     public struct DIALOG_SEGMENT {
         public string dialog;
         public StartSignal startSignal;

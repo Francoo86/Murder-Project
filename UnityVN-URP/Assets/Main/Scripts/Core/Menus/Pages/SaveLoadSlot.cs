@@ -6,10 +6,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.IO;
-
+using VISUALNOVEL;
+    
 public class SaveLoadSlot : MonoBehaviour
 {
-    /*
+    
     public GameObject root;
     public RawImage previewImage;
     public TextMeshProUGUI titleText;
@@ -17,10 +18,10 @@ public class SaveLoadSlot : MonoBehaviour
     public Button loadButton;
     public Button saveButton;
 
-    [HideInInspector] public int FileNumber = 0;
+    [HideInInspector] public int fileNumber = 0;
     [HideInInspector] public string filePath = "";
 
-
+    
     public void PopulateDetails( SaveAndLoadMenu.MenuFunction function )
     {
         if (File.Exists(filePath))
@@ -34,14 +35,19 @@ public class SaveLoadSlot : MonoBehaviour
         }
     }
     
+    
     private void PopulateDetailsFromFile( SaveAndLoadMenu.MenuFunction function, VNGameSave file) 
     {
+        //Debug.Log("IS THIS SAVE BEING CALLED?!!?!?!");
+        Debug.Log($"Current file {file}");
+        Debug.Log($"Actual instance of the file {SaveAndLoadMenu.Instance.emptyFileImage}");
         if (file == null)
         {
             titleText.text = $"{fileNumber}. Empty File";
             deleteButton.gameObject.SetActive(false);
             loadButton.gameObject.SetActive(false);
             saveButton.gameObject.SetActive(function == SaveAndLoadMenu.MenuFunction.save);
+            //Este es el conchesumare que webea.
             previewImage.texture = SaveAndLoadMenu.Instance.emptyFileImage;
         }
         else
@@ -58,6 +64,7 @@ public class SaveLoadSlot : MonoBehaviour
         }
     }
     
+    
     public void Delete() 
     {
         File.Delete(filePath);
@@ -69,7 +76,8 @@ public class SaveLoadSlot : MonoBehaviour
         VNGameSave file = VNGameSave.Load(filePath, true);
         SaveAndLoadMenu.Instance.Close(closeAllMenus: true);
     }
-
+    
+    
     public void Save()
     {
         var activeSave = VNGameSave.activeFile;
@@ -77,5 +85,5 @@ public class SaveLoadSlot : MonoBehaviour
         activeSave.Save();
         PopulateDetailsFromFile(SaveAndLoadMenu.Instance.menuFunction, activeSave);
     }
-    */
+    
 }

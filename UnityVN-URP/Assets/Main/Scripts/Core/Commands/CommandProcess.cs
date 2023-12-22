@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Class that holds information about a command and how it would be executed.
+/// </summary>
 public class CommandProcess
 {
     //Identificador del proceso.

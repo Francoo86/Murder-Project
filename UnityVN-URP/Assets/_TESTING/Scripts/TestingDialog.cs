@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CHARACTERS;
+using UnityEditor;
+using System.IO;
+using VISUALNOVEL;
 
 public class TestingDialog : MonoBehaviour
 {
+
+    [SerializeField] private TextAsset fileToRead = null; 
     
     // Start is called before the first frame update
     void Start()
@@ -13,6 +19,13 @@ public class TestingDialog : MonoBehaviour
 
     IEnumerator StartTalking()
     {
+        string fullPath = AssetDatabase.GetAssetPath(fileToRead);
+        int resourcesIndex = fullPath.IndexOf("Resources/");
+        string relativePath = fullPath.Substring(resourcesIndex + 10);
+        string filePath = Path.ChangeExtension(relativePath, null);
+
+        VNManager.Instance.LoadFile(filePath);
+
         SpriteCharacter charPedro = CharacterController.Instance.CreateCharacter("Marcelo") as SpriteCharacter;
         Character alfonso = CharacterController.Instance.CreateCharacter("Patricia");
         List<string> lines = new List<string>()

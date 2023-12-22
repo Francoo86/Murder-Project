@@ -15,9 +15,13 @@ else
 	narrator "si soy"
 }
 
-setlayerMedia(fondo consejeria)
-Narrator "Aqui es cuando aparece el marselo..."
-Marcelo "When despiertas"
+setlayermedia(fondo consejeria)
+narrator "Aqui es cuando aparece el marselo..."
+marcelo "When despiertas"
+
+$VN.mainChar= <input>
+//cambiar input por VN.mainChar
+
 input "Cual es tu nombre bro?"
 
 narrator "Ahh entonces te llamas <input>"
@@ -44,11 +48,11 @@ ShowUI()
 enter Marcelo [pensativo] "Hola"
 Marcelo [feliz] "Toy feliz"
 MoveCharacter(Marcelo -x 0.1 -smoothness true -i true)
-Frieren "comando(gracioso, xd, xdxdxd) hola ayuda"
+Ana "hola ayuda a pasar TIS"
 
 Gordon as ??? at 1:0 "En territorio laplaciano"
 
-Gordon at 0.5:0.5 as The Half-Life "El pepe xddd" 
+Gordon at 0.5:0.5 as The Half-Life "Lorem ipsum" 
 
-Gordon as Freeman [0:Angle1, 1:happy] at 0 "hello there"re"
+Gordon as Freeman [0:Angle1, 1:happy] at 0 "hello there"
 

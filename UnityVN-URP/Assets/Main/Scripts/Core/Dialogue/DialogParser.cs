@@ -6,20 +6,32 @@ using UnityEngine;
 
 /// 
 /// <summary>
-/// Se encaraga del dialogo e intenta parsear las funciones escritas dentro de la misma linea.
+/// Class that parses raw lines for getting the character, dialog, and the commands (internal methods defined in the extension).
 /// </summary>
 public class DialogParser {
     //Buscamos palabras, pero sin espacios en blanco para realizar el patrón.
     private const string cmdCommandExp = @"[\w\[\]]*[^\s]\(";
+    /// <summary>
+    /// Does parsing and retrieves the data for conversation manager.
+    /// </summary>
+    /// <param name="line"></param>
+    /// <returns></returns>
     public static DialogLineModel Parse(string line) {
         //Debug.Log($"Parsing this line {line}");
         (string speaker, string dialogue, string commands) = ExtractContent(line);
 
-        //Debug.Log($"Speaker is {speaker}, dialog is {dialogue}, command is {commands}");
+        commands = TagController.Inject(commands);
 
+        //Debug.Log($"Speaker is {speaker}, dialog is {dialogue}, command is {commands}");
         return new DialogLineModel(line, speaker, dialogue, commands);
     }
 
+    /// <summary>
+    /// Extracts the content of a raw line.
+    /// In this case, extracts the character name, the character dialog and the commands (that are internal methods to be called).
+    /// </summary>
+    /// <param name="line">Raw text of line.</param>
+    /// <returns>The speaker, the dialog of the speaker and the commands.</returns>
     private static (string, string, string) ExtractContent(string line)
     {
         string speaker = "", dialogue = "", commands = "";
@@ -68,8 +80,6 @@ public class DialogParser {
         if (commandStart != -1 && (dialogStart == -1 && dialogEnd == -1)){
             return ("", "", line.Trim());
         }
-
-
 
         //Revisamos si el comando está después del dialogo.
         //Juanito "Sample Text" Bailar([comando style linux])
