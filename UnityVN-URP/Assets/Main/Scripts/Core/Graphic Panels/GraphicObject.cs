@@ -187,8 +187,8 @@ public class GraphicObject
         else
         {
             DestroyBackgroundGraphicsOnLayer();
-            //renderer.texture = renderer.material.GetTexture(MAT_FIELD_MAINTEX);
-            //renderer.material = null;
+            renderer.texture = renderer.material.GetTexture(MAT_FIELD_MAINTEX);
+            renderer.material = null;
         }
     }
 
