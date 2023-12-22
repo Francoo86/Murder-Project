@@ -38,7 +38,7 @@ public class SaveLoadSlot : MonoBehaviour
     
     private void PopulateDetailsFromFile( SaveAndLoadMenu.MenuFunction function, VNGameSave file) 
     {
-        Debug.Log("IS THIS SAVE BEING CALLED?!!?!?!");
+        //Debug.Log("IS THIS SAVE BEING CALLED?!!?!?!");
         Debug.Log($"Current file {file}");
         Debug.Log($"Actual instance of the file {SaveAndLoadMenu.Instance.emptyFileImage}");
         if (file == null)

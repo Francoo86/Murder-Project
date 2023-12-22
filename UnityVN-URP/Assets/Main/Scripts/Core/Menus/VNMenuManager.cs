@@ -36,7 +36,7 @@ public class VNMenuManager : MonoBehaviour
     public void OpenSavePage()
     {
         var page = GetPage(MenuPage.PageType.SaveAndLoad);
-        var slm = page.GetComponentInParent<SaveAndLoadMenu>();
+        var slm = page.anim.GetComponentInParent<SaveAndLoadMenu>();
         slm.menuFunction = SaveAndLoadMenu.MenuFunction.save;
         OpenPage(page);
     }
@@ -44,7 +44,7 @@ public class VNMenuManager : MonoBehaviour
     public void OpenLoadPage()
     {
         var page = GetPage(MenuPage.PageType.SaveAndLoad);
-        var slm = page.GetComponentInParent<SaveAndLoadMenu>();
+        var slm = page.anim.GetComponentInParent<SaveAndLoadMenu>();
         slm.menuFunction = SaveAndLoadMenu.MenuFunction.load;
         OpenPage(page);
     }

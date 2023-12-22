@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MenuPage : MonoBehaviour
 {
-    [SerializeField] private Animator anim;
+    public Animator anim;
     private const string OPEN = "Open";
     private const string CLOSE = "Close";
     public enum PageType { SaveAndLoad, Config, Help };
