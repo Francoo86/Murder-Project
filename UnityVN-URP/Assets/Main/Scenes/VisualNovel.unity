@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3926,6 +3926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc741fac1550dde428671b0aa4ea41d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 1899149077}
   pageType: 1
 --- !u!1 &345244063
 GameObject:
@@ -7317,6 +7318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 594399336}
   - component: {fileID: 594399337}
+  - component: {fileID: 594399338}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -7357,6 +7359,27 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!95 &594399338
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594399335}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ec0175cf522f9a4fa129ab4381a3a9a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &602922176
 GameObject:
   m_ObjectHideFlags: 0
@@ -17267,6 +17290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d075e0209c8011d41a99f7007c8c3f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 594399338}
   pageType: 2
 --- !u!1 &1540275671
 GameObject:
@@ -17327,6 +17351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5eafcea0a7ba74991062c834b690d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 1719907501}
   pageType: 0
   menuFunction: 0
   saveSlots:
@@ -19299,6 +19324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1719907499}
   - component: {fileID: 1719907500}
+  - component: {fileID: 1719907501}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -19336,10 +19362,31 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1719907498}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!95 &1719907501
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719907498}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ec0175cf522f9a4fa129ab4381a3a9a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1736876166
 GameObject:
   m_ObjectHideFlags: 0
@@ -21393,6 +21440,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1899149075}
   - component: {fileID: 1899149076}
+  - component: {fileID: 1899149077}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -21435,6 +21483,27 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!95 &1899149077
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899149074}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ec0175cf522f9a4fa129ab4381a3a9a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1919262016
 GameObject:
   m_ObjectHideFlags: 0

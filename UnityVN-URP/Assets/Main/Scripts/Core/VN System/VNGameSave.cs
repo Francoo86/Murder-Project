@@ -37,7 +37,6 @@ namespace VISUALNOVEL
             activeState = HistoryState.Capture();
             historyLog = HistoryManager.Instance.history.ToArray();
             activeConversations = GetConversationData();
-
             variables = GetVariableData();
 
             timestamp = DateTime.Now.ToString("dd-MM-yy HH:mm:ss");

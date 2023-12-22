@@ -34,7 +34,7 @@ public class ScreenshootMaster : MonoBehaviour
         return screenshot;
     }
 
-    public enum ImageType { PNG, JPG}
+    public enum ImageType { PNG, JPG }
 
     public static void SaveScreenshotToFile(Texture2D screenshot, string filePath, ImageType fileType = ImageType.PNG)
     {
