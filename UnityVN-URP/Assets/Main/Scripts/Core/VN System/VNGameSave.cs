@@ -47,7 +47,7 @@ namespace VISUALNOVEL
             FileManager.Save(filePath, saveJSON);
         }
 
-        public void Load() 
+        public void Activate() 
         {
             if (activeState != null)
                 activeState.Load();
@@ -57,11 +57,19 @@ namespace VISUALNOVEL
             HistoryManager.Instance.logManager.Rebuild();
 
             SetVariableData();
-
             SetConversationData();
             
             //Esconder el cursor.
             //DialogController.Instance.prompt.Hide();
+        }
+
+        public static VNGameSave Load(string filePath, bool activateOnLoad = false)
+        {
+            VNGameSave save = FileManager.Load<VNGameSave>(filePath);
+            activeFile = save;
+            if (activateOnLoad)
+                save.Activate();
+            return save;  
         }
 
         public string[] GetConversationData()

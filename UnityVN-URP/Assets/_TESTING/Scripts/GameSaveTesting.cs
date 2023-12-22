@@ -5,6 +5,7 @@ using VISUALNOVEL;
 
 public class GameSaveTesting : MonoBehaviour
 {
+    public VNGameSave save;
     // Start is called before the first frame update
     void Awake()
     {
@@ -20,8 +21,17 @@ public class GameSaveTesting : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.L))
         {
-            VNGameSave.activeFile = FileManager.Load<VNGameSave>($"{FilePaths.gameSaves}1{VNGameSave.FILE_TYPE}");
-            VNGameSave.activeFile.Load();
+            try
+            {
+                save = VNGameSave.Load($"{FilePaths.gameSaves}1{VNGameSave.FILE_TYPE}", activateOnLoad: true);
+                //VNGameSave.activeFile = FileManager.Load<VNGameSave>($"{FilePaths.gameSaves}1{VNGameSave.FILE_TYPE}");
+                //VNGameSave.activeFile.Activate();
+            }
+            catch
+            {
+                Debug.LogError($"Error can't load data, the file is corrupt");
+            }
+
         }
     }
 }
