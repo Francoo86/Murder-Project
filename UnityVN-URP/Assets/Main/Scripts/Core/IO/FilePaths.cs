@@ -14,7 +14,12 @@ public class FilePaths
     public static string rootPath;
     void Awake() 
     {
-        rootPath = $"{Application.dataPath}/Main/Resources/";
+        #if UNITY_EDITOR
+            rootPath = $"{Application.dataPath}/Main/Resources/";
+        #else
+            rootPath = $"{Application.persistentDataPath}/Main/Resources/"; // initialize here for builds
+        #endif
+        
     }
 
     //RunTime Paths
