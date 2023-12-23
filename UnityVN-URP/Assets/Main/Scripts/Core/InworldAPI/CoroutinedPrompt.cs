@@ -10,6 +10,7 @@ public class CoroutinePrompt {
     private static CoroutinePrompt instance;
     private AISessionManager currentSession;
     private CharacterInteraction lastInteraction;
+    public bool IsStillFetching => currentSession.Client.IsFetching;
 
     /// <summary>
     /// Initializes the Coroutined Prompt class, in singleton way.
@@ -72,8 +73,8 @@ public class CoroutinePrompt {
         lastInteraction.SetLastInteraction(deserializedInteraction.TextList, emoteInfo.Behavior, emoteInfo.Strength);
     }
 
-    public IEnumerator Interact(Character character)
+    public void Interact(string characterName)
     {
-        yield return lastInteraction.DisplayText(character);
+        lastInteraction.DisplayText(characterName);
     }
 }

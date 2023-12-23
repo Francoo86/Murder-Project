@@ -9,7 +9,7 @@ public class APITesting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(TestPedro());
+        //StartCoroutine(TestPedro());
        
         /*
         AISessionHandler sess = new AISessionHandler("sujeto_5", client);
@@ -58,7 +58,7 @@ public class APITesting : MonoBehaviour
         {
             yield return textChar.Say(lines[i]);
             yield return prompt.Talk(lines[i]);
-            yield return prompt.Interact(charPedro);
+            //prompt.Interact(charPedro);
         }
     }
 

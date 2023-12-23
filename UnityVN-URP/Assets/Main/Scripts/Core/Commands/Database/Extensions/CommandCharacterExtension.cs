@@ -14,7 +14,7 @@ public class CommandCharacterExtension : CommandDBExtension
     //Posiciones.
     private static string XPOS = "-x";
     private static string YPOS = "-y";
-    private static string[] SPEED_PARAM = new string[]{ "-s", "-speed" };
+    private static string[] SPEED_PARAM = new string[] { "-s", "-speed" };
     private static string SMOOTH_PARAM = "-smoothness";
 
     new public static void Extend(CommandDB commandDB)
@@ -22,6 +22,9 @@ public class CommandCharacterExtension : CommandDBExtension
         commandDB.AddCommand("show", new Func<string[], IEnumerator>(ShowAll));
         commandDB.AddCommand("createcharacter", new Action<string[]>(CreateCharacter));
         commandDB.AddCommand("movecharacter", new Func<string[], IEnumerator>(MoveCharacter));
+
+        //The technological plus.
+        commandDB.AddCommand("talkcharacter", new Func<string, IEnumerator>(TalkWithCharacter));
     }
 
     private static void CreateCharacter(string[] data)
@@ -52,7 +55,7 @@ public class CommandCharacterExtension : CommandDBExtension
 
         Character character = CharacterController.Instance.GetCharacter(charName);
 
-        if(character == null) yield break;
+        if (character == null) yield break;
 
         float x = 0, y = 0;
         float speed = 0;
@@ -76,7 +79,7 @@ public class CommandCharacterExtension : CommandDBExtension
             character.SetPos(pos);
         else
             CommandController.Instance.AddTerminationActionToActualProcess(() => { character.SetPos(pos); });
-            yield return character.MoveToPosition(pos, speed, smooth);
+        yield return character.MoveToPosition(pos, speed, smooth);
 
         //yield return null;
     }
@@ -90,11 +93,11 @@ public class CommandCharacterExtension : CommandDBExtension
         {
             Character currentCharacter = CharacterController.Instance.GetCharacter(character, create: false);
 
-            if(currentCharacter != null)
+            if (currentCharacter != null)
                 allCharacters.Add(currentCharacter);
         }
 
-        if(allCharacters.Count == 0)
+        if (allCharacters.Count == 0)
         {
             yield break;
         }
@@ -102,7 +105,7 @@ public class CommandCharacterExtension : CommandDBExtension
         var parameters = ConvertToParams(data);
         parameters.TryGetValue(INMEDIATE_APPEARING, out inmediate, false);
 
-        foreach(Character character in allCharacters)
+        foreach (Character character in allCharacters)
         {
             if (!inmediate)
                 character.Hide();
@@ -112,11 +115,50 @@ public class CommandCharacterExtension : CommandDBExtension
 
         if (!inmediate)
         {
-            while(allCharacters.Any(c => c.IsHiding))
+            while (allCharacters.Any(c => c.IsHiding))
             {
                 yield return null;
             }
         }
+    }
+
+    private static IEnumerator TalkWithCharacter(string characterName)
+    {
+        characterName = characterName.ToLower();
+        PromptPanel panel = PromptPanel.Instance;
+
+        Debug.Log("WHY THIS SHIT IS NOT CALLING");
+        //Loads a new session.
+        AISessionManager sess = new AISessionManager(characterName);
+        CoroutinePrompt prompt = CoroutinePrompt.GetInstance();
+        prompt.InjectSession(sess);
+
+        Character character = CharacterController.Instance.GetCharacter(characterName, true);
+
+        yield return character.Show();
+
+        
+        //FIXME: Save those lines in the conversation.
+        while (panel.LastInput.ToLower() != "stop")
+        {
+            panel.Show("What do you want to ask me?");
+
+            while (panel.IsWaitingOnUserInput)
+                yield return null;
+            
+            yield return prompt.Talk(panel.LastInput);
+
+            while (prompt.IsStillFetching)
+                yield return null;
+
+            prompt.Interact(characterName);
+
+            yield break;
+        }
+
+        Debug.Log("<color=#008000>Spitting fax!!!!</color>");
+        Debug.Log($"STILL FETCHING??? {prompt.IsStillFetching}");
+        //yield return null;
     }
 
     public static void HideAll(string[] data)

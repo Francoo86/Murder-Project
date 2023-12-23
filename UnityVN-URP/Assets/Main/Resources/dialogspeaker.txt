@@ -20,6 +20,8 @@ setlayermedia(fondo consejeria)
 narrator "Aqui es cuando aparece el marselo..."
 marcelo "When despiertas"
 
+[wait]talkcharacter(marcelo)
+
 
 //cambiar input por VN.mainChar
 

@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
 using CHARACTERS;
-
+using UnityEngine;
 class CharacterInteraction
 {
     private List<string> lastText;
@@ -31,8 +30,8 @@ class CharacterInteraction
         {"VALIDATION", "feliz"},
         {"AFFECTION", "feliz"},
         {"HUMOR", "feliz"},
+        {"SPAFF_CODE_UNSPECIFIED", "normal"},
     };
-
 
     private const string ERROR_MESSAGE = "Sorry i'm sleeping right now, maybe try by resetting the game, or connecting to internet to re-think about myself.";
 
@@ -59,14 +58,22 @@ class CharacterInteraction
     /// Inyectar personaje para que pueda decir algo.
     /// </summary>
     /// <param name="character"></param>
-    public IEnumerator DisplayText(Character character)
+    public void DisplayText(string characterName)
     {
-        if (lastText == null) 
-            yield return character.Say(ERROR_MESSAGE);
-        else
+        //BINGO.
+        ConversationManager Controller = DialogController.Instance.convManager;
+
+        List<string> linesToAppend = lastText ?? new List<string> { ERROR_MESSAGE };
+        //HACK: The deadline is near so this is a very fix for appending AI data.
+        linesToAppend.Insert(0, "");
+
+        List<string> conversationLines = Controller.conversation.GetLines();
+        int progress = Controller.conversation.GetProgress();
+
+        for(int i = linesToAppend.Count - 1; i >= 0; i--)
         {
-            character.OnExpressionReceive(0, lastEmotion);
-            yield return character.Say(lastText);
+            string line = $"{characterName} \"{linesToAppend[i]}\"";
+            conversationLines.Insert(progress, line);
         }
     }
 }
