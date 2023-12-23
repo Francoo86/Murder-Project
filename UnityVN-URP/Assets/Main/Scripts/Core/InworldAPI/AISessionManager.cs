@@ -31,10 +31,11 @@ public class AISessionManager
     //Maybe it can used by another classes.
     public static readonly Dictionary<string, string> MAINCHARACTER_DATA = new Dictionary<string, string>()
         {
-            { "givenName", "Luis" },
-            {"age", "30" },
-            {"gender", "male" },
-            {"role", "detective" }
+        //Hardcoded af xDDDD.
+            {"givenName", "Luis"},
+            {"age", "30"},
+            {"gender", "male"},
+            {"role", "detective"}
         };
 
     //Tiempo maximo que se puede estar en una sesión sin realizar nada.

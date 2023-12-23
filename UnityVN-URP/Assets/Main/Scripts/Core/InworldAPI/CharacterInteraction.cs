@@ -14,6 +14,31 @@ class CharacterInteraction
     //For now we are reserving this.
     private string lastEmotion;
     private string emotionStrengthness;
+
+    private Dictionary<string, string> ACCEPTED_EMOTIONS = new Dictionary<string, string>
+    {
+        {"NEUTRAL", "normal"},
+        {"ANGER", "enojado"},
+        {"JOY", "feliz"},
+        {"TENSION", "pensativo"},
+        {"SADNESS", "triste"},
+        {"SURPRISE", "sorprendido"},
+        {"DISGUST", "enojado"},
+        {"CONTEMPT", "enojado"},
+        {"BELLIGERENCE", "enojado"},
+        {"DOMINEERING", "enojado"},
+        {"CRITICISM", "enojado"},
+        {"TENSE_HUMOR", "pensativo"},
+        {"DEFENSIVENESS", "enojado"},
+        {"WHINING", "triste"},
+        {"STONEWALLING", "pensativo"},
+        {"INTEREST", "normal"},
+        {"VALIDATION", "feliz"},
+        {"AFFECTION", "feliz"},
+        {"HUMOR", "feliz"},
+    };
+
+
     private const string ERROR_MESSAGE = "Sorry i'm sleeping right now, maybe try by resetting the game, or connecting to internet to re-think about myself.";
 
     /// <summary>
@@ -24,7 +49,7 @@ class CharacterInteraction
     /// <param name="emotionStrengthness">The last emotion strength.</param>
     public void SetLastInteraction(List<string> lastText, string lastEmotion, string emotionStrengthness)
     {
-        Debug.Log($"Calling this method: {lastEmotion}");
+        //Debug.Log($"Calling this method: {lastEmotion}");
         this.lastText = lastText;
         this.lastEmotion = lastEmotion;
         this.emotionStrengthness = emotionStrengthness;
