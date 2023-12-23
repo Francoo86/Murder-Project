@@ -26,7 +26,9 @@ public class SaveLoadSlot : MonoBehaviour
     {
         if (File.Exists(filePath))
         {
+            Debug.Log($"<color=#AAFF00>MEGA SCREAMING AT CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
             VNGameSave file = VNGameSave.Load(filePath);
+            Debug.Log($"<color=#AAFF00>MEGA SCREAMING AT CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
             PopulateDetailsFromFile(function, file);
         }
         else 
@@ -73,14 +75,18 @@ public class SaveLoadSlot : MonoBehaviour
 
     public void Load()
     {
+        Debug.Log($"Currently loading file number of: {filePath}");
         VNGameSave file = VNGameSave.Load(filePath, true);
+        VNGameSave.activeFile = file;
         SaveAndLoadMenu.Instance.Close(closeAllMenus: true);
     }
     
     
     public void Save()
     {
+
         var activeSave = VNGameSave.activeFile;
+        Debug.Log($"Currently saving file number of: {fileNumber}");
         activeSave.slotNumber = fileNumber;
         activeSave.Save();
         PopulateDetailsFromFile(SaveAndLoadMenu.Instance.menuFunction, activeSave);

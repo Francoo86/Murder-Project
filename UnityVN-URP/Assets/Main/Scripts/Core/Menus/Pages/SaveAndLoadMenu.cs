@@ -44,7 +44,9 @@ public class SaveAndLoadMenu : MenuPage
     //Funcion aparentemente buena, comentada para que Unity no webee.
     public override void Open()
     {
+        //Debug.Log($"<color=#AAFF00>SCREAMING AT CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
         base.Open();
+        //Debug.Log($"<color=#AAFF00>SCREAMING AT CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
         if (!loadedFilesForFirstTime)
             PopulateSaveSlotsForPage(currentPage);
     }
@@ -70,7 +72,9 @@ public class SaveAndLoadMenu : MenuPage
                 string filePath = $"{FilePaths.gameSaves}{fileNum}{VNGameSave.FILE_TYPE}";
                 slot.fileNumber = fileNum;
                 slot.filePath = filePath;
+                Debug.Log($"<color=#AAFF00>SCREAMING AT CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
                 slot.PopulateDetails(menuFunction);
+                Debug.Log($"<color=#AAFF00>SCREAMING AT CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
             }
             else
             {

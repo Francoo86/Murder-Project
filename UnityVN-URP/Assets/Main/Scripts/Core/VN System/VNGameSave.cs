@@ -62,10 +62,11 @@ namespace VISUALNOVEL
             //DialogController.Instance.prompt.Hide();
         }
 
+        //ESTA FUNCION WEBEA CON LAS VARIABLES.
         public static VNGameSave Load(string filePath, bool activateOnLoad = false)
         {
             VNGameSave save = FileManager.Load<VNGameSave>(filePath);
-            activeFile = save;
+            //activeFile = save;
             if (activateOnLoad)
                 save.Activate();
             return save;  
@@ -106,8 +107,7 @@ namespace VISUALNOVEL
 
         private void SetConversationData()
         {
-            int i = 0;
-            for(i = 0; i < activeConversations.Length; i++) 
+            for(int i = 0; i < activeConversations.Length; i++) 
             {
                 try
                 {
@@ -163,6 +163,7 @@ namespace VISUALNOVEL
                     variableData.name = $"{database.name}.{variable.Key}";
                     string val = $"{variable.Value.Get()}";
                     variableData.value = val;
+                    Debug.Log($"<color=#00FF00>Retreiving the variable: {variableData.name} val: {variableData.value}</color>");
                     variableData.type = val == string.Empty ? "System.String" : variable.Value.Get().GetType().ToString(); 
                     retData.Add(variableData);
                 }
@@ -201,7 +202,13 @@ namespace VISUALNOVEL
                             continue;
                         }
                         break;
-
+                    case "System.Double":
+                        if(float.TryParse(val, out float d_val))
+                        {
+                            VariableStore.TrySetValue(variable.name, d_val);
+                            continue;
+                        }
+                        break;
                     case "System.String":
                         VariableStore.TrySetValue(variable.name, val);
                         continue;

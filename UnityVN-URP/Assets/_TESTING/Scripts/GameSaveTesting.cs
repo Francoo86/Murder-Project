@@ -7,8 +7,9 @@ public class GameSaveTesting : MonoBehaviour
 {
     public VNGameSave save;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
+        //save = VNGameSave.activeFile;
         //VNGameSave.activeFile = new VNGameSave();
     }
 
@@ -17,10 +18,14 @@ public class GameSaveTesting : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S)) 
         {
-            VNGameSave.activeFile.Save();
+            //tRY TO RETREIVE IT.
+            save = VNGameSave.activeFile;
+            ///Debug.Log($"PRINTING PLAYER NAME: {VNGameSave.activeFile.playerName}");
+            //VNGameSave.activeFile.Save();
         }
         else if (Input.GetKeyDown(KeyCode.L))
         {
+            /*
             try
             {
                 save = VNGameSave.Load($"{FilePaths.gameSaves}1{VNGameSave.FILE_TYPE}", activateOnLoad: true);
@@ -30,7 +35,7 @@ public class GameSaveTesting : MonoBehaviour
             catch
             {
                 Debug.LogError($"Error can't load data, the file is corrupt");
-            }
+            }*/
 
         }
     }

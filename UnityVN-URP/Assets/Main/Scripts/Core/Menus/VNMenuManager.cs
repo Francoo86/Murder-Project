@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using VISUALNOVEL;
 
 //MenuPage.PageType
 
@@ -35,10 +36,14 @@ public class VNMenuManager : MonoBehaviour
     // Dan probelmas el slm.menuFunction -> se debe crear en VNGAMESAVE.
     public void OpenSavePage()
     {
+        //Debug.Log($"<color=#AAFF00>CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
         var page = GetPage(MenuPage.PageType.SaveAndLoad);
+        //Debug.Log($"<color=#AAFF00>CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
         var slm = page.anim.GetComponentInParent<SaveAndLoadMenu>();
+        //Debug.Log($"<color=#AAFF00>CHECKING INSTANCE THINGS PART 3: {VNGameSave.activeFile.playerName}</color>");
         slm.menuFunction = SaveAndLoadMenu.MenuFunction.save;
         OpenPage(page);
+        //Debug.Log($"<color=#AAFF00>CHECKING INSTANCE THINGS PART 4: {VNGameSave.activeFile.playerName}</color>");
     }
 
     public void OpenLoadPage()
@@ -72,7 +77,9 @@ public class VNMenuManager : MonoBehaviour
         {
             activePage.Close();
         }
+        //Debug.Log($"<color=#AAFF00>SCREAMING CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
         page.Open();
+        //Debug.Log($"<color=#AAFF00>SCREAMING CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
         activePage = page;
 
         if(!isOpen)
