@@ -51,6 +51,11 @@ class CharacterInteraction
     {
         //Debug.Log($"Calling this method: {lastEmotion}");
         this.lastText = lastText;
+
+        //To parse the interaction correctly.
+        if (ACCEPTED_EMOTIONS.ContainsKey(lastEmotion))
+            lastEmotion = ACCEPTED_EMOTIONS[lastEmotion];
+
         this.lastEmotion = lastEmotion;
         this.emotionStrengthness = emotionStrengthness;
     }
