@@ -16,10 +16,12 @@ public class AISessionManager
 
     private Dictionary<string, string> CHARACTERS = new Dictionary<string, string>
     {
+        {"ana", "ana" },
+        {"anastasia", "sujeto4"},
         {"jacinto", "sujeto8-dvv3d"},
         {"juan", "sujeto3"},
         {"lucia", "sujeto6"},
-        {"luis", "sujeto0"},
+        {"luis", "sejeto0"},
         {"marcelo", "sujeto_5"},
         {"patricia", "sujeto9"},
         {"pedro", "sujeto2"},
