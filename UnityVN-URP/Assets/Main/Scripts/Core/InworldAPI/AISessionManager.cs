@@ -13,8 +13,21 @@ public class AISessionManager
 
     public string SessionId { get; private set; }
     public string PlayerSessionId { get; private set; }
+
+    private Dictionary<string, string> CHARACTERS = new Dictionary<string, string>
+    {
+        {"jacinto", "sujeto8-dvv3d"},
+        {"juan", "sujeto3"},
+        {"lucia", "sujeto6"},
+        {"luis", "sujeto0"},
+        {"marcelo", "sujeto_5"},
+        {"patricia", "sujeto9"},
+        {"pedro", "sujeto2"},
+        {"santiago", "sujeto7"}
+    };
+
     //Maybe it can used by another classes.
-    public static readonly Dictionary<string, string> PROTAGONIST_DATA = new Dictionary<string, string>()
+    public static readonly Dictionary<string, string> MAINCHARACTER_DATA = new Dictionary<string, string>()
         {
             { "givenName", "Luis" },
             {"age", "30" },
@@ -25,13 +38,17 @@ public class AISessionManager
     //Tiempo maximo que se puede estar en una sesión sin realizar nada.
     private readonly float SESSION_TIMEOUT_MINUTES = 30;
     /// <summary>
-    /// Initializes the session manager.
+    /// Initializes the session manager. Makes a lookup in the list of character for be prepared to be used on Inworld.
     /// </summary>
     /// <param name="character">The character we are going to use.</param>
     public AISessionManager(string character)
     {
-        this.character = character;
+        if (CHARACTERS.ContainsKey(character))
+        {
+            character = CHARACTERS[character];
+        };
 
+        this.character = character;
     }
 
     /// <summary>
@@ -77,7 +94,7 @@ public class AISessionManager
     /// </summary>
     /// <returns>Current IEnumerator</returns>
     public IEnumerator RequestNewSession() {
-        yield return Client.RequestCharacterSession(character, PROTAGONIST_DATA, FetchSession);
+        yield return Client.RequestCharacterSession(character, MAINCHARACTER_DATA, FetchSession);
     }
 
     /// <summary>
