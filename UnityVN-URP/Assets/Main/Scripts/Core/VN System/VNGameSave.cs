@@ -63,6 +63,7 @@ namespace VISUALNOVEL
         }
 
         //ESTA FUNCION WEBEA CON LAS VARIABLES.
+        //This function it shouldn't set the activeFile instantly.
         public static VNGameSave Load(string filePath, bool activateOnLoad = false)
         {
             VNGameSave save = FileManager.Load<VNGameSave>(filePath);
