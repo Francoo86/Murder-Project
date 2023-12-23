@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 using CHARACTERS;
 
@@ -69,8 +64,9 @@ class CharacterInteraction
         if (lastText == null) 
             yield return character.Say(ERROR_MESSAGE);
         else
+        {
+            character.OnExpressionReceive(0, lastEmotion);
             yield return character.Say(lastText);
+        }
     }
-
-
 }

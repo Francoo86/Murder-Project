@@ -46,6 +46,8 @@ public class AISessionManager
     /// <param name="character">The character we are going to use.</param>
     public AISessionManager(string character)
     {
+        character = character.ToLower();
+
         if (CHARACTERS.ContainsKey(character))
         {
             character = CHARACTERS[character];
