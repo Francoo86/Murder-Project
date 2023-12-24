@@ -48,11 +48,11 @@ public class CanvasGroupController
         if (IsShowing) return co_Showing;
         else if (IsHiding)
         {
-            DialogController.Instance.StopCoroutine(co_Hiding);
+            owner.StopCoroutine(co_Hiding);
             co_Hiding = null;
         }
 
-        co_Showing = DialogController.Instance.StartCoroutine(Fade(1, speed, inmediate));
+        co_Showing = owner.StartCoroutine(Fade(1, speed, inmediate));
 
         return co_Showing;
     }

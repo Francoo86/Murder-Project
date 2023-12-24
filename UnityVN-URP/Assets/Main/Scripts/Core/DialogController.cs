@@ -21,7 +21,7 @@ public class DialogController : MonoBehaviour
     public static DialogController Instance { get; private set; }
     private TextArchitect architect;
     private CanvasGroupController CGController;
-    private AutoReader autoReader;
+    public AutoReader autoReader;
 
     //Definimos una "funcion" que es m�s o menos personalizable.
     public delegate void DialogSystemEvent();
@@ -66,8 +66,9 @@ public class DialogController : MonoBehaviour
         dialogContainer.Initialize();
 
         _hasInitialized = true;
+        autoReader = GetComponent<AutoReader>();
 
-        if (TryGetComponent(out autoReader))
+        if (autoReader != null)
             autoReader.Initialize(convManager);
     }
 

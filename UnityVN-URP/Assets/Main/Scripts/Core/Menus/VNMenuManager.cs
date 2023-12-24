@@ -100,4 +100,14 @@ public class VNMenuManager : MonoBehaviour
         isOpen = false;
     }
     
+    public void Click_Home()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Main menu");
+    }
+
+    public void Click_Quit()
+    {
+        Application.Quit();
+    }
+
 }
