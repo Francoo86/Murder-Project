@@ -4,6 +4,9 @@ using UnityEngine;
 
 using CHARACTERS;
 
+/// <summary>
+/// Holds all logic of the text that will be parsed on the screen. Handles commands, text and character stuff passed in the conversation.
+/// </summary>
 public class ConversationManager
 {
     private Coroutine process = null;
@@ -180,7 +183,7 @@ public class ConversationManager
         yield return BuildLineSegments(dialogLine.dialogData);
     }
 
-    private const string INWORLD_COMMAND = "talkcharacter";
+    private const string INWORLD_COMMAND = "inworld";
 
     private IEnumerator RunDialogForCommands(DialogLineModel dialogLine) {
         List<CommandData.Command> commands = dialogLine.commandData.commands;
@@ -193,6 +196,10 @@ public class ConversationManager
             {
                 //Is this really a RenPy 2 UNAP edition?
                 CoroutineWrapper wrap = CommandController.Instance.Execute(command.name, command.arguments);
+
+                //This pass to next iteration.
+                if (wrap == null)
+                    yield return null;
 
                 while (!wrap.IsDone)
                 {

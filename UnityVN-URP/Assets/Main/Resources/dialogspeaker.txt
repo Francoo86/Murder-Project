@@ -22,7 +22,7 @@ Marcelo "When despiertas"
 Marcelo "Hacer diagramas de secuencia es...."
 Marcelo "Facil para el que estudioXD...."
 
-[wait]talkcharacter(marcelo)
+[wait]inworld(marcelo)
 
 //cambiar input por VN.mainChar
 

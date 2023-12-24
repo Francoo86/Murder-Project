@@ -28,7 +28,7 @@ public class ConfigMenu : MenuPage
     {
         for (int i = 0; i < panels.Length; i++)
         {
-            panels[i].SetActive(false);
+            panels[i].SetActive(i == 0);
         }
 
         activePanel = panels[0];
@@ -58,7 +58,7 @@ public class ConfigMenu : MenuPage
 
     public void OpenPanel(string panelName)
     {
-        GameObject panel = panels.First(p => p.name == panelName);
+        GameObject panel = panels.First(p => p.name.ToLower() == panelName.ToLower());
         if (panel == null)
         {
             UnityEngine.Debug.LogWarning($"Did not find panel called '{panelName}' in config menu");
@@ -100,14 +100,16 @@ public class ConfigMenu : MenuPage
         public Button fullscreen;
         public Button windowed;
         public TMP_Dropdown resolutions;
-        public Button skippingContinue, skippingStop;
-        public Slider architectSpeed, autoReaderSpeed;
+        //public Button skippingContinue, skippingStop;
+        //public Slider architectSpeed, autoReaderSpeed;
 
         [Header("Audio")]
+        //public Slider generalVolume;
+        //public Image generalFill;
         public Slider musicVolume;
         public Image musicFill;
         public Slider sfxVolume;
-        public Slider sfxFill;
+        public Image sfxFill;
         public Sprite mutedSymbol;
         public Sprite unmutedSymbol;
         public Image musicMute;
@@ -146,6 +148,7 @@ public class ConfigMenu : MenuPage
 
     }
 
+    /*
     public void SetContinueSkippingAfterChoice(bool continueSkipping)
     {
         config.continueSkippingAfterChoice = continueSkipping;
@@ -171,7 +174,14 @@ public class ConfigMenu : MenuPage
         AutoReader autoReader = DialogController.Instance.autoReader;
         if (autoReader != null)
             autoReader.Speed = config.dialogueAutoReadSpeed;
-    }
+    }*/
+    /*
+    public void SetGeneralVolume()
+    {
+
+        AudioController.Instance.SetMusicVolume(config.musicVolume, config.musicMute);
+        AudioController.Instance.SetMusicVolume(config.sfx, config.musicMute);
+    }*/
 
     public void SetMusicVolume()
     {

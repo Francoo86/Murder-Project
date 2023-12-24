@@ -52,11 +52,11 @@ public class VN_Configuration
         ui.resolutions.value = res_index;
 
         //establecer la opción continuar después de skipping
-        ui.SetButtonColors(ui.skippingContinue, ui.skippingStop, continueSkippingAfterChoice);
+        //ui.SetButtonColors(ui.skippingContinue, ui.skippingStop, continueSkippingAfterChoice);
 
         //establecer el valor de autoreaderpeed y de architect
-        ui.architectSpeed.value = dialogueTextSpeed;
-        ui.autoReaderSpeed.value = dialogueAutoReadSpeed;
+        //ui.architectSpeed.value = dialogueTextSpeed;
+        //ui.autoReaderSpeed.value = dialogueAutoReadSpeed;
 
         //configurar los volúmenes del mezclador de audio
         ui.musicVolume.value = musicVolume;

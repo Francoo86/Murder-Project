@@ -24,7 +24,7 @@ public class CommandCharacterExtension : CommandDBExtension
 		commandDB.AddCommand("movecharacter", new Func<string[], IEnumerator>(MoveCharacter));
 
 		//The technological plus.
-		commandDB.AddCommand("talkcharacter", new Func<string, IEnumerator>(TalkWithCharacter));
+		commandDB.AddCommand("inworld", new Func<string, IEnumerator>(TalkWithCharacter));
 	}
 
 	private static void CreateCharacter(string[] data)
@@ -147,6 +147,7 @@ public class CommandCharacterExtension : CommandDBExtension
 
 			if (panel.LastInput == STOP_ID)
 			{
+				yield return character.Hide();
 				yield break;
 			}
 		   
