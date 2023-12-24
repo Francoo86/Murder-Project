@@ -18,10 +18,11 @@ else
 narrator "Webear por favor stopp!!! <mainChar>"
 setlayermedia(fondo consejeria)
 narrator "Aqui es cuando aparece el marselo..."
-marcelo "When despiertas"
+Marcelo "When despiertas"
+Marcelo "Hacer diagramas de secuencia es...."
+Marcelo "Facil para el que estudioXD...."
 
 [wait]talkcharacter(marcelo)
-
 
 //cambiar input por VN.mainChar
 

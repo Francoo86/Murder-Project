@@ -22,6 +22,7 @@ public class CommandProcess
     
     //Tener control de lo que se ejecuta en escena mientras se presionan teclas.
     public UnityEvent onTerminateAction;
+    public bool loopableProc = false;
 
     public CommandProcess(Guid ID, string processName, Delegate command, string[] args, CoroutineWrapper currentProcess, UnityEvent onTerminateAction = null)
     {

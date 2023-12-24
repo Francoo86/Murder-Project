@@ -76,4 +76,9 @@ class CharacterInteraction
             conversationLines.Insert(progress, line);
         }
     }
+
+    public string GetLastEmotion()
+    {
+        return lastEmotion ?? "normal";
+    }
 }

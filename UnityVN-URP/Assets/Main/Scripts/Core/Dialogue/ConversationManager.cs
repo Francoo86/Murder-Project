@@ -141,7 +141,7 @@ public class ConversationManager
 
         if (speakerModel.MakeCharacterEnter && (!character.IsVisible))
         {
-            Debug.Log("MAKING CHARACTER ENTER!!!!");
+            //Debug.Log("MAKING CHARACTER ENTER!!!!");
             character.Show();
             //character.IsVisible = true;
         }
@@ -178,10 +178,9 @@ public class ConversationManager
         //Construir el dialogo.
         //yield return BuildDialogue(dialogLine.dialog);
         yield return BuildLineSegments(dialogLine.dialogData);
-
-        //Esperar al input de usuario, así como tocar la pantalla o cosas así.
-        //yield return WaitForUserInput();
     }
+
+    private const string INWORLD_COMMAND = "talkcharacter";
 
     private IEnumerator RunDialogForCommands(DialogLineModel dialogLine) {
         List<CommandData.Command> commands = dialogLine.commandData.commands;
@@ -199,8 +198,11 @@ public class ConversationManager
                 {
                     if (isUserManipulated)
                     {
-                        CommandController.Instance.StopCurrentProcess();
-                        isUserManipulated = false;
+                        if (command.name != INWORLD_COMMAND)
+                        {
+                            CommandController.Instance.StopCurrentProcess();
+                            isUserManipulated = false;
+                        }
                     }
 
                     //If this is not on the loop this causes stack overflow.

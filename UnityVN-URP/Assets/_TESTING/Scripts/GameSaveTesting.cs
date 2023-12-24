@@ -6,7 +6,7 @@ using VISUALNOVEL;
 public class GameSaveTesting : MonoBehaviour
 {
     public VNGameSave save;
-    public string characterName;
+    //public string characterName;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +26,7 @@ public class GameSaveTesting : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.K))
         {
-            
+            /*   
             ConversationManager Controller = DialogController.Instance.convManager;
             Debug.Log($"<color=#104901>{Controller.conversation.GetCurrentLine()}</color>");
             
@@ -46,7 +46,7 @@ public class GameSaveTesting : MonoBehaviour
             {
                 string line = $"{characterName} \"{linesToAppend[i]}\"";
                 conversationLines.Insert(progress, line);
-            }
+            }*/
 
             //DialogController.Instance.dialogContainer.dialogText.text = linesToAppend[linesToAppend.Count - 1];
         }
