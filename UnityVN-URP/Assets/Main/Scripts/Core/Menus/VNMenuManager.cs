@@ -102,7 +102,7 @@ public class VNMenuManager : MonoBehaviour
     
     public void Click_Home()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Main menu");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(MainMenu.MAIN_MENU_SCENE);
     }
 
     public void Click_Quit()

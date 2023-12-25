@@ -53,6 +53,24 @@ public class CharacterController : MonoBehaviour
 
         return character;
     }
+    //private CHARACTER_INFO GetCharacterInfo(string characterName)
+    //{
+    //    CHARACTER_INFO result = new CHARACTER_INFO;
+
+    //    string[] nameData = characterName.Split(CHARACTER_ID, System.StringSplitOptions.RemoveEmptyEntries);
+    //    result.name = nameData[0];
+    //    result.castingName = nameData.Length > 1 ? nameData[1] : result.name;
+
+    //    result.config = config.GetConfig(result.castingName);
+
+    //    result.prefab = GetPrefabForCharacter(result.castingname);
+
+    //    result.rootCharacterFolder = FormatCharacterPath(characterRootPathFormat, result.castingName);
+
+    //    return result;
+
+    //}
+    
 
     /// <summary>
     /// Retrieves a character from the stored characters list.
