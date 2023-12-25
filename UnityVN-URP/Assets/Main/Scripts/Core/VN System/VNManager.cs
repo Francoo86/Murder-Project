@@ -32,12 +32,14 @@ namespace VISUALNOVEL
         {
             if (VNGameSave.activeFile.newGame)
             {
+                Debug.Log("WHY THIS SHIT HERE?");
                 List<string> lines = FileManager.ReadTextAsset(config.startingFile);
                 Conversation start = new Conversation(lines);
                 DialogController.Instance.Say(start);
             }
             else
             {
+                Debug.Log("IS FIXED!");
                 VNGameSave.activeFile.Activate();
             }
         }

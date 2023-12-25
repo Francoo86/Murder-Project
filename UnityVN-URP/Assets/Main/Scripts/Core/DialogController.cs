@@ -151,7 +151,10 @@ public class DialogController : MonoBehaviour
         ApplySpeakerDataToBox(config);
     }
 
-    //Shows the character name on the screen, if the character is the narrator it wil not show it.
+    /// <summary>
+    /// Shows the character name on the screen, if the character is the narrator it wil not show it.
+    /// </summary>
+    /// <param name="speakerName">The character name.</param>
     public void ShowSpeakerName(string speakerName = "")
     {
         //No hay raz�n para mostrar al narrador, similar a RenPy.

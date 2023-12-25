@@ -80,14 +80,14 @@ public class SaveLoadSlot : MonoBehaviour
 
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == MainMenu.MAIN_MENU_SCENE)
         {
+            //VNGameSave.activeFile = file;
             MainMenu.instance.LoadGame(file);
         }
         else
         {
             //Debug.Log($"Currently loading file number of: {filePath}");
             file.Activate();
-            VNGameSave.activeFile = file;
-            
+            //VNGameSave.activeFile = file;
         }
 
     }

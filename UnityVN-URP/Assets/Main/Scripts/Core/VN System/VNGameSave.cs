@@ -70,7 +70,8 @@ namespace VISUALNOVEL
         public static VNGameSave Load(string filePath, bool activateOnLoad = false)
         {
             VNGameSave save = FileManager.Load<VNGameSave>(filePath);
-            //activeFile = save;
+            activeFile = save;
+
             if (activateOnLoad)
                 save.Activate();
             return save;  

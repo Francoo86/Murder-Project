@@ -8,6 +8,10 @@ using UnityEngine;
 /// </summary>
 public class FileManager
 {
+    private static bool IsSkippableLine(string line)
+    {
+        return line.Trim().StartsWith("//");
+    }
     //TODO: Split into multiple classes.
     //En este caso podríamos usar el Factory Pattern para poder leer incluyendo archivos JSON.
     /// <summary>
@@ -28,7 +32,7 @@ public class FileManager
                 {
                     string line = sr.ReadLine();
                     //Skip goofy aahh comments.
-                    if (line.StartsWith("//")) continue;
+                    if (IsSkippableLine(line)) continue;
 
                     if (includeBlankLines || !string.IsNullOrWhiteSpace(line)) {
                         savedLines.Add(line);
@@ -79,6 +83,9 @@ public class FileManager
             while (sr.Peek() > -1)
             {
                 string line = sr.ReadLine();
+
+                if (IsSkippableLine(line)) continue;
+
                 if (includeBlankLines || !string.IsNullOrWhiteSpace(line))
                 {
                     savedLines.Add(line);

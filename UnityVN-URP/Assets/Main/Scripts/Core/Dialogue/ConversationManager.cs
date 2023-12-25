@@ -54,7 +54,7 @@ public class ConversationManager
         return process;
     }
 
-    public void StopConversation()
+    private void StopConversation()
     {
         if (!IsRunning) return;
 
@@ -141,16 +141,19 @@ public class ConversationManager
     {
         bool shouldBeCreated = (speakerModel.MakeCharacterEnter || speakerModel.IsGoingToScreenPos || speakerModel.IsDoingAnyExpression);
         Character character = CharacterController.Instance.GetCharacter(speakerModel.name, shouldBeCreated);
+        bool shouldBeVisible = speakerModel.MakeCharacterEnter && (!character.IsVisible);
 
-        if (speakerModel.MakeCharacterEnter && (!character.IsVisible))
+        if (shouldBeVisible)
         {
             //Debug.Log("MAKING CHARACTER ENTER!!!!");
             character.Show();
             //character.IsVisible = true;
         }
-            
+
+
+        string displayNameParsed = TagController.Inject(speakerModel.DisplayName);
         //Muestra el nombre del personaje.
-        Controller.ShowSpeakerName(TagController.Inject(speakerModel.DisplayName));
+        Controller.ShowSpeakerName(displayNameParsed);
 
         //Carga los datos creados por la configuración escrita en su clase.
         Controller.ApplySpeakerDataToBox(speakerModel.name);
@@ -158,12 +161,17 @@ public class ConversationManager
         if (speakerModel.IsGoingToScreenPos)
             character.MoveToPosition(speakerModel.speakerScrPos);
 
-        if(speakerModel.IsDoingAnyExpression)
-            foreach(var exp in speakerModel.ScreenExpressions)
-            {
+        if (speakerModel.IsDoingAnyExpression)
+        {
+            //NO LAYERS.
+            (int _, string exp) = speakerModel.ScreenExpressions[0];
+            character.OnExpressionReceive(0, exp);
+        }
+            //foreach(var exp in speakerModel.ScreenExpressions)
+            //{
                 //TODO: Remove the layer thing as we are not working with that.
-                character.OnExpressionReceive(exp.layer, exp.expression);
-            }
+                //character.OnExpressionReceive(exp.layer, exp.expression);
+            //}
     }
     private IEnumerator RunDialogForLine(DialogLineModel dialogLine)
     {
@@ -235,6 +243,7 @@ public class ConversationManager
     }
 
     public bool IsWaitingOnAutoTimer { get; private set; }
+
     private IEnumerator WaitForDialogSegmentSignalToBeTriggered(DialogData.DIALOG_SEGMENT segment)
     {
         switch (segment.startSignal)

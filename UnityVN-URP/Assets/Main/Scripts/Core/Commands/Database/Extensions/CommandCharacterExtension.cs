@@ -162,9 +162,6 @@ public class CommandCharacterExtension : CommandDBExtension
 			//HACK: STOPS THE OTHER COROUTINES FOR THIS ONE.
 			yield break;
 		}
-
-		Debug.Log("<color=#008000>Spitting fax!!!!</color>");
-		Debug.Log($"STILL FETCHING??? {prompt.IsStillFetching}");
 		//yield return null;
 	}
 
