@@ -128,25 +128,23 @@ namespace History
 
                 character.IsVisible = characterData.enabled;
 
-                switch (character.config.charType)
+                if(character.config.charType == Character.CharacterType.Sprite)
                 {
-                    case Character.CharacterType.Sprite:
-                        SpriteData sData = JsonUtility.FromJson<SpriteData>(characterData.dataJSON);
-                        SpriteCharacter sc = character as SpriteCharacter;
-                        int i;
-                        for (i = 0; i < sData.layers.Count; i++) 
+                    SpriteData sData = JsonUtility.FromJson<SpriteData>(characterData.dataJSON);
+                    SpriteCharacter sc = character as SpriteCharacter;
+                    int i;
+                    for (i = 0; i < sData.layers.Count; i++)
+                    {
+                        var layer = sData.layers[i];
+                        if (sc.layers[i].renderer.sprite != null && sc.layers[i].renderer.sprite.name != layer.spriteName)
                         {
-                            var layer = sData.layers[i];
-                            if (sc.layers[i].renderer.sprite != null && sc.layers[i].renderer.sprite.name != layer.spriteName) 
-                            {
-                                Sprite sprite = sc.GetSprite(layer.spriteName);
-                                if (sprite != null)
-                                    sc.SetSprite(sprite, i);
-                                else
-                                    Debug.LogWarning("$History State could not load sprite '{layer.spriteName}'");
-                            }
+                            Sprite sprite = sc.GetSprite(layer.spriteName);
+                            if (sprite != null)
+                                sc.SetSprite(sprite, i);
+                            else
+                                Debug.LogWarning("$History State could not load sprite '{layer.spriteName}'");
                         }
-                        break;
+                    }
                 }
 
                 cache.Add(character.name);
