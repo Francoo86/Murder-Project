@@ -132,19 +132,23 @@ namespace History
                 {
                     SpriteData sData = JsonUtility.FromJson<SpriteData>(characterData.dataJSON);
                     SpriteCharacter sc = character as SpriteCharacter;
-                    int i;
-                    for (i = 0; i < sData.layers.Count; i++)
+
+                    //for (int i = 0; i < sData.layers.Count; i++)
+                    //{
+                    //Solo ocupamos una capa.
+                    int i = 0;
+                    var layer = sData.layers[i];
+                    if (sc.layers[i].renderer.sprite != null && sc.layers[i].renderer.sprite.name != layer.spriteName)
                     {
-                        var layer = sData.layers[i];
-                        if (sc.layers[i].renderer.sprite != null && sc.layers[i].renderer.sprite.name != layer.spriteName)
-                        {
-                            Sprite sprite = sc.GetSprite(layer.spriteName);
-                            if (sprite != null)
-                                sc.SetSprite(sprite, i);
-                            else
-                                Debug.LogWarning("$History State could not load sprite '{layer.spriteName}'");
-                        }
+                        Sprite sprite = sc.GetSprite(layer.spriteName);
+                        if (sprite != null)
+                            sc.SetSprite(sprite, i);
+                        else
+                            Debug.LogWarning($"History State could not load sprite '{layer.spriteName}'");
                     }
+                    //}
+
+                    //Debug.Log($"LOL COUNT: {sData.layers.Count}");
                 }
 
                 cache.Add(character.name);
