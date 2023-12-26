@@ -103,6 +103,10 @@ namespace History
 
             foreach (CharacterData characterData in data)
             {
+                //Whats this?
+                //if (characterData.characterName == "Innkepper")
+                    //characterData.characterName = "Innkeepeer as Generic";
+
                 Character character = CharacterController.Instance.GetCharacter(characterData.characterName, create: true);
                 character.displayName = characterData.displayName;
                 character.SetColor(characterData.color);
@@ -124,25 +128,27 @@ namespace History
 
                 character.IsVisible = characterData.enabled;
 
-                switch (character.config.charType)
+                if(character.config.charType == Character.CharacterType.Sprite)
                 {
-                    case Character.CharacterType.Sprite:
-                        SpriteData sData = JsonUtility.FromJson<SpriteData>(characterData.dataJSON);
-                        SpriteCharacter sc = character as SpriteCharacter;
-                        int i;
-                        for (i = 0; i < sData.layers.Count; i++) 
-                        {
-                            var layer = sData.layers[i];
-                            if (sc.layers[i].renderer.sprite != null && sc.layers[i].renderer.sprite.name != layer.spriteName) 
-                            {
-                                Sprite sprite = sc.GetSprite(layer.spriteName);
-                                if (sprite != null)
-                                    sc.SetSprite(sprite, i);
-                                else
-                                    Debug.LogWarning("$History State could not load sprite '{layer.spriteName}'");
-                            }
-                        }
-                        break;
+                    SpriteData sData = JsonUtility.FromJson<SpriteData>(characterData.dataJSON);
+                    SpriteCharacter sc = character as SpriteCharacter;
+
+                    //for (int i = 0; i < sData.layers.Count; i++)
+                    //{
+                    //Solo ocupamos una capa.
+                    int i = 0;
+                    var layer = sData.layers[i];
+                    if (sc.layers[i].renderer.sprite != null && sc.layers[i].renderer.sprite.name != layer.spriteName)
+                    {
+                        Sprite sprite = sc.GetSprite(layer.spriteName);
+                        if (sprite != null)
+                            sc.SetSprite(sprite, i);
+                        else
+                            Debug.LogWarning($"History State could not load sprite '{layer.spriteName}'");
+                    }
+                    //}
+
+                    //Debug.Log($"LOL COUNT: {sData.layers.Count}");
                 }
 
                 cache.Add(character.name);

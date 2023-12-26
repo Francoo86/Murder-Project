@@ -10,6 +10,8 @@ public class CoroutinePrompt {
     private static CoroutinePrompt instance;
     private AISessionManager currentSession;
     private CharacterInteraction lastInteraction;
+    public bool IsWaiting = false;
+    public bool IsStillFetching => currentSession.Client.IsFetching;
 
     /// <summary>
     /// Initializes the Coroutined Prompt class, in singleton way.
@@ -72,8 +74,15 @@ public class CoroutinePrompt {
         lastInteraction.SetLastInteraction(deserializedInteraction.TextList, emoteInfo.Behavior, emoteInfo.Strength);
     }
 
-    public IEnumerator Interact(Character character)
+    //Esta funcion fue cambiada debido a que los personajes con la función Say reinician la conversación y encolan la conversación de inworld.
+    /// <summary>
+    /// Makes the character dialog box display the resultant response text and saves it into the actual conversation.
+    /// </summary>
+    /// <param name="characterName">The character name.</param>
+    public void Interact(string characterName)
     {
-        yield return lastInteraction.DisplayText(character);
+        lastInteraction.DisplayText(characterName);
     }
+
+    public string GetResponseExpression() => lastInteraction.GetLastEmotion();
 }

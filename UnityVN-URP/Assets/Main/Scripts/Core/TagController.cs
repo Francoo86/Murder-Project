@@ -14,7 +14,7 @@ using VISUALNOVEL;
 public class TagController
 {   
     private static readonly Dictionary<string, Func<string>> tags = new Dictionary<string, Func<string>>() {
-        { "<playerName>", () => VNGameSave.activeFile.playerName },
+        { "<mainChar>", () => VNGameSave.activeFile.playerName },
         { "<time>",       () => DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss") },
         { "<tempVal>",    () => "test2" },
         { "<input>",      () => PromptPanel.Instance.LastInput }

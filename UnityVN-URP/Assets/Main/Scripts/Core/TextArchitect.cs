@@ -103,6 +103,9 @@ public class TextArchitect
     public Coroutine buildProcess = null;
     public bool isBuilding => buildProcess != null;
 
+    /// <summary>
+    /// Tells the writing coroutine to stop.
+    /// </summary>
     public void Stop() {
         if (!isBuilding) return;
 
@@ -130,7 +133,7 @@ public class TextArchitect
     }
 
     /// <summary>
-    /// Prepara el texto para que no tenga errores.
+    /// Prepares the text by the specified ones.
     /// </summary>
     private void Prepare() 
     {

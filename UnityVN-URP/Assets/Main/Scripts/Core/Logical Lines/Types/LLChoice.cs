@@ -42,6 +42,14 @@ public class LLChoice : ILogicalLine
         Conversation newConversation = new Conversation(selectedChoice.resultLines, file: currentConversation.file, fileStartIndex: selectedChoice.startIndex, fileEndIndex: selectedChoice.endIndex);
         ConvManager.conversation.SetProgress(data.endingIndex - currentConversation.fileStartIndex);
         ConvManager.EnqueuePriority(newConversation);
+
+        AutoReader autoReader = DialogController.Instance.autoReader;
+        if (autoReader !=null && autoReader.IsOn && autoReader.Skip)
+        {
+            if (VN_Configuration.activeConfig != null && !VN_Configuration.activeConfig.continueSkippingAfterChoice)
+                autoReader.Disable();
+        }
+
     }
 
     /// <summary>

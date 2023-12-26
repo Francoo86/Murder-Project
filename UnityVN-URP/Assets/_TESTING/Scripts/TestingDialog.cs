@@ -24,7 +24,7 @@ public class TestingDialog : MonoBehaviour
         string relativePath = fullPath.Substring(resourcesIndex + 10);
         string filePath = Path.ChangeExtension(relativePath, null);
 
-        VNManager.Instance.LoadFile(filePath);
+        LoadFile(filePath);
 
         SpriteCharacter charPedro = CharacterController.Instance.CreateCharacter("Marcelo") as SpriteCharacter;
         Character alfonso = CharacterController.Instance.CreateCharacter("Patricia");
@@ -76,4 +76,23 @@ public class TestingDialog : MonoBehaviour
     {
         
     }
+
+    public void LoadFile(string filePath)
+    {
+        List<string> lines = new List<string>();
+        TextAsset file = Resources.Load<TextAsset>(filePath);
+
+        try
+        {
+            lines = FileManager.ReadTextAsset(file);
+        }
+        catch
+        {
+            Debug.LogError($"Dialogue file at path 'Resources/{filePath}' does not exist!");
+            return;
+        }
+
+        DialogController.Instance.Say(lines, filePath);
+    }
+
 }

@@ -16,6 +16,7 @@ public class InworldWrapper : MonoBehaviour
     private const string GRPC_ID = "Grpc-Metadata-session-id";
     private const string PREFERRED_METHOD = "POST";
     private static readonly HashSet<long> SUCCESFUL_CODES = new HashSet<long> { 200, 201 };
+    public bool IsFetching {  get; private set; }
     public static InworldWrapper Instance {  get; private set; }
 
     //Variables de vital importancia.
@@ -44,6 +45,11 @@ public class InworldWrapper : MonoBehaviour
     private IEnumerator CallAPI(string endPoint, Dictionary<string, string> contentData, string sessionIdGrpc = null, Action<string> callback = null)
     {
         //null thing makes unity crazy.
+        while (IsFetching)
+            yield return null;
+
+        IsFetching = true;
+
         string serializedContent = contentData != null ? JsonConvert.SerializeObject(contentData) : "";
         string fullUrl = $"{API_URL}{workspacePath}{endPoint}";
 
@@ -62,6 +68,8 @@ public class InworldWrapper : MonoBehaviour
         }
 
         yield return webRequest.SendWebRequest();
+
+        IsFetching = false;
 
         Debug.Log($"Last response: {webRequest.responseCode}");
 
@@ -145,6 +153,8 @@ public class InworldWrapper : MonoBehaviour
     public IEnumerator SendPrompt(string sessId, string plyId, string text, Action<string> callback)
     {
         string promptEndpoint = $"/sessions/{sessId}/sessionCharacters/{plyId}:sendText";
-        yield return StartCoroutine(CallWithGRPC(promptEndpoint, sessId, new Dictionary<string, string>() { { "text", text } }, callback));
+        //This causes a memory leak for no reason?
+        Dictionary<string, string> textData = new Dictionary<string, string>() { { "text", text } };
+        yield return StartCoroutine(CallWithGRPC(promptEndpoint, sessId, textData, callback));
     }
 }

@@ -16,7 +16,7 @@ namespace VISUALNOVEL
         public const string FILE_TYPE = ".vns";
         public const string SCREENSHOT_FILE_TYPE = ".jpg";
         public const bool ENCRYPY_FILE = false;
-        public const float SCREENSHOT_DOWNSCALE = 0.25f;
+        public const float SCREENSHOT_DOWNSCALE = 1;
 
         public string filePath => $"{FilePaths.gameSaves}{slotNumber}{FILE_TYPE}";
         public string screenshotPath => $"{FilePaths.gameSaves}{slotNumber}{SCREENSHOT_FILE_TYPE}";
@@ -24,6 +24,7 @@ namespace VISUALNOVEL
         public string playerName;
         public int slotNumber = 1;
 
+        public bool newGame = true;
         public string[] activeConversations;
         public HistoryState activeState;
         public HistoryState[] historyLog;
@@ -34,6 +35,8 @@ namespace VISUALNOVEL
 
         public void Save() 
         {
+            newGame = false;
+
             activeState = HistoryState.Capture();
             historyLog = HistoryManager.Instance.history.ToArray();
             activeConversations = GetConversationData();
@@ -46,6 +49,9 @@ namespace VISUALNOVEL
             FileManager.Save(filePath, saveJSON);
         }
 
+        /// <summary>
+        /// Applies the save file to the screen.
+        /// </summary>
         public void Activate() 
         {
             if (activeState != null)
@@ -62,10 +68,13 @@ namespace VISUALNOVEL
             //DialogController.Instance.prompt.Hide();
         }
 
+        //ESTA FUNCION WEBEA CON LAS VARIABLES.
+        //This function it shouldn't set the activeFile instantly.
         public static VNGameSave Load(string filePath, bool activateOnLoad = false)
         {
             VNGameSave save = FileManager.Load<VNGameSave>(filePath);
             activeFile = save;
+
             if (activateOnLoad)
                 save.Activate();
             return save;  
@@ -106,8 +115,7 @@ namespace VISUALNOVEL
 
         private void SetConversationData()
         {
-            int i = 0;
-            for(i = 0; i < activeConversations.Length; i++) 
+            for(int i = 0; i < activeConversations.Length; i++) 
             {
                 try
                 {
@@ -163,6 +171,7 @@ namespace VISUALNOVEL
                     variableData.name = $"{database.name}.{variable.Key}";
                     string val = $"{variable.Value.Get()}";
                     variableData.value = val;
+                    Debug.Log($"<color=#00FF00>Retreiving the variable: {variableData.name} val: {variableData.value}</color>");
                     variableData.type = val == string.Empty ? "System.String" : variable.Value.Get().GetType().ToString(); 
                     retData.Add(variableData);
                 }
@@ -201,7 +210,13 @@ namespace VISUALNOVEL
                             continue;
                         }
                         break;
-
+                    case "System.Double":
+                        if(float.TryParse(val, out float d_val))
+                        {
+                            VariableStore.TrySetValue(variable.name, d_val);
+                            continue;
+                        }
+                        break;
                     case "System.String":
                         VariableStore.TrySetValue(variable.name, val);
                         continue;

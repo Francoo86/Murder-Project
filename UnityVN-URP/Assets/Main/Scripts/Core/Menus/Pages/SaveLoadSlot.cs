@@ -26,7 +26,9 @@ public class SaveLoadSlot : MonoBehaviour
     {
         if (File.Exists(filePath))
         {
+            //UnityEngine.Debug.Log($"<color=#AAFF00>MEGA SCREAMING AT CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
             VNGameSave file = VNGameSave.Load(filePath);
+            //Debug.Log($"<color=#AAFF00>MEGA SCREAMING AT CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
             PopulateDetailsFromFile(function, file);
         }
         else 
@@ -39,8 +41,8 @@ public class SaveLoadSlot : MonoBehaviour
     private void PopulateDetailsFromFile( SaveAndLoadMenu.MenuFunction function, VNGameSave file) 
     {
         //Debug.Log("IS THIS SAVE BEING CALLED?!!?!?!");
-        Debug.Log($"Current file {file}");
-        Debug.Log($"Actual instance of the file {SaveAndLoadMenu.Instance.emptyFileImage}");
+        //Debug.Log($"Current file {file}");
+        //Debug.Log($"Actual instance of the file {SaveAndLoadMenu.Instance.emptyFileImage}");
         if (file == null)
         {
             titleText.text = $"{fileNumber}. Empty File";
@@ -73,14 +75,28 @@ public class SaveLoadSlot : MonoBehaviour
 
     public void Load()
     {
-        VNGameSave file = VNGameSave.Load(filePath, true);
+        VNGameSave file = VNGameSave.Load(filePath, false);
         SaveAndLoadMenu.Instance.Close(closeAllMenus: true);
+
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == MainMenu.MAIN_MENU_SCENE)
+        {
+            //VNGameSave.activeFile = file;
+            MainMenu.instance.LoadGame(file);
+        }
+        else
+        {
+            //Debug.Log($"Currently loading file number of: {filePath}");
+            file.Activate();
+            //VNGameSave.activeFile = file;
+        }
+
     }
-    
     
     public void Save()
     {
+
         var activeSave = VNGameSave.activeFile;
+        //Debug.Log($"Currently saving file number of: {fileNumber}");
         activeSave.slotNumber = fileNumber;
         activeSave.Save();
         PopulateDetailsFromFile(SaveAndLoadMenu.Instance.menuFunction, activeSave);

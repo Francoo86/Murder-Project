@@ -21,7 +21,7 @@ public class DialogController : MonoBehaviour
     public static DialogController Instance { get; private set; }
     private TextArchitect architect;
     private CanvasGroupController CGController;
-    private AutoReader autoReader;
+    public AutoReader autoReader;
 
     //Definimos una "funcion" que es m�s o menos personalizable.
     public delegate void DialogSystemEvent();
@@ -66,8 +66,9 @@ public class DialogController : MonoBehaviour
         dialogContainer.Initialize();
 
         _hasInitialized = true;
+        autoReader = GetComponent<AutoReader>();
 
-        if (TryGetComponent(out autoReader))
+        if (autoReader != null)
             autoReader.Initialize(convManager);
     }
 
@@ -150,7 +151,10 @@ public class DialogController : MonoBehaviour
         ApplySpeakerDataToBox(config);
     }
 
-    //Shows the character name on the screen, if the character is the narrator it wil not show it.
+    /// <summary>
+    /// Shows the character name on the screen, if the character is the narrator it wil not show it.
+    /// </summary>
+    /// <param name="speakerName">The character name.</param>
     public void ShowSpeakerName(string speakerName = "")
     {
         //No hay raz�n para mostrar al narrador, similar a RenPy.

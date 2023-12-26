@@ -15,18 +15,23 @@ else
 	narrator "si soy"
 }
 
+narrator "Webear por favor stopp!!! <mainChar>"
 setlayermedia(fondo consejeria)
 narrator "Aqui es cuando aparece el marselo..."
-marcelo "When despiertas"
+Marcelo "When despiertas"
+Marcelo "Hacer diagramas de secuencia es...."
+Marcelo "Facil para el que estudioXD...."
 
-$VN.mainChar= <input>
+[wait]inworld(marcelo)
+
 //cambiar input por VN.mainChar
 
 input "Cual es tu nombre bro?"
+$VN.mainCharName = <input>
 
-narrator "Ahh entonces te llamas <input>"
+narrator "¡Ahh entonces te llamas $VN.mainCharName!"
 
-<playerName> "Soy ese, la hora es <time>"
+Freeman "Soy ese, la hora es <time>"
 
 choice "What do you like to do?"
 {

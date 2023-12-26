@@ -8,119 +8,165 @@ using CHARACTERS;
 
 public class CommandCharacterExtension : CommandDBExtension
 {
-    //Activar personajes y eso.
-    private static string[] ENABLED_CHARACTER = new string[] { "-e", "-enabled" };
-    private static string[] INMEDIATE_APPEARING = new string[] { "-i", "-inmediate" };
-    //Posiciones.
-    private static string XPOS = "-x";
-    private static string YPOS = "-y";
-    private static string[] SPEED_PARAM = new string[]{ "-s", "-speed" };
-    private static string SMOOTH_PARAM = "-smoothness";
+	//Activar personajes y eso.
+	private static string[] ENABLED_CHARACTER = new string[] { "-e", "-enabled" };
+	private static string[] INMEDIATE_APPEARING = new string[] { "-i", "-inmediate" };
+	//Posiciones.
+	private static string XPOS = "-x";
+	private static string YPOS = "-y";
+	private static string[] SPEED_PARAM = new string[] { "-s", "-speed" };
+	private static string SMOOTH_PARAM = "-smoothness";
 
-    new public static void Extend(CommandDB commandDB)
-    {
-        commandDB.AddCommand("show", new Func<string[], IEnumerator>(ShowAll));
-        commandDB.AddCommand("createcharacter", new Action<string[]>(CreateCharacter));
-        commandDB.AddCommand("movecharacter", new Func<string[], IEnumerator>(MoveCharacter));
-    }
+	new public static void Extend(CommandDB commandDB)
+	{
+		commandDB.AddCommand("show", new Func<string[], IEnumerator>(ShowAll));
+		commandDB.AddCommand("createcharacter", new Action<string[]>(CreateCharacter));
+		commandDB.AddCommand("movecharacter", new Func<string[], IEnumerator>(MoveCharacter));
 
-    private static void CreateCharacter(string[] data)
-    {
-        string charName = data[0];
-        bool enabled = false;
-        bool inmediate = false;
-        Character character = CharacterController.Instance.CreateCharacter(charName, enabled);
+		//The technological plus.
+		commandDB.AddCommand("inworld", new Func<string, IEnumerator>(TalkWithCharacter));
+	}
 
-        var parameters = ConvertToParams(data);
-        parameters.TryGetValue(ENABLED_CHARACTER, out enabled, false);
-        parameters.TryGetValue(INMEDIATE_APPEARING, out inmediate, false);
+	private static void CreateCharacter(string[] data)
+	{
+		string charName = data[0];
+		bool enabled = false;
+		bool inmediate = false;
+		Character character = CharacterController.Instance.CreateCharacter(charName, enabled);
 
-        Debug.Log($"Creating from command {charName}");
+		var parameters = ConvertToParams(data);
+		parameters.TryGetValue(ENABLED_CHARACTER, out enabled, false);
+		parameters.TryGetValue(INMEDIATE_APPEARING, out inmediate, false);
 
-        if (!enabled) return;
+		Debug.Log($"Creating from command {charName}");
 
-        if (inmediate)
-            character.IsVisible = true;
-        else
-            character.Show();
-    }
+		if (!enabled) return;
 
-    //Trying.
-    private static IEnumerator MoveCharacter(string[] data)
-    {
-        string charName = data[0];
+		if (inmediate)
+			character.IsVisible = true;
+		else
+			character.Show();
+	}
 
-        Character character = CharacterController.Instance.GetCharacter(charName);
+	//Trying.
+	private static IEnumerator MoveCharacter(string[] data)
+	{
+		string charName = data[0];
 
-        if(character == null) yield break;
+		Character character = CharacterController.Instance.GetCharacter(charName);
 
-        float x = 0, y = 0;
-        float speed = 0;
-        bool smooth = false;
-        bool inmediate = false;
+		if (character == null) yield break;
 
-        var parameters = ConvertToParams(data);
-        //Obtener posicion en X.
-        parameters.TryGetValue(XPOS, out x);
-        //En Y.
-        parameters.TryGetValue(YPOS, out y);
-        //Ver si se mueve de inmediato.
-        parameters.TryGetValue(SPEED_PARAM, out speed, defaultVal: 1);
-        //Queremos suavidad?
-        parameters.TryGetValue(SMOOTH_PARAM, out smooth, false);
-        //Altoque?
-        parameters.TryGetValue(INMEDIATE_APPEARING, out inmediate, false);
+		float x = 0, y = 0;
+		float speed = 0;
+		bool smooth = false;
+		bool inmediate = false;
 
-        Vector2 pos = new Vector2(x, y);
-        if (inmediate)
-            character.SetPos(pos);
-        else
-            CommandController.Instance.AddTerminationActionToActualProcess(() => { character.SetPos(pos); });
-            yield return character.MoveToPosition(pos, speed, smooth);
+		var parameters = ConvertToParams(data);
+		//Obtener posicion en X.
+		parameters.TryGetValue(XPOS, out x);
+		//En Y.
+		parameters.TryGetValue(YPOS, out y);
+		//Ver si se mueve de inmediato.
+		parameters.TryGetValue(SPEED_PARAM, out speed, defaultVal: 1);
+		//Queremos suavidad?
+		parameters.TryGetValue(SMOOTH_PARAM, out smooth, false);
+		//Altoque?
+		parameters.TryGetValue(INMEDIATE_APPEARING, out inmediate, false);
 
-        //yield return null;
-    }
+		Vector2 pos = new Vector2(x, y);
+		if (inmediate)
+			character.SetPos(pos);
+		else
+			CommandController.Instance.AddTerminationActionToActualProcess(() => { character.SetPos(pos); });
+		yield return character.MoveToPosition(pos, speed, smooth);
 
-    private static IEnumerator ShowAll(string[] data)
-    {
-        List<Character> allCharacters = new List<Character>();
-        bool inmediate = false;
+		//yield return null;
+	}
 
-        foreach (string character in data)
-        {
-            Character currentCharacter = CharacterController.Instance.GetCharacter(character, create: false);
+	private static IEnumerator ShowAll(string[] data)
+	{
+		List<Character> allCharacters = new List<Character>();
+		bool inmediate = false;
 
-            if(currentCharacter != null)
-                allCharacters.Add(currentCharacter);
-        }
+		foreach (string character in data)
+		{
+			Character currentCharacter = CharacterController.Instance.GetCharacter(character, create: false);
 
-        if(allCharacters.Count == 0)
-        {
-            yield break;
-        }
+			if (currentCharacter != null)
+				allCharacters.Add(currentCharacter);
+		}
 
-        var parameters = ConvertToParams(data);
-        parameters.TryGetValue(INMEDIATE_APPEARING, out inmediate, false);
+		if (allCharacters.Count == 0)
+		{
+			yield break;
+		}
 
-        foreach(Character character in allCharacters)
-        {
-            if (!inmediate)
-                character.Hide();
-            else
-                character.IsVisible = true;
-        }
+		var parameters = ConvertToParams(data);
+		parameters.TryGetValue(INMEDIATE_APPEARING, out inmediate, false);
 
-        if (!inmediate)
-        {
-            while(allCharacters.Any(c => c.IsHiding))
-            {
-                yield return null;
-            }
-        }
-    }
+		foreach (Character character in allCharacters)
+		{
+			if (!inmediate)
+				character.Hide();
+			else
+				character.IsVisible = true;
+		}
 
-    public static void HideAll(string[] data)
-    {
+		if (!inmediate)
+		{
+			while (allCharacters.Any(c => c.IsHiding))
+			{
+				yield return null;
+			}
+		}
+	}
 
-    }
+	private const string STOP_ID = "stop";
+	private static IEnumerator TalkWithCharacter(string characterName)
+	{
+		characterName = characterName.ToLower();
+		PromptPanel panel = PromptPanel.Instance;
+
+		//Loads a new session.
+		AISessionManager sess = new AISessionManager(characterName);
+		CoroutinePrompt prompt = CoroutinePrompt.GetInstance();
+		prompt.InjectSession(sess);
+
+		Character character = CharacterController.Instance.GetCharacter(characterName, true);
+
+		yield return character.Show();
+		
+		//FIXME: Save those lines in the conversation.
+		while (true)
+		{
+			panel.Show("What do you want to ask me?");
+
+			while (panel.IsWaitingOnUserInput)
+				yield return null;
+
+			if (panel.LastInput == STOP_ID)
+			{
+				yield return character.Hide();
+				yield break;
+			}
+		   
+			yield return prompt.Talk(panel.LastInput);
+
+			while (prompt.IsStillFetching)
+				yield return null;
+
+			prompt.Interact(characterName);
+			character.OnExpressionReceive(0, prompt.GetResponseExpression());
+
+			//HACK: STOPS THE OTHER COROUTINES FOR THIS ONE.
+			yield break;
+		}
+		//yield return null;
+	}
+
+	public static void HideAll(string[] data)
+	{
+
+	}
 }
