@@ -103,8 +103,9 @@ namespace History
 
             foreach (CharacterData characterData in data)
             {
-                if (characterData.characterName == "Innkepper")
-                    characterData.characterName = "Innkeepeer as Generic";
+                //Whats this?
+                //if (characterData.characterName == "Innkepper")
+                    //characterData.characterName = "Innkeepeer as Generic";
 
                 Character character = CharacterController.Instance.GetCharacter(characterData.characterName, create: true);
                 character.displayName = characterData.displayName;

@@ -49,6 +49,9 @@ namespace VISUALNOVEL
             FileManager.Save(filePath, saveJSON);
         }
 
+        /// <summary>
+        /// Applies the save file to the screen.
+        /// </summary>
         public void Activate() 
         {
             if (activeState != null)
