@@ -21,6 +21,8 @@ narrator "Aqui es cuando aparece el marselo..."
 Marcelo "When despiertas"
 Marcelo "Hacer diagramas de secuencia es...."
 Marcelo "Facil para el que estudioXD...."
+Patricia "Si"
+Luis "When eres"
 
 [wait]inworld(marcelo)
 

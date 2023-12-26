@@ -33,7 +33,7 @@ public class ConfigMenu : MenuPage
 
         activePanel = panels[0];
 
-        Resolution[] resolutions = Screen.resolutions; // esta linea aparentemente en el video desaparece
+        //Resolution[] resolutions = Screen.resolutions; // esta linea aparentemente en el video desaparece
 
         SetAvailableResolutions();
 

@@ -9,11 +9,18 @@ using VISUALNOVEL;
 public class TestingDialog : MonoBehaviour
 {
 
-    [SerializeField] private TextAsset fileToRead = null; 
+    [SerializeField] private TextAsset fileToRead = null;
+    private SpriteCharacter charPedro;
+    private SpriteCharacter charPatricia;
     
     // Start is called before the first frame update
     void Start()
     {
+        charPedro = CharacterController.Instance.CreateCharacter("Marcelo") as SpriteCharacter;
+        charPatricia = CharacterController.Instance.CreateCharacter("Patricia") as SpriteCharacter;
+
+        charPatricia.Show();
+        charPedro.Show();
         //StartCoroutine(StartTalking());
     }
 
@@ -54,7 +61,7 @@ public class TestingDialog : MonoBehaviour
         charPedro.TransitionSprite(pensativo);
         //charPedro.SetSprite(pensativo);
         //Wacky ahh pos.
-        charPedro.SetPos(new Vector2(0.5f, 0.4f));
+      
 
         //AudioController.Instance.PlaySoundEffect("Audio/SFX/RadioStatic");
 
@@ -74,7 +81,19 @@ public class TestingDialog : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Debug.Log("Setting positions for Marcelo");
+            charPedro.MoveToPosition(new Vector2(0.5f, 0.4f), 0.5f, true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Debug.Log("Setting positions for Marcelo");
+            charPatricia.MoveToPosition(new Vector2(0.5f, 0.4f), 0.5f, true);
+        }
+
+
     }
 
     public void LoadFile(string filePath)

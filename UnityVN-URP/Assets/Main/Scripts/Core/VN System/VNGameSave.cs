@@ -58,8 +58,10 @@ namespace VISUALNOVEL
                 activeState.Load();
             
             HistoryManager.Instance.history = historyLog.ToList();
-            HistoryManager.Instance.logManager.Clear();
-            HistoryManager.Instance.logManager.Rebuild();
+            //Wrapper method for refactoring this stuff.
+            HistoryManager.Instance.ResetLogManager();
+            //HistoryManager.Instance.logManager.Clear();
+            //HistoryManager.Instance.logManager.Rebuild();
 
             SetVariableData();
             SetConversationData();
@@ -86,8 +88,7 @@ namespace VISUALNOVEL
 
             var conversations = DialogController.Instance.convManager.GetConversationQueue();
 
-            int i = 0;
-            for (i = 0; i < conversations.Length; i++)
+            for (int i = 0; i < conversations.Length; i++)
             {
                 var conversation = conversations[i];
                 string data = "";
