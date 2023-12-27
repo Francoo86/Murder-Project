@@ -55,7 +55,7 @@ public class ScreenshootMaster : MonoBehaviour
         if(!filePath.Contains('.'))
             filePath = filePath + extension;
 
-        Debug.Log("Is this shit even trying?!");
+        FileManager.TryCreateDirectoryFromPath(filePath);
 
         System.IO.File.WriteAllBytes(filePath, bytes);
     }
