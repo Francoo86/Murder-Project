@@ -45,6 +45,7 @@ namespace History
                 return;
             }
 
+            Debug.Log($"Is being active? {isOpen}");
             SetActive(true);
             isOpen = true;
         }
