@@ -1,0 +1,2 @@
+[wait]HideUI()
+[wait]ShowUI()

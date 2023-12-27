@@ -13,6 +13,7 @@ public class CoroutinePrompt {
     public bool IsWaiting = false;
     public bool IsStillFetching => currentSession.Client.IsFetching;
     public bool IsTalkingWithCharacter = false;
+    public Conversation savedConversation = null;
 
     /// <summary>
     /// Initializes the Coroutined Prompt class, in singleton way.
@@ -42,6 +43,19 @@ public class CoroutinePrompt {
     public void InjectSession(AISessionManager session)
     {
         currentSession = session;
+    }
+
+    private ConversationManager convManager => DialogController.Instance.convManager;
+
+    public void BackupLastConversation()
+    {
+        Conversation[] allConvs = convManager.GetConversationQueue();
+        savedConversation = allConvs[allConvs.Length - 1];
+    }
+
+    public void RestoreLastConversation()
+    {
+        convManager.StartConversation(savedConversation);
     }
 
     //Void method should keep it there.
@@ -80,10 +94,10 @@ public class CoroutinePrompt {
     /// Makes the character dialog box display the resultant response text and saves it into the actual conversation.
     /// </summary>
     /// <param name="characterName">The character name.</param>
-    public void Interact(string characterName)
+    public IEnumerator Interact(Character character)
     {
-        lastInteraction.DisplayText(characterName);
+        yield return lastInteraction.DisplayText(character);
     }
 
-    public string GetResponseExpression() => lastInteraction.GetLastEmotion();
+    //public string GetResponseExpression() => lastInteraction.GetLastEmotion();
 }

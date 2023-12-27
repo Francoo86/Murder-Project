@@ -163,12 +163,14 @@ public class CommandCharacterExtension : CommandDBExtension
 		characterName = characterName.ToLower();
 		PromptPanel panel = PromptPanel.Instance;
 
-		//Loads a new session.
+		//Loads a new session
 		AISessionManager sess = new AISessionManager(characterName);
 		CoroutinePrompt prompt = CoroutinePrompt.GetInstance();
 		prompt.InjectSession(sess);
 
 		Character character = CharacterController.Instance.GetCharacter(characterName, true);
+
+		prompt.BackupLastConversation();
 
 		yield return character.Show();
 		
@@ -185,10 +187,9 @@ public class CommandCharacterExtension : CommandDBExtension
 			{
                 prompt.IsTalkingWithCharacter = false;
                 yield return character.Hide();
+				prompt.RestoreLastConversation();
 				yield break;
 			}
-
-			Debug.Log("THE FUCK IS THIS?");
 		   
 			yield return prompt.Talk(panel.LastInput);
 
@@ -196,14 +197,12 @@ public class CommandCharacterExtension : CommandDBExtension
 				yield return null;
 
 			prompt.IsTalkingWithCharacter = false;
-			prompt.Interact(characterName);
-			character.OnExpressionReceive(0, prompt.GetResponseExpression());
 
-			//HACK: STOPS THE OTHER COROUTINES FOR THIS ONE.
-			yield break;
-		}
-		//yield return null;
-	}
+			yield return prompt.Interact(character);
+            //HACK: STOPS THE OTHER COROUTINES FOR THIS ONE.
+        }
+        //yield return null;
+    }
 
 	public static void HideAll(string[] data)
 	{

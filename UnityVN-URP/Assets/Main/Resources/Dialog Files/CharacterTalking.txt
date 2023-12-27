@@ -1,12 +1,10 @@
 [wait]SetLayerMedia(fondo campo_fondo_iglesia)
 [wait]ShowUI(-speed 0.75)
-$talkedCharacters = 0
+//$talkedCharacters = 0
 
 PlaySong(metro2033_redux)
 
 <mainChar> "I need to investigate who the murderer is..."
-
-
 
 choice "I will talk to..."
 {
@@ -14,6 +12,7 @@ choice "I will talk to..."
         <mainChar> "Guess I will talk to Ana."
         [wait]Inworld(Ana)
         $talkedCharacters += 1
+        Load(CharacterTalking)
     -Anastasia
         <mainChar> "Guess I will talk to Anastasia."
         [wait]Inworld(Anastasia)
@@ -56,6 +55,16 @@ if($talkedCharacters > 3)
 {
     
     <mainChar> "I talked with some guys, i will try to guess who is the murderer."
+
+    choice "Should i tell the mayor?"
+    {
+        -Yes
+            <mainChar> "I will tell mayor then."
+            Load(Ending -enqueue true)
+        -No
+            <mainChar> "Maybe i will tell after i do more research!"
+    }
 }
 
+<mainChar> "I need to investigate more..."
 Load(CharacterTalking -enqueue true)

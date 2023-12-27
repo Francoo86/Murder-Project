@@ -58,8 +58,11 @@ class CharacterInteraction
     /// Inyectar personaje para que pueda decir algo.
     /// </summary>
     /// <param name="character"></param>
-    public void DisplayText(string characterName)
+    public IEnumerator DisplayText(Character character)
     {
+        character.OnExpressionReceive(0, GetLastEmotion());
+        yield return character.Say(lastText);
+        /*
         //BINGO.
         ConversationManager Controller = DialogController.Instance.convManager;
 
@@ -76,8 +79,8 @@ class CharacterInteraction
             wasNull = true;
         }
 
-        List<string> conversationLines = Controller.conversation.GetLines();
-        int progress = Controller.conversation.GetProgress();
+        List<string> conversationLines = lastConversation.GetLines();
+        int progress = lastConversation.GetProgress();
 
         for(int i = linesToAppend.Count - 1; i >= 0; i--)
         {
@@ -86,10 +89,10 @@ class CharacterInteraction
         }
 
         if(wasNull)
-           Controller.StartConversation(lastConversation);
+           Controller.StartConversation(lastConversation);*/
     }
 
-    public string GetLastEmotion()
+    private string GetLastEmotion()
     {
         return lastEmotion ?? "normal";
     }
