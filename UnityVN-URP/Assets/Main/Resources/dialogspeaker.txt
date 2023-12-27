@@ -16,6 +16,7 @@ else
 }
 
 //enter Luis [pensativo] "Hola"
+enter Jacinto "Hola soy yo"
 enter Pedro [pensativo] "Hola tambien"
 narrator "Webear por favor stopp!!! <mainChar>"
 setlayermedia(fondo consejeria)

@@ -45,13 +45,34 @@ MonoBehaviour:
     alias: 
     charType: 1
     nameCol: {r: 1, g: 0.9097158, b: 0, a: 1}
-    diagCol: {r: 0.11119795, g: 1, b: 0, a: 1}
+    diagCol: {r: 0.22651002, g: 0.3773585, b: 0.20790316, a: 1}
     nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  - name: Santiago
+  - name: Jacinto
     alias: 
     charType: 1
-    nameCol: {r: 0, g: 0.24576807, b: 1, a: 1}
-    diagCol: {r: 0.11119795, g: 1, b: 0, a: 1}
+    nameCol: {r: 0.10265255, g: 0, b: 1, a: 1}
+    diagCol: {r: 0.41509432, g: 0.24593955, b: 0.22869347, a: 1}
+    nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - name: Ana
+    alias: 
+    charType: 1
+    nameCol: {r: 0.43438768, g: 0, b: 1, a: 1}
+    diagCol: {r: 0.5827457, g: 1, b: 0, a: 1}
+    nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - name: Lucia
+    alias: 
+    charType: 1
+    nameCol: {r: 0, g: 0.48054695, b: 1, a: 1}
+    diagCol: {r: 0.418202, g: 0.5660378, b: 0.21039516, a: 1}
+    nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - name: Anastasia
+    alias: 
+    charType: 1
+    nameCol: {r: 0, g: 0.25482798, b: 0.5283019, a: 1}
+    diagCol: {r: 0.418202, g: 0.5660378, b: 0.21039516, a: 1}
     nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
