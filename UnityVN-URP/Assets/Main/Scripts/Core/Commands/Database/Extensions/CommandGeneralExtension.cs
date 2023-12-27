@@ -27,6 +27,7 @@ namespace COMMANDS
             commandDB.AddCommand("load", new Action<string[]>(LoadDialogFile));
 
             commandDB.AddCommand("setplayername", new Action<string>(SetPlayerNameVariable));
+            commandDB.AddCommand("gobacktomenu", new Action<string>(GoBackToMenu));
         }
 
         private static void SetPlayerNameVariable(string data)
@@ -113,6 +114,12 @@ namespace COMMANDS
             bool inmediate;
             (speed, inmediate) = ExtractFadeLogic(data);
             yield return DialogController.Instance.Hide(speed, inmediate);
+        }
+
+        private static void GoBackToMenu(string data)
+        {
+            VN_Configuration.activeConfig.Save();
+            UnityEngine.SceneManagement.SceneManager.LoadScene(MainMenu.MAIN_MENU_SCENE);
         }
     }
 }

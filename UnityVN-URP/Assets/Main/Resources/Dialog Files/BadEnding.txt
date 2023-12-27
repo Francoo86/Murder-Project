@@ -1,0 +1,31 @@
+if($characterName == Jacinto)
+{
+    Jacinto as Mayor "Do you realize that i will never be capable to do that?"
+    Jacinto as Mayor "Get out of this place, and try again, be serious of your work detective!"
+}
+else 
+{
+    Jacinto as Mayor "So? $characterName is the guilty one?"
+    Jacinto as Mayor "We will put that person under arrest!"
+    Jacinto as Mayor "Thanks for your collaboration"
+}
+
+[wait]HideCharacter(Jacinto)
+[wait]HideUI()
+[wait]SetLayerMedia(fondo noche)
+[wait]ShowUI()
+
+[wait]ShowCharacter(Pedro)
+Pedro "Did you find guilty one?"
+Pedro "Guess what..."
+Pedro [enojado] "I will never be catched"
+Pedro "You won't survive, bye bye...."
+
+PlaySFX(csgo_knife)
+[wait]HideCharacter(Pedro)
+
+narrator "Bad ending: $characterName wasn't the murderer!"
+
+[wait]HideUI()
+
+GoBackToMenu()

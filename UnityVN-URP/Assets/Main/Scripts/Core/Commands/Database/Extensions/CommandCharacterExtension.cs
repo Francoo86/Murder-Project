@@ -22,6 +22,8 @@ public class CommandCharacterExtension : CommandDBExtension
 		commandDB.AddCommand("show", new Func<string[], IEnumerator>(ShowAll));
 		commandDB.AddCommand("createcharacter", new Action<string[]>(CreateCharacter));
 		commandDB.AddCommand("movecharacter", new Func<string[], IEnumerator>(MoveCharacter));
+		commandDB.AddCommand("showcharacter", new Func<string[], IEnumerator>(Show));
+		commandDB.AddCommand("hidecharacter", new Func<string[], IEnumerator>(Hide));
 
 		//The technological plus.
 		commandDB.AddCommand("inworld", new Func<string, IEnumerator>(TalkWithCharacter));
@@ -48,8 +50,41 @@ public class CommandCharacterExtension : CommandDBExtension
 			character.Show();
 	}
 
-	//Trying.
-	private static IEnumerator MoveCharacter(string[] data)
+	private static IEnumerator Show(string[] data)
+	{
+		Character character = CharacterController.Instance.GetCharacter(data[0], true);
+		if (character == null) yield break;
+
+		Debug.Log("Got the character: Jacinto");
+
+		var parameters = ConvertToParams(data);
+
+		parameters.TryGetValue(INMEDIATE_APPEARING, out bool inmediate, false);
+
+		if (inmediate)
+			character.IsVisible = true;
+		else
+			yield return character.Show();
+
+	}
+
+    private static IEnumerator Hide(string[] data)
+    {
+        Character character = CharacterController.Instance.GetCharacter(data[0], true);
+        if (character == null) yield break;
+
+        var parameters = ConvertToParams(data);
+
+        parameters.TryGetValue(INMEDIATE_APPEARING, out bool inmediate, false);
+
+        if (inmediate)
+            character.IsVisible = false;
+        else
+            yield return character.Hide();
+
+    }
+    //Trying.
+    private static IEnumerator MoveCharacter(string[] data)
 	{
 		string charName = data[0];
 
@@ -128,18 +163,21 @@ public class CommandCharacterExtension : CommandDBExtension
 		characterName = characterName.ToLower();
 		PromptPanel panel = PromptPanel.Instance;
 
-		//Loads a new session.
+		//Loads a new session
 		AISessionManager sess = new AISessionManager(characterName);
 		CoroutinePrompt prompt = CoroutinePrompt.GetInstance();
 		prompt.InjectSession(sess);
 
 		Character character = CharacterController.Instance.GetCharacter(characterName, true);
 
+		prompt.BackupLastConversation();
+
 		yield return character.Show();
 		
 		//FIXME: Save those lines in the conversation.
 		while (true)
 		{
+			prompt.IsTalkingWithCharacter = true;
 			panel.Show("What do you want to ask me?");
 
 			while (panel.IsWaitingOnUserInput)
@@ -147,7 +185,9 @@ public class CommandCharacterExtension : CommandDBExtension
 
 			if (panel.LastInput == STOP_ID)
 			{
-				yield return character.Hide();
+                prompt.IsTalkingWithCharacter = false;
+                yield return character.Hide();
+				prompt.RestoreLastConversation();
 				yield break;
 			}
 		   
@@ -156,14 +196,13 @@ public class CommandCharacterExtension : CommandDBExtension
 			while (prompt.IsStillFetching)
 				yield return null;
 
-			prompt.Interact(characterName);
-			character.OnExpressionReceive(0, prompt.GetResponseExpression());
+			prompt.IsTalkingWithCharacter = false;
 
-			//HACK: STOPS THE OTHER COROUTINES FOR THIS ONE.
-			yield break;
-		}
-		//yield return null;
-	}
+			yield return prompt.Interact(character);
+            //HACK: STOPS THE OTHER COROUTINES FOR THIS ONE.
+        }
+        //yield return null;
+    }
 
 	public static void HideAll(string[] data)
 	{

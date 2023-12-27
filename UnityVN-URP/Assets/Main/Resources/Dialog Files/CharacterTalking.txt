@@ -1,0 +1,68 @@
+[wait]SetLayerMedia(fondo campo_fondo_iglesia)
+[wait]ShowUI(-speed 0.75)
+
+PlaySong(metro2033_redux)
+
+<mainChar> "I need to investigate who the murderer is..."
+
+choice "I will talk to..."
+{
+    -Ana
+        <mainChar> "Guess I will talk to Ana."
+        $talkedCharacters += 1
+        [wait]Inworld(Ana)
+    -Anastasia
+        <mainChar> "Guess I will talk to Anastasia."
+        $talkedCharacters += 1
+        [wait]Inworld(Anastasia)
+    -Juan
+        <mainChar> "Guess I will talk to Juan."
+        $talkedCharacters += 1
+        [wait]Inworld(Juan)
+    -Lucia
+        <mainChar> "Guess I will talk to Lucia."
+        [wait]Inworld(Lucia)
+        $talkedCharacters += 1
+    -Luis
+        <mainChar> "Guess I will talk to Luis."
+        $talkedCharacters += 1
+        [wait]Inworld(Luis)
+    -Marcelo
+        <mainChar> "Guess I will talk to Marcelo."
+        $talkedCharacters += 1
+        [wait]Inworld(Marcelo)
+    -Mayor
+        <mainChar> "Guess I will talk with the mayor of this town again."
+        $talkedCharacters += 1
+        [wait]Inworld(Jacinto)
+    -Patricia
+        <mainChar> "Guess I will talk to Patricia."
+        $talkedCharacters += 1
+        [wait]Inworld(Patricia)
+    -Pedro
+        <mainChar> "Guess I will talk to Pedro."
+        $talkedCharacters += 1
+        [wait]Inworld(Pedro)
+    -Santiago
+        <mainChar> "Guess I will talk to Santiago."
+        $talkedCharacters += 1
+        [wait]Inworld(Santiago)
+
+}
+
+if($talkedCharacters > 3)
+{
+    <mainChar> "I talked with some guys, i will try to guess who is the murderer."
+
+    choice "Should i tell the mayor?"
+    {
+        -Yes
+            <mainChar> "I will tell mayor then."
+            Load(Ending -enqueue true)
+        -No
+            <mainChar> "Maybe i will tell after i do more research!"
+    }
+}
+
+<mainChar> "I need to investigate more..."
+Load(CharacterTalking -enqueue true)

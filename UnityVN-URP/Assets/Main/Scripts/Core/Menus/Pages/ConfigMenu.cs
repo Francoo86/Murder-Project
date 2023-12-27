@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -185,6 +184,7 @@ public class ConfigMenu : MenuPage
 
     public void SetMusicVolume()
     {
+        Debug.Log($"Music volume is: {ui.musicVolume.value}");
         config.musicVolume = ui.musicVolume.value;
         AudioController.Instance.SetMusicVolume(config.musicVolume, config.musicMute);
 

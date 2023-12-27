@@ -16,6 +16,7 @@ else
 }
 
 //enter Luis [pensativo] "Hola"
+enter Jacinto "Hola soy yo"
 enter Pedro [pensativo] "Hola tambien"
 narrator "Webear por favor stopp!!! <mainChar>"
 setlayermedia(fondo consejeria)
@@ -24,6 +25,41 @@ Marcelo "When despiertas"
 Marcelo "Hacer diagramas de secuencia es...."
 Marcelo "Facil para el que estudioXD...."
 Patricia "Si"
+
+choice "What do you like to do?"
+{
+    -JavaScript
+        Marcelo "Me encanta trabajar con JavaScript, especialmente en el desarrollo web."
+
+    -Python
+        Marcelo "Python es mi elección para la automatización y análisis de datos. ¡Es tan versátil!"
+
+    -Java
+        Marcelo "Java es un lenguaje sólido para el desarrollo de aplicaciones empresariales."
+
+    -Swift
+        Marcelo "Swift es genial para el desarrollo de aplicaciones iOS. ¡Me encanta la sintaxis!"
+
+    -Ruby
+        Marcelo "Ruby tiene una elegante simplicidad que hace que la programación sea divertida."
+
+    -C++
+        Marcelo "C++ es poderoso y eficiente. Lo uso para proyectos que requieren un rendimiento óptimo."
+
+    -Go
+        Marcelo "Go es genial para construir sistemas concurrentes y de alto rendimiento."
+
+    -TypeScript
+        Marcelo "TypeScript aporta tipado estático a JavaScript, haciendo que el desarrollo sea más seguro."
+
+    -Rust
+        Marcelo "Rust me fascina por su enfoque en la seguridad sin sacrificar el rendimiento."
+
+    -Kotlin
+        Marcelo "Kotlin es mi elección para el desarrollo de aplicaciones Android. ¡Es moderno y conciso!"
+}
+
+
 Luis "When eres"
 
 [wait]inworld(marcelo)

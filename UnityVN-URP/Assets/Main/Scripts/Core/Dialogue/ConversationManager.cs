@@ -243,7 +243,7 @@ public class ConversationManager
     }
 
     public bool IsWaitingOnAutoTimer { get; private set; }
-
+    /*
     private IEnumerator WaitForDialogSegmentSignalToBeTriggered(DialogData.DIALOG_SEGMENT segment)
     {
         switch (segment.startSignal)
@@ -267,7 +267,7 @@ public class ConversationManager
                 IsWaitingOnAutoTimer = false;
                 break;
         }
-    }
+    }*/
 
     private IEnumerator BuildDialog(string diag, bool append = false) {
         diag = TagController.Inject(diag);

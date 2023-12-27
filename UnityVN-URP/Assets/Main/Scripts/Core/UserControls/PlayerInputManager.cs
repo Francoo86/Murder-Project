@@ -57,6 +57,9 @@ public class PlayerInputManager : MonoBehaviour
     /// </summary>
     /// <param name="c"></param>
     public void PromptAdvance(InputAction.CallbackContext c) {
+        if (CoroutinePrompt.GetInstance().IsTalkingWithCharacter)
+            return;
+
         DialogController.Instance.OnUserPrompt_Next();
     }
 

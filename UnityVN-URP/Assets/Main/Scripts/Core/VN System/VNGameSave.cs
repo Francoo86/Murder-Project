@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using History;
 using System.Linq;
-using VISUALNOVEL;
 using System;
 
 namespace VISUALNOVEL

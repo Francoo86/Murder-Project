@@ -120,7 +120,6 @@ public class CommandController : MonoBehaviour
     {
         foreach(var proc in processList)
         {
-            Debug.Log($"Killing {proc.processName}");
             CoroutineWrapper currProc = proc.currentProcess;
             if(currProc != null && !currProc.IsDone)
             {
