@@ -41,10 +41,11 @@ namespace VISUALNOVEL
             variables = GetVariableData();
 
             timestamp = DateTime.Now.ToString("dd-MM-yy HH:mm:ss");
-            ScreenshootMaster.CaptureScreenshot(VNManager.Instance.mainCamera, Screen.width, Screen.height, SCREENSHOT_DOWNSCALE, screenshotPath);
 
             string saveJSON = JsonUtility.ToJson(this);
             FileManager.Save(filePath, saveJSON);
+
+            ScreenshootMaster.CaptureScreenshot(VNManager.Instance.mainCamera, Screen.width, Screen.height, SCREENSHOT_DOWNSCALE, screenshotPath);
         }
 
         /// <summary>
