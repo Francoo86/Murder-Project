@@ -38,6 +38,7 @@ public class VN_Configuration
         ConfigMenu.instance.SetDisplayToFullScreen(display_fullscreen);
         ui.SetButtonColors(ui.fullscreen, ui.windowed, display_fullscreen);
 
+        /*
         //establecer el tamaño de la pantalla
         int res_index = 0;
         for (int i = 0; i< ui.resolutions.options.Count; i++)
@@ -49,7 +50,7 @@ public class VN_Configuration
                 break;
             }
         }
-        ui.resolutions.value = res_index;
+        ui.resolutions.value = res_index;*/
 
         //establecer la opción continuar después de skipping
         //ui.SetButtonColors(ui.skippingContinue, ui.skippingStop, continueSkippingAfterChoice);
