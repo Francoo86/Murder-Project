@@ -15,6 +15,8 @@ else
 	narrator "si soy"
 }
 
+//enter Luis [pensativo] "Hola"
+enter Pedro [pensativo] "Hola tambien"
 narrator "Webear por favor stopp!!! <mainChar>"
 setlayermedia(fondo consejeria)
 narrator "Aqui es cuando aparece el marselo..."

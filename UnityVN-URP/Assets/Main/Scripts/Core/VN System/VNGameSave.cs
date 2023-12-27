@@ -172,7 +172,7 @@ namespace VISUALNOVEL
                     variableData.name = $"{database.name}.{variable.Key}";
                     string val = $"{variable.Value.Get()}";
                     variableData.value = val;
-                    Debug.Log($"<color=#00FF00>Retreiving the variable: {variableData.name} val: {variableData.value}</color>");
+                    //Debug.Log($"<color=#00FF00>Retreiving the variable: {variableData.name} val: {variableData.value}</color>");
                     variableData.type = val == string.Empty ? "System.String" : variable.Value.Get().GetType().ToString(); 
                     retData.Add(variableData);
                 }

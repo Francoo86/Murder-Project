@@ -12,15 +12,19 @@ public class TestingDialog : MonoBehaviour
     [SerializeField] private TextAsset fileToRead = null;
     private SpriteCharacter charPedro;
     private SpriteCharacter charPatricia;
+    private SpriteCharacter charLuis;
     
     // Start is called before the first frame update
     void Start()
     {
         charPedro = CharacterController.Instance.CreateCharacter("Marcelo") as SpriteCharacter;
         charPatricia = CharacterController.Instance.CreateCharacter("Patricia") as SpriteCharacter;
+        charLuis = CharacterController.Instance.CreateCharacter("Luis") as SpriteCharacter;
+
 
         charPatricia.Show();
         charPedro.Show();
+        charLuis.Show();
         //StartCoroutine(StartTalking());
     }
 
