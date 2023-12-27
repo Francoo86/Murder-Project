@@ -1,2 +1,43 @@
 [wait]HideUI()
+[wait]SetLayerMedia(fondo consejeria)
 [wait]ShowUI()
+StopSong(metro2033_redux)
+
+$wasFound = false
+$characterName = None
+
+[wait]ShowCharacter(Jacinto)
+Jacinto as Mayor "Did you find the guilty one?"
+
+choice "Who is then?"
+{
+    -Luis
+        $characterName = Luis
+    -Juan
+        $characterName = Juan
+    -Anastasia
+        $characterName = Anastasia
+    -Marcelo
+        $characterName = Marcelo
+    -Lucia
+        $characterName = Lucia
+    -Santiago
+        $characterName = Santiago
+    -Patricia
+        $characterName = Patricia
+    -Ana
+        $characterName = Ana
+    -Mayor
+        $characterName = Jacinto
+    -Pedro
+        $wasFound = true
+}
+
+if ($wasFound == true)
+{
+    Load(GoodEnding)
+}
+else 
+{
+    Load(BadEnding)
+}

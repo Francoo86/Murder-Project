@@ -1,0 +1,16 @@
+Jacinto as Mayor "So? Pedro is the guilty one?"
+Jacinto as Mayor "We will put him person under arrest!"
+Jacinto as Mayor "Although, i feel it was him."
+Jacinto as Mayor "He was acting kinda weird lately."
+Jacinto as Mayor "Thanks for your collaboration, take a beer!"
+
+[wait]HideCharacter(Jacinto)
+[wait]HideDialog()
+
+[wait]SetLayerMedia(fondo campo_fondo_iglesia)
+
+[wait]ShowDialog()
+
+narrator "Good ending: Pedro was the murderer and you saved the town!"
+
+GoBackToMenu()
