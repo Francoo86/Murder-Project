@@ -67,6 +67,15 @@ class CharacterInteraction
         //HACK: The deadline is near so this is a very fix for appending AI data.
         linesToAppend.Insert(0, "");
 
+        bool wasNull = false;
+        Conversation lastConversation = Controller.conversation;
+
+        if(lastConversation == null)
+        {
+            lastConversation = new Conversation(new List<string>());
+            wasNull = true;
+        }
+
         List<string> conversationLines = Controller.conversation.GetLines();
         int progress = Controller.conversation.GetProgress();
 
@@ -75,6 +84,9 @@ class CharacterInteraction
             string line = $"{characterName} \"{linesToAppend[i]}\"";
             conversationLines.Insert(progress, line);
         }
+
+        if(wasNull)
+           Controller.StartConversation(lastConversation);
     }
 
     public string GetLastEmotion()

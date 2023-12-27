@@ -56,7 +56,7 @@ choice "What should i ask?"
 {
     -Are you sure he disappeared?
         Mayor "Yes, no one has seen him since yesterday, I went to check his house and where the party was, he wasn't there. Today in the town we will look for him".
-        <mainChar> "How many people are in the town?
+        <mainChar> "How many people are in the town?"
         Mayor "About 11 people counting me".
     -Do you know how or when it happened?
         Mayor "I can't tell you, earlier today I spoke with his wife and she said that she hasn't seen him since late at night, that he didn't come home."
@@ -79,3 +79,8 @@ Mayor "Understood, Mr. Detective, we start when you consider it convenient".
 [wait]ClearLayerMedia(fondo -speed 0.8)
 
 StopSong(Mistery)
+HideCharacter(Jacinto)
+
+$talkedCharacters = 0
+
+Load(CharacterTalking)

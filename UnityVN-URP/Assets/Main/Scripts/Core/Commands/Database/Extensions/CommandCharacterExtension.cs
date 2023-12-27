@@ -175,6 +175,7 @@ public class CommandCharacterExtension : CommandDBExtension
 		//FIXME: Save those lines in the conversation.
 		while (true)
 		{
+			prompt.IsTalkingWithCharacter = true;
 			panel.Show("What do you want to ask me?");
 
 			while (panel.IsWaitingOnUserInput)
@@ -182,15 +183,19 @@ public class CommandCharacterExtension : CommandDBExtension
 
 			if (panel.LastInput == STOP_ID)
 			{
-				yield return character.Hide();
+                prompt.IsTalkingWithCharacter = false;
+                yield return character.Hide();
 				yield break;
 			}
+
+			Debug.Log("THE FUCK IS THIS?");
 		   
 			yield return prompt.Talk(panel.LastInput);
 
 			while (prompt.IsStillFetching)
 				yield return null;
 
+			prompt.IsTalkingWithCharacter = false;
 			prompt.Interact(characterName);
 			character.OnExpressionReceive(0, prompt.GetResponseExpression());
 

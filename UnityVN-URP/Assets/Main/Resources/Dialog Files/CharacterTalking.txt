@@ -1,0 +1,40 @@
+[wait]SetLayerMedia(fondo campo_fondo_iglesia)
+[wait]ShowUI(-speed 0.75)
+
+<mainChar> "I need to investigate who the murderer is..."
+
+choice "I will talk to..."
+{
+    -Ana
+        <mainChar> "Guess I will talk to Ana."
+        [wait]Inworld(Ana)
+    -Anastasia
+        <mainChar> "Guess I will talk to Anastasia."
+        [wait]Inworld(Anastasia)
+    -Juan
+        <mainChar> "Guess I will talk to Juan."
+        [wait]Inworld(Juan)
+    -Lucia
+        <mainChar> "Guess I will talk to Lucia."
+        [wait]Inworld(Lucia)
+    -Luis
+        <mainChar> "Guess I will talk to Luis."
+        [wait]Inworld(Luis)
+    -Marcelo
+        <mainChar> "Guess I will talk to Marcelo."
+        [wait]Inworld(Marcelo)
+    -Mayor
+        <mainChar> "Guess I will talk with the mayor of this town again."
+        [wait]Inworld(Jacinto)
+    -Patricia
+        <mainChar> "Guess I will talk to Patricia."
+        [wait]Inworld(Patricia)
+    -Pedro
+        <mainChar> "Guess I will talk to Pedro."
+        [wait]Inworld(Pedro)
+    -Santiago
+        <mainChar> "Guess I will talk to Santiago."
+        [wait]Inworld(Santiago)
+}
+
+<mainChar> "Peppino momazos"

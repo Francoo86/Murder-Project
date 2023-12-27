@@ -12,6 +12,7 @@ public class CoroutinePrompt {
     private CharacterInteraction lastInteraction;
     public bool IsWaiting = false;
     public bool IsStillFetching => currentSession.Client.IsFetching;
+    public bool IsTalkingWithCharacter = false;
 
     /// <summary>
     /// Initializes the Coroutined Prompt class, in singleton way.

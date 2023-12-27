@@ -1,8 +1,0 @@
-//It bugged for no reason.
-choice "What should i say?"
-{
-    -What must have happened to cause today's lunch to be canceled?
-        <mainChar> "What must have happened to cause today's lunch to be canceled?"
-    -I can see by your face that it didn't go well yesterday.
-        <mainChar> "I can see by your face that it didn't go well yesterday."
-}
