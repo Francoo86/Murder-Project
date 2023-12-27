@@ -1,40 +1,61 @@
 [wait]SetLayerMedia(fondo campo_fondo_iglesia)
 [wait]ShowUI(-speed 0.75)
+$talkedCharacters = 0
+
+PlaySong(metro2033_redux)
 
 <mainChar> "I need to investigate who the murderer is..."
+
+
 
 choice "I will talk to..."
 {
     -Ana
         <mainChar> "Guess I will talk to Ana."
         [wait]Inworld(Ana)
+        $talkedCharacters += 1
     -Anastasia
         <mainChar> "Guess I will talk to Anastasia."
         [wait]Inworld(Anastasia)
+        $talkedCharacters += 1
     -Juan
         <mainChar> "Guess I will talk to Juan."
         [wait]Inworld(Juan)
+        $talkedCharacters += 1
     -Lucia
         <mainChar> "Guess I will talk to Lucia."
         [wait]Inworld(Lucia)
+        $talkedCharacters += 1
     -Luis
         <mainChar> "Guess I will talk to Luis."
         [wait]Inworld(Luis)
+        $talkedCharacters += 1
     -Marcelo
         <mainChar> "Guess I will talk to Marcelo."
         [wait]Inworld(Marcelo)
+        $talkedCharacters += 1
     -Mayor
         <mainChar> "Guess I will talk with the mayor of this town again."
         [wait]Inworld(Jacinto)
+        $talkedCharacters += 1
     -Patricia
         <mainChar> "Guess I will talk to Patricia."
         [wait]Inworld(Patricia)
+        $talkedCharacters += 1
     -Pedro
         <mainChar> "Guess I will talk to Pedro."
         [wait]Inworld(Pedro)
+        $talkedCharacters += 1
     -Santiago
         <mainChar> "Guess I will talk to Santiago."
         [wait]Inworld(Santiago)
+        $talkedCharacters += 1
 }
 
-<mainChar> "Peppino momazos"
+if($talkedCharacters > 3)
+{
+    
+    <mainChar> "I talked with some guys, i will try to guess who is the murderer."
+}
+
+Load(CharacterTalking -enqueue true)

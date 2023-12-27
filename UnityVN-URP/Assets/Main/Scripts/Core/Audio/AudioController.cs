@@ -166,12 +166,13 @@ public class AudioController : MonoBehaviour
 
     public void SetMusicVolume(float volume, bool muted)
     {
-        volume = muted ? MUTED_VOLUME_LEVEL : audioFalloffCurve.Evaluate(volume);
+        volume = muted ? MUTED_VOLUME_LEVEL : volume;//audioFalloffCurve.Evaluate(volume);
+        Debug.Log($"Evaluating this thing: {volume}");
         musicMixer.audioMixer.SetFloat(MUSIC_VOLUME_PARAMETER_NAME, volume);
     }
     public void SetSFXVolume(float volume, bool muted)
     {
-        volume = muted ? MUTED_VOLUME_LEVEL : audioFalloffCurve.Evaluate(volume);
+        volume = muted ? MUTED_VOLUME_LEVEL : volume;
         sfxMixer.audioMixer.SetFloat(SFX_VOLUME_PARAMETER_NAME, volume);
     }
 }

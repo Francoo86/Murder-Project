@@ -216,8 +216,8 @@ public class ConversationManager
                         if (command.name != INWORLD_COMMAND)
                         {
                             CommandController.Instance.StopCurrentProcess();
+                            isUserManipulated = false;
                         }
-                        isUserManipulated = false;
                     }
 
                     //If this is not on the loop this causes stack overflow.

@@ -77,6 +77,9 @@ public class DialogController : MonoBehaviour
     /// </summary>
     public void OnUserPrompt_Next() {
         //Debug.Log("Invoking...");
+        if (InworldWrapper.Instance.IsFetching)
+            return;
+
         //Si no es nulo lo invoca.
         onUserPrompt_Next?.Invoke();
         

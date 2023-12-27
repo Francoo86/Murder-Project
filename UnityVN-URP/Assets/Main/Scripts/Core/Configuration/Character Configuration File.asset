@@ -59,7 +59,7 @@ MonoBehaviour:
     alias: 
     charType: 1
     nameCol: {r: 0.43438768, g: 0, b: 1, a: 1}
-    diagCol: {r: 0.5827457, g: 1, b: 0, a: 1}
+    diagCol: {r: 1, g: 0, b: 0.27273703, a: 1}
     nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   - name: Lucia
@@ -78,8 +78,15 @@ MonoBehaviour:
     diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   - name: <mainChar>
     alias: 
-    charType: 1
+    charType: 0
     nameCol: {r: 0.5294118, g: 0.2867631, b: 0, a: 1}
     diagCol: {r: 0.418202, g: 0.5660378, b: 0.21039516, a: 1}
+    nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - name: Juan
+    alias: 
+    charType: 1
+    nameCol: {r: 1, g: 0.5407407, b: 0, a: 1}
+    diagCol: {r: 0.21176468, g: 0.2532518, b: 0.5647059, a: 1}
     nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
