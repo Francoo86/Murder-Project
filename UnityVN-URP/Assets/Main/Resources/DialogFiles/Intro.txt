@@ -1,0 +1,12 @@
+//Esconder la UI para poder dar misterio.
+HideUI()
+
+[wait]ShowUI(-speed 0.5)
+
+narrator "Vas entrando a la casa del alcalde..."
+
+[wait]SetLayerMedia(fondo consejeria)
+
+[wait]ShowCharacter(jacinto)
+
+Jacinto as Mayor "Hi Mister, what brings you so early to the town?"

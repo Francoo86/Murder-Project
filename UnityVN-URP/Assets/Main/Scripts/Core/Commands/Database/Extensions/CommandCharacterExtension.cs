@@ -22,6 +22,8 @@ public class CommandCharacterExtension : CommandDBExtension
 		commandDB.AddCommand("show", new Func<string[], IEnumerator>(ShowAll));
 		commandDB.AddCommand("createcharacter", new Action<string[]>(CreateCharacter));
 		commandDB.AddCommand("movecharacter", new Func<string[], IEnumerator>(MoveCharacter));
+		commandDB.AddCommand("showcharacter", new Func<string[], IEnumerator>(Show));
+		commandDB.AddCommand("hidecharacter", new Func<string[], IEnumerator>(Hide));
 
 		//The technological plus.
 		commandDB.AddCommand("inworld", new Func<string, IEnumerator>(TalkWithCharacter));
@@ -48,8 +50,41 @@ public class CommandCharacterExtension : CommandDBExtension
 			character.Show();
 	}
 
-	//Trying.
-	private static IEnumerator MoveCharacter(string[] data)
+	private static IEnumerator Show(string[] data)
+	{
+		Character character = CharacterController.Instance.GetCharacter(data[0], true);
+		if (character == null) yield break;
+
+		Debug.Log("Got the character: Jacinto");
+
+		var parameters = ConvertToParams(data);
+
+		parameters.TryGetValue(INMEDIATE_APPEARING, out bool inmediate, false);
+
+		if (inmediate)
+			character.IsVisible = true;
+		else
+			yield return character.Show();
+
+	}
+
+    private static IEnumerator Hide(string[] data)
+    {
+        Character character = CharacterController.Instance.GetCharacter(data[0], true);
+        if (character == null) yield break;
+
+        var parameters = ConvertToParams(data);
+
+        parameters.TryGetValue(INMEDIATE_APPEARING, out bool inmediate, false);
+
+        if (inmediate)
+            character.IsVisible = false;
+        else
+            yield return character.Hide();
+
+    }
+    //Trying.
+    private static IEnumerator MoveCharacter(string[] data)
 	{
 		string charName = data[0];
 

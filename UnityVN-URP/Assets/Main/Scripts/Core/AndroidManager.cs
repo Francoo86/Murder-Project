@@ -12,10 +12,6 @@ public class AndroidManager : MonoBehaviour
     
     private void Start()
     {
-        //There could be other ways to do this.
-        //GameObject closeBtn = GameObject.Find("CloseHistoryAndroid");
-        //GameObject historyBtn = GameObject.Find("HistoryButtonAndroid");
-
         //Make this game for android i guess.
         #if !UNITY_ANDROID
             GameObject[] androidObjs = GameObject.FindGameObjectsWithTag("AndroidElement");
