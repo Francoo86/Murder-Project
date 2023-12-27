@@ -8,6 +8,8 @@ $VN.mainCharName = <input>
 
 narrator "You are entering the mayor's house..."
 
+PlaySong(Mistery -loop true)
+
 [wait]SetLayerMedia(fondo consejeria)
 
 [wait]ShowCharacter(jacinto)
@@ -75,3 +77,5 @@ Mayor "Understood, Mr. Detective, we start when you consider it convenient".
 [wait]HideUI(-speed 0.5)
 
 [wait]ClearLayerMedia(fondo -speed 0.8)
+
+StopSong(Mistery)

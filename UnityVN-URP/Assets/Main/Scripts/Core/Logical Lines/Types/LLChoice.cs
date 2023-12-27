@@ -41,6 +41,11 @@ public class LLChoice : ILogicalLine
         //Evitar que las conversaciones se solapen dentro de la cola.
         Conversation newConversation = new Conversation(selectedChoice.resultLines, file: currentConversation.file, fileStartIndex: selectedChoice.startIndex, fileEndIndex: selectedChoice.endIndex);
         int fixedIndex = data.endingIndex - currentConversation.fileStartIndex;
+
+        //Fix for choices not going properly.
+        if ((data.endingIndex < currentConversation.fileStartIndex) && fixedIndex < 0)
+            fixedIndex = currentConversation.fileStartIndex;
+
         ConvManager.conversation.SetProgress(fixedIndex);
         ConvManager.EnqueuePriority(newConversation);
 
