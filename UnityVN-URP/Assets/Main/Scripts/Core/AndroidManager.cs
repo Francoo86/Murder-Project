@@ -13,27 +13,43 @@ public class AndroidManager : MonoBehaviour
     private void Start()
     {
         //There could be other ways to do this.
-        GameObject closeBtn = GameObject.Find("CloseHistoryAndroid");
-        GameObject historyBtn = GameObject.Find("HistoryButtonAndroid");
+        //GameObject closeBtn = GameObject.Find("CloseHistoryAndroid");
+        //GameObject historyBtn = GameObject.Find("HistoryButtonAndroid");
 
         //Make this game for android i guess.
         #if !UNITY_ANDROID
-              closeBtn.SetActive(false);
-              historyBtn.SetActive(false);
+            GameObject[] androidObjs = GameObject.FindGameObjectsWithTag("AndroidElement");
+
+            foreach (GameObject go in androidObjs)
+            {
+                go.SetActive(false);
+            }
         #endif
     }
 
 
-    HistoryLogManager Log => HistoryManager.Instance.logManager;
+    private HistoryManager HManager => HistoryManager.Instance;
+
+    public void GoBack()
+    {
+        HManager.GoBack();
+    }
+
+    public void GoForward()
+    {
+        HManager.GoFoward();
+    }
 
     public void OnHistoryLogOpen()
     {
+        var Log = HManager.logManager;
         if (!Log.isOpen)
             Log.Open();
     }
 
     public void OnHistoryLogClose()
     {
+        var Log = HManager.logManager;
         Log.Close();
     }
 }
