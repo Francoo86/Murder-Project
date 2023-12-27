@@ -34,7 +34,7 @@ public class ConfigMenu : MenuPage
 
         //Resolution[] resolutions = Screen.resolutions; // esta linea aparentemente en el video desaparece
 
-        SetAvailableResolutions();
+       // SetAvailableResolutions();
 
         LoadConfig();
     }
@@ -71,6 +71,7 @@ public class ConfigMenu : MenuPage
         activePanel = panel;
     }
 
+    /*
     private void SetAvailableResolutions()
     {
         Resolution[] resolutions = Screen.resolutions;
@@ -83,7 +84,7 @@ public class ConfigMenu : MenuPage
 
         ui.resolutions.ClearOptions();
         ui.resolutions.AddOptions(options);
-    }
+    }*/
 
     [System.Serializable]
     public class UI_ITEMS
@@ -98,7 +99,7 @@ public class ConfigMenu : MenuPage
         [Header("General")]
         public Button fullscreen;
         public Button windowed;
-        public TMP_Dropdown resolutions;
+        //public TMP_Dropdown resolutions;
         //public Button skippingContinue, skippingStop;
         //public Slider architectSpeed, autoReaderSpeed;
 
@@ -132,6 +133,7 @@ public class ConfigMenu : MenuPage
         ui.SetButtonColors(ui.fullscreen, ui.windowed, fullscreen);
     }
 
+    /*
     public void SetDisplayResolution()
     {
         string resolution = ui.resolutions.captionText.text;
@@ -145,7 +147,7 @@ public class ConfigMenu : MenuPage
         else
             UnityEngine.Debug.LogError($"Parsing error for screen resolution; [{resolution}] could not be parsed into WIDTHxHEIGHT");
 
-    }
+    }*/
 
     /*
     public void SetContinueSkippingAfterChoice(bool continueSkipping)
