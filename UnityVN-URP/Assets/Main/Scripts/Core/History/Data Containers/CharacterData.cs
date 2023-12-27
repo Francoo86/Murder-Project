@@ -124,7 +124,11 @@ namespace History
                 else
                     character.FaceRight(immediate: true);
 
-                character.SetPos(characterData.position);
+                Debug.Log($"Position of the character to set: {characterData.position}");
+
+                //HACK: This fixes the characters going to the begining of the screen.
+                if (characterData.position != Vector2.zero)
+                    character.SetPos(characterData.position);
 
                 character.IsVisible = characterData.enabled;
 

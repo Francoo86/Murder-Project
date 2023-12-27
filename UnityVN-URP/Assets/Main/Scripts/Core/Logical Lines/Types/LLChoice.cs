@@ -40,9 +40,11 @@ public class LLChoice : ILogicalLine
 
         //Evitar que las conversaciones se solapen dentro de la cola.
         Conversation newConversation = new Conversation(selectedChoice.resultLines, file: currentConversation.file, fileStartIndex: selectedChoice.startIndex, fileEndIndex: selectedChoice.endIndex);
-        ConvManager.conversation.SetProgress(data.endingIndex - currentConversation.fileStartIndex);
+        int fixedIndex = data.endingIndex - currentConversation.fileStartIndex;
+        ConvManager.conversation.SetProgress(fixedIndex);
         ConvManager.EnqueuePriority(newConversation);
 
+        //Esto siempre va a ser falso xd
         AutoReader autoReader = DialogController.Instance.autoReader;
         if (autoReader !=null && autoReader.IsOn && autoReader.Skip)
         {

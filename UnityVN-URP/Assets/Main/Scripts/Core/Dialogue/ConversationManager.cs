@@ -237,7 +237,7 @@ public class ConversationManager
         {
             DialogData.DIALOG_SEGMENT segment = dialogLine.segments[i];
 
-            yield return WaitForDialogSegmentSignalToBeTriggered(segment);
+            //yield return WaitForDialogSegmentSignalToBeTriggered(segment);
             yield return BuildDialog(segment.dialog, segment.ShouldAppend);
         }
     }

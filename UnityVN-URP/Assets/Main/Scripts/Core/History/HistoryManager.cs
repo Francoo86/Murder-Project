@@ -30,6 +30,12 @@ namespace History
             DialogController.Instance.onClear += LogCurrentState;
         }
 
+        public void ResetLogManager()
+        {
+            logManager.Clear();
+            logManager.Rebuild();
+        }
+
         public void LogCurrentState()
         {
             HistoryState state = HistoryState.Capture();

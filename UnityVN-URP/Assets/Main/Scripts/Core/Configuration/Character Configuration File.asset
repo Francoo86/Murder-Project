@@ -14,30 +14,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characters:
   - name: Patricia
-    alias: Mr. Alcalde
+    alias: 
     charType: 1
-    nameCol: {r: 0, g: 1, b: 1, a: 1}
-    diagCol: {r: 0, g: 1, b: 0, a: 1}
+    nameCol: {r: 1, g: 0.6398947, b: 0, a: 1}
+    diagCol: {r: 0, g: 0, b: 0, a: 1}
     nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   - name: Luis
-    alias: xdddd
+    alias: 
     charType: 1
-    nameCol: {r: 1, g: 0, b: 0.042004585, a: 1}
-    diagCol: {r: 1, g: 0.90990627, b: 0, a: 1}
+    nameCol: {r: 0.25585675, g: 1, b: 0, a: 1}
+    diagCol: {r: 0, g: 0, b: 0, a: 1}
     nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   - name: Marcelo
-    alias: marselo
+    alias: 
     charType: 1
     nameCol: {r: 0, g: 1, b: 1, a: 1}
-    diagCol: {r: 1, g: 0, b: 0, a: 1}
+    diagCol: {r: 0, g: 0, b: 0, a: 1}
     nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  - name: Player
-    alias: noseaskldxd
-    charType: 0
-    nameCol: {r: 0, g: 1, b: 1, a: 1}
-    diagCol: {r: 1, g: 0, b: 0, a: 1}
+  - name: Santiago
+    alias: 
+    charType: 1
+    nameCol: {r: 0, g: 0.24576807, b: 1, a: 1}
+    diagCol: {r: 0, g: 0, b: 0, a: 1}
+    nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - name: Pedro
+    alias: 
+    charType: 1
+    nameCol: {r: 1, g: 0.9097158, b: 0, a: 1}
+    diagCol: {r: 0.11119795, g: 1, b: 0, a: 1}
+    nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - name: Santiago
+    alias: 
+    charType: 1
+    nameCol: {r: 0, g: 0.24576807, b: 1, a: 1}
+    diagCol: {r: 0.11119795, g: 1, b: 0, a: 1}
     nameFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     diagFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

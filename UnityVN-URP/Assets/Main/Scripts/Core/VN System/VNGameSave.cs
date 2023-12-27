@@ -58,8 +58,10 @@ namespace VISUALNOVEL
                 activeState.Load();
             
             HistoryManager.Instance.history = historyLog.ToList();
-            HistoryManager.Instance.logManager.Clear();
-            HistoryManager.Instance.logManager.Rebuild();
+            //Wrapper method for refactoring this stuff.
+            HistoryManager.Instance.ResetLogManager();
+            //HistoryManager.Instance.logManager.Clear();
+            //HistoryManager.Instance.logManager.Rebuild();
 
             SetVariableData();
             SetConversationData();
@@ -86,8 +88,7 @@ namespace VISUALNOVEL
 
             var conversations = DialogController.Instance.convManager.GetConversationQueue();
 
-            int i = 0;
-            for (i = 0; i < conversations.Length; i++)
+            for (int i = 0; i < conversations.Length; i++)
             {
                 var conversation = conversations[i];
                 string data = "";
@@ -171,7 +172,7 @@ namespace VISUALNOVEL
                     variableData.name = $"{database.name}.{variable.Key}";
                     string val = $"{variable.Value.Get()}";
                     variableData.value = val;
-                    Debug.Log($"<color=#00FF00>Retreiving the variable: {variableData.name} val: {variableData.value}</color>");
+                    //Debug.Log($"<color=#00FF00>Retreiving the variable: {variableData.name} val: {variableData.value}</color>");
                     variableData.type = val == string.Empty ? "System.String" : variable.Value.Get().GetType().ToString(); 
                     retData.Add(variableData);
                 }

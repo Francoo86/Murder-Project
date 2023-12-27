@@ -15,12 +15,16 @@ else
 	narrator "si soy"
 }
 
+//enter Luis [pensativo] "Hola"
+enter Pedro [pensativo] "Hola tambien"
 narrator "Webear por favor stopp!!! <mainChar>"
 setlayermedia(fondo consejeria)
 narrator "Aqui es cuando aparece el marselo..."
 Marcelo "When despiertas"
 Marcelo "Hacer diagramas de secuencia es...."
 Marcelo "Facil para el que estudioXD...."
+Patricia "Si"
+Luis "When eres"
 
 [wait]inworld(marcelo)
 
