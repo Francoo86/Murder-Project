@@ -74,7 +74,7 @@ namespace VISUALNOVEL
         public static VNGameSave Load(string filePath, bool activateOnLoad = false)
         {
             VNGameSave save = FileManager.Load<VNGameSave>(filePath);
-            activeFile = save;
+            //activeFile = save;
 
             if (activateOnLoad)
                 save.Activate();
@@ -86,6 +86,15 @@ namespace VISUALNOVEL
             List<string> retData = new List<string>();
 
             var conversations = DialogController.Instance.convManager.GetConversationQueue();
+            var inworldBackup = CoroutinePrompt.GetInstance().savedConversation;
+
+            //WORKAROUND FOR ELEMENTS NOT RESPONDING.
+            if(inworldBackup != null)
+            {
+                var listedConvs = conversations.ToList();
+                listedConvs.Insert(0, inworldBackup);
+                conversations = listedConvs.ToArray();
+            }
 
             for (int i = 0; i < conversations.Length; i++)
             {

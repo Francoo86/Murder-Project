@@ -172,6 +172,8 @@ public class CommandCharacterExtension : CommandDBExtension
 
 		prompt.BackupLastConversation();
 
+		character.IsInInworld = true;
+
 		yield return character.Show();
 		
 		//FIXME: Save those lines in the conversation.
@@ -183,9 +185,10 @@ public class CommandCharacterExtension : CommandDBExtension
 			while (panel.IsWaitingOnUserInput)
 				yield return null;
 
-			if (panel.LastInput == STOP_ID)
+			if (panel.LastInput.ToLower() == STOP_ID)
 			{
                 prompt.IsTalkingWithCharacter = false;
+				character.IsInInworld = false;
                 yield return character.Hide();
 				prompt.RestoreLastConversation();
 				yield break;
