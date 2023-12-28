@@ -58,6 +58,9 @@ public class AudioChannel
 
         foreach(var track in tracks)
         {
+            if (track == null)
+                continue;
+
             if(track.Name.ToLower() == name)
             {
                 value = track;
@@ -86,6 +89,8 @@ public class AudioChannel
             for(int i = tracks.Count - 1; i >= 0; i--)
             {
                 AudioTrack track = tracks[i];
+                if (track == null) continue;
+
                 float targetVolume = CurrentTrack == track ? track.VolumeCap : 0;
 
                 //No queremos afectar a nuestra pista actual, para cuando termine la interpolación.

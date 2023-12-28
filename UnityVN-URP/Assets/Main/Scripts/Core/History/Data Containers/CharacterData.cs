@@ -131,6 +131,7 @@ namespace History
                     character.SetPos(characterData.position);
 
                 character.IsVisible = characterData.enabled;
+                    
 
                 if(character.config.charType == Character.CharacterType.Sprite)
                 {
