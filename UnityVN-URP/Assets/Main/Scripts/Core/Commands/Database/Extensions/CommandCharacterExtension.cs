@@ -172,7 +172,7 @@ public class CommandCharacterExtension : CommandDBExtension
 
 		prompt.BackupLastConversation();
 
-		character.IsInInworld = true;
+		//character.IsInInworld = true;
 
 		yield return character.Show();
 		
@@ -188,7 +188,7 @@ public class CommandCharacterExtension : CommandDBExtension
 			if (panel.LastInput.ToLower() == STOP_ID)
 			{
                 prompt.IsTalkingWithCharacter = false;
-				character.IsInInworld = false;
+				//character.IsInInworld = false;
                 yield return character.Hide();
 				prompt.RestoreLastConversation();
 				yield break;

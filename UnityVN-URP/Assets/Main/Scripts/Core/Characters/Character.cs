@@ -49,7 +49,7 @@ namespace CHARACTERS
         public bool isFacingLeft => facingLeft;
         public bool isFacingRight => !facingLeft;
         public bool isFlipping => co_flipping != null;
-        public bool IsInInworld { get; set; } = false;
+        //public bool IsInInworld { get; set; } = false;
 
         /// <summary>
         /// Setups the character to be associated with its config and its prefab (image collection to be rendered).
