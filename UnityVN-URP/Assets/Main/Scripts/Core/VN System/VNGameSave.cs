@@ -41,10 +41,11 @@ namespace VISUALNOVEL
             variables = GetVariableData();
 
             timestamp = DateTime.Now.ToString("dd-MM-yy HH:mm:ss");
-            ScreenshootMaster.CaptureScreenshot(VNManager.Instance.mainCamera, Screen.width, Screen.height, SCREENSHOT_DOWNSCALE, screenshotPath);
 
             string saveJSON = JsonUtility.ToJson(this);
             FileManager.Save(filePath, saveJSON);
+
+            ScreenshootMaster.CaptureScreenshot(VNManager.Instance.mainCamera, Screen.width, Screen.height, SCREENSHOT_DOWNSCALE, screenshotPath);
         }
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace VISUALNOVEL
         public static VNGameSave Load(string filePath, bool activateOnLoad = false)
         {
             VNGameSave save = FileManager.Load<VNGameSave>(filePath);
-            activeFile = save;
+            //activeFile = save;
 
             if (activateOnLoad)
                 save.Activate();
@@ -85,6 +86,15 @@ namespace VISUALNOVEL
             List<string> retData = new List<string>();
 
             var conversations = DialogController.Instance.convManager.GetConversationQueue();
+            var inworldBackup = CoroutinePrompt.GetInstance().savedConversation;
+
+            //WORKAROUND FOR ELEMENTS NOT RESPONDING.
+            if(inworldBackup != null)
+            {
+                var listedConvs = conversations.ToList();
+                listedConvs.Insert(0, inworldBackup);
+                conversations = listedConvs.ToArray();
+            }
 
             for (int i = 0; i < conversations.Length; i++)
             {

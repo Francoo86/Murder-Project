@@ -87,7 +87,7 @@ public class SaveLoadSlot : MonoBehaviour
         {
             //Debug.Log($"Currently loading file number of: {filePath}");
             file.Activate();
-            //VNGameSave.activeFile = file;
+            VNGameSave.activeFile = file;
         }
 
     }

@@ -13,14 +13,21 @@ public class AndroidManager : MonoBehaviour
     private void Start()
     {
         //Make this game for android i guess.
-        #if !UNITY_ANDROID
+#if !UNITY_ANDROID
             GameObject[] androidObjs = GameObject.FindGameObjectsWithTag("AndroidElement");
 
             foreach (GameObject go in androidObjs)
             {
                 go.SetActive(false);
             }
-        #endif
+#else
+        GameObject[] windowsElements = GameObject.FindGameObjectsWithTag("WindowsElement");
+
+        foreach (GameObject go in windowsElements)
+        {
+            go.SetActive(false);
+        }
+#endif
     }
 
 
