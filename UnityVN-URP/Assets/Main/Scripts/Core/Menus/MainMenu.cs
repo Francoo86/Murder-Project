@@ -13,8 +13,6 @@ public class MainMenu : MonoBehaviour
     public CanvasGroup mainPanel;
     public CanvasGroupController mainCG;
 
-    //[SerializeField] private UIConfirmationMenu uiChoiceMenu;
-
     private void Awake()
     {
         instance = this;
@@ -25,11 +23,6 @@ public class MainMenu : MonoBehaviour
         mainCG = new CanvasGroupController(this, mainPanel);
         AudioController.Instance.PlayTrack(menuMusic, channel: 0, startVol : 1);
     }
-
-    //public void Click_StarNewGame()
-    //{
-    //    uiChoiceMenu.Show("Star a new Game?", new UIConfirmationMenu.ConfirmationButton("Yes", StarNewGame), new UIConfirmationMenu.ConfirmationButton("No", null));
-    //}
 
     public void LoadGame(VNGameSave file)
     {
