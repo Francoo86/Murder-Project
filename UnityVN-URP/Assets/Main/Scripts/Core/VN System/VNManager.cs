@@ -15,13 +15,13 @@ namespace VISUALNOVEL
         {
             Instance = this;
             //Este GetComponent toma el objeto asociado al GameObject en la escena. Encuentra el primero.
+            /*
             VNDatabaseLinkSetup linksetup = GetComponent<VNDatabaseLinkSetup>();
-            linksetup.SetupExternalLinks();
+            linksetup.SetupExternalLinks();*/
+            VariableStore.CreateVariable("VN.mainCharName", "", () => VNGameSave.activeFile.playerName, value => VNGameSave.activeFile.playerName = value);
 
             if (VNGameSave.activeFile == null)
                 VNGameSave.activeFile = new VNGameSave();
-
-
         }
 
         private void Start()
