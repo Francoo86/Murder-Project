@@ -71,21 +71,6 @@ public class ConfigMenu : MenuPage
         activePanel = panel;
     }
 
-    /*
-    private void SetAvailableResolutions()
-    {
-        Resolution[] resolutions = Screen.resolutions;
-        List<string> options = new List<string>();
-
-        for (int i = resolutions.Length - 1; i >= 0; i--)
-        {
-            options.Add($"{resolutions[i].width}x{resolutions[i].height}");
-        }
-
-        ui.resolutions.ClearOptions();
-        ui.resolutions.AddOptions(options);
-    }*/
-
     [System.Serializable]
     public class UI_ITEMS
     {
@@ -99,13 +84,8 @@ public class ConfigMenu : MenuPage
         [Header("General")]
         public Button fullscreen;
         public Button windowed;
-        //public TMP_Dropdown resolutions;
-        //public Button skippingContinue, skippingStop;
-        //public Slider architectSpeed, autoReaderSpeed;
 
         [Header("Audio")]
-        //public Slider generalVolume;
-        //public Image generalFill;
         public Slider musicVolume;
         public Image musicFill;
         public Slider sfxVolume;
@@ -132,57 +112,6 @@ public class ConfigMenu : MenuPage
         Screen.fullScreen = fullscreen;
         ui.SetButtonColors(ui.fullscreen, ui.windowed, fullscreen);
     }
-
-    /*
-    public void SetDisplayResolution()
-    {
-        string resolution = ui.resolutions.captionText.text;
-        string[] values = resolution.Split('x');
-
-        if (int.TryParse(values[0], out int width) && int.TryParse(values[1], out int height))
-        {
-            Screen.SetResolution(width, height, Screen.fullScreen);
-            config.display_resolution = resolution;
-        }
-        else
-            UnityEngine.Debug.LogError($"Parsing error for screen resolution; [{resolution}] could not be parsed into WIDTHxHEIGHT");
-
-    }*/
-
-    /*
-    public void SetContinueSkippingAfterChoice(bool continueSkipping)
-    {
-        config.continueSkippingAfterChoice = continueSkipping;
-        ui.SetButtonColors(ui.skippingContinue, ui.skippingStop, continueSkipping);
-
-    }
-
-    public void SetTextArchitectSpeed()
-    {
-        config.dialogueTextSpeed = ui.architectSpeed.value;
-
-        if (DialogController.Instance != null) { }
-            DialogController.Instance.convManager.arch.speed = config.dialogueTextSpeed;
-    }
-
-    public void SetAutoReaderSpeed()
-    {
-        config.dialogueAutoReadSpeed = ui.autoReaderSpeed.value;
-
-        if (DialogController.Instance == null)
-            return;
-
-        AutoReader autoReader = DialogController.Instance.autoReader;
-        if (autoReader != null)
-            autoReader.Speed = config.dialogueAutoReadSpeed;
-    }*/
-    /*
-    public void SetGeneralVolume()
-    {
-
-        AudioController.Instance.SetMusicVolume(config.musicVolume, config.musicMute);
-        AudioController.Instance.SetMusicVolume(config.sfx, config.musicMute);
-    }*/
 
     public void SetMusicVolume()
     {

@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class VN_Configuration
 {
-
     public static VN_Configuration activeConfig;
 
     public static string filePath => $"{FilePaths.rootPath}vnconfig.cfg"; //posible error revisar
@@ -37,27 +36,6 @@ public class VN_Configuration
         //establecer el tamaño de la ventana
         ConfigMenu.instance.SetDisplayToFullScreen(display_fullscreen);
         ui.SetButtonColors(ui.fullscreen, ui.windowed, display_fullscreen);
-
-        /*
-        //establecer el tamaño de la pantalla
-        int res_index = 0;
-        for (int i = 0; i< ui.resolutions.options.Count; i++)
-        {
-            string resolution = ui.resolutions.options[i].text;
-            if (resolution == display_resolution)
-            {
-                res_index = i;
-                break;
-            }
-        }
-        ui.resolutions.value = res_index;*/
-
-        //establecer la opción continuar después de skipping
-        //ui.SetButtonColors(ui.skippingContinue, ui.skippingStop, continueSkippingAfterChoice);
-
-        //establecer el valor de autoreaderpeed y de architect
-        //ui.architectSpeed.value = dialogueTextSpeed;
-        //ui.autoReaderSpeed.value = dialogueAutoReadSpeed;
 
         //configurar los volúmenes del mezclador de audio
         ui.musicVolume.value = musicVolume;
