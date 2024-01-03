@@ -16,6 +16,7 @@ PlaySong(Mistery -loop true)
 
 //[wait]MoveCharacter(jacinto -x 0.5 -y 0.5)
 
+
 Jacinto as Mayor "Hi Mister, what brings you so early to the town?"
 
 <mainChar> "Good morning, I come to town for the festival, is it today?"
@@ -68,11 +69,11 @@ choice "What should i ask?"
 
 <mainChar> "I want to help you, instead of looking for Mario, tell everyone not to leave their homes and I will go to each house to ask some questions".
 
-Mayor "Why? Wouldn't it be better to look for him now?"
+Jacinto as Mayor "Why? Wouldn't it be better to look for him now?"
 
 <mainChar> "No, between the chaos of the search, the possible culprit could hide or disappear important clues".
 
-Mayor "Understood, Mr. Detective, we start when you consider it convenient".
+Jacinto as Mayor "Understood, Mr. Detective, we start when you consider it convenient".
 
 [wait]HideUI(-speed 0.5)
 

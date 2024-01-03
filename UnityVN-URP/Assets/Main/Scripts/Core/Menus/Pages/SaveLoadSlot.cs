@@ -19,16 +19,18 @@ public class SaveLoadSlot : MonoBehaviour
     public Button saveButton;
 
     [HideInInspector] public int fileNumber = 0;
-    [HideInInspector] public string filePath = "";
+    [HideInInspector] private string filePath = "";
 
-    
+    public void SetLoadPath(string path)
+    {
+        filePath = path;
+    }
+
     public void PopulateDetails( SaveAndLoadMenu.MenuFunction function )
     {
         if (File.Exists(filePath))
         {
-            //UnityEngine.Debug.Log($"<color=#AAFF00>MEGA SCREAMING AT CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
             VNGameSave file = VNGameSave.Load(filePath);
-            //Debug.Log($"<color=#AAFF00>MEGA SCREAMING AT CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
             PopulateDetailsFromFile(function, file);
         }
         else 
@@ -37,19 +39,14 @@ public class SaveLoadSlot : MonoBehaviour
         }
     }
     
-    
     private void PopulateDetailsFromFile( SaveAndLoadMenu.MenuFunction function, VNGameSave file) 
     {
-        //Debug.Log("IS THIS SAVE BEING CALLED?!!?!?!");
-        //Debug.Log($"Current file {file}");
-        //Debug.Log($"Actual instance of the file {SaveAndLoadMenu.Instance.emptyFileImage}");
         if (file == null)
         {
             titleText.text = $"{fileNumber}. Empty File";
             deleteButton.gameObject.SetActive(false);
             loadButton.gameObject.SetActive(false);
             saveButton.gameObject.SetActive(function == SaveAndLoadMenu.MenuFunction.save);
-            //Este es el conchesumare que webea.
             previewImage.texture = SaveAndLoadMenu.Instance.emptyFileImage;
         }
         else
@@ -66,7 +63,6 @@ public class SaveLoadSlot : MonoBehaviour
         }
     }
     
-    
     public void Delete() 
     {
         File.Delete(filePath);
@@ -80,12 +76,10 @@ public class SaveLoadSlot : MonoBehaviour
 
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == MainMenu.MAIN_MENU_SCENE)
         {
-            //VNGameSave.activeFile = file;
             MainMenu.instance.LoadGame(file);
         }
         else
         {
-            //Debug.Log($"Currently loading file number of: {filePath}");
             file.Activate();
             VNGameSave.activeFile = file;
         }

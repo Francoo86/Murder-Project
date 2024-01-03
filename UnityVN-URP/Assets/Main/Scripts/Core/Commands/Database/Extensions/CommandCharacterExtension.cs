@@ -121,29 +121,22 @@ public class CommandCharacterExtension : CommandDBExtension
 
 	private static IEnumerator ShowAll(string[] data)
 	{
-		List<Character> allCharacters = new List<Character>();
 		bool inmediate = false;
 
-		foreach (string character in data)
-		{
-			Character currentCharacter = CharacterController.Instance.GetCharacter(character, create: false);
+		Character[] allCharacters = CharacterController.Instance.allCharacters;
 
-			if (currentCharacter != null)
-				allCharacters.Add(currentCharacter);
-		}
+        if (allCharacters.Length == 0)
+        {
+            yield break;
+        }
 
-		if (allCharacters.Count == 0)
-		{
-			yield break;
-		}
-
-		var parameters = ConvertToParams(data);
+        var parameters = ConvertToParams(data);
 		parameters.TryGetValue(INMEDIATE_APPEARING, out inmediate, false);
 
 		foreach (Character character in allCharacters)
 		{
 			if (!inmediate)
-				character.Hide();
+				character.Show();
 			else
 				character.IsVisible = true;
 		}
@@ -158,7 +151,9 @@ public class CommandCharacterExtension : CommandDBExtension
 	}
 
 	private const string STOP_ID = "stop";
-	private static IEnumerator TalkWithCharacter(string characterName)
+	private const string ASKING_TEXT = "What do you want to ask me?";
+
+    private static IEnumerator TalkWithCharacter(string characterName)
 	{
 		characterName = characterName.ToLower();
 		PromptPanel panel = PromptPanel.Instance;
@@ -172,7 +167,7 @@ public class CommandCharacterExtension : CommandDBExtension
 
 		prompt.BackupLastConversation();
 
-		character.IsInInworld = true;
+		//character.IsInInworld = true;
 
 		yield return character.Show();
 		
@@ -180,7 +175,7 @@ public class CommandCharacterExtension : CommandDBExtension
 		while (true)
 		{
 			prompt.IsTalkingWithCharacter = true;
-			panel.Show("What do you want to ask me?");
+			panel.Show(ASKING_TEXT);
 
 			while (panel.IsWaitingOnUserInput)
 				yield return null;
@@ -188,7 +183,7 @@ public class CommandCharacterExtension : CommandDBExtension
 			if (panel.LastInput.ToLower() == STOP_ID)
 			{
                 prompt.IsTalkingWithCharacter = false;
-				character.IsInInworld = false;
+				//character.IsInInworld = false;
                 yield return character.Hide();
 				prompt.RestoreLastConversation();
 				yield break;
@@ -207,8 +202,34 @@ public class CommandCharacterExtension : CommandDBExtension
         //yield return null;
     }
 
-	public static void HideAll(string[] data)
+	public static IEnumerator HideAll(string[] data)
 	{
+        bool inmediate = false;
 
-	}
+        Character[] allCharacters = CharacterController.Instance.allCharacters;
+
+        if (allCharacters.Length == 0)
+        {
+            yield break;
+        }
+
+        var parameters = ConvertToParams(data);
+        parameters.TryGetValue(INMEDIATE_APPEARING, out inmediate, false);
+
+        foreach (Character character in allCharacters)
+        {
+            if (!inmediate)
+                character.Hide();
+            else
+                character.IsVisible = true;
+        }
+
+        if (!inmediate)
+        {
+            while (allCharacters.Any(c => c.IsHiding))
+            {
+                yield return null;
+            }
+        }
+    }
 }

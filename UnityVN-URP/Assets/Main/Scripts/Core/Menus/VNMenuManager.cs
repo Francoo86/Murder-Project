@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using VISUALNOVEL;
+using UnityEngine.SceneManagement;
 
 //MenuPage.PageType
 
+/// <summary>
+/// Class that handles the main menu and gameplay menu logic, providing handling of Saving/Loading/Configuration.
+/// </summary>
 public class VNMenuManager : MonoBehaviour
 {
-    //Filepath por lo que veo, webea mucho, de todas formas me imagino que nosotros debemos asignarlas.
     public static VNMenuManager Instance;
     private MenuPage activePage = null;
     private bool isOpen = false;
@@ -17,6 +20,9 @@ public class VNMenuManager : MonoBehaviour
     [SerializeField] private MenuPage[] pages;
     private CanvasGroupController rootCG;
 
+    /// <summary>
+    /// Saves the instance to be used across the game.
+    /// </summary>
     private void Awake() 
     {
         Instance = this;
@@ -33,25 +39,32 @@ public class VNMenuManager : MonoBehaviour
         return pages.FirstOrDefault(page => page.pageType == pageType);
     }
 
-    // Dan probelmas el slm.menuFunction -> se debe crear en VNGAMESAVE.
-    public void OpenSavePage()
+    /// <summary>
+    /// Opens the save and load menu related to a specific criteria (load or save).
+    /// </summary>
+    /// <param name="menuFunc"></param>
+    private void OpenPageByCriteria(SaveAndLoadMenu.MenuFunction menuFunc)
     {
-        //Debug.Log($"<color=#AAFF00>CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
         var page = GetPage(MenuPage.PageType.SaveAndLoad);
-        //Debug.Log($"<color=#AAFF00>CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
         var slm = page.anim.GetComponentInParent<SaveAndLoadMenu>();
-        //Debug.Log($"<color=#AAFF00>CHECKING INSTANCE THINGS PART 3: {VNGameSave.activeFile.playerName}</color>");
-        slm.menuFunction = SaveAndLoadMenu.MenuFunction.save;
+        slm.menuFunction = menuFunc;
         OpenPage(page);
-        //Debug.Log($"<color=#AAFF00>CHECKING INSTANCE THINGS PART 4: {VNGameSave.activeFile.playerName}</color>");
     }
 
+    /// <summary>
+    /// Opens the save page and tries to retrieve all the available files related to savings.
+    /// </summary>
+    public void OpenSavePage()
+    {
+        OpenPageByCriteria(SaveAndLoadMenu.MenuFunction.save);
+    }
+
+    /// <summary>
+    /// Opens the load page and tries to retrieve all the available files related to savings.
+    /// </summary>
     public void OpenLoadPage()
     {
-        var page = GetPage(MenuPage.PageType.SaveAndLoad);
-        var slm = page.anim.GetComponentInParent<SaveAndLoadMenu>();
-        slm.menuFunction = SaveAndLoadMenu.MenuFunction.load;
-        OpenPage(page);
+        OpenPageByCriteria(SaveAndLoadMenu.MenuFunction.load);
     }
     
 
@@ -67,7 +80,14 @@ public class VNMenuManager : MonoBehaviour
         OpenPage(page);
     }
 
-    public void OpenPage(MenuPage page) 
+    /// <summary>
+    /// Opens a page associated with a type (they need to attached in Unity).
+    /// In this case we have the Help menu, that shows the controls.
+    /// SaveAndLoad that shows the save slots menu.
+    /// Config menu, as the name says it shows the configuration.
+    /// </summary>
+    /// <param name="page"></param>
+    private void OpenPage(MenuPage page) 
     {
         if (page == null)
         {
@@ -77,9 +97,9 @@ public class VNMenuManager : MonoBehaviour
         {
             activePage.Close();
         }
-        //Debug.Log($"<color=#AAFF00>SCREAMING CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
+
         page.Open();
-        //Debug.Log($"<color=#AAFF00>SCREAMING CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
+
         activePage = page;
 
         if(!isOpen)
@@ -103,7 +123,7 @@ public class VNMenuManager : MonoBehaviour
     public void Click_Home()
     {
         VN_Configuration.activeConfig.Save();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(MainMenu.MAIN_MENU_SCENE);
+        SceneManager.LoadScene(MainMenu.MAIN_MENU_SCENE);
     }
 
     public void Click_Quit()

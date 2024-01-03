@@ -49,7 +49,7 @@ namespace CHARACTERS
         public bool isFacingLeft => facingLeft;
         public bool isFacingRight => !facingLeft;
         public bool isFlipping => co_flipping != null;
-        public bool IsInInworld { get; set; } = false;
+        //public bool IsInInworld { get; set; } = false;
 
         /// <summary>
         /// Setups the character to be associated with its config and its prefab (image collection to be rendered).
@@ -411,7 +411,7 @@ namespace CHARACTERS
         /// </summary>
         /// <param name="layer">(Most for spritesheet) the layer.</param>
         /// <param name="expression">The expression associated with the character.</param>
-        public virtual void OnExpressionReceive(int layer, string expression)
+        public virtual void OnExpressionReceive(string expression)
         {
             return;
         }

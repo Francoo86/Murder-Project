@@ -19,7 +19,7 @@ public class SpriteCharacter : Character
     public override bool IsVisible => IsShowing || RootCanvas.alpha == 1;
 
     //TODO: Esto hay que cambiarlo por uno solo.
-    public List<CharacterSpriteLayer> layers = new List<CharacterSpriteLayer>();
+    public CharacterSpriteLayer currentLayer;
     /// <summary>
     /// Creates a SpriteCharacter associated with the configuration specified in the Unity file and the prefab defined with it.
     /// </summary>
@@ -32,9 +32,8 @@ public class SpriteCharacter : Character
         RootCanvas.alpha = 0;
         assetsDirectory = charAssetsFolder + IMAGES_PATH;
 
-        GetLayers();
+        GetLayer();
 
-        //Show();
         Debug.Log($"Character based on sprites loaded. {name}");
     }
 
@@ -42,37 +41,29 @@ public class SpriteCharacter : Character
     /// <summary>
     /// Gets the layers of a character, currently this function will be modified because we only use 1 layer.
     /// </summary>
-    private void GetLayers()
+    private void GetLayer()
     {
         Transform renderRoot = animator.transform.Find(SPRITE_RENDERED_PARENT_NAME);
 
         if (renderRoot == null) return;
 
-        //TODO: Set it only to first child as we don't use all the layers.
-        for (int i = 0; i < renderRoot.transform.childCount; i++)
-        {
-            Transform child = renderRoot.transform.GetChild(i);
-            
-            if (child.TryGetComponent<Image>(out var renderImage))
-            {
-                CharacterSpriteLayer layer = new CharacterSpriteLayer(renderImage);
-                layers.Add(layer);
-                //En español porque en la UI de Unity nos pusimos de acuerdo en que fuera así.
-                //FIXME: Quitar esto.
-                child.name = $"Capa {i}";
-            }
+        //Get the first child to put the image.
+        Transform child = renderRoot.transform.GetChild(0);
 
+        if (child.TryGetComponent<Image>(out var renderImage))
+        {
+            currentLayer = new CharacterSpriteLayer(renderImage);
+            child.name = $"Capa 0";
         }
     }
 
     /// <summary>
-    /// Sets the sprite of the character and the layer to be saved.
+    /// Sets the sprite of the character in the current layer.
     /// </summary>
     /// <param name="sprite">The sprite resource.</param>
-    /// <param name="layer">The layer where it lies.</param>
-    public void SetSprite(Sprite sprite, int layer = 0)
+    public void SetSprite(Sprite sprite)
     {
-        layers[layer].SetSprite(sprite);
+        currentLayer.SetSprite(sprite);
     }
 
     /// <summary>
@@ -90,14 +81,11 @@ public class SpriteCharacter : Character
     /// Makes a transition while changing the character sprite.
     /// </summary>
     /// <param name="sprite">The sprite resource.</param>
-    /// <param name="layer">The layer to change the sprite.</param>
     /// <param name="speed">How fast the transition should be.</param>
     /// <returns>The Coroutine process associated with the transition.</returns>
-    public Coroutine TransitionSprite(Sprite sprite, int layer = 0, float speed = 1)
+    public Coroutine TransitionSprite(Sprite sprite, float speed = 1)
     {
-        //TODO: Remove the layer.
-        CharacterSpriteLayer spriteLayer = layers[layer];
-        return spriteLayer.TransitionSprite(sprite, speed);
+        return currentLayer.TransitionSprite(sprite, speed);
     }
 
     public override IEnumerator HandleShowing(bool shouldShow)
@@ -121,20 +109,17 @@ public class SpriteCharacter : Character
         base.SetColor(color);
         color = displayColor;
 
-        foreach (CharacterSpriteLayer layer in layers)
-        {
-            layer.StopChangingColor();
-            layer.SetColor(color);
-        }
+        currentLayer.StopChangingColor();
+        currentLayer.SetColor(color);
     }
+
     public override IEnumerator ChangingColor(Color color, float speed)
     {
-        foreach (CharacterSpriteLayer layer in layers)
-            layer.TransitionColor(color, speed);
+        currentLayer.TransitionColor(color, speed);
 
         yield return null;
 
-        while (layers.Any(l => l.isChangingColor))
+        while(currentLayer.isChangingColor)
             yield return null;
 
         co_changingColor = null;
@@ -146,18 +131,14 @@ public class SpriteCharacter : Character
     {
         Color targetColor = displayColor;
 
-        foreach (CharacterSpriteLayer layer in layers)
-        {
-            if (inmediate)
-                layer.SetColor(targetColor);
-            else
-                layer.TransitionColor(targetColor, speedMultiplier);
-        }
-            
+        if (inmediate)
+            currentLayer.SetColor(targetColor);
+        else
+            currentLayer.TransitionColor(targetColor, speedMultiplier);
 
         yield return null;
 
-        while (layers.Any(l => l.isChangingColor))
+        while(currentLayer.isChangingColor)
             yield return null;
 
         co_changingColor = null;
@@ -165,20 +146,21 @@ public class SpriteCharacter : Character
 
     public override IEnumerator FaceDirection(bool faceLeft, float speedMultiplier, bool immediate)
     {
-        foreach (CharacterSpriteLayer layer in layers)
-        {
-            if (faceLeft)
-                layer.FaceLeft(speedMultiplier, immediate);
-            else
-                layer.FaceRight(speedMultiplier, immediate);
-        }
+        if (faceLeft)
+            currentLayer.FaceLeft(speedMultiplier, immediate);
+        else
+            currentLayer.FaceRight(speedMultiplier, immediate);
+
+        //Esperar un poco.
         yield return null;
-        while (layers.Any(l => l.isFlipping))
+
+        while(currentLayer.isFlipping)
             yield return null;
+
         co_flipping = null;
     }
 
-    public override void OnExpressionReceive(int layer, string expression)
+    public override void OnExpressionReceive(string expression)
     {
         Sprite sprite = GetSprite(expression);
 
@@ -187,6 +169,6 @@ public class SpriteCharacter : Character
             return;
         }
 
-        TransitionSprite(sprite, layer);
+        TransitionSprite(sprite);
     }
 }

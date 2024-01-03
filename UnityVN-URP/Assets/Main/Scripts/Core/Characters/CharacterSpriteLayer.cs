@@ -17,7 +17,7 @@ namespace CHARACTERS
         private const float DEFAULT_TRANSITION_SPEED = 3f;
         private float transitionSpeedMultiplier = 1;
 
-        public int layer { get; private set; } = 0;
+        //public int layer { get; private set; } = 0;
 
         public Image renderer { get; private set; } = null;
 
@@ -42,10 +42,10 @@ namespace CHARACTERS
         /// </summary>
         /// <param name="defaultRenderer">The image that should be rendered with the layer.</param>
         /// <param name="layer">The layer num, always 0.</param>
-        public CharacterSpriteLayer(Image defaultRenderer, int layer = 0)
+        public CharacterSpriteLayer(Image defaultRenderer)
         {
             renderer = defaultRenderer;
-            this.layer = layer;
+            //this.layer = layer;
         }
 
         /// <summary>

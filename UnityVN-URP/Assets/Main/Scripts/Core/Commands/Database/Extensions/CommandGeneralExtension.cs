@@ -60,8 +60,6 @@ namespace COMMANDS
                 DialogController.Instance.convManager.Enqueue(newConversation);
             else
                 DialogController.Instance.convManager.StartConversation(newConversation);
-
-
         }
 
         private static IEnumerator Wait(string data) { 

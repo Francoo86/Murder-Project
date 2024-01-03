@@ -60,7 +60,8 @@ class CharacterInteraction
     /// <param name="character"></param>
     public IEnumerator DisplayText(Character character)
     {
-        character.OnExpressionReceive(0, GetLastEmotion());
+        Debug.Log($"Expression received: {lastEmotion}");
+        character.OnExpressionReceive(lastEmotion ?? "normal");
         yield return character.Say(lastText);
         /*
         //BINGO.
@@ -92,8 +93,9 @@ class CharacterInteraction
            Controller.StartConversation(lastConversation);*/
     }
 
+    /*
     private string GetLastEmotion()
     {
         return lastEmotion ?? "normal";
-    }
+    }*/
 }
