@@ -4,6 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// The choice panel logic handler.
+/// </summary>
 public class ChoicePanel : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -24,11 +27,17 @@ public class ChoicePanel : MonoBehaviour
     public ChoicePanelDecision LastDecision { get; private set; } = null;
     private List<ChoiceButton> buttons = new List<ChoiceButton>();
 
+    /// <summary>
+    /// Initializes the instance of this class, this class must be unique as we don't need more logic about choices.
+    /// </summary>
     private void Awake()
     {
         Instance = this;
     }
 
+    /// <summary>
+    /// Starts in the game with the panel hidden.
+    /// </summary>
     void Start()
     {
         cgController = new CanvasGroupController(this, canvasGroup);
@@ -36,7 +45,11 @@ public class ChoicePanel : MonoBehaviour
         cgController.SetInteractableState(false);
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Shows the choice panel with the title and the possible choices on the screen.
+    /// </summary>
+    /// <param name="question">The title of the choice panel, usually a question.</param>
+    /// <param name="choices">The array of possible choices to be displayed on the buttons.</param>
     public void Show(string question, string[] choices)
     {
         LastDecision = new ChoicePanelDecision(question, choices);
@@ -49,6 +62,9 @@ public class ChoicePanel : MonoBehaviour
         StartCoroutine(GenerateChoices(choices));
     }
 
+    /// <summary>
+    /// Hides the panel and disables the interaction with it.
+    /// </summary>
     public void Hide()
     {
         cgController.Hide();
