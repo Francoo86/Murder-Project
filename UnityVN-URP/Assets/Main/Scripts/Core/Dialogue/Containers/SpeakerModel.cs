@@ -21,7 +21,7 @@ public class SpeakerModel
     public bool IsDoingAnyExpression => actualExpression != "";//ScreenExpressions.Count > 0;
     //Las emociones son papel fundamental en una novela.
     //Por lo que veo estas son capas, lo más probable es que solo usaremos la primera solamente.
-    public string actualExpression = "";//List<(int layer, string expression)> ScreenExpressions { get; set; }
+    public string actualExpression = "";
 
     //Minuto 13.
     public bool MakeCharacterEnter = false;
@@ -32,8 +32,6 @@ public class SpeakerModel
     private const string EXPRESSION_ID = " [";
     //Para la position en pantalla, asumiendo que [1:1] es x:y;
     private const char AXISDELIMITER_ID = ':';
-    private const char EXPRESSIONLAYER_JOINER = ',';
-    private const char EXPRESSIONLAYER_DELIMITER = ':';
     //Palabra clave para mostrar al personaje en pantalla.
     private const string SHOWCHARACTER_ID = "enter ";
     /// <summary>
