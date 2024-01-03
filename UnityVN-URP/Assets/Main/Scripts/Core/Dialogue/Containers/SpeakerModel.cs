@@ -18,10 +18,10 @@ public class SpeakerModel
     public string DisplayName => IsScreenName ? screenName : name;
     public bool IsScreenName => screenName != string.Empty;
     public bool IsGoingToScreenPos => false;
-    public bool IsDoingAnyExpression => ScreenExpressions.Count > 0;
+    public bool IsDoingAnyExpression => actualExpression != "";//ScreenExpressions.Count > 0;
     //Las emociones son papel fundamental en una novela.
     //Por lo que veo estas son capas, lo más probable es que solo usaremos la primera solamente.
-    public List<(int layer, string expression)> ScreenExpressions { get; set; }
+    public string actualExpression = "";//List<(int layer, string expression)> ScreenExpressions { get; set; }
 
     //Minuto 13.
     public bool MakeCharacterEnter = false;
@@ -55,7 +55,7 @@ public class SpeakerModel
         //Inicializar para evitar problemas de referencias.
         screenName = "";
         speakerScrPos = Vector2.zero;
-        ScreenExpressions = new List<(int layer, string expression)>();
+        actualExpression = "normal"; ///new List<(int layer, string expression)>();
     }
 
     //The constructor does too much work.
@@ -129,9 +129,15 @@ public class SpeakerModel
                 endIdx = (i < matches.Count - 1) ? matches[i + 1].Index : speaker.Length;
                 string castedExpr = speaker.Substring(startIdx, endIdx - (startIdx + 1));
 
+                //Debug.Log("TAK TAK");
+                //Debug.Log(castedExpr);
+                actualExpression = castedExpr;
+
+                /*
                 ScreenExpressions = castedExpr.Split(EXPRESSIONLAYER_JOINER)
                     //Very JS syntax to forEach.
                     .Select(elem => {
+                        Debug.Log($"{elem}");
                         var parts = elem.Trim().Split(EXPRESSIONLAYER_DELIMITER);
 
                         Debug.Log($"EXPRESSION GOT: {parts[0]}");
@@ -140,7 +146,7 @@ public class SpeakerModel
                             return (int.Parse(parts[0]), parts[1]);
                         else
                             return (0, parts[0]);
-                    }).ToList();
+                    }).ToList();*/
             }
         }
     }

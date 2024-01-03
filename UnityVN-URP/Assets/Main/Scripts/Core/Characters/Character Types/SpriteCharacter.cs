@@ -34,7 +34,6 @@ public class SpriteCharacter : Character
 
         GetLayer();
 
-        //Show();
         Debug.Log($"Character based on sprites loaded. {name}");
     }
 
@@ -165,7 +164,7 @@ public class SpriteCharacter : Character
         co_flipping = null;
     }
 
-    public override void OnExpressionReceive(int layer, string expression)
+    public override void OnExpressionReceive(string expression)
     {
         Sprite sprite = GetSprite(expression);
 

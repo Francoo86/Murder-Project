@@ -16,6 +16,12 @@ PlaySong(Mistery -loop true)
 
 //[wait]MoveCharacter(jacinto -x 0.5 -y 0.5)
 
+[wait]ShowCharacter(Marcelo)
+
+Marcelo "Hola"
+Marcelo [enojado] "Toy enojao xd"
+
+
 Jacinto as Mayor "Hi Mister, what brings you so early to the town?"
 
 <mainChar> "Good morning, I come to town for the festival, is it today?"

@@ -145,9 +145,7 @@ public class ConversationManager
 
         if (shouldBeVisible)
         {
-            //Debug.Log("MAKING CHARACTER ENTER!!!!");
             character.Show();
-            //character.IsVisible = true;
         }
 
 
@@ -164,14 +162,9 @@ public class ConversationManager
         if (speakerModel.IsDoingAnyExpression)
         {
             //NO LAYERS.
-            (int _, string exp) = speakerModel.ScreenExpressions[0];
-            character.OnExpressionReceive(0, exp);
+            string exp = speakerModel.actualExpression;
+            character.OnExpressionReceive(exp);
         }
-            //foreach(var exp in speakerModel.ScreenExpressions)
-            //{
-                //TODO: Remove the layer thing as we are not working with that.
-                //character.OnExpressionReceive(exp.layer, exp.expression);
-            //}
     }
     private IEnumerator RunDialogForLine(DialogLineModel dialogLine)
     {
@@ -277,7 +270,6 @@ public class ConversationManager
         else
             arch.Append(diag);
 
-        Debug.Log($"Current style of TextArchitect: {arch.buildMethod}");
         //Esperar a que el dialogo se termine de construir.
         while (arch.isBuilding)
         {

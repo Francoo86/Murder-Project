@@ -411,7 +411,7 @@ namespace CHARACTERS
         /// </summary>
         /// <param name="layer">(Most for spritesheet) the layer.</param>
         /// <param name="expression">The expression associated with the character.</param>
-        public virtual void OnExpressionReceive(int layer, string expression)
+        public virtual void OnExpressionReceive(string expression)
         {
             return;
         }

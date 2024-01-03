@@ -45,6 +45,5 @@ public class MainMenu : MonoBehaviour
             yield return null;
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("VisualNovel");
-
     }
 }
