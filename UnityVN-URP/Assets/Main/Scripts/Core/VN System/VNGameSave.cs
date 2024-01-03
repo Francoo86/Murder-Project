@@ -13,7 +13,6 @@ namespace VISUALNOVEL
         public static VNGameSave activeFile = null;
         public const string FILE_TYPE = ".vns";
         public const string SCREENSHOT_FILE_TYPE = ".jpg";
-        public const bool ENCRYPY_FILE = false;
         public const float SCREENSHOT_DOWNSCALE = 1;
 
         public string filePath => $"{FilePaths.gameSaves}{slotNumber}{FILE_TYPE}";
@@ -59,14 +58,9 @@ namespace VISUALNOVEL
             HistoryManager.Instance.history = historyLog.ToList();
             //Wrapper method for refactoring this stuff.
             HistoryManager.Instance.ResetLogManager();
-            //HistoryManager.Instance.logManager.Clear();
-            //HistoryManager.Instance.logManager.Rebuild();
 
             SetVariableData();
             SetConversationData();
-            
-            //Esconder el cursor.
-            //DialogController.Instance.prompt.Hide();
         }
 
         //ESTA FUNCION WEBEA CON LAS VARIABLES.

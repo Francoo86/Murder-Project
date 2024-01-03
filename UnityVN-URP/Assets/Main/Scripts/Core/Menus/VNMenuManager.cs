@@ -40,14 +40,23 @@ public class VNMenuManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Opens the save and load menu related to a specific criteria (load or save).
+    /// </summary>
+    /// <param name="menuFunc"></param>
+    private void OpenPageByCriteria(SaveAndLoadMenu.MenuFunction menuFunc)
+    {
+        var page = GetPage(MenuPage.PageType.SaveAndLoad);
+        var slm = page.anim.GetComponentInParent<SaveAndLoadMenu>();
+        slm.menuFunction = menuFunc;
+        OpenPage(page);
+    }
+
+    /// <summary>
     /// Opens the save page and tries to retrieve all the available files related to savings.
     /// </summary>
     public void OpenSavePage()
     {
-        var page = GetPage(MenuPage.PageType.SaveAndLoad);
-        var slm = page.anim.GetComponentInParent<SaveAndLoadMenu>();
-        slm.menuFunction = SaveAndLoadMenu.MenuFunction.save;
-        OpenPage(page);
+        OpenPageByCriteria(SaveAndLoadMenu.MenuFunction.save);
     }
 
     /// <summary>
@@ -55,10 +64,7 @@ public class VNMenuManager : MonoBehaviour
     /// </summary>
     public void OpenLoadPage()
     {
-        var page = GetPage(MenuPage.PageType.SaveAndLoad);
-        var slm = page.anim.GetComponentInParent<SaveAndLoadMenu>();
-        slm.menuFunction = SaveAndLoadMenu.MenuFunction.load;
-        OpenPage(page);
+        OpenPageByCriteria(SaveAndLoadMenu.MenuFunction.load);
     }
     
 
