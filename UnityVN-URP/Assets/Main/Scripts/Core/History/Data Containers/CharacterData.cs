@@ -125,10 +125,6 @@ namespace History
 
             foreach (CharacterData characterData in data)
             {
-                //Whats this?
-                //if (characterData.characterName == "Innkepper")
-                    //characterData.characterName = "Innkeepeer as Generic";
-
                 Character character = CharacterController.Instance.GetCharacter(characterData.characterName, create: true);
                 character.displayName = characterData.displayName;
                 character.SetColor(characterData.color);
@@ -153,18 +149,13 @@ namespace History
                     character.SetPos(characterData.position);
 
                 character.IsVisible = characterData.enabled;
-                    
 
                 if(character.config.charType == Character.CharacterType.Sprite)
                 {
                     SpriteData sData = JsonUtility.FromJson<SpriteData>(characterData.dataJSON);
                     SpriteCharacter sc = character as SpriteCharacter;
 
-                    //for (int i = 0; i < sData.layers.Count; i++)
-                    //{
-                    //Solo ocupamos una capa.
-                    //int i = 0;
-                    var layer = sData.actualLayer;//layers[i];
+                    var layer = sData.actualLayer;
                     if (sc.currentLayer.renderer.sprite != null && sc.currentLayer.renderer.sprite.name != layer.spriteName)
                     {
                         Sprite sprite = sc.GetSprite(layer.spriteName);
@@ -173,9 +164,6 @@ namespace History
                         else
                             Debug.LogWarning($"History State could not load sprite '{layer.spriteName}'");
                     }
-                    //}
-
-                    //Debug.Log($"LOL COUNT: {sData.layers.Count}");
                 }
 
                 cache.Add(character.name);

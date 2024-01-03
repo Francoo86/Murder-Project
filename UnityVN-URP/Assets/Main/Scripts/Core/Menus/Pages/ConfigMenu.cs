@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,11 +28,6 @@ public class ConfigMenu : MenuPage
         }
 
         activePanel = panels[0];
-
-        //Resolution[] resolutions = Screen.resolutions; // esta linea aparentemente en el video desaparece
-
-       // SetAvailableResolutions();
-
         LoadConfig();
     }
 
@@ -60,7 +52,7 @@ public class ConfigMenu : MenuPage
         GameObject panel = panels.First(p => p.name.ToLower() == panelName.ToLower());
         if (panel == null)
         {
-            UnityEngine.Debug.LogWarning($"Did not find panel called '{panelName}' in config menu");
+            Debug.LogWarning($"Did not find panel called '{panelName}' in config menu");
             return;
         }
 

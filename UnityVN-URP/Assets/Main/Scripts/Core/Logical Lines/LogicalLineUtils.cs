@@ -270,9 +270,17 @@ public class LogicalLineUtils
             {">", (left, right) => left > right },
         };
 
+        /// <summary>
+        /// Evaluates an expression based on float, bool, or integers.
+        /// Left and Right should be the same type!!!!
+        /// </summary>
+        /// <param name="left">The left side of the condition.</param>
+        /// <param name="op">The operation.</param>
+        /// <param name="right">The right side of the condition.</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         private static bool EvaluateExpression(string left, string op, string right)
         {
-            Debug.Log($"CURRENT WEAS {left} {op} {right}");
             if (bool.TryParse(left, out bool leftBool) && bool.TryParse(right, out bool rightBool))
                 return boolOperators[op](leftBool, rightBool);
 
