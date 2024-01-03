@@ -53,15 +53,14 @@ public class SpriteCharacter : Character
         if (child.TryGetComponent<Image>(out var renderImage))
         {
             currentLayer = new CharacterSpriteLayer(renderImage);
-            child.name = $"Sprite Personaje";
+            child.name = $"Capa 0";
         }
     }
 
     /// <summary>
-    /// Sets the sprite of the character and the layer to be saved.
+    /// Sets the sprite of the character in the current layer.
     /// </summary>
     /// <param name="sprite">The sprite resource.</param>
-    /// <param name="layer">The layer where it lies.</param>
     public void SetSprite(Sprite sprite)
     {
         currentLayer.SetSprite(sprite);
@@ -82,13 +81,10 @@ public class SpriteCharacter : Character
     /// Makes a transition while changing the character sprite.
     /// </summary>
     /// <param name="sprite">The sprite resource.</param>
-    /// <param name="layer">The layer to change the sprite.</param>
     /// <param name="speed">How fast the transition should be.</param>
     /// <returns>The Coroutine process associated with the transition.</returns>
     public Coroutine TransitionSprite(Sprite sprite, float speed = 1)
     {
-        //TODO: Remove the layer.
-        //CharacterSpriteLayer spriteLayer = layers[layer];
         return currentLayer.TransitionSprite(sprite, speed);
     }
 
