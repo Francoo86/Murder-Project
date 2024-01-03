@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 namespace History
@@ -27,7 +24,6 @@ namespace History
             trackName = track.Name;
             trackPath = track.path;
             trackVolume = track.VolumeCap;
-            //trackPitch = track.pitch;
             loop = track.Loop;
         }
 
@@ -46,7 +42,6 @@ namespace History
 
             return audioChannels;
         }
-
 
         public static void Apply(List<AudioData> data) 
         {

@@ -47,7 +47,6 @@ public class SaveLoadSlot : MonoBehaviour
             deleteButton.gameObject.SetActive(false);
             loadButton.gameObject.SetActive(false);
             saveButton.gameObject.SetActive(function == SaveAndLoadMenu.MenuFunction.save);
-            //Este es el conchesumare que webea.
             previewImage.texture = SaveAndLoadMenu.Instance.emptyFileImage;
         }
         else
@@ -77,12 +76,10 @@ public class SaveLoadSlot : MonoBehaviour
 
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == MainMenu.MAIN_MENU_SCENE)
         {
-            //VNGameSave.activeFile = file;
             MainMenu.instance.LoadGame(file);
         }
         else
         {
-            //Debug.Log($"Currently loading file number of: {filePath}");
             file.Activate();
             VNGameSave.activeFile = file;
         }
