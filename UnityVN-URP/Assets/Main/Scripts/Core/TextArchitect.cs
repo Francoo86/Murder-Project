@@ -22,8 +22,6 @@ public class TextArchitect
     public string preText { get; private set; } = "";
 
     public string fullTargetText => preText + targetText;
-    public enum BuildMethod { instant, typewriter};
-    public BuildMethod buildMethod = BuildMethod.typewriter;
 
     public Color textColor { get { return tmpro.color; } set { tmpro.color = value; } }
 
@@ -113,10 +111,7 @@ public class TextArchitect
     IEnumerator Building() {
         Prepare();
 
-        if(buildMethod == BuildMethod.typewriter)
-        {
-            yield return Build_TypeWriter();
-        }
+        yield return Build_TypeWriter();
 
         OnComplete();
     }
@@ -130,38 +125,13 @@ public class TextArchitect
     /// </summary>
     private void Prepare() 
     {
-        switch (buildMethod) {
-            case BuildMethod.instant:
-                Prepare_Instant();
-                break;
-            case BuildMethod.typewriter:
-                Prepare_Typewriter();
-                break;
-        }
+        Prepare_Typewriter();
     }
 
     public void ForceComplete() {
-        if(buildMethod == BuildMethod.typewriter)
-        {
-            tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
-        }
-
+        tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
         Stop();
         OnComplete();
-    }
-
-    //TODO: Create a new class that holds this functionality.
-    /// <summary>
-    /// Prepares the text without any effect for showing instantly.
-    /// </summary>
-    private void Prepare_Instant() {
-        //Reinciar color.
-        tmpro.color = tmpro.color;
-        tmpro.text = fullTargetText;
-        //Cualquier cambio hecho al texto se actualizará aquí.
-        tmpro.ForceMeshUpdate();
-        //Que los caracteres calcen en la pantalla.
-        tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
     }
 
     /// <summary>
