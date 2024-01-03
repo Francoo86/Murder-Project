@@ -21,7 +21,7 @@ public class DialogController : MonoBehaviour
     public static DialogController Instance { get; private set; }
     private TextArchitect architect;
     private CanvasGroupController CGController;
-    public AutoReader autoReader;
+    private AutoReader autoReader;
 
     //Definimos una "funcion" que es m�s o menos personalizable.
     public delegate void DialogSystemEvent();
