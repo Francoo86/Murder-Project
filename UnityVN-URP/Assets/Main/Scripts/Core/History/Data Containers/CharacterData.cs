@@ -74,6 +74,28 @@ namespace History
                 entry.position = character.targetPosition;
                 entry.characterConfig = new CharacterConfigCache(character.config);
 
+                Character.CharacterType actualType = character.config.charType;
+
+                if(actualType == Character.CharacterType.Sprite)
+                {
+                    SpriteData sData = new SpriteData();
+                    sData.actualLayer = new SpriteData.LayerData(); //layers = new List<SpriteData.LayerData>();
+
+                    SpriteCharacter sc = character as SpriteCharacter;
+                    var layer = sc.currentLayer;
+
+                    //foreach (var layer in sc.layers)
+                    //{
+                    var layerData = new SpriteData.LayerData();
+                    layerData.color = layer.renderer.color;
+                    layerData.spriteName = layer.renderer.sprite.name;
+                    sData.actualLayer = layerData;
+                    //sData.layers.Add(layerData);
+                    //}
+                    entry.dataJSON = JsonUtility.ToJson(sData);
+                }
+
+                /*
                 switch (character.config.charType)
                 {
                     case Character.CharacterType.Sprite:
@@ -91,7 +113,7 @@ namespace History
                         }
                         entry.dataJSON = JsonUtility.ToJson(sData);
                         break;
-                }
+                }*/
                 characters.Add(entry);
             }
             return characters;
@@ -141,13 +163,13 @@ namespace History
                     //for (int i = 0; i < sData.layers.Count; i++)
                     //{
                     //Solo ocupamos una capa.
-                    int i = 0;
-                    var layer = sData.layers[i];
-                    if (sc.layers[i].renderer.sprite != null && sc.layers[i].renderer.sprite.name != layer.spriteName)
+                    //int i = 0;
+                    var layer = sData.actualLayer;//layers[i];
+                    if (sc.currentLayer.renderer.sprite != null && sc.currentLayer.renderer.sprite.name != layer.spriteName)
                     {
                         Sprite sprite = sc.GetSprite(layer.spriteName);
                         if (sprite != null)
-                            sc.SetSprite(sprite, i);
+                            sc.SetSprite(sprite);
                         else
                             Debug.LogWarning($"History State could not load sprite '{layer.spriteName}'");
                     }
@@ -169,7 +191,8 @@ namespace History
         [System.Serializable]
         public class SpriteData 
         {
-            public List<LayerData> layers;
+            public LayerData actualLayer;
+            //public List<LayerData> layers;
             [System.Serializable]
             public class LayerData
             {
