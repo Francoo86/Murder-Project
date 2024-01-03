@@ -277,6 +277,7 @@ public class ConversationManager
         else
             arch.Append(diag);
 
+        Debug.Log($"Current style of TextArchitect: {arch.buildMethod}");
         //Esperar a que el dialogo se termine de construir.
         while (arch.isBuilding)
         {

@@ -116,14 +116,20 @@ public class TextArchitect
     IEnumerator Building() {
         Prepare();
 
-        switch (buildMethod) {
+        if(buildMethod == BuildMethod.typewriter)
+        {
+            yield return Build_TypeWriter();
+        }
+
+        /*switch (buildMethod) {
             case BuildMethod.typewriter:
                 yield return Build_TypeWriter();
                 break;
+           
             case BuildMethod.fade:
                 yield return Build_Fade();
                 break;
-        }
+        }*/
 
         OnComplete();
     }
@@ -144,13 +150,20 @@ public class TextArchitect
             case BuildMethod.typewriter:
                 Prepare_Typewriter();
                 break;
+            /*
             case BuildMethod.fade:
                 Prepare_Fade();
-                break;
+                break;*/
         }
     }
 
     public void ForceComplete() {
+        if(buildMethod == BuildMethod.typewriter)
+        {
+            tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
+        }
+
+        /*
         switch (buildMethod) { 
             case BuildMethod.typewriter:
                 tmpro.maxVisibleCharacters = tmpro.textInfo.characterCount;
@@ -158,7 +171,7 @@ public class TextArchitect
             case BuildMethod.fade:
                 tmpro.ForceMeshUpdate();
                 break;
-        }
+        }*/
 
         Stop();
         OnComplete();
@@ -200,6 +213,7 @@ public class TextArchitect
     /// <summary>
     /// Prepares the Fade effect for VN.
     /// </summary>
+    /*
     private void Prepare_Fade()
     {
         tmpro.text = preText;
@@ -243,7 +257,7 @@ public class TextArchitect
 
         //Actualizar las referencias del color del texto.
         tmpro.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
-    }
+    }*/
 
     /// <summary>
     /// Builds the typewriting effect for the text.
@@ -260,7 +274,7 @@ public class TextArchitect
     /// Builds the fade effect for the text.
     /// </summary>
     /// <returns></returns>
-    private IEnumerator Build_Fade() {
+    /*private IEnumerator Build_Fade() {
         //TODO: HIPER-REFACTOR.
         int minRange = preTextLength;
         int maxRange = minRange + 1;
@@ -305,5 +319,5 @@ public class TextArchitect
 
             yield return new WaitForEndOfFrame();
         }
-    }
+    }*/
 }
