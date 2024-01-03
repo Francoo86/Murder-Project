@@ -12,9 +12,6 @@ public class SaveAndLoadMenu : MenuPage
     public static SaveAndLoadMenu Instance { get; private set; }
     private const int MAX_FILES = 6;
 
-    private string savePath => FilePaths.gameSaves;
-    //private string savePath;
-
     private int currentPage = 1;
     private bool loadedFilesForFirstTime = false;
 
@@ -27,26 +24,17 @@ public class SaveAndLoadMenu : MenuPage
 
     public Texture emptyFileImage;
 
-    //ERROR: FilePath/SaveAndLoadMenu
-    /*public static string rootPath { get; private set; }
-    private void Awake() 
-    {
-        rootPath = $"{Application.dataPath}/Main/Resources/";   
-    }*/
-
     //Original
     private void Awake() 
     {
         Instance = this;
-        //savePath = FilePaths.gameSaves;    
     }
     
     //Funcion aparentemente buena, comentada para que Unity no webee.
     public override void Open()
     {
-        //Debug.Log($"<color=#AAFF00>SCREAMING AT CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
         base.Open();
-        //Debug.Log($"<color=#AAFF00>SCREAMING AT CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
+        
         if (!loadedFilesForFirstTime)
             PopulateSaveSlotsForPage(currentPage);
     }
@@ -71,10 +59,12 @@ public class SaveAndLoadMenu : MenuPage
                 slot.root.SetActive(true);
                 string filePath = $"{FilePaths.gameSaves}{fileNum}{VNGameSave.FILE_TYPE}";
                 slot.fileNumber = fileNum;
-                slot.filePath = filePath;
-                //Debug.Log($"<color=#AAFF00>SCREAMING AT CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
+
+                slot.SetLoadPath(filePath);
+
+                //slot.filePath = filePath;
+                
                 slot.PopulateDetails(menuFunction);
-                //Debug.Log($"<color=#AAFF00>SCREAMING AT CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
             }
             else
             {

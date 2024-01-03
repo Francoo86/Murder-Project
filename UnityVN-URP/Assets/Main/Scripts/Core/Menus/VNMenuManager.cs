@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using VISUALNOVEL;
+using UnityEngine.SceneManagement;
 
 //MenuPage.PageType
 
@@ -11,7 +12,6 @@ using VISUALNOVEL;
 /// </summary>
 public class VNMenuManager : MonoBehaviour
 {
-    //Filepath por lo que veo, webea mucho, de todas formas me imagino que nosotros debemos asignarlas.
     public static VNMenuManager Instance;
     private MenuPage activePage = null;
     private bool isOpen = false;
@@ -117,7 +117,7 @@ public class VNMenuManager : MonoBehaviour
     public void Click_Home()
     {
         VN_Configuration.activeConfig.Save();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(MainMenu.MAIN_MENU_SCENE);
+        SceneManager.LoadScene(MainMenu.MAIN_MENU_SCENE);
     }
 
     public void Click_Quit()
