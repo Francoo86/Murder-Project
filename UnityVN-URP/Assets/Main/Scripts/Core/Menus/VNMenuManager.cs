@@ -6,6 +6,9 @@ using VISUALNOVEL;
 
 //MenuPage.PageType
 
+/// <summary>
+/// Class that handles the main menu and gameplay menu logic, providing handling of Saving/Loading/Configuration.
+/// </summary>
 public class VNMenuManager : MonoBehaviour
 {
     //Filepath por lo que veo, webea mucho, de todas formas me imagino que nosotros debemos asignarlas.
@@ -17,6 +20,9 @@ public class VNMenuManager : MonoBehaviour
     [SerializeField] private MenuPage[] pages;
     private CanvasGroupController rootCG;
 
+    /// <summary>
+    /// Saves the instance to be used across the game.
+    /// </summary>
     private void Awake() 
     {
         Instance = this;
@@ -33,19 +39,20 @@ public class VNMenuManager : MonoBehaviour
         return pages.FirstOrDefault(page => page.pageType == pageType);
     }
 
-    // Dan probelmas el slm.menuFunction -> se debe crear en VNGAMESAVE.
+    /// <summary>
+    /// Opens the save page and tries to retrieve all the available files related to savings.
+    /// </summary>
     public void OpenSavePage()
     {
-        //Debug.Log($"<color=#AAFF00>CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
         var page = GetPage(MenuPage.PageType.SaveAndLoad);
-        //Debug.Log($"<color=#AAFF00>CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
         var slm = page.anim.GetComponentInParent<SaveAndLoadMenu>();
-        //Debug.Log($"<color=#AAFF00>CHECKING INSTANCE THINGS PART 3: {VNGameSave.activeFile.playerName}</color>");
         slm.menuFunction = SaveAndLoadMenu.MenuFunction.save;
         OpenPage(page);
-        //Debug.Log($"<color=#AAFF00>CHECKING INSTANCE THINGS PART 4: {VNGameSave.activeFile.playerName}</color>");
     }
 
+    /// <summary>
+    /// Opens the load page and tries to retrieve all the available files related to savings.
+    /// </summary>
     public void OpenLoadPage()
     {
         var page = GetPage(MenuPage.PageType.SaveAndLoad);
@@ -67,7 +74,14 @@ public class VNMenuManager : MonoBehaviour
         OpenPage(page);
     }
 
-    public void OpenPage(MenuPage page) 
+    /// <summary>
+    /// Opens a page associated with a type (they need to attached in Unity).
+    /// In this case we have the Help menu, that shows the controls.
+    /// SaveAndLoad that shows the save slots menu.
+    /// Config menu, as the name says it shows the configuration.
+    /// </summary>
+    /// <param name="page"></param>
+    private void OpenPage(MenuPage page) 
     {
         if (page == null)
         {
@@ -77,9 +91,9 @@ public class VNMenuManager : MonoBehaviour
         {
             activePage.Close();
         }
-        //Debug.Log($"<color=#AAFF00>SCREAMING CHECKING INSTANCE THINGS PART 1: {VNGameSave.activeFile.playerName}</color>");
+
         page.Open();
-        //Debug.Log($"<color=#AAFF00>SCREAMING CHECKING INSTANCE THINGS PART 2: {VNGameSave.activeFile.playerName}</color>");
+
         activePage = page;
 
         if(!isOpen)

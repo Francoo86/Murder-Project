@@ -15,7 +15,6 @@ namespace COMMANDS
 
         private static void SetPlayerNameVariable(string data)
         {
-            Debug.Log($"The data is {data} why this is so fucking funny");
             VISUALNOVEL.VNGameSave.activeFile.playerName = data;
         }
     }
