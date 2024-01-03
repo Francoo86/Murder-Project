@@ -10,14 +10,10 @@ public class VN_Configuration
 
     public static string filePath => $"{FilePaths.rootPath}vnconfig.cfg"; //posible error revisar
 
-    public const bool ENCRYPT = false;
-
     //Ajustes generales
     public bool display_fullscreen = true;
     public string display_resolution = "1920x1080";
     public bool continueSkippingAfterChoice = false;
-    //public float dialogueTextSpeed = 1f;
-    //public float dialogueAutoReadSpeed = 1f;
 
     //ajuste de audio
     public float musicVolume = 1f;

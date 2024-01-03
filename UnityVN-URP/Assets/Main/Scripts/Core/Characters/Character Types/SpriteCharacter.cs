@@ -19,7 +19,7 @@ public class SpriteCharacter : Character
     public override bool IsVisible => IsShowing || RootCanvas.alpha == 1;
 
     //TODO: Esto hay que cambiarlo por uno solo.
-    public CharacterSpriteLayer currentLayer;
+    public CharacterImage currentLayer;
     /// <summary>
     /// Creates a SpriteCharacter associated with the configuration specified in the Unity file and the prefab defined with it.
     /// </summary>
@@ -52,7 +52,7 @@ public class SpriteCharacter : Character
 
         if (child.TryGetComponent<Image>(out var renderImage))
         {
-            currentLayer = new CharacterSpriteLayer(renderImage);
+            currentLayer = new CharacterImage(renderImage);
             child.name = $"Capa 0";
         }
     }

@@ -9,7 +9,7 @@ namespace CHARACTERS
     /// <summary>
     /// Manages character sprite layers, currently we use the first layer (the 0th one). This is for doing expressions on the screen.
     /// </summary>
-    public class CharacterSpriteLayer
+    public class CharacterImage
     {
 
         private CharacterController charController => CharacterController.Instance;
@@ -42,7 +42,7 @@ namespace CHARACTERS
         /// </summary>
         /// <param name="defaultRenderer">The image that should be rendered with the layer.</param>
         /// <param name="layer">The layer num, always 0.</param>
-        public CharacterSpriteLayer(Image defaultRenderer)
+        public CharacterImage(Image defaultRenderer)
         {
             renderer = defaultRenderer;
             //this.layer = layer;

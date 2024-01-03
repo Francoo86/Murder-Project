@@ -112,6 +112,15 @@ public class DialogController : MonoBehaviour
         }
     }
 
+    public void TryToStopAutoReader()
+    {
+        if (autoReader != null && autoReader.IsOn && autoReader.Skip)
+        {
+            if (VN_Configuration.activeConfig != null && !VN_Configuration.activeConfig.continueSkippingAfterChoice)
+                autoReader.Disable();
+        }
+    }
+
     /// <summary>
     /// This function is called when the player closes the history log.
     /// </summary>

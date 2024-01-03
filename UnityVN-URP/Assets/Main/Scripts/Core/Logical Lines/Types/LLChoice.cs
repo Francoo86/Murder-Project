@@ -50,13 +50,7 @@ public class LLChoice : ILogicalLine
         ConvManager.EnqueuePriority(newConversation);
 
         //Esto siempre va a ser falso xd
-        AutoReader autoReader = DialogController.Instance.autoReader;
-        if (autoReader !=null && autoReader.IsOn && autoReader.Skip)
-        {
-            if (VN_Configuration.activeConfig != null && !VN_Configuration.activeConfig.continueSkippingAfterChoice)
-                autoReader.Disable();
-        }
-
+        DialogController.Instance.TryToStopAutoReader();
     }
 
     /// <summary>
