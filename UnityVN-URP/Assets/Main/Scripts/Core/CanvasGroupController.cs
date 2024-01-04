@@ -4,6 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// Manipulates the CanvasGroup of a MonoBehaviour object.
+/// In this case, handles the interactable state, and makes transitions for showing or hiding of the Canvas.
 /// </summary>
 public class CanvasGroupController
 {
