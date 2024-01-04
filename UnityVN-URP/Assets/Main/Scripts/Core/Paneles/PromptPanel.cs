@@ -4,6 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class that handles the player input panel stuff for the game.
+/// </summary>
 public class PromptPanel : MonoBehaviour
 {
     public static PromptPanel Instance { get; private set; }
@@ -15,12 +18,18 @@ public class PromptPanel : MonoBehaviour
     private CanvasGroupController cgController;
     public string LastInput { get; private set; } = string.Empty;
     public bool IsWaitingOnUserInput { get; private set; }
-
+    
+    /// <summary>
+    /// Setups the instance.
+    /// </summary>
     private void Awake()
     {
         Instance = this;
     }
 
+    /// <summary>
+    /// Hides the panel and disables interaction, and adds listeners to the button and the input field.
+    /// </summary>
     void Start()
     {
         cgController = new CanvasGroupController(this, canvasGroup);
@@ -33,6 +42,10 @@ public class PromptPanel : MonoBehaviour
         acceptButton.onClick.AddListener(OnAcceptInput);
     }
 
+    /// <summary>
+    /// Shows the panel with title and makes it interactable.
+    /// </summary>
+    /// <param name="title">The title of the panel.</param>
     public void Show(string title)
     {
         titleText.text = title;
@@ -49,6 +62,9 @@ public class PromptPanel : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// When input is accepted the text will be saved as LastInput and the panel will be hidden.
+    /// </summary>
     public void OnAcceptInput()
     {
         if (inputField.text == string.Empty)
@@ -58,11 +74,19 @@ public class PromptPanel : MonoBehaviour
         Hide();
     }
 
+    /// <summary>
+    /// Sets the button active based on the valid text checking.
+    /// </summary>
+    /// <param name="pHolder"></param>
     public void OnInputChanged(string pHolder)
     {
         acceptButton.gameObject.SetActive(HasValidText());
     }
 
+    /// <summary>
+    /// Checks if the input field has at least 1 character.
+    /// </summary>
+    /// <returns>The check result.</returns>
     private bool HasValidText()
     {
         return inputField.text != string.Empty;

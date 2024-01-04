@@ -59,7 +59,7 @@ namespace History
                 entry.displayName = character.displayName;
                 entry.enabled = character.IsVisible;
                 entry.color = character.color;
-                entry.priority = character.priority;
+                //entry.priority = character.priority;
                 entry.isFacingLeft = character.isFacingLeft;
                 entry.isHighlighted = character.highlighted;
                 entry.position = character.targetPosition;

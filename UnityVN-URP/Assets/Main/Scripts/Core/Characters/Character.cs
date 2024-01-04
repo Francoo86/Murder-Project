@@ -31,7 +31,7 @@ namespace CHARACTERS
         protected Color unhighlightedColor => new Color(color.r * UNHIGHLIGHTED_DARKEN_STRENGTH, color.g * UNHIGHLIGHTED_DARKEN_STRENGTH, color.b * UNHIGHLIGHTED_DARKEN_STRENGTH, color.a);
         public bool highlighted { get; private set; } = true;
         protected bool facingLeft = DEFAULT_ORIENTATION_IS_FACING_LEFT;
-        public int priority { get; protected set; }
+        //public int priority { get; protected set; }
         public Vector2 targetPosition { get; protected set; }
 
         //Corutinas de mostrado.                              
