@@ -6,6 +6,9 @@ using TMPro;
 
 namespace History
 {
+    /// <summary>
+    /// Handles the History Log stuff when player opens it.
+    /// </summary>
     public class HistoryLogManager : MonoBehaviour
     {
         private const float LOG_STARTING_HEIGHT = 2F;
@@ -30,7 +33,10 @@ namespace History
 
         private float textScaling => logScaling * 3f;
 
-        //Estos tienen problema ya que no tienen algo que pueda arreglar el canvas.
+        /// <summary>
+        /// Makes the HistoryLogs displayable on the screen.
+        /// </summary>
+        /// <param name="active">Should display.</param>
         private void SetActive(bool active)
         {
             PanelCG.alpha = active ? 1f : 0f;
@@ -38,6 +44,9 @@ namespace History
             PanelCG.blocksRaycasts = active;
         }
 
+        /// <summary>
+        /// Open all the current logs until the last state.
+        /// </summary>
         public void Open()
         {
             if (isOpen)
@@ -50,6 +59,9 @@ namespace History
             isOpen = true;
         }
 
+        /// <summary>
+        /// Closes the HistoryLog Panel.
+        /// </summary>
         public void Close()
         {
             if (!isOpen)
@@ -60,6 +72,10 @@ namespace History
             isOpen = false;
         }
 
+        /// <summary>
+        /// Appends a log to the panel.
+        /// </summary>
+        /// <param name="state">The state that holds info about the character and the dialog.</param>
         public void AddLog(HistoryState state)
         {
             if (logs.Count >= HistoryManager.HISTORY_CACHE_LIMIT)
@@ -130,6 +146,9 @@ namespace History
             logLayout.preferredHeight += 2f * logScaling;
         }
 
+        /// <summary>
+        /// Makes the slider to scale the text of the logs.
+        /// </summary>
         public void SetLogScaling()
         {
             logScaling = logScaleSlider.value;
@@ -143,6 +162,9 @@ namespace History
             }
         }
 
+        /// <summary>
+        /// Removes all logs and destroys them.
+        /// </summary>
         public void Clear() 
         {
             int i = 0;
@@ -152,6 +174,9 @@ namespace History
             logs.Clear();
         }
 
+        /// <summary>
+        /// Creates all logs based on the HistoryManager history states.
+        /// </summary>
         public void Rebuild() 
         {
             foreach (var state in manager.history)

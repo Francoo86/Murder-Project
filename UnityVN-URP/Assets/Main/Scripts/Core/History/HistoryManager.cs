@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace History
 {
+    /// <summary>
+    /// Manages history states of the game.
+    /// </summary>
     [RequireComponent(typeof(HistoryLogManager))]
     [RequireComponent(typeof(HistoryNavigation))]
     public class HistoryManager : MonoBehaviour
@@ -17,6 +20,9 @@ namespace History
         private HistoryNavigation navigation;
         public HistoryLogManager logManager { get; private set; }
 
+        /// <summary>
+        /// Setups the instance, and attachs the LogManager and the navigation.
+        /// </summary>
         private void Awake() 
         {
             Instance = this;
@@ -30,12 +36,18 @@ namespace History
             DialogController.Instance.onClear += LogCurrentState;
         }
 
+        /// <summary>
+        /// Reloads log manager by clearing it and rebuilding it.
+        /// </summary>
         public void ResetLogManager()
         {
             logManager.Clear();
             logManager.Rebuild();
         }
 
+        /// <summary>
+        /// Gets the current history state and appends it to the log, only if the limit is not surpassed.
+        /// </summary>
         public void LogCurrentState()
         {
             HistoryState state = HistoryState.Capture();
@@ -46,13 +58,23 @@ namespace History
                 history.RemoveAt(0);
         }
 
+        /// <summary>
+        /// Loads the current history state.
+        /// </summary>
+        /// <param name="state">The passed state.</param>
         public void LoadState(HistoryState state)
         {
             state.Load();
         }
 
+        /// <summary>
+        /// Makes the history advance until current state.
+        /// </summary>
         public void GoFoward() => navigation.GoFoward();
 
+        /// <summary>
+        /// Makes the history go back until it meets the first dialog ocurrence.
+        /// </summary>
         public void GoBack() => navigation.GoBack();
 
     }
