@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace History
 {
+    /// <summary>
+    /// Class that holds information about the current audio data that is holded by the conversation.
+    /// </summary>
     [System.Serializable]
     public class AudioData
     {

@@ -51,5 +51,9 @@ public class ConversationQueue
     /// </summary>
     public void Clear() => conversationQueue.Clear();
 
+    /// <summary>
+    /// Gets the Queue but as a copy.
+    /// </summary>
+    /// <returns>The copied queue as an array.</returns>
     public Conversation[] GetReadOnly() => conversationQueue.ToArray();
 }

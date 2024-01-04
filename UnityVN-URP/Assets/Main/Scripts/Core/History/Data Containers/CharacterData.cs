@@ -6,6 +6,9 @@ using CHARACTERS;
 
 namespace History
 {
+    /// <summary>
+    /// Class that holds all information about the characters to be captured and reused on saves.
+    /// </summary>
     [System.Serializable]
     public class CharacterData
     {

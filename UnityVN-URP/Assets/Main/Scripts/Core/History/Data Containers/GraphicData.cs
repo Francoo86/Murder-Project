@@ -5,7 +5,9 @@ using UnityEngine.Video;
 
 namespace History
 {
-
+    /// <summary>
+    /// Class that holds information about the current graphic data retrieved by the conversation.
+    /// </summary>
     [System.Serializable]
     public class GraphicData
     {
