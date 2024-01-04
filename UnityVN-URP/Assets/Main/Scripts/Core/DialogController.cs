@@ -7,6 +7,7 @@ using CHARACTERS;
 
 /// <summary>
 /// Controls the dialog stuff appearing the conversation, like clicking on screen and everything related to the dialog box.
+/// Also is the main handler of the gameplay.
 /// </summary>
 public class DialogController : MonoBehaviour
 {
