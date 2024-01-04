@@ -71,6 +71,12 @@ public class ChoicePanel : MonoBehaviour
         cgController.SetInteractableState(false);
     }
 
+    /// <summary>
+    /// Generates choices on the screen, with their assigned button and setups the event listener of the button, which in this case saves the selected decision
+    /// and hides the panel.
+    /// </summary>
+    /// <param name="choices">The passed choices.</param>
+    /// <returns>The IEnumerator to be yielded to don't make fast button additions.</returns>
     private IEnumerator GenerateChoices(string[] choices)
     {
         float maxWidth = 0;
@@ -126,7 +132,11 @@ public class ChoicePanel : MonoBehaviour
         }
     }
 
-    public void AcceptAnswer(int index)
+    /// <summary>
+    /// Method that needs to be associated with a button to save the decision.
+    /// </summary>
+    /// <param name="index">The button index.</param>
+    private void AcceptAnswer(int index)
     {
         if (index < 0 || index > LastDecision.choices.Length - 1)
             return;

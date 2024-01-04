@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace VISUALNOVEL
 {
+    /// <summary>
+    /// Class that holds the variables information like the name, value, and the type (in System.Type C# format).
+    /// </summary>
     [System.Serializable]
     public class VN_VariableData
     {
