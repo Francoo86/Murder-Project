@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Esto es parte del tutorial de audio.
+
+/// <summary>
+/// Class that 
+/// </summary>
 public class AudioChannel
 {
     private const string TRACK_CONTAINER_NAME_FORMAT = "Channel - [{0}]";

@@ -6,8 +6,10 @@ using System;
 
 namespace VISUALNOVEL
 {
+    /// <summary>
+    /// The save file handler class.
+    /// </summary>
     [System.Serializable]
-
     public class VNGameSave
     {
         public static VNGameSave activeFile = null;
@@ -30,6 +32,9 @@ namespace VISUALNOVEL
 
         public string timestamp;
 
+        /// <summary>
+        /// Saves the current progress, from beginning to current screen.
+        /// </summary>
         public void Save() 
         {
             newGame = false;
@@ -63,8 +68,13 @@ namespace VISUALNOVEL
             SetConversationData();
         }
 
-        //ESTA FUNCION WEBEA CON LAS VARIABLES.
-        //This function it shouldn't set the activeFile instantly.
+
+        /// <summary>
+        /// Loads a save from a specific path.
+        /// </summary>
+        /// <param name="filePath">The filepath where to load.</param>
+        /// <param name="activateOnLoad">Display instantly the load on the screen.</param>
+        /// <returns>The save file loaded (if any).</returns>
         public static VNGameSave Load(string filePath, bool activateOnLoad = false)
         {
             VNGameSave save = FileManager.Load<VNGameSave>(filePath);
@@ -75,6 +85,10 @@ namespace VISUALNOVEL
             return save;  
         }
 
+        /// <summary>
+        /// Retrieves the current conversation data in the queue to be saved into the save file.
+        /// </summary>
+        /// <returns>A list of conversations saved in JSON format.</returns>
         public string[] GetConversationData()
         {
             List<string> retData = new List<string>();
@@ -116,6 +130,9 @@ namespace VISUALNOVEL
             return retData.ToArray();
         }
 
+        /// <summary>
+        /// Sets the conversation data loaded from JSON and enqueues it, making it first.
+        /// </summary>
         private void SetConversationData()
         {
             for(int i = 0; i < activeConversations.Length; i++) 
@@ -162,6 +179,10 @@ namespace VISUALNOVEL
             }
         }
 
+        /// <summary>
+        /// Retrieves the variables to be serialized in the JSON.
+        /// </summary>
+        /// <returns>The variables information (name, value).</returns>
         private VN_VariableData[] GetVariableData()
         {
             List<VN_VariableData> retData = new List<VN_VariableData>();
@@ -182,6 +203,9 @@ namespace VISUALNOVEL
             return retData.ToArray();
         }
 
+        /// <summary>
+        /// Sets the saved variable data onto the current conversation, making it consistent across the saves.
+        /// </summary>
         private void SetVariableData()
         {
             foreach (var variable in variables)
