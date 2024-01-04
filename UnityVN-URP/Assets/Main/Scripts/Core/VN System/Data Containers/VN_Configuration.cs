@@ -2,28 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The configuration object of the Visual Novel.
+/// </summary>
 [System.Serializable]
-
 public class VN_Configuration
 {
     public static VN_Configuration activeConfig;
 
-    public static string filePath => $"{FilePaths.rootPath}vnconfig.cfg"; //posible error revisar
-
-    //Ajustes generales
+    public static string filePath => $"{FilePaths.rootPath}vnconfig.cfg";
     public bool display_fullscreen = true;
-    //public string display_resolution = "1920x1080";
     public bool continueSkippingAfterChoice = false;
 
-    //ajuste de audio
     public float musicVolume = 1f;
     public float sfxVolume = 1f;
     public bool musicMute = false;
     public bool sfxMute = false;
 
-    //otros ajustes
-    //public float historyLogScale = 1f;
-
+    /// <summary>
+    /// Loads the configuration, in this case the fullscreen mode and sounds related stuff.
+    /// </summary>
     public void Load()
     {
         var ui = ConfigMenu.instance.ui;
@@ -41,6 +39,9 @@ public class VN_Configuration
 
     }
 
+    /// <summary>
+    /// Saves the configuration into JSON.
+    /// </summary>
     public void Save()
     {
         FileManager.Save(filePath, JsonUtility.ToJson(this));
