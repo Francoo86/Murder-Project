@@ -43,15 +43,6 @@ namespace History
 
                 nameCol = reference.nameCol;
                 diagCol = reference.diagCol;
-
-                // No los pillo en CharacterConfig Data
-                // No estan por que dentro de los requerimientos no necesitamos tanta info.
-                /*
-                nameFontScale = FilePaths.ResourcesFonts + reference.nameFont.name;
-                dialogueFontScale = FilePaths.ResourcesFonts + reference.diagFont.name;
-
-                nameFont = reference.nameFont;
-                diagFont = reference.diagFont;*/
             }
         }
 
@@ -79,43 +70,20 @@ namespace History
                 if(actualType == Character.CharacterType.Sprite)
                 {
                     SpriteData sData = new SpriteData();
-                    sData.actualLayer = new SpriteData.LayerData(); //layers = new List<SpriteData.LayerData>();
+                    sData.actualLayer = new SpriteData.LayerData();
 
                     SpriteCharacter sc = character as SpriteCharacter;
                     var layer = sc.currentLayer;
-
-                    //foreach (var layer in sc.layers)
-                    //{
                     var layerData = new SpriteData.LayerData();
                     layerData.color = layer.renderer.color;
                     layerData.spriteName = layer.renderer.sprite.name;
                     sData.actualLayer = layerData;
-                    //sData.layers.Add(layerData);
-                    //}
                     entry.dataJSON = JsonUtility.ToJson(sData);
                 }
 
-                /*
-                switch (character.config.charType)
-                {
-                    case Character.CharacterType.Sprite:
-                        //case Character.CharacterType.SpriteSheet:
-                        SpriteData sData = new SpriteData();
-                        sData.layers = new List<SpriteData.LayerData>();
-
-                        SpriteCharacter sc = character as SpriteCharacter;
-                        foreach (var layer in sc.layers)
-                        {
-                            var layerData = new SpriteData.LayerData();
-                            layerData.color = layer.renderer.color;
-                            layerData.spriteName = layer.renderer.sprite.name;
-                            sData.layers.Add(layerData);
-                        }
-                        entry.dataJSON = JsonUtility.ToJson(sData);
-                        break;
-                }*/
                 characters.Add(entry);
             }
+
             return characters;
         }
 
@@ -154,6 +122,9 @@ namespace History
                 {
                     SpriteData sData = JsonUtility.FromJson<SpriteData>(characterData.dataJSON);
                     SpriteCharacter sc = character as SpriteCharacter;
+
+                    if (characterData.enabled)
+                        sc.Show();
 
                     var layer = sData.actualLayer;
                     if (sc.currentLayer.renderer.sprite != null && sc.currentLayer.renderer.sprite.name != layer.spriteName)

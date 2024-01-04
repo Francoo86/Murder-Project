@@ -12,7 +12,7 @@ public class VN_Configuration
 
     //Ajustes generales
     public bool display_fullscreen = true;
-    public string display_resolution = "1920x1080";
+    //public string display_resolution = "1920x1080";
     public bool continueSkippingAfterChoice = false;
 
     //ajuste de audio
@@ -22,7 +22,7 @@ public class VN_Configuration
     public bool sfxMute = false;
 
     //otros ajustes
-    public float historyLogScale = 1f;
+    //public float historyLogScale = 1f;
 
     public void Load()
     {

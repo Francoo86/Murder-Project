@@ -104,7 +104,7 @@ namespace CHARACTERS
         /// <summary>
         /// Resets the character configuration to the defaults.
         /// </summary>
-        public void ResetCharacterConfig() => config = CharacterController.Instance.GetCharacterConfig(name);
+        public void ResetCharacterConfig() => config = CharacterController.Instance.GetCharacterConfig(name, true);
 
         //Hacer que el personaje hable.
         /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 
 public class GraphicObject
@@ -200,7 +201,10 @@ public class GraphicObject
         if(layer.oldGraphics.Contains(this))
             layer.oldGraphics.Remove(this);
 
-        Object.Destroy(renderer.gameObject); 
+        if (!renderer.gameObject.IsDestroyed())
+            Object.Destroy(renderer.gameObject);
+        else
+            Debug.Log("XDDDD DESTROYED");
     }
     private void DestroyBackgroundGraphicsOnLayer()
     {

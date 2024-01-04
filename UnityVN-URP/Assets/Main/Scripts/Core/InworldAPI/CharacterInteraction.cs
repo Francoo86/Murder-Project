@@ -63,39 +63,5 @@ class CharacterInteraction
         Debug.Log($"Expression received: {lastEmotion}");
         character.OnExpressionReceive(lastEmotion ?? "normal");
         yield return character.Say(lastText);
-        /*
-        //BINGO.
-        ConversationManager Controller = DialogController.Instance.convManager;
-
-        List<string> linesToAppend = lastText ?? new List<string> { ERROR_MESSAGE };
-        //HACK: The deadline is near so this is a very fix for appending AI data.
-        linesToAppend.Insert(0, "");
-
-        bool wasNull = false;
-        Conversation lastConversation = Controller.conversation;
-
-        if(lastConversation == null)
-        {
-            lastConversation = new Conversation(new List<string>());
-            wasNull = true;
-        }
-
-        List<string> conversationLines = lastConversation.GetLines();
-        int progress = lastConversation.GetProgress();
-
-        for(int i = linesToAppend.Count - 1; i >= 0; i--)
-        {
-            string line = $"{characterName} \"{linesToAppend[i]}\"";
-            conversationLines.Insert(progress, line);
-        }
-
-        if(wasNull)
-           Controller.StartConversation(lastConversation);*/
     }
-
-    /*
-    private string GetLastEmotion()
-    {
-        return lastEmotion ?? "normal";
-    }*/
 }

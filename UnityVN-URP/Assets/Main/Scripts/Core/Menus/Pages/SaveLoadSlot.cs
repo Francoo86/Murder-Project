@@ -7,7 +7,8 @@ using UnityEngine.UI;
 using TMPro;
 using System.IO;
 using VISUALNOVEL;
-    
+using CHARACTERS;
+
 public class SaveLoadSlot : MonoBehaviour
 {
     
@@ -80,10 +81,24 @@ public class SaveLoadSlot : MonoBehaviour
         }
         else
         {
+            EnforceConsistentLoading();
             file.Activate();
             VNGameSave.activeFile = file;
         }
 
+    }
+
+    //HACK: This is the only solution i could find to the problem of inworld atm, not very nice, but it works.
+    private void EnforceConsistentLoading()
+    {
+        CommandController.Instance.StopAllProcesses();
+
+        Character character = CoroutinePrompt.GetInstance().lastCharacter;
+
+        if (character != null)
+        {
+            character.Hide();
+        }
     }
     
     public void Save()

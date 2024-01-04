@@ -103,8 +103,16 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     /// <param name="charName">The character name.</param>
     /// <returns>The character configuration data.</returns>
-    public CharacterConfigData GetCharacterConfig(string charName)
+    public CharacterConfigData GetCharacterConfig(string charName, bool useOriginal = false)
     {
+        if (!useOriginal)
+        {
+            Character character = GetCharacter(charName);
+
+            if (character != null)
+                return character.config;
+        }
+
         return config.GetConfig(charName);
     }
 

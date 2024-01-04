@@ -14,6 +14,7 @@ public class CoroutinePrompt {
     public bool IsStillFetching => currentSession.Client.IsFetching;
     public bool IsTalkingWithCharacter = false;
     public Conversation savedConversation = null;
+    public Character lastCharacter = null;
 
     /// <summary>
     /// Initializes the Coroutined Prompt class, in singleton way.
@@ -96,6 +97,7 @@ public class CoroutinePrompt {
     /// <param name="characterName">The character name.</param>
     public IEnumerator Interact(Character character)
     {
+        lastCharacter = character;
         yield return lastInteraction.DisplayText(character);
     }
 
