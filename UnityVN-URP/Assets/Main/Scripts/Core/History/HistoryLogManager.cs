@@ -71,6 +71,10 @@ namespace History
             CreateLog(state);
         }
 
+        /// <summary>
+        /// Creates a log based on the current history state, that has the character name and the dialog said in that time.
+        /// </summary>
+        /// <param name="state">The history state.</param>
         private void CreateLog(HistoryState state)
         {
             HistoryLog log = new HistoryLog();
@@ -100,10 +104,16 @@ namespace History
             log.dialogueFontSize = TEXT_DEFAULT_SCALE * state.dialogue.dialogueScale;
             log.dialogueText.fontSize = log.dialogueFontSize + textScaling;
 
+            //Debug.Log($"<color=#FFA500>Current log: {log.dialogueText.text}</color>");
+
             FitLogToText(log);
             logs.Add(log);
         }
 
+        /// <summary>
+        /// Makes responsive text to the log to avoid text overflowing.
+        /// </summary>
+        /// <param name="log">The history log.</param>
         private void FitLogToText(HistoryLog log)
         {
             RectTransform rect = log.dialogueText.GetComponent<RectTransform>();

@@ -81,20 +81,12 @@ public class InworldWrapper : MonoBehaviour
         else
             Debug.LogWarning("Can't connect to Inworld!");
     }
-
     /// <summary>
-    /// Initializes the instance after the script is loaded.
-    /// </summary>
-    void Awake()
-    {
-        Instance = this;
-    }
-
-    /// <summary>
-    /// Initializes the Inworld API Wrapper object, also reads the key and workspace provided in the .env file.
+    /// Initializes the Inworld API Wrapper object and makes a global instance, also reads the key and workspace provided in the .env file.
     /// </summary>
     void Start()
     {
+        Instance = this;
         env.TryParseEnvironmentVariable("API_KEY", out apiKey);
         env.TryParseEnvironmentVariable("WORKSPACE_PATH", out workspacePath);
     }
