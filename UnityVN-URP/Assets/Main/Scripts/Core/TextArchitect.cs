@@ -21,8 +21,6 @@ public class TextArchitect
     public string targetText { get; private set; } = "";
     public string preText { get; private set; } = "";
 
-    public string fullTargetText => preText + targetText;
-
     public Color textColor { get { return tmpro.color; } set { tmpro.color = value; } }
 
     //Text speed handler.

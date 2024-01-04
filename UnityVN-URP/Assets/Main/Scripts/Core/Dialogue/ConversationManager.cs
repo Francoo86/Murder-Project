@@ -236,31 +236,6 @@ public class ConversationManager
     }
 
     public bool IsWaitingOnAutoTimer { get; private set; }
-    /*
-    private IEnumerator WaitForDialogSegmentSignalToBeTriggered(DialogData.DIALOG_SEGMENT segment)
-    {
-        switch (segment.startSignal)
-        {
-            case DialogData.DIALOG_SEGMENT.StartSignal.C:
-                yield return WaitForUserInput();
-                Controller.OnSystemPrompt_Clear();
-                break;
-            case DialogData.DIALOG_SEGMENT.StartSignal.A:
-                yield return WaitForUserInput(); 
-                break;
-            case DialogData.DIALOG_SEGMENT.StartSignal.WC:
-                IsWaitingOnAutoTimer = true;
-                yield return new WaitForSeconds(segment.signalDelay);
-                IsWaitingOnAutoTimer = false;
-                Controller.OnSystemPrompt_Clear();
-                break;
-            case DialogData.DIALOG_SEGMENT.StartSignal.WA:
-                IsWaitingOnAutoTimer = true;
-                yield return new WaitForSeconds(segment.signalDelay);
-                IsWaitingOnAutoTimer = false;
-                break;
-        }
-    }*/
 
     private IEnumerator BuildDialog(string diag, bool append = false) {
         diag = TagController.Inject(diag);
