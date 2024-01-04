@@ -5,6 +5,9 @@ using TMPro;
 
 namespace History 
 { 
+    /// <summary>
+    /// Setups the navigation around the history by pressing left and right buttons.
+    /// </summary>
     public class HistoryNavigation : MonoBehaviour
     {
         public int progress = 0;
@@ -21,6 +24,9 @@ namespace History
 
         public bool canNavigate => !DialogController.Instance.convManager.isOnLogicalLine;
 
+        /// <summary>
+        /// Goes forward on the history until the player goes to the last state.
+        /// </summary>
         public void GoFoward() 
         {
             if (!isViewingHistory || !canNavigate) 
@@ -54,6 +60,9 @@ namespace History
             }
         }
         
+        /// <summary>
+        /// Goes back around the history until the player goes to the first one.
+        /// </summary>
         public void GoBack() 
         {
             if (history.Count == 0 || (progress == 0 && isViewingHistory) || !canNavigate)
@@ -74,6 +83,10 @@ namespace History
             state.Load();
             UpdateStatusText();
         }
+
+        /// <summary>
+        /// Updates the status text by saying the current progress of the history.
+        /// </summary>
 
         private void UpdateStatusText() 
         {

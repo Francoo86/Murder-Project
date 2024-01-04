@@ -5,6 +5,9 @@ using TMPro;
 
 namespace History
 {
+    /// <summary>
+    /// Class that holds the information about a single history log in the game.
+    /// </summary>
     public class HistoryLog
     {
         public GameObject container;

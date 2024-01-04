@@ -6,7 +6,9 @@ using UnityEngine.Video;
 
 namespace History
 {
-
+    /// <summary>
+    /// Static class that tries to loads Fonts, Audios, Textures, Videos from assigned paths.
+    /// </summary>
     public class HistoryCache 
     { 
         public static Dictionary<string, (object asset, int staleIndex)> loadedAssets = new Dictionary<string, (object asset, int staleIndex)> ();
