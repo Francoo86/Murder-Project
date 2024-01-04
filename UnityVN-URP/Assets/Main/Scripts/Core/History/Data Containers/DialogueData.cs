@@ -6,6 +6,9 @@ using TMPro;
 
 namespace History
 {
+    /// <summary>
+    /// Class that holds information of the current dialog on the screen, in this case, the character name, the text and saves both font and color.
+    /// </summary>
     [System.Serializable]
     public class DialogueData
     {
@@ -43,6 +46,10 @@ namespace History
             return data;
         }
 
+        /// <summary>
+        /// Applies the data of the dialog.
+        /// </summary>
+        /// <param name="data">The data to be applied.</param>
         public static void Apply(DialogueData data)
         {
             var ds = DialogController.Instance;

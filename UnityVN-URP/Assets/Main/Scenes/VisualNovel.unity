@@ -22069,12 +22069,6 @@ MonoBehaviour:
     type: 2}
   sfxMixer: {fileID: 8875841133277672783, guid: 14bb1bbc1eca2bd4b82392d85a85f1e3,
     type: 2}
-  audioFalloffCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &2034410718
 GameObject:
   m_ObjectHideFlags: 0

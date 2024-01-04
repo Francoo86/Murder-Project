@@ -5,7 +5,7 @@ using UnityEngine;
 //Esto es parte del tutorial de audio.
 
 /// <summary>
-/// Class that 
+/// Class that makes possible making multiple tracks to be played at the same time.
 /// </summary>
 public class AudioChannel
 {
@@ -18,6 +18,11 @@ public class AudioChannel
     //Darle un efecto de entrada/salida así como las peliculas.
     public bool IsLevelingVolume => co_VolumeLeveling != null;
     Coroutine co_VolumeLeveling = null;
+
+    /// <summary>
+    /// Creates the AudioChannel object and creates a GameObject to be associated to the controller as a child.
+    /// </summary>
+    /// <param name="channel">The channel num.</param>
     public AudioChannel(int channel) {
         ChannelIndex = channel;
 
@@ -25,6 +30,15 @@ public class AudioChannel
         TrackContainer.transform.SetParent(AudioController.Instance.transform);
     }
     
+    /// <summary>
+    /// Plays a track by AudioClip data, if it doesn't exist then creates a new one and plays it on the new one.
+    /// </summary>
+    /// <param name="clip">AudioClip data to get the name.</param>
+    /// <param name="loop">Marks the track as loopable.</param>
+    /// <param name="startVol">The starting volume of the track.</param>
+    /// <param name="volCap">The max volume that the track can have.</param>
+    /// <param name="filePath">The filePath of the track.</param>
+    /// <returns>The track that will be played.</returns>
     public AudioTrack PlayTrack(AudioClip clip, bool loop, float startVol, float volCap, string filePath)
     {
         if(TryToGetTrack(clip.name, out AudioTrack existingTrack))
@@ -46,6 +60,10 @@ public class AudioChannel
         return track;
     }
 
+    /// <summary>
+    /// Sets the channel active track and volumes it.
+    /// </summary>
+    /// <param name="track">The track.</param>
     private void SetActiveTrack(AudioTrack track)
     {
         if (!tracks.Contains(track))
@@ -56,6 +74,12 @@ public class AudioChannel
         TryStartVolumeLeveling();
     }
 
+    /// <summary>
+    /// Tries to get a track by name.
+    /// </summary>
+    /// <param name="name">The track name.</param>
+    /// <param name="value">The value that gets the track.</param>
+    /// <returns>Was retrieved succesfully.</returns>
     public bool TryToGetTrack(string name, out AudioTrack value)
     {
         name = name.ToLower();
@@ -76,6 +100,9 @@ public class AudioChannel
         return false;
     }
 
+    /// <summary>
+    /// Tries to start the volume leveling of the current track.
+    /// </summary>
     private void TryStartVolumeLeveling()
     {
         if (!IsLevelingVolume)
@@ -84,6 +111,10 @@ public class AudioChannel
         }
     }
 
+    /// <summary>
+    /// Makes the current track to go to 0 volume and then destroys it.
+    /// </summary>
+    /// <returns>The IEnumerator to be yielded with the AudioController.</returns>
     private IEnumerator VolumeLeveling()
     {
         //Deberiamos tener al menos un track dentro de la lista.
@@ -116,6 +147,10 @@ public class AudioChannel
         co_VolumeLeveling = null;
     }
 
+    /// <summary>
+    /// Removes a track from the list and destroys it.
+    /// </summary>
+    /// <param name="track">The track to be removed</param>
     private void DestroyTrack(AudioTrack track)
     {
         if(tracks.Contains(track))
@@ -126,6 +161,10 @@ public class AudioChannel
         Object.Destroy(track.Root);
     }
 
+    /// <summary>
+    /// Stops the track and destroys it.
+    /// </summary>
+    /// <param name="inmediate">Marks this as instant stop.</param>
     public void StopTrack(bool inmediate = false)
     {
         if(CurrentTrack == null) { return; }

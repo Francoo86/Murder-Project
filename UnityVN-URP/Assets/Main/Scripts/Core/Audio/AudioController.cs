@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+/// <summary>
+/// Controls the audio logic of the game.
+/// </summary>
 public class AudioController : MonoBehaviour
 {
     public const string MUSIC_VOLUME_PARAMETER_NAME = "MusicVolume";
@@ -21,12 +24,15 @@ public class AudioController : MonoBehaviour
     public AudioMixerGroup musicMixer;
     public AudioMixerGroup sfxMixer;
 
-    public AnimationCurve audioFalloffCurve;
+    //public AnimationCurve audioFalloffCurve;
 
     //Usar al padre de SFX.
     private Transform sfxRoot;
 
 
+    /// <summary>
+    /// Setups the controller, and resets the instance if the scene was changed.
+    /// </summary>
     private void Awake()
     {
         if (Instance == null)
@@ -45,7 +51,15 @@ public class AudioController : MonoBehaviour
     }
 
     //TODO: Add KeyValue JSON thing to make it somewhat similar to get files with only names.
-    public AudioSource PlaySoundEffect(string filePath, AudioMixerGroup mixGroup = null, float volume = 1, float pitch = 1, bool loop = false)
+    /// <summary>
+    /// Plays sound effect by passing the filepath.
+    /// </summary>
+    /// <param name="filePath">The audio path.</param>
+    /// <param name="volume">The volume of the audio in a scale of 0-1.</param>
+    /// <param name="pitch">How pitched is the audio.</param>
+    /// <param name="loop">Marks the sound as loopable.</param>
+    /// <returns>The AudioSource object to be played on the scene.</returns>
+    public AudioSource PlaySoundEffect(string filePath, float volume = 1, float pitch = 1, bool loop = false)
     {
         AudioClip clip = Resources.Load<AudioClip>(filePath);
 
@@ -55,10 +69,18 @@ public class AudioController : MonoBehaviour
             return null;
         }
 
-        return PlaySoundEffect(clip, mixGroup, volume, pitch, loop);
+        return PlaySoundEffect(clip, volume, pitch, loop);
     }
 
-    public AudioSource PlaySoundEffect(AudioClip clip, AudioMixerGroup mixGroup = null, float volume = 1, float pitch = 1, bool loop = false)
+    /// <summary>
+    /// Plays a sound by passing a loaded AudioClip object.
+    /// </summary>
+    /// <param name="clip">The loaded audio object.</param>
+    /// <param name="volume">The volume of audio (scales 0-1).</param>
+    /// <param name="pitch">The pitch of the sound.</param>
+    /// <param name="loop">Marks the sound as loopable.</param>
+    /// <returns>The AudioSource object to be played on the scene.</returns>
+    public AudioSource PlaySoundEffect(AudioClip clip, float volume = 1, float pitch = 1, bool loop = false)
     {
         string formattedName = string.Format(SFX_NAME_FORMAT, clip.name);
         AudioSource effectSrc = new GameObject(formattedName).AddComponent<AudioSource>();
@@ -66,10 +88,11 @@ public class AudioController : MonoBehaviour
         effectSrc.transform.position = sfxRoot.position;
         effectSrc.clip = clip;
 
+        /*
         if (mixGroup == null)
-            mixGroup = sfxMixer;
+            mixGroup = sfxMixer;*/
 
-        effectSrc.outputAudioMixerGroup = mixGroup;
+        effectSrc.outputAudioMixerGroup = sfxMixer;
         effectSrc.volume = volume;
         //No es un sonido en 3D.
         effectSrc.spatialBlend = 0;
@@ -84,6 +107,10 @@ public class AudioController : MonoBehaviour
         return effectSrc;
     }
 
+    /// <summary>
+    /// Stop the sound by name and destroys the GameObject of the scene.
+    /// </summary>
+    /// <param name="soundName">The sound name.</param>
     public void StopSoundEffects(string soundName)
     {
         soundName =  soundName.ToLower();
@@ -99,6 +126,10 @@ public class AudioController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Stops the sound by the AudioClip data object.
+    /// </summary>
+    /// <param name="clip">The AudioClip object.</param>
     public void StopSoundEffects(AudioClip clip) => StopSoundEffects(clip.name);
 
     //TODO: Refactor onto one method.
@@ -115,6 +146,16 @@ public class AudioController : MonoBehaviour
         return PlayTrack(clip, channel, loop, startVol, capVol, filePath);
     }
 
+    /// <summary>
+    /// Plays a track by the AudioClip data.
+    /// </summary>
+    /// <param name="clip">The AudioClip data.</param>
+    /// <param name="channel">The channel where the track should play.</param>
+    /// <param name="loop">Marks the track loopable.</param>
+    /// <param name="startVol">The volume that the track will start.</param>
+    /// <param name="capVol">The max volume that the track can be have.</param>
+    /// <param name="filePath">The path of the track.</param>
+    /// <returns>The AudioTrack that will be played.</returns>
     public AudioTrack PlayTrack(AudioClip clip, int channel = 0, bool loop = true, float startVol = 0f, float capVol = 1f, string filePath = "")
     {
         AudioChannel audioChannel = TryToGetChannel(channel, forceCreation: true);
@@ -122,6 +163,10 @@ public class AudioController : MonoBehaviour
         return track;
     }
 
+    /// <summary>
+    /// Stops the current track of the requested channel.
+    /// </summary>
+    /// <param name="channel">The channel num.</param>
     public void StopTrack(int channel)
     {
         AudioChannel chan = TryToGetChannel(channel, forceCreation: false);
@@ -132,6 +177,10 @@ public class AudioController : MonoBehaviour
         chan.StopTrack();
     }
 
+    /// <summary>
+    /// Stops the track by name associated to a channel.
+    /// </summary>
+    /// <param name="trackName">The track name.</param>
     public void StopTrack(string trackName)
     {
         trackName = trackName.ToLower();
@@ -146,6 +195,12 @@ public class AudioController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Tries to get an AudioChannel by number.
+    /// </summary>
+    /// <param name="channelNum">The channel num.</param>
+    /// <param name="forceCreation">The channel should be created if doesn't exists.</param>
+    /// <returns></returns>
     public AudioChannel TryToGetChannel(int channelNum, bool forceCreation = false)
     {
         AudioChannel channel = null;
@@ -164,12 +219,23 @@ public class AudioController : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Sets the music volume of the environment.
+    /// </summary>
+    /// <param name="volume">The volume in dB (being -80 muted and 20 the greatest).</param>
+    /// <param name="muted">Mute instantly.</param>
     public void SetMusicVolume(float volume, bool muted)
     {
         volume = muted ? MUTED_VOLUME_LEVEL : volume;//audioFalloffCurve.Evaluate(volume);
         Debug.Log($"Evaluating this thing: {volume}");
         musicMixer.audioMixer.SetFloat(MUSIC_VOLUME_PARAMETER_NAME, volume);
     }
+
+    /// <summary>
+    /// Sets the SFX volume when playing a sound.
+    /// </summary>
+    /// <param name="volume">The volume in dB (being -80 muted and 20 the greatest).</param>
+    /// <param name="muted">Mute instantly.</param>
     public void SetSFXVolume(float volume, bool muted)
     {
         volume = muted ? MUTED_VOLUME_LEVEL : volume;
