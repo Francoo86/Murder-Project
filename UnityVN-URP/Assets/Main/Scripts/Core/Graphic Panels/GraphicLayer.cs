@@ -12,7 +12,7 @@ public class GraphicLayer
     public List<GraphicObject> oldGraphics = new List<GraphicObject>();
 
     // Start is called before the first frame update
-    public Coroutine SetTexture(string path, float transitionSpeed = 2.0f, Texture blendingTexture = null, bool immediate = false)
+    public Coroutine SetTexture(string path, float transitionSpeed = 2.0f, bool immediate = false)
     {
         Texture texture = Resources.Load<Texture2D>(path);
 
@@ -22,16 +22,16 @@ public class GraphicLayer
             return null;
         }
 
-        return SetTexture(texture, transitionSpeed, blendingTexture, path, immediate);
+        return SetTexture(texture, transitionSpeed, path, immediate);
     }
 
     // path para poder guardar elementos de Load/Save.
-    public Coroutine SetTexture(Texture texture, float transitionSpeed = 2.0f, Texture blendingTexture = null, string path = "", bool immediate = false)
+    public Coroutine SetTexture(Texture texture, float transitionSpeed = 2.0f, string path = "", bool immediate = false)
     {
-        return CreateGraphic(texture, transitionSpeed, path, blendingTexture: blendingTexture, immediate: immediate);
+        return CreateGraphic(texture, transitionSpeed, path, immediate: immediate);
     }
 
-    public Coroutine SetVideo(string path, float transitionSpeed = 1f, bool useAudio = true, Texture blendingTexture = null, bool immediate = false)
+    public Coroutine SetVideo(string path, float transitionSpeed = 1f, bool useAudio = true, bool immediate = false)
     {
         VideoClip clip = Resources.Load<VideoClip>(path);
 
@@ -41,17 +41,17 @@ public class GraphicLayer
             return null;
         }
 
-        return SetVideo(clip, transitionSpeed, useAudio, blendingTexture, path, immediate);
+        return SetVideo(clip, transitionSpeed, useAudio, path, immediate);
     }
 
-    public Coroutine SetVideo(VideoClip video, float transitionSpeed = 2.0f, bool useAudio = true, Texture blendingTexture = null, string path = "", bool immediate = false)
+    public Coroutine SetVideo(VideoClip video, float transitionSpeed = 2.0f, bool useAudio = true, string path = "", bool immediate = false)
     {
-        return CreateGraphic(video, transitionSpeed, path, useAudio, blendingTexture, immediate);
+        return CreateGraphic(video, transitionSpeed, path, useAudio, immediate);
     }
 
     // Only way to avoid repeating myself.
     // Usar el tipo generico para poder manejar imagenes y videos.
-    private Coroutine CreateGraphic<T>(T graphicData, float transitionSpeed, string path, bool useAudioForVids = false, Texture blendingTexture = null, bool immediate = false)
+    private Coroutine CreateGraphic<T>(T graphicData, float transitionSpeed, string path, bool useAudioForVids = false, bool immediate = false)
     {
         GraphicObject graphObj = null;
 
@@ -71,7 +71,7 @@ public class GraphicLayer
         // Mantener graficas en renderizado (trackeo).
         CurrentGraphic = graphObj;
         if (!immediate)
-            return CurrentGraphic.FadeIn(transitionSpeed, blendingTexture);
+            return CurrentGraphic.FadeIn(transitionSpeed);
         DestroyOldGraphics();
         return null;
     }
@@ -85,12 +85,12 @@ public class GraphicLayer
         oldGraphics.Clear();
     }
 
-    public void Clear(float transitionSpeed = 1, Texture blendTexture = null, bool immediate = false)
+    public void Clear(float transitionSpeed = 1, bool immediate = false)
     {
         if (CurrentGraphic != null)
         {
             if (!immediate)
-                CurrentGraphic.FadeOut(transitionSpeed, blendTexture);
+                CurrentGraphic.FadeOut(transitionSpeed);
             else
                 CurrentGraphic.Destroy();
         }
@@ -98,7 +98,7 @@ public class GraphicLayer
         foreach (var g in oldGraphics)
         {
             if (!immediate)
-                g.FadeOut(transitionSpeed, blendTexture);
+                g.FadeOut(transitionSpeed);
             else
                 g.Destroy();
         }

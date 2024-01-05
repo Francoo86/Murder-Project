@@ -124,7 +124,7 @@ public class GraphicObject
 
     GraphicPanelController GraphicController => GraphicPanelController.Instance;
 
-    public Coroutine FadeIn(float speed = 1f, Texture blend = null)
+    public Coroutine FadeIn(float speed = 1f)
     {
         if (co_FadingOut != null)
             GraphicController.StopCoroutine(co_FadingOut);
@@ -132,12 +132,12 @@ public class GraphicObject
         if (co_FadingIn != null)
             return co_FadingIn;
 
-        co_FadingIn = GraphicController.StartCoroutine(Fading(1f, speed, blend));
+        co_FadingIn = GraphicController.StartCoroutine(Fading(1f, speed));
 
         return co_FadingIn;
     }
 
-    public Coroutine FadeOut(float speed = 1f, Texture blend = null)
+    public Coroutine FadeOut(float speed = 1f)
     {
         if (co_FadingIn != null)
             GraphicController.StopCoroutine(co_FadingIn);
@@ -145,14 +145,14 @@ public class GraphicObject
         if (co_FadingOut != null)
             return co_FadingOut;
 
-        co_FadingOut = GraphicController.StartCoroutine(Fading(0f, speed, blend));
+        co_FadingOut = GraphicController.StartCoroutine(Fading(0f, speed)); //blend));
 
         return co_FadingOut;
     }
 
-    private IEnumerator Fading(float target, float speed, Texture blend = null)
+    private IEnumerator Fading(float target, float speed)//, Texture blend = null)
     {
-        bool isBlending = blend != null;
+        //bool isBlending = blend != null;
         bool fadingIn = target > 0f;
 
         if(renderer.material.name == DEFAULT_UI_MAT)
@@ -163,11 +163,11 @@ public class GraphicObject
         }
 
         Material renderMat = renderer.material;
-        renderMat.SetTexture(MAT_FIELD_BLENDTEX, blend);
-        renderMat.SetFloat(MAT_FIELD_ALPHA, isBlending ? 1f : fadingIn ? 0f : 1f);
-        renderMat.SetFloat(MAT_FIELD_BLEND, isBlending ? fadingIn ? 0 : 1 : 1);
+        //renderMat.SetTexture(MAT_FIELD_BLENDTEX, blend);
+        renderMat.SetFloat(MAT_FIELD_ALPHA, fadingIn ? 0f : 1f);
+        //renderMat.SetFloat(MAT_FIELD_BLEND, isBlending ? fadingIn ? 0 : 1 : 1);
 
-        string opacityParam = isBlending ? MAT_FIELD_BLEND : MAT_FIELD_ALPHA;
+        string opacityParam = MAT_FIELD_ALPHA;
 
         while (renderMat.GetFloat(opacityParam) != target)
         {

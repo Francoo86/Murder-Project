@@ -23,16 +23,14 @@ public class CommandGraphicPanels : CommandDBExtension
     {
         // par�metros disponibles para funcionar
         string panelName = "";
-        int layer = 0;
+        //int layer = 0;
         string mediaName = "";
         float transitionSpeed = 0;
         bool immediate = false;
-        string blendTexName = "";
         bool useAudio = false;
         string pathToGraphic = "";
 
         UnityEngine.Object graphic = null;
-        Texture blendTex = null;
         var parameters = ConvertToParams(data);
         parameters.TryGetValue(PARAM_PANEL, out panelName);
         GraphicPanel panel = GraphicPanelController.Instance.GetPanel(panelName);
@@ -41,16 +39,18 @@ public class CommandGraphicPanels : CommandDBExtension
             Debug.LogError($"Unable to grab panel '{panelName}' because it is not a valid panel. please check the panel name and adjust the command.");
             yield break;
         }
-        parameters.TryGetValue(PARAM_LAYER, out layer, defaultVal: 0);
+        //parameters.TryGetValue(PARAM_LAYER, out layer, defaultVal: 0);
         parameters.TryGetValue(PARAM_MEDIA, out mediaName);
         parameters.TryGetValue(PARAM_IMMEDIATE, out immediate, defaultVal: false);
+
+        //Debug.Log($"<color=red>Panel data: {panelName}, {layer}, {mediaName}</color>");
 
         if (!immediate)
             parameters.TryGetValue(PARAM_SPEED, out transitionSpeed, defaultVal: 1);
 
-        parameters.TryGetValue(PARAM_BLENDTEX, out blendTexName);
+        //parameters.TryGetValue(PARAM_BLENDTEX, out blendTexName);
 
-        parameters.TryGetValue(PARAM_USEVIDEOAUDIO, out useAudio, defaultVal: false);
+        //parameters.TryGetValue(PARAM_USEVIDEOAUDIO, out useAudio, defaultVal: false);
 
         Debug.LogWarning($"Current graphic path thing.");
         pathToGraphic = GetPathToGraphic(FilePaths.ResourcesBGImages, mediaName);
@@ -65,22 +65,20 @@ public class CommandGraphicPanels : CommandDBExtension
             Debug.LogError($"Could not find a graphic called '{mediaName}' in the Resources directories");
             yield break;
         }
-        if (!immediate && blendTexName != string.Empty)
-            blendTex = Resources.Load<Texture>(FilePaths.ResourcesBlendTexture + blendTexName);
 
-        GraphicLayer graphicLayer = panel.GetLayer(layer, forceCreation: true);
+        GraphicLayer graphicLayer = panel.GetLayer(0, forceCreation: true);
 
         if (graphic is Texture)
         {
             if(!immediate)
                 CommandController.Instance.AddTerminationActionToActualProcess(() => { graphicLayer?.SetTexture (graphic as Texture, path: pathToGraphic, immediate: true); });
-            yield return graphicLayer.SetTexture(graphic as Texture, transitionSpeed, blendTex, pathToGraphic, immediate);
+            yield return graphicLayer.SetTexture(graphic as Texture, transitionSpeed, pathToGraphic, immediate);
         }
         else
         {
             if(!immediate)
                 CommandController.Instance.AddTerminationActionToActualProcess(() => { graphicLayer?.SetVideo(graphic as VideoClip, path: pathToGraphic, immediate: true); });
-            yield return graphicLayer.SetVideo(graphic as VideoClip, transitionSpeed, useAudio, blendTex, pathToGraphic, immediate);
+            yield return graphicLayer.SetVideo(graphic as VideoClip, transitionSpeed, useAudio, pathToGraphic, immediate);
         }
     }
 
@@ -90,9 +88,6 @@ public class CommandGraphicPanels : CommandDBExtension
         int layer = 0;
         float transitionSpeed = 0;
         bool immediate = false;
-        string blendTexName = "";
-
-        Texture blendTex = null;
 
         var parameters = ConvertToParams(data);
 
@@ -111,13 +106,8 @@ public class CommandGraphicPanels : CommandDBExtension
         if (!immediate)
             parameters.TryGetValue(PARAM_SPEED, out transitionSpeed, defaultVal: 1);
 
-        parameters.TryGetValue(PARAM_BLENDTEX, out blendTexName);
-
-        if (!immediate && blendTexName != string.Empty)
-            blendTex = Resources.Load<Texture>(FilePaths.ResourcesBlendTexture + blendTexName);
-
         if (layer == -1)
-            panel.Clear(transitionSpeed, blendTex, immediate);
+            panel.Clear(transitionSpeed, immediate);
         else
         {
             GraphicLayer graphicLayer = panel.GetLayer(layer);
@@ -127,7 +117,7 @@ public class CommandGraphicPanels : CommandDBExtension
                 yield break;
             }
 
-            graphicLayer.Clear(transitionSpeed, blendTex, immediate);
+            graphicLayer.Clear(transitionSpeed, immediate);
         }
     }
 
