@@ -23,6 +23,10 @@ namespace History
         public Color speakerNameColor;
         public float speakerScale;
 
+        /// <summary>
+        /// Captures the dialog data 
+        /// </summary>
+        /// <returns></returns>
         public static DialogueData Capture() 
         { 
             DialogueData data = new DialogueData();

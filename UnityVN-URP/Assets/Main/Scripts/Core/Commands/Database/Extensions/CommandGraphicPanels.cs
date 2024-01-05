@@ -21,13 +21,11 @@ public class CommandGraphicPanels : CommandDBExtension
     }
     private static IEnumerator SetLayerMedia(string[] data)
     {
-        // par�metros disponibles para funcionar
         string panelName = "";
-        //int layer = 0;
         string mediaName = "";
-        float transitionSpeed = 0;
+        float transitionSpeed = 1;
         bool immediate = false;
-        bool useAudio = false;
+        //bool useAudio = false;
         string pathToGraphic = "";
 
         UnityEngine.Object graphic = null;
@@ -39,18 +37,9 @@ public class CommandGraphicPanels : CommandDBExtension
             Debug.LogError($"Unable to grab panel '{panelName}' because it is not a valid panel. please check the panel name and adjust the command.");
             yield break;
         }
-        //parameters.TryGetValue(PARAM_LAYER, out layer, defaultVal: 0);
+
         parameters.TryGetValue(PARAM_MEDIA, out mediaName);
         parameters.TryGetValue(PARAM_IMMEDIATE, out immediate, defaultVal: false);
-
-        //Debug.Log($"<color=red>Panel data: {panelName}, {layer}, {mediaName}</color>");
-
-        if (!immediate)
-            parameters.TryGetValue(PARAM_SPEED, out transitionSpeed, defaultVal: 1);
-
-        //parameters.TryGetValue(PARAM_BLENDTEX, out blendTexName);
-
-        //parameters.TryGetValue(PARAM_USEVIDEOAUDIO, out useAudio, defaultVal: false);
 
         Debug.LogWarning($"Current graphic path thing.");
         pathToGraphic = GetPathToGraphic(FilePaths.ResourcesBGImages, mediaName);
@@ -78,7 +67,7 @@ public class CommandGraphicPanels : CommandDBExtension
         {
             if(!immediate)
                 CommandController.Instance.AddTerminationActionToActualProcess(() => { graphicLayer?.SetVideo(graphic as VideoClip, path: pathToGraphic, immediate: true); });
-            yield return graphicLayer.SetVideo(graphic as VideoClip, transitionSpeed, useAudio, pathToGraphic, immediate);
+            yield return graphicLayer.SetVideo(graphic as VideoClip, transitionSpeed, false, pathToGraphic, immediate);
         }
     }
 

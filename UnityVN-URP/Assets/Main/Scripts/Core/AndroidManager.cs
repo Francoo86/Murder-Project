@@ -31,7 +31,6 @@ public class AndroidManager : MonoBehaviour
 #endif
     }
 
-
     private HistoryManager HManager => HistoryManager.Instance;
 
     /// <summary>
